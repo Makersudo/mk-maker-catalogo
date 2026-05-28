@@ -30,7 +30,7 @@ export function Header() {
   ] as const;
 
   return (
-    <header className="flex items-center justify-between h-16 border-b border-neutral-200 bg-white/80 backdrop-blur-md px-6 lg:px-16 sticky top-0 z-50">
+    <header className="flex min-h-20 items-center justify-between border-b border-neutral-200 bg-white/80 backdrop-blur-md px-4 py-2 md:min-h-24 md:px-6 lg:px-16 sticky top-0 z-50">
       {/* Logo */}
       <motion.div
         initial={{ opacity: 0, x: -20 }}

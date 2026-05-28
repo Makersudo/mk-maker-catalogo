@@ -4,7 +4,7 @@ import { getPublicSettings, type StoreSettings } from '../services/settingsServi
 export const DEFAULT_PUBLIC_SETTINGS: StoreSettings = {
   store_name: 'MK MAKER',
   store_slug: 'mk-maker',
-  store_logo: 'https://augeggvlijscaebcggvk.supabase.co/storage/v1/object/public/mk-maker-media/brand/mk-maker-logo.png',
+  store_logo: 'https://augeggvlijscaebcggvk.supabase.co/storage/v1/object/public/mk-maker-media/brand/mk-maker-logo-tight.png',
   store_primary_color: '#c98f86',
   store_secondary_color: '#111111',
 };

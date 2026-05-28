@@ -64,7 +64,7 @@ const demoStores: Store[] = [
     whatsapp: '5511999999999',
     primaryColor: '#c98f86',
     banner: 'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=1200&q=80',
-    logo: 'https://augeggvlijscaebcggvk.supabase.co/storage/v1/object/public/mk-maker-media/brand/mk-maker-logo.png',
+    logo: 'https://augeggvlijscaebcggvk.supabase.co/storage/v1/object/public/mk-maker-media/brand/mk-maker-logo-tight.png',
     plan: 'medium',
     planUsage: { products: 286, ordersThisMonth: 301, stockItems: 362 },
   },
