@@ -10,6 +10,7 @@ export function Hero() {
   const navigate = useNavigate();
   const instagramUrl = import.meta.env.VITE_INSTAGRAM_URL || "https://www.instagram.com/";
   const storeName = settings.store_name || 'MK MAKER';
+  const heroStoreName = storeName.toUpperCase() === 'MK MAKER' ? 'MK Maker' : storeName;
   const primaryColor = settings.store_primary_color || '#c98f86';
   const secondaryColor = settings.store_secondary_color || '#111111';
 
@@ -42,8 +43,8 @@ export function Hero() {
         <div className="absolute inset-0 dot-pattern opacity-60"></div>
       </div>
 
-      <div className="relative z-10 w-full flex-1 flex flex-col justify-center container mx-auto px-6 lg:px-16 pt-12 pb-52 sm:pb-40 lg:pb-32">
-        <div className="max-w-2xl">
+      <div className="relative z-10 mx-auto grid w-full max-w-full flex-1 items-center gap-8 px-6 pb-56 pt-10 sm:container sm:pb-44 lg:grid-cols-[minmax(0,0.95fr)_minmax(360px,0.9fr)] lg:px-16 lg:pb-32 lg:pt-12">
+        <div className="w-full min-w-0 max-w-[calc(100vw-3rem)] sm:max-w-2xl">
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
@@ -63,16 +64,18 @@ export function Hero() {
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.25, ease: "easeOut" }}
-            className="text-[36px] md:text-[64px] font-bold uppercase tracking-normal leading-[1.05] text-neutral-900 mb-6"
+            className="font-script mb-6 max-w-full text-[48px] font-bold normal-case leading-[0.94] tracking-normal text-neutral-900 sm:text-[56px] md:text-[78px] lg:text-[88px]"
           >
-            {storeName} pronto para vender <span style={{ color: primaryColor }}>todos os dias.</span>
+            {heroStoreName}
+            <span className="block text-[0.74em] sm:text-[0.82em]">pronto para vender</span>
+            <span className="block text-[0.74em] sm:text-[0.82em]" style={{ color: primaryColor }}>todos os dias.</span>
           </motion.h1>
 
           <motion.p
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.34, ease: "easeOut" }}
-            className="max-w-xl text-sm md:text-base font-medium text-neutral-600 leading-relaxed mb-5"
+            className="mb-5 max-w-[19rem] text-sm font-medium leading-relaxed text-neutral-600 sm:max-w-xl md:text-base"
           >
             Um catalogo simples, direto e organizado para seus clientes escolherem produtos e finalizarem pelo WhatsApp.
           </motion.p>
@@ -103,6 +106,26 @@ export function Hero() {
             Ver Catalogo
           </motion.button>
         </div>
+
+        <motion.div
+          initial={{ opacity: 0, x: 48, scale: 0.96 }}
+          animate={{ opacity: 1, x: 0, scale: 1 }}
+          transition={{ duration: 0.9, delay: 0.35, ease: "easeOut" }}
+          className="relative mx-auto w-full min-w-0 max-w-[calc(100vw-3rem)] sm:max-w-[560px] lg:max-w-none"
+        >
+          <div
+            className="absolute -inset-4 rounded-lg opacity-35 blur-2xl"
+            style={{ background: `linear-gradient(135deg, ${primaryColor}55, transparent 62%)` }}
+          />
+          <div className="relative aspect-[4/3] overflow-hidden rounded-lg bg-white shadow-2xl shadow-neutral-900/10 ring-1 ring-white/70 lg:h-[min(58vh,520px)] lg:aspect-auto">
+            <img
+              src="/hero/makeup-products.jpg"
+              alt="Produtos de maquiagem MK MAKER"
+              className="h-full w-full object-cover"
+            />
+            <div className="pointer-events-none absolute inset-0 bg-gradient-to-tr from-white/18 via-transparent to-white/10" />
+          </div>
+        </motion.div>
       </div>
 
       {/* Bottom Widget */}
