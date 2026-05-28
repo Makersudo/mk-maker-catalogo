@@ -9,7 +9,7 @@ type BrandLogoProps = {
 
 export function BrandLogo({
   className = '',
-  imageClassName = 'h-16 w-28 object-contain object-left md:h-20 md:w-36',
+  imageClassName = 'h-16 w-32 object-contain object-left md:h-20 md:w-44',
   textClassName = 'text-lg font-black tracking-normal text-neutral-950',
 }: BrandLogoProps) {
   const settings = usePublicSettings();
