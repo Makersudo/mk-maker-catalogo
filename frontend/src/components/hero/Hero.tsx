@@ -64,11 +64,20 @@ export function Hero() {
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.25, ease: "easeOut" }}
-            className="font-script mb-6 max-w-full text-[48px] font-bold normal-case leading-[0.94] tracking-normal text-neutral-900 sm:text-[56px] md:text-[78px] lg:text-[88px]"
+            className="mb-6 max-w-full text-neutral-900"
           >
-            {heroStoreName}
-            <span className="block text-[0.74em] sm:text-[0.82em]">pronto para vender</span>
-            <span className="block text-[0.74em] sm:text-[0.82em]" style={{ color: primaryColor }}>todos os dias.</span>
+            <span className="font-display block text-[46px] font-semibold leading-[0.96] tracking-normal sm:text-[58px] md:text-[76px] lg:text-[86px]">
+              {heroStoreName}
+            </span>
+            <span className="font-display mt-2 block text-[28px] font-medium italic leading-[1.05] tracking-normal text-neutral-800 sm:text-[36px] md:text-[46px] lg:text-[54px]">
+              pronto para vender
+            </span>
+            <span
+              className="font-script mt-1 block text-[42px] font-bold leading-[0.95] tracking-normal sm:text-[54px] md:text-[68px] lg:text-[76px]"
+              style={{ color: primaryColor }}
+            >
+              todos os dias.
+            </span>
           </motion.h1>
 
           <motion.p
