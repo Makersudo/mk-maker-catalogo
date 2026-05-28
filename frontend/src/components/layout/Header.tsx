@@ -30,65 +30,81 @@ export function Header() {
   ] as const;
 
   return (
-    <header className="flex min-h-20 items-center justify-between border-b border-neutral-200 bg-white/80 backdrop-blur-md px-4 py-2 md:min-h-24 md:px-6 lg:px-16 sticky top-0 z-50">
-      {/* Logo */}
-      <motion.div
-        initial={{ opacity: 0, x: -20 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.8, ease: "easeOut" }}
-        className="flex items-center gap-2 cursor-pointer"
-        onClick={() => goToTab('inicio')}
-      >
-        <BrandLogo />
-      </motion.div>
+    <header className="sticky top-0 z-50 bg-white/95 px-4 py-3 backdrop-blur-xl md:px-6 lg:px-16">
+      <div className="grid min-h-16 grid-cols-[auto_1fr_auto] items-center gap-3 md:min-h-20">
+        {/* Logo */}
+        <motion.div
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="flex min-w-0 cursor-pointer items-center"
+          onClick={() => goToTab('inicio')}
+        >
+          <BrandLogo imageClassName="h-14 w-32 object-contain object-left md:h-16 md:w-40" />
+        </motion.div>
 
-      {/* Nav Links */}
-      <nav className="hidden md:flex gap-8 text-sm font-medium uppercase tracking-wider text-neutral-500">
-        {navItems.map((item, index) => (
+        {/* Nav Links */}
+        <nav className="hidden justify-self-center rounded-full bg-white/80 p-1 text-sm font-bold uppercase tracking-wider text-neutral-500 shadow-sm shadow-neutral-200/70 ring-1 ring-neutral-200/70 md:flex">
+          {navItems.map((item, index) => (
+            <motion.button
+              key={item.id}
+              onClick={() => goToTab(item.id)}
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.3 + index * 0.1 }}
+              style={activeTab === item.id ? { color: primaryColor } : undefined}
+              className={`rounded-full px-4 py-2 transition-all ${activeTab === item.id ? 'bg-white font-black shadow-sm' : 'hover:bg-white/70 hover:text-neutral-900'}`}
+            >
+              {item.label}
+            </motion.button>
+          ))}
+        </nav>
+
+        {/* Header Controls */}
+        <div className="flex items-center justify-end gap-2 md:gap-3">
           <motion.button
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            onClick={openCart}
+            className="relative flex h-11 w-11 items-center justify-center rounded-full bg-white text-neutral-500 shadow-sm ring-1 ring-neutral-200 transition-colors hover:text-neutral-900"
+            aria-label="Abrir carrinho"
+          >
+            <ShoppingCart className="h-6 w-6" />
+            {cartCount > 0 && (
+              <span
+                className="absolute right-0 top-0 flex h-4 w-4 items-center justify-center rounded-full text-[10px] font-bold text-white"
+                style={{ backgroundColor: primaryColor }}
+              >
+                {cartCount}
+              </span>
+            )}
+          </motion.button>
+
+          <motion.button
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8, delay: 0.6 }}
+            className="hidden h-11 items-center justify-center rounded-full px-5 text-xs font-bold uppercase tracking-tight text-white shadow-lg shadow-neutral-900/10 transition-all sm:flex"
+            style={{ background: `linear-gradient(90deg, ${secondaryColor}, ${primaryColor})` }}
+            onClick={() => goToTab('contato')}
+          >
+            Fale Conosco
+          </motion.button>
+        </div>
+      </div>
+
+      <nav className="mt-2 flex justify-center rounded-full bg-white/85 p-1 text-xs font-bold uppercase tracking-wider text-neutral-500 shadow-sm ring-1 ring-neutral-200/70 md:hidden">
+        {navItems.map((item) => (
+          <button
             key={item.id}
             onClick={() => goToTab(item.id)}
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.3 + index * 0.1 }}
             style={activeTab === item.id ? { color: primaryColor } : undefined}
-            className={`transition-colors ${activeTab === item.id ? 'font-bold' : 'hover:text-neutral-900'}`}
+            className={`flex-1 rounded-full px-3 py-2 transition-all ${activeTab === item.id ? 'bg-white font-black shadow-sm' : 'hover:bg-white/70 hover:text-neutral-900'}`}
           >
             {item.label}
-          </motion.button>
+          </button>
         ))}
       </nav>
-
-      {/* Header Controls */}
-      <div className="flex items-center gap-4">
-        <motion.button
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          onClick={openCart}
-          className="relative p-2 text-neutral-500 hover:text-neutral-900 transition-colors"
-        >
-          <ShoppingCart className="w-6 h-6" />
-          {cartCount > 0 && (
-            <span
-              className="absolute top-0 right-0 w-4 h-4 text-[10px] font-bold text-white flex items-center justify-center rounded-full"
-              style={{ backgroundColor: primaryColor }}
-            >
-              {cartCount}
-            </span>
-          )}
-        </motion.button>
-
-        <motion.button
-          initial={{ opacity: 0, x: 20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.8, delay: 0.6 }}
-          className="hidden sm:flex items-center justify-center px-5 py-2 text-white font-bold text-xs uppercase tracking-tight rounded-lg transition-all shadow-md"
-          style={{ background: `linear-gradient(90deg, ${secondaryColor}, ${primaryColor})` }}
-          onClick={() => goToTab('contato')}
-        >
-          Fale Conosco
-        </motion.button>
-      </div>
     </header>
   );
 }
