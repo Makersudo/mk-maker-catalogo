@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "Sistemalize Catálogo",
-    "slug": "sistemalize-catalogo",
+    "name": "MK MAKER Catalogo",
+    "slug": "mk-maker-catalogo",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -16,7 +16,7 @@
       "supportsTablet": true
     },
     "android": {
-      "package": "com.sistemalize.catalogo",
+      "package": "com.mkmaker.catalogo",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"

@@ -20,7 +20,7 @@ interface NormalizedOrderItem {
 }
 
 function formatWhatsAppMessage(order: any, items: any[]) {
-  let message = '*NOVO PEDIDO - CATALOGO FITNESS*\\n\\n';
+  let message = '*NOVO PEDIDO - MK MAKER*\\n\\n';
   message += `*TOKEN DO PEDIDO:* ${order.order_code}\\n`;
   message += `Tipo: ${order.fulfillment_type === 'pickup' ? 'Retirada na loja' : 'Entrega'}\\n`;
   message += `Pagamento: ${order.payment_method === 'cash' ? 'Dinheiro' : order.payment_method === 'card' ? 'Cartao' : 'Pix'}\\n\\n`;
@@ -39,7 +39,7 @@ function formatWhatsAppMessage(order: any, items: any[]) {
     if (order.reference_point) message += `Referencia: ${order.reference_point}\\n`;
   }
   message += '\\n';
-  message += 'Ola, tenho interesse nos produtos abaixo que vi no catalogo fitness:\\n\\n';
+  message += 'Ola, tenho interesse nos produtos abaixo que vi no catalogo:\\n\\n';
 
   items.forEach((item) => {
     const variant = item.variant_label ? ` (${item.variant_label})` : '';

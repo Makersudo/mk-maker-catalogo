@@ -1,10 +1,10 @@
 {
   "storeName": "MK MAKER",
   "storeSlug": "mk-maker",
-  "logoUrl": null,
+  "logoUrl": "https://augeggvlijscaebcggvk.supabase.co/storage/v1/object/public/mk-maker-media/brand/mk-maker-logo.png",
   "bannerUrl": null,
-  "primaryColor": "#d68a00",
-  "secondaryColor": "#111827",
+  "primaryColor": "#c98f86",
+  "secondaryColor": "#111111",
   "whatsappPhone": "",
   "checkoutMode": "whatsapp",
   "externalCheckoutUrl": null,

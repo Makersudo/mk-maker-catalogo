@@ -103,7 +103,7 @@ export function SettingsView() {
     }
   }
 
-  const primaryColor = settings.store_primary_color || '#d68a00';
+  const primaryColor = settings.store_primary_color || '#c98f86';
 
   return (
     <div className="flex flex-col gap-6 max-w-4xl mx-auto pb-10">

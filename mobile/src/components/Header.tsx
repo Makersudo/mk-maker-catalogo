@@ -18,9 +18,9 @@ export function Header({ mode, setMode, activeStore, isLoading, apiConnected, co
   return (
     <View style={styles.header}>
       <View>
-        <Text style={[styles.appName, { color: colors.text }]}>Sistemalize Catalogo</Text>
+        <Text style={[styles.appName, { color: colors.text }]}>{activeStore?.name ?? 'MK MAKER'}</Text>
         <Text style={[styles.headerSub, { color: colors.muted }]}>
-          {activeStore ? `Loja fixa: ${activeStore.name}` : 'App Android multi-loja'}
+          {activeStore ? `Loja fixa: ${activeStore.name}` : 'Catalogo mobile'}
         </Text>
         <Text style={[styles.headerSub, { color: apiConnected ? colors.primary : colors.muted }]}>
           {isLoading ? 'Sincronizando...' : apiConnected ? 'Backend conectado' : 'Modo local/demo'}

@@ -8,6 +8,10 @@ function currency(value: number) {
   return value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
 }
 
+function isImageLogo(value: string) {
+  return /^https?:\/\//i.test(value);
+}
+
 interface CatalogScreenProps {
   activeStore: Store | null;
   storeProducts: Product[];
@@ -43,12 +47,20 @@ export function CatalogScreen({
     );
   }
 
+  const logoIsImage = isImageLogo(activeStore.logo);
+
   return (
     <ScrollView contentContainerStyle={styles.content}>
       <View style={styles.bannerWrap}>
         <Image source={{ uri: activeStore.banner }} style={styles.banner} />
         <View style={styles.bannerOverlay}>
-          <Text style={styles.storeLogo}>{activeStore.logo}</Text>
+          <View style={styles.storeLogoFrame}>
+            {logoIsImage ? (
+              <Image source={{ uri: activeStore.logo }} style={styles.storeLogoImage} resizeMode="contain" />
+            ) : (
+              <Text style={styles.storeLogoText}>{activeStore.logo}</Text>
+            )}
+          </View>
           <Text style={styles.bannerTitle}>{activeStore.name}</Text>
           <Text style={styles.bannerText}>Catalogo preso ao link /loja/{activeStore.slug}</Text>
         </View>

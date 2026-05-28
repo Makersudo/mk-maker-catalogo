@@ -117,7 +117,7 @@ export function ProductsListView() {
       <header className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
           <h1 className="text-2xl md:text-3xl font-bold uppercase tracking-tight text-neutral-900">Produtos</h1>
-          <p className="text-xs md:text-sm text-neutral-500 mt-1">Gerencie o catalogo de roupas e equipamentos.</p>
+          <p className="text-xs md:text-sm text-neutral-500 mt-1">Gerencie o catalogo de maquiagem e beleza.</p>
         </div>
         <button
           onClick={handleCreate}

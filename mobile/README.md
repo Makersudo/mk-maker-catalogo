@@ -1,6 +1,6 @@
-# Sistemalize Catalogo Mobile
+# MK MAKER Catalogo Mobile
 
-App Android-first em Expo/React Native para o SaaS multi-loja Sistemalize Catalogo.
+App Android-first em Expo/React Native para o catalogo MK MAKER.
 
 ## Escopo implementado nesta base local
 

@@ -346,12 +346,12 @@ export function Catalog() {
               )}
               <div>
                 <h2 className="text-2xl lg:text-4xl font-bold uppercase tracking-tight text-neutral-900 mb-1 lg:mb-2">
-                  Moda{" "}
+                  Makeup{" "}
                   <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-800 to-purple-500">
-                    Fitness
+                    & Beauty
                   </span>
                 </h2>
-                <p className="text-xs lg:text-sm text-neutral-500">Mais do que roupa, é um estilo de vida!</p>
+                <p className="text-xs lg:text-sm text-neutral-500">Produtos de beleza organizados para comprar pelo WhatsApp.</p>
               </div>
             </div>
 

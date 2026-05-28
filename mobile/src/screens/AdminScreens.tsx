@@ -279,7 +279,7 @@ export function AdminOrdersScreen({
 
 // ── Admin Settings ────────────────────────────────────────────────────────────
 
-const PUBLIC_BASE_URL = 'https://app.sistemalizecatalogo.com/loja';
+const PUBLIC_CATALOG_URL = 'https://mk-maker-catalogo.vercel.app/catalogo';
 
 interface AdminSettingsScreenProps {
   activeStore: Store | null;
@@ -305,7 +305,7 @@ export function AdminSettingsScreen({
       <EntryScreen storeCode={storeCode} setStoreCode={setStoreCode} onOpen={onOpenStore} colors={colors} />
     );
   }
-  const publicLink = `${PUBLIC_BASE_URL}/${activeStore.slug}`;
+  const publicLink = PUBLIC_CATALOG_URL;
   return (
     <ScrollView contentContainerStyle={styles.content}>
       <Text style={[styles.sectionTitle, { color: colors.text }]}>Configuracoes e QR</Text>

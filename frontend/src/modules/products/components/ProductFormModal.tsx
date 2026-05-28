@@ -229,12 +229,12 @@ export function ProductFormModal({ onClose, productToEdit }: ProductFormModalPro
               <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                 <div className="flex flex-col gap-1.5 md:col-span-2">
                   <label className="text-xs font-bold text-neutral-700 uppercase tracking-widest">Nome do Produto *</label>
-                  <input required type="text" value={title} onChange={(e) => setTitle(e.target.value)} className="w-full px-4 py-3 bg-neutral-50 border border-neutral-200 rounded-xl text-sm focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500" placeholder="Ex: Legging Alta Performance" />
+                  <input required type="text" value={title} onChange={(e) => setTitle(e.target.value)} className="w-full px-4 py-3 bg-neutral-50 border border-neutral-200 rounded-xl text-sm focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500" placeholder="Ex: Batom Matte Rose" />
                 </div>
 
                 <div className="flex flex-col gap-1.5 md:col-span-2">
                   <label className="text-xs font-bold text-neutral-700 uppercase tracking-widest">Slug interno</label>
-                  <input type="text" value={slug} onChange={(e) => setSlug(e.target.value)} className="w-full px-4 py-3 bg-neutral-50 border border-neutral-200 rounded-xl text-sm focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500" placeholder="legging-alta-performance" />
+                  <input type="text" value={slug} onChange={(e) => setSlug(e.target.value)} className="w-full px-4 py-3 bg-neutral-50 border border-neutral-200 rounded-xl text-sm focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500" placeholder="batom-matte-rose" />
                 </div>
                 
                 <div className="flex flex-col gap-1.5">
@@ -406,12 +406,12 @@ export function ProductFormModal({ onClose, productToEdit }: ProductFormModalPro
 
                 <div className="flex flex-col gap-1.5">
                   <label className="text-xs font-bold text-neutral-700 uppercase tracking-widest">Tipo</label>
-                  <input type="text" value={productType} onChange={(e) => setProductType(e.target.value)} className="w-full px-4 py-3 bg-neutral-50 border border-neutral-200 rounded-xl text-sm focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500" placeholder="legging, top, whey..." />
+                  <input type="text" value={productType} onChange={(e) => setProductType(e.target.value)} className="w-full px-4 py-3 bg-neutral-50 border border-neutral-200 rounded-xl text-sm focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500" placeholder="batom, paleta, mascara..." />
                 </div>
 
                 <div className="flex flex-col gap-1.5 md:col-span-3">
                   <label className="text-xs font-bold text-neutral-700 uppercase tracking-widest">Variacao</label>
-                  <input type="text" value={variation} onChange={(e) => setVariation(e.target.value)} className="w-full px-4 py-3 bg-neutral-50 border border-neutral-200 rounded-xl text-sm focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500" placeholder="Alta sustentacao, manga longa, sabor chocolate..." />
+                  <input type="text" value={variation} onChange={(e) => setVariation(e.target.value)} className="w-full px-4 py-3 bg-neutral-50 border border-neutral-200 rounded-xl text-sm focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500" placeholder="Rose, nude, waterproof..." />
                 </div>
 
                 <div className="flex flex-col gap-1.5 md:col-span-3">

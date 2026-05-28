@@ -4,8 +4,8 @@ create table if not exists public.catalog_config (
   store_slug text not null default 'mk-maker',
   logo_url text,
   banner_url text,
-  primary_color text not null default '#d68a00',
-  secondary_color text not null default '#111827',
+  primary_color text not null default '#c98f86',
+  secondary_color text not null default '#111111',
   whatsapp_phone text,
   checkout_mode text not null default 'whatsapp' check (checkout_mode in ('whatsapp', 'internal_order', 'external_link', 'pix_whatsapp')),
   external_checkout_url text,
@@ -35,8 +35,8 @@ values (
   coalesce((select value from public.settings where key = 'store_slug'), 'mk-maker'),
   (select value from public.settings where key = 'store_logo'),
   (select value from public.settings where key = 'store_banner'),
-  coalesce((select value from public.settings where key = 'store_primary_color'), '#d68a00'),
-  coalesce((select value from public.settings where key = 'store_secondary_color'), '#111827'),
+  coalesce((select value from public.settings where key = 'store_primary_color'), '#c98f86'),
+  coalesce((select value from public.settings where key = 'store_secondary_color'), '#111111'),
   (select value from public.settings where key = 'whatsapp_phone'),
   coalesce((select value from public.settings where key = 'store_plan'), 'medium')
 )

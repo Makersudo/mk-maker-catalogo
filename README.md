@@ -1,6 +1,6 @@
 # MK MAKER
 
-Template piloto para catálogo fitness com frontend, backend e banco separados.
+Catalogo MK MAKER Makeup & Beauty com frontend, backend e banco separados.
 
 ## Estrutura
 

@@ -2,18 +2,16 @@ import { Instagram, PackageCheck, ShoppingBag, Sparkles } from "lucide-react";
 import { motion } from "motion/react";
 import { useNavigate } from "react-router-dom";
 import { useStore } from "../../store/useStore";
-import { useState } from "react";
 import { usePublicSettings } from "../../hooks/usePublicSettings";
 
 export function Hero() {
   const setActiveTab = useStore(state => state.setActiveTab);
   const settings = usePublicSettings();
   const navigate = useNavigate();
-  const [videoError, setVideoError] = useState(false);
   const instagramUrl = import.meta.env.VITE_INSTAGRAM_URL || "https://www.instagram.com/";
   const storeName = settings.store_name || 'MK MAKER';
-  const primaryColor = settings.store_primary_color || '#d68a00';
-  const secondaryColor = settings.store_secondary_color || '#111827';
+  const primaryColor = settings.store_primary_color || '#c98f86';
+  const secondaryColor = settings.store_secondary_color || '#111111';
 
   const openCatalog = () => {
     setActiveTab('catalogo');
@@ -31,32 +29,12 @@ export function Hero() {
     <div className="relative w-full flex-1 flex flex-col overflow-hidden bg-white">
       {/* Background Media */}
       <div className="absolute inset-0 z-0 bg-white">
-        {!videoError ? (
-          <video
-            autoPlay
-            loop
-            muted
-            playsInline
-            onError={() => setVideoError(true)}
-            className="w-full h-full object-cover mix-blend-multiply opacity-[0.18] grayscale"
-          >
-            <source
-              src="https://videos.pexels.com/video-files/6550881/6550881-uhd_2560_1440_30fps.mp4"
-              type="video/mp4"
-            />
-            <source
-              src="https://assets.mixkit.co/videos/preview/mixkit-athlete-jumping-on-a-box-in-a-gym-43368-large.mp4"
-              type="video/mp4"
-            />
-          </video>
-        ) : (
-          <img
-            src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?q=80&w=1920&auto=format&fit=crop"
-            alt={`Catalogo ${storeName}`}
-            className="w-full h-full object-cover mix-blend-multiply opacity-[0.18] grayscale"
-            referrerPolicy="no-referrer"
-          />
-        )}
+        <img
+          src="https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?q=80&w=1920&auto=format&fit=crop"
+          alt={`Catalogo ${storeName}`}
+          className="w-full h-full object-cover mix-blend-multiply opacity-[0.18] grayscale"
+          referrerPolicy="no-referrer"
+        />
         
         {/* Overlay - Claro para manter o texto legivel e o logo nitido */}
         <div className="absolute inset-0 bg-gradient-to-r from-white/95 via-white/78 to-white/40"></div>

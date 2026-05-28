@@ -1,5 +1,5 @@
 import { type FormEvent, useEffect, useMemo, useState } from 'react';
-import { Dumbbell, Edit2, Plus, Tags, Trash2 } from 'lucide-react';
+import { Edit2, Plus, Tags, Trash2 } from 'lucide-react';
 import { Category, useCategoryStore } from '../store/useCategoryStore';
 
 function getParentId(category: Category) {
@@ -89,7 +89,7 @@ export function CategoriesView() {
     <div className="flex flex-col gap-4 md:gap-8 max-w-6xl mx-auto pb-6">
       <header>
         <h1 className="text-2xl md:text-3xl font-bold uppercase tracking-tight text-neutral-900">Categorias</h1>
-        <p className="text-xs md:text-sm text-neutral-500 mt-1">Organize o catalogo por Masculina, Feminina e suas subcategorias.</p>
+        <p className="text-xs md:text-sm text-neutral-500 mt-1">Organize o catalogo por linhas, categorias e subcategorias.</p>
       </header>
 
       {error && (
@@ -106,7 +106,7 @@ export function CategoriesView() {
               type="text"
               value={newRootName}
               onChange={(e) => setNewRootName(e.target.value)}
-              placeholder="Ex: Masculina ou Feminina"
+              placeholder="Ex: Maquiagem ou Skincare"
               className="w-full px-3 py-2.5 md:px-4 md:py-3 bg-neutral-50 border border-neutral-200 rounded-lg md:rounded-xl text-xs md:text-sm focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500"
             />
           </div>
@@ -124,7 +124,7 @@ export function CategoriesView() {
       {rootCategories.length === 0 ? (
         <div className="bg-white rounded-xl md:rounded-2xl border border-neutral-200 shadow-sm p-12 text-center text-neutral-400 flex flex-col items-center">
           <Tags className="w-10 h-10 mb-3 opacity-30" />
-          <p className="text-sm">Crie as categorias principais Masculina e Feminina.</p>
+          <p className="text-sm">Crie as categorias principais do catalogo.</p>
         </div>
       ) : (
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6">
@@ -136,7 +136,7 @@ export function CategoriesView() {
               <section key={root.id} className="bg-white rounded-xl md:rounded-2xl border border-neutral-200 shadow-sm overflow-hidden">
                 <div className="p-4 border-b border-neutral-100 bg-neutral-50 flex items-center justify-between gap-3">
                   <div className="flex items-center gap-3">
-                    <Dumbbell className="w-5 h-5 text-purple-600" />
+                    <Tags className="w-5 h-5 text-purple-600" />
                     <div>
                       <h2 className="font-bold text-sm text-neutral-800 uppercase tracking-widest">{root.name}</h2>
                       <p className="text-[11px] text-neutral-400">/{root.slug}</p>

@@ -29,8 +29,8 @@ export function LoginView() {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const setUser = useAuthStore((state) => state.setUser);
-  const primaryColor = settings.store_primary_color || '#d68a00';
-  const secondaryColor = settings.store_secondary_color || '#111827';
+  const primaryColor = settings.store_primary_color || '#c98f86';
+  const secondaryColor = settings.store_secondary_color || '#111111';
 
   useEffect(() => {
     let active = true;

@@ -10,8 +10,8 @@ export function Header() {
   const settings = usePublicSettings();
   const navigate = useNavigate();
   const cartCount = cart.reduce((acc, item) => acc + item.quantity, 0);
-  const primaryColor = settings.store_primary_color || '#d68a00';
-  const secondaryColor = settings.store_secondary_color || '#111827';
+  const primaryColor = settings.store_primary_color || '#c98f86';
+  const secondaryColor = settings.store_secondary_color || '#111111';
   const publicPathByTab = {
     inicio: '/inicio',
     catalogo: '/catalogo',
