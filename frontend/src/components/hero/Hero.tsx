@@ -30,16 +30,13 @@ export function Hero() {
     <div className="relative w-full flex-1 flex flex-col overflow-hidden bg-white">
       {/* Background Media */}
       <div className="absolute inset-0 z-0 bg-white">
-        <img
-          src="https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?q=80&w=1920&auto=format&fit=crop"
-          alt={`Catalogo ${storeName}`}
-          className="w-full h-full object-cover mix-blend-multiply opacity-[0.18] grayscale"
-          referrerPolicy="no-referrer"
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              `radial-gradient(circle at 72% 28%, ${primaryColor}14 0, transparent 34%), linear-gradient(90deg, #ffffff 0%, #ffffff 56%, #fff7f5 100%)`
+          }}
         />
-        
-        {/* Overlay - Claro para manter o texto legivel e o logo nitido */}
-        <div className="absolute inset-0 bg-gradient-to-r from-white/95 via-white/78 to-white/40"></div>
-        <div className="absolute inset-0 bg-white/25 backdrop-blur-[1px]"></div>
         <div className="absolute inset-0 dot-pattern opacity-60"></div>
       </div>
 
