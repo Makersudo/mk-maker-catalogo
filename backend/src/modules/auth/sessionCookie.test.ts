@@ -62,16 +62,16 @@ describe('admin session cookies', () => {
 
     assert.equal(shouldReturnSessionTokenInBody(webRequest), false);
     assert.equal(shouldReturnSessionTokenInBody(mobileRequest), true);
-    assert.deepEqual(buildLoginResponse('admin@pulsefit.local', 'session-token', webRequest), {
+    assert.deepEqual(buildLoginResponse('admin@mk-maker.local', 'session-token', webRequest), {
       user: {
         id: 'admin',
-        email: 'admin@pulsefit.local',
+        email: 'admin@mk-maker.local',
       },
     });
-    assert.deepEqual(buildLoginResponse('admin@pulsefit.local', 'session-token', mobileRequest), {
+    assert.deepEqual(buildLoginResponse('admin@mk-maker.local', 'session-token', mobileRequest), {
       user: {
         id: 'admin',
-        email: 'admin@pulsefit.local',
+        email: 'admin@mk-maker.local',
       },
       token: 'session-token',
     });

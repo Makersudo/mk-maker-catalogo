@@ -24,9 +24,9 @@ import {
 } from '../../../services/settingsService';
 
 const PLAN_LABELS: Record<string, string> = {
-  basic: 'Basico - R$ 49,90/mes',
-  medium: 'Medio - R$ 119,90/mes',
-  master: 'Master - R$ 249,90/mes',
+  basic: 'Basico - R$ 149,90/mes',
+  medium: 'Medio - R$ 399,90/mes',
+  master: 'Master - R$ 749,90/mes',
 };
 
 export function SettingsView() {
@@ -103,7 +103,7 @@ export function SettingsView() {
     }
   }
 
-  const primaryColor = settings.store_primary_color || '#8b5cf6';
+  const primaryColor = settings.store_primary_color || '#d68a00';
 
   return (
     <div className="flex flex-col gap-6 max-w-4xl mx-auto pb-10">
@@ -233,14 +233,14 @@ export function SettingsView() {
               <SettingsField
                 id="store_name"
                 label="Nome da Loja"
-                placeholder="Ex: PulseFit Suplementos"
+                placeholder="Ex: MK MAKER"
                 value={settings.store_name || ''}
                 onChange={(value) => handleSettingsChange('store_name', value)}
               />
               <SettingsField
                 id="store_slug"
                 label="Slug / URL"
-                placeholder="Ex: pulsefit"
+                placeholder="Ex: mk-maker"
                 value={settings.store_slug || ''}
                 onChange={(value) => handleSettingsChange('store_slug', value)}
                 prefix="loja/"

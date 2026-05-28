@@ -51,20 +51,20 @@ import type {
 // ── Dados iniciais (fallback offline) ─────────────────────────────────────────
 
 const plans: Record<PlanCode, Plan> = {
-  basic: { label: 'Basico', price: 'R$ 49,90', products: 100, orders: 250, stock: 100, customization: false },
-  medium: { label: 'Medio', price: 'R$ 119,90', products: 350, orders: 350, stock: 450, customization: true },
-  master: { label: 'Master', price: 'R$ 249,90', products: null, orders: null, stock: null, customization: true },
+  basic: { label: 'Basico', price: 'R$ 149,90', products: 50, orders: 250, stock: 50, customization: false },
+  medium: { label: 'Medio', price: 'R$ 399,90', products: 250, orders: 350, stock: 250, customization: true },
+  master: { label: 'Master', price: 'R$ 749,90', products: null, orders: null, stock: 450, customization: true },
 };
 
 const demoStores: Store[] = [
   {
-    id: 'store-pulsefit',
-    name: 'PulseFit Suplementos',
-    slug: 'pulsefit',
+    id: 'store-mk-maker',
+    name: 'MK MAKER',
+    slug: 'mk-maker',
     whatsapp: '5511999999999',
-    primaryColor: '#15b86a',
+    primaryColor: '#d68a00',
     banner: 'https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&w=1200&q=80',
-    logo: 'PF',
+    logo: 'MK',
     plan: 'medium',
     planUsage: { products: 286, ordersThisMonth: 301, stockItems: 362 },
   },
@@ -73,7 +73,7 @@ const demoStores: Store[] = [
 const demoProducts: Product[] = [
   {
     id: 'whey-growth',
-    storeId: 'store-pulsefit',
+    storeId: 'store-mk-maker',
     name: 'Whey Protein Chocolate',
     description: 'Proteina concentrada para rotina de treino, sabor chocolate e alta dissolucao.',
     price: 139.9,
@@ -90,7 +90,7 @@ const demoProducts: Product[] = [
   },
   {
     id: 'creatina',
-    storeId: 'store-pulsefit',
+    storeId: 'store-mk-maker',
     name: 'Creatina Monohidratada',
     description: 'Creatina pura para forca, performance e recuperacao muscular.',
     price: 89.9,
@@ -105,7 +105,7 @@ const demoProducts: Product[] = [
   },
   {
     id: 'pre-treino',
-    storeId: 'store-pulsefit',
+    storeId: 'store-mk-maker',
     name: 'Pre-Treino Energia',
     description: 'Formula para foco e intensidade nos treinos, com sabor citrus.',
     price: 109.9,
@@ -120,7 +120,7 @@ const demoProducts: Product[] = [
 const initialOrders: Order[] = [
   {
     id: 'PED-1001',
-    storeId: 'store-pulsefit',
+    storeId: 'store-mk-maker',
     customerName: 'Cliente exemplo',
     phone: '(11) 99999-9999',
     total: 209.8,
@@ -162,7 +162,7 @@ export default function App() {
   const [adminLogged, setAdminLogged] = useState(false);
   const [apiConnected, setApiConnected] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [storeCode, setStoreCode] = useState('pulsefit');
+  const [storeCode, setStoreCode] = useState('mk-maker');
   const [selectedVariantId, setSelectedVariantId] = useState<string | undefined>();
   const [adminAccessCode, setAdminAccessCode] = useState('');
   const [adminEmail, setAdminEmail] = useState('');

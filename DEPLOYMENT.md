@@ -1,4 +1,4 @@
-# PulseFit Deploy
+# MK MAKER Deploy
 
 Este projeto separa frontend, backend e banco. Nao grave credenciais reais em arquivos versionados.
 
@@ -11,8 +11,8 @@ Variaveis necessarias para o backend:
 ```txt
 SUPABASE_URL
 SUPABASE_SERVICE_ROLE_KEY
-SUPABASE_MEDIA_BUCKET=pulsefit-media
-SUPABASE_PRODUCT_BUCKET=pulsefit-products
+SUPABASE_MEDIA_BUCKET=mk-maker-media
+SUPABASE_PRODUCT_BUCKET=mk-maker-products
 ```
 
 ## Backend

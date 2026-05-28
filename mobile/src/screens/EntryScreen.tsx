@@ -23,14 +23,14 @@ export function EntryScreen({ storeCode, setStoreCode, onOpen, colors }: EntrySc
         <TextInput
           value={storeCode}
           onChangeText={setStoreCode}
-          placeholder="pulsefit ou link /loja/pulsefit"
+          placeholder="mk-maker ou link /loja/mk-maker"
           placeholderTextColor={colors.muted}
           style={[styles.input, { color: colors.text, borderColor: colors.border }]}
         />
         <Button label="Abrir loja" onPress={() => onOpen(storeCode)} colors={colors} />
         <Button
           label="Simular leitura de QR Code"
-          onPress={() => onOpen('pulsefit')}
+          onPress={() => onOpen('mk-maker')}
           tone="secondary"
           colors={colors}
         />

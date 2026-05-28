@@ -161,17 +161,18 @@ using (is_public = true);
 
 -- Source: database\storage.sql
 insert into storage.buckets (id, name, public)
-values ('pulsefit-media', 'pulsefit-media', true)
+values ('mk-maker-media', 'mk-maker-media', true)
 on conflict (id) do nothing;
 
 insert into storage.buckets (id, name, public)
-values ('pulsefit-products', 'pulsefit-products', true)
+values ('mk-maker-products', 'mk-maker-products', true)
 on conflict (id) do nothing;
 
 drop policy if exists "Public can read pulsefit media" on storage.objects;
-create policy "Public can read pulsefit media"
+drop policy if exists "Public can read mk maker media" on storage.objects;
+create policy "Public can read mk maker media"
 on storage.objects for select
-using (bucket_id in ('pulsefit-media', 'pulsefit-products'));
+using (bucket_id in ('mk-maker-media', 'mk-maker-products'));
 
 -- Uploads e exclusoes devem passar pelo backend com service role.
 

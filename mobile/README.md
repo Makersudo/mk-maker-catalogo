@@ -7,7 +7,7 @@ App Android-first em Expo/React Native para o SaaS multi-loja Sistemalize Catalo
 - Cliente sem login.
 - Entrada por codigo/link de loja, simulando deep link/QR.
 - Cliente preso a loja ativa.
-- Catalogo estilo PulseFit.
+- Catalogo estilo MK MAKER.
 - Favoritos locais por loja.
 - Carrinho local persistente por loja.
 - Dados de checkout lembrados no aparelho.

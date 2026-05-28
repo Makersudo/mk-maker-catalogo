@@ -12,7 +12,10 @@ describe('secret encryption', () => {
 
   it('rejects tampered encrypted payloads', () => {
     const encrypted = encryptSecret('JBSWY3DPEHPK3PXP', 'jwt-secret-for-tests');
+    const parts = encrypted.split(':');
+    const encryptedValue = parts[3] ?? '';
+    parts[3] = `${encryptedValue.slice(0, -1)}${encryptedValue.endsWith('A') ? 'B' : 'A'}`;
 
-    assert.throws(() => decryptSecret(`${encrypted.slice(0, -2)}xx`, 'jwt-secret-for-tests'));
+    assert.throws(() => decryptSecret(parts.join(':'), 'jwt-secret-for-tests'));
   });
 });

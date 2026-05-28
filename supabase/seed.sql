@@ -12,9 +12,8 @@ set name = excluded.name,
 
 insert into public.settings (key, value, is_public)
 values
-  ('store_name', 'PulseFit', true),
+  ('store_name', 'MK MAKER', true),
   ('whatsapp_phone', '', true)
 on conflict (key) do update
 set value = excluded.value,
     is_public = excluded.is_public;
-

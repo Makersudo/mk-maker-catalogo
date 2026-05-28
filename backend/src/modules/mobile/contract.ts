@@ -20,26 +20,26 @@ export const MOBILE_PLANS: Record<MobilePlanCode, MobilePlan> = {
   basic: {
     code: 'basic',
     label: 'Basico',
-    monthlyPrice: 49.9,
-    productsLimit: 100,
+    monthlyPrice: 149.9,
+    productsLimit: 50,
     ordersMonthlyLimit: 250,
-    stockItemsLimit: 100,
+    stockItemsLimit: 50,
     customization: false,
   },
   medium: {
     code: 'medium',
     label: 'Medio',
-    monthlyPrice: 119.9,
-    productsLimit: 350,
+    monthlyPrice: 399.9,
+    productsLimit: 250,
     ordersMonthlyLimit: 350,
-    stockItemsLimit: 450,
+    stockItemsLimit: 250,
     customization: true,
   },
   master: {
     code: 'master',
     label: 'Master',
-    monthlyPrice: 249.9,
-    productsLimit: null,
+    monthlyPrice: 749.9,
+    productsLimit: 450,
     ordersMonthlyLimit: null,
     stockItemsLimit: null,
     customization: true,
@@ -53,6 +53,7 @@ export function normalizeStoreSlug(value: unknown) {
     .toLowerCase()
     .replace(/^.*\/loja\//, '')
     .split(/[?#]/)[0]
+    .replace(/[\s_]+/g, '-')
     .replace(/[^a-z0-9-]/g, '');
 }
 

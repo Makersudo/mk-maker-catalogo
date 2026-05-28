@@ -6,5 +6,5 @@ function compactDate(date: Date) {
 
 export function generateOrderCode(date = new Date(), randomSource: RandomSource = () => Math.random().toString(36).slice(2, 10)) {
   const safeRandom = randomSource().toUpperCase().replace(/[^A-Z0-9]/g, '').padEnd(6, '0').slice(0, 6);
-  return `PF-${compactDate(date)}-${safeRandom}`;
+  return `MK-${compactDate(date)}-${safeRandom}`;
 }

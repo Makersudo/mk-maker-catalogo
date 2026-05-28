@@ -47,7 +47,7 @@ export const useStore = create<StoreState>()(
       clearCart: () => set({ cart: [] }),
     }),
     {
-      name: 'pulsefit-cart',
+      name: 'mk-maker-cart',
       // Persiste somente o carrinho; estado de UI fica apenas em memória
       partialize: (state) => ({ cart: state.cart }),
     }

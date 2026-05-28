@@ -1,4 +1,4 @@
-export const SESSION_COOKIE_NAME = 'pulsefit_admin_session';
+export const SESSION_COOKIE_NAME = 'mk_maker_admin_session';
 export const CSRF_HEADER = 'x-admin-request';
 export const ADMIN_CLIENT_HEADER = 'x-admin-client';
 const SESSION_MAX_AGE_SECONDS = 60 * 60 * 8;

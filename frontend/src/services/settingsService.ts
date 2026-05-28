@@ -5,6 +5,7 @@ export interface StoreSettings {
   store_slug?: string;
   whatsapp_phone?: string;
   store_primary_color?: string;
+  store_secondary_color?: string;
   store_banner?: string;
   store_logo?: string;
   store_plan?: string;

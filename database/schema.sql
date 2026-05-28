@@ -114,11 +114,11 @@ create table if not exists public.settings (
 
 create table if not exists public.catalog_config (
   id boolean primary key default true check (id = true),
-  store_name text not null default 'PulseFit Suplementos',
-  store_slug text not null default 'pulsefit',
+  store_name text not null default 'MK MAKER',
+  store_slug text not null default 'mk-maker',
   logo_url text,
   banner_url text,
-  primary_color text not null default '#15b86a',
+  primary_color text not null default '#d68a00',
   secondary_color text not null default '#111827',
   whatsapp_phone text,
   checkout_mode text not null default 'whatsapp' check (checkout_mode in ('whatsapp', 'internal_order', 'external_link', 'pix_whatsapp')),

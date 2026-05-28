@@ -34,11 +34,11 @@ describe('TOTP', () => {
 
   it('builds an otpauth URI for Google Authenticator', () => {
     const uri = buildTotpUri({
-      issuer: 'PulseFit',
-      accountName: 'admin@pulsefit.local',
+      issuer: 'MK MAKER',
+      accountName: 'admin@mk-maker.local',
       secret: 'ABCDEF234567',
     });
 
-    assert.equal(uri, 'otpauth://totp/PulseFit:admin%40pulsefit.local?secret=ABCDEF234567&issuer=PulseFit&algorithm=SHA1&digits=6&period=30');
+    assert.equal(uri, 'otpauth://totp/MK%20MAKER:admin%40mk-maker.local?secret=ABCDEF234567&issuer=MK+MAKER&algorithm=SHA1&digits=6&period=30');
   });
 });

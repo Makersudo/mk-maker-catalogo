@@ -1,14 +1,19 @@
-import { Dumbbell, Instagram, ShoppingBag, Sparkles } from "lucide-react";
+import { Instagram, PackageCheck, ShoppingBag, Sparkles } from "lucide-react";
 import { motion } from "motion/react";
 import { useNavigate } from "react-router-dom";
 import { useStore } from "../../store/useStore";
 import { useState } from "react";
+import { usePublicSettings } from "../../hooks/usePublicSettings";
 
 export function Hero() {
   const setActiveTab = useStore(state => state.setActiveTab);
+  const settings = usePublicSettings();
   const navigate = useNavigate();
   const [videoError, setVideoError] = useState(false);
   const instagramUrl = import.meta.env.VITE_INSTAGRAM_URL || "https://www.instagram.com/";
+  const storeName = settings.store_name || 'MK MAKER';
+  const primaryColor = settings.store_primary_color || '#d68a00';
+  const secondaryColor = settings.store_secondary_color || '#111827';
 
   const openCatalog = () => {
     setActiveTab('catalogo');
@@ -16,10 +21,10 @@ export function Hero() {
   };
 
   const categorySignals = [
-    "Moda Fitness",
-    "Performance",
-    "Suplementos",
-    "Acessorios"
+    "Produtos selecionados",
+    "Novidades",
+    "Ofertas",
+    "Compra via WhatsApp"
   ];
 
   return (
@@ -47,14 +52,14 @@ export function Hero() {
         ) : (
           <img
             src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?q=80&w=1920&auto=format&fit=crop"
-            alt="Catalogo fitness PulseFit"
+            alt={`Catalogo ${storeName}`}
             className="w-full h-full object-cover mix-blend-multiply opacity-[0.18] grayscale"
             referrerPolicy="no-referrer"
           />
         )}
         
         {/* Overlay - Claro para manter o texto legivel e o logo nitido */}
-        <div className="absolute inset-0 bg-gradient-to-r from-white/95 via-white/78 to-purple-100/35"></div>
+        <div className="absolute inset-0 bg-gradient-to-r from-white/95 via-white/78 to-white/40"></div>
         <div className="absolute inset-0 bg-white/25 backdrop-blur-[1px]"></div>
         <div className="absolute inset-0 dot-pattern opacity-60"></div>
       </div>
@@ -67,9 +72,12 @@ export function Hero() {
             transition={{ duration: 0.8, delay: 0.1, ease: "easeOut" }}
             className="mb-4"
           >
-            <span className="inline-flex items-center gap-2 px-3 py-1.5 bg-purple-100 border border-purple-200 text-purple-800 font-bold uppercase tracking-widest text-[10px] rounded shadow-sm">
+            <span
+              className="inline-flex items-center gap-2 px-3 py-1.5 bg-white border font-bold uppercase tracking-widest text-[10px] rounded shadow-sm"
+              style={{ borderColor: `${primaryColor}40`, color: secondaryColor }}
+            >
               <Sparkles className="w-3.5 h-3.5" />
-              Catalogo Fitness Premium
+              Catalogo Premium
             </span>
           </motion.div>
           
@@ -77,9 +85,9 @@ export function Hero() {
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.25, ease: "easeOut" }}
-            className="text-[36px] md:text-[64px] font-bold uppercase tracking-[-0.04em] leading-[1.05] text-neutral-900 mb-6"
+            className="text-[36px] md:text-[64px] font-bold uppercase tracking-normal leading-[1.05] text-neutral-900 mb-6"
           >
-            Performance pronta para o <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-800 to-purple-500">seu treino.</span>
+            {storeName} pronto para vender <span style={{ color: primaryColor }}>todos os dias.</span>
           </motion.h1>
 
           <motion.p
@@ -88,7 +96,7 @@ export function Hero() {
             transition={{ duration: 0.8, delay: 0.34, ease: "easeOut" }}
             className="max-w-xl text-sm md:text-base font-medium text-neutral-600 leading-relaxed mb-5"
           >
-            Roupas, suplementos e acessorios selecionados para quem treina com foco, conforto e estilo.
+            Um catalogo simples, direto e organizado para seus clientes escolherem produtos e finalizarem pelo WhatsApp.
           </motion.p>
 
           <motion.div
@@ -99,7 +107,7 @@ export function Hero() {
           >
             {categorySignals.map((item) => (
               <span key={item} className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white/85 border border-neutral-200 rounded-full text-[10px] font-bold uppercase tracking-widest text-neutral-700 shadow-sm">
-                <Dumbbell className="w-3 h-3 text-purple-600" />
+                <PackageCheck className="w-3 h-3" style={{ color: primaryColor }} />
                 {item}
               </span>
             ))}
@@ -110,7 +118,8 @@ export function Hero() {
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.45, ease: "easeOut" }}
-            className="flex items-center gap-2 px-6 py-3.5 bg-gradient-to-r from-purple-800 to-purple-500 text-white font-bold text-sm uppercase tracking-tight rounded-full hover:from-purple-700 hover:to-purple-400 transition-all hover:scale-105 active:scale-95 shadow-[0_8px_32px_rgba(168,85,247,0.3)]"
+            className="flex items-center gap-2 px-6 py-3.5 text-white font-bold text-sm uppercase tracking-tight rounded-full transition-all hover:scale-105 active:scale-95 shadow-lg"
+            style={{ background: `linear-gradient(90deg, ${secondaryColor}, ${primaryColor})` }}
           >
             <ShoppingBag className="w-5 h-5" />
             Ver Catalogo
@@ -131,12 +140,15 @@ export function Hero() {
           className="bento-card p-2.5 sm:p-3.5 flex flex-col gap-2.5 sm:gap-3 bg-white/90 backdrop-blur-md shadow-xl"
         >
           <div className="flex gap-2.5 sm:gap-3 items-center">
-            <div className="w-8 h-8 sm:w-9 sm:h-9 flex-shrink-0 bg-purple-100 border border-purple-200 flex items-center justify-center rounded-full text-purple-700">
+            <div
+              className="w-8 h-8 sm:w-9 sm:h-9 flex-shrink-0 bg-white border flex items-center justify-center rounded-full"
+              style={{ borderColor: `${primaryColor}40`, color: primaryColor }}
+            >
               <Instagram className="w-4 h-4" strokeWidth={2} />
             </div>
             <div className="flex-1">
               <h3 className="text-xs font-bold uppercase tracking-tight text-neutral-900 mb-1">
-                Siga a PulseFit
+                Siga a {storeName}
               </h3>
               <p className="hidden sm:block text-[10px] font-medium text-neutral-500 leading-tight">
                 Veja novidades, looks e ofertas no Instagram.
@@ -145,7 +157,7 @@ export function Hero() {
           </div>
           <button 
             onClick={() => window.open(instagramUrl, "_blank", "noopener,noreferrer")}
-            className="px-3 sm:px-4 py-1.5 sm:py-2 bg-neutral-100 text-neutral-900 border border-neutral-200 font-bold text-[10px] sm:text-[11px] uppercase rounded-lg hover:bg-purple-50 hover:border-purple-300 hover:text-purple-800 transition-colors w-full"
+            className="px-3 sm:px-4 py-1.5 sm:py-2 bg-neutral-100 text-neutral-900 border border-neutral-200 font-bold text-[10px] sm:text-[11px] uppercase rounded-lg hover:bg-white transition-colors w-full"
           >
             <Instagram className="inline-block w-3 h-3 sm:w-3.5 sm:h-3.5 mr-1.5 sm:mr-2 align-[-2px]" />
             Instagram

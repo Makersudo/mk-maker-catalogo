@@ -15,8 +15,8 @@ async function main() {
   }
 
   const secret = generateTotpSecret();
-  const issuer = process.env.TOTP_ISSUER || 'PulseFit';
-  const accountName = process.env.TOTP_ACCOUNT_NAME || env.adminEmail || 'admin@pulsefit';
+  const issuer = process.env.TOTP_ISSUER || 'MK MAKER';
+  const accountName = process.env.TOTP_ACCOUNT_NAME || env.adminEmail || 'admin@mk-maker';
   const uri = buildTotpUri({ issuer, accountName, secret });
   const supabase = createClient(env.supabaseUrl, env.supabaseServiceRoleKey, {
     auth: { autoRefreshToken: false, persistSession: false },
@@ -33,7 +33,7 @@ async function main() {
   }
 
   const output = [
-    'PulseFit Google Authenticator setup',
+    'MK MAKER Google Authenticator setup',
     '',
     'Use "Enter a setup key" in Google Authenticator.',
     `Account: ${accountName}`,

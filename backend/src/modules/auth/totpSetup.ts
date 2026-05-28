@@ -119,8 +119,8 @@ export async function startAdminTotpSetup(
     setupKey,
     setupToken,
     otpauthUri: buildTotpUri({
-      issuer: 'PulseFit',
-      accountName: 'admin@pulsefit.local',
+      issuer: 'MK MAKER',
+      accountName: 'admin@mk-maker.local',
       secret: setupKey,
     }),
     expiresAt,

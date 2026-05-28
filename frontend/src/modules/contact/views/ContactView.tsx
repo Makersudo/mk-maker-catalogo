@@ -5,7 +5,7 @@ import { getPublicSettings } from '../../../services/settingsService';
 
 export function ContactView() {
   const [whatsapp, setWhatsapp] = useState('');
-  const [storeName, setStoreName] = useState('');
+  const [storeName, setStoreName] = useState('MK MAKER');
   const [sent, setSent] = useState(false);
   const [form, setForm] = useState({ name: '', email: '', message: '' });
 
@@ -54,7 +54,7 @@ export function ContactView() {
     {
       icon: Mail,
       label: 'E-mail',
-      value: 'contato@pulsefit.com.br',
+      value: 'Configurar no atendimento',
       color: 'text-blue-600',
       bg: 'bg-blue-50',
     },

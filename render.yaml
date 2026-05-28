@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: pulsefit-backend
+    name: mk-maker-backend
     runtime: node
     rootDir: backend
     plan: free
@@ -20,9 +20,9 @@ services:
       - key: SUPABASE_SERVICE_ROLE_KEY
         sync: false
       - key: SUPABASE_MEDIA_BUCKET
-        value: pulsefit-media
+        value: mk-maker-media
       - key: SUPABASE_PRODUCT_BUCKET
-        value: pulsefit-products
+        value: mk-maker-products
       - key: JWT_SECRET
         sync: false
       - key: ADMIN_EMAIL

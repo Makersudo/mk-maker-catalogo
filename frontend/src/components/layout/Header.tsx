@@ -1,13 +1,17 @@
 import { ShoppingCart } from "lucide-react";
 import { motion } from "motion/react";
 import { useNavigate } from "react-router-dom";
+import { BrandLogo } from "../brand/BrandLogo";
+import { usePublicSettings } from "../../hooks/usePublicSettings";
 import { useStore } from "../../store/useStore";
 
 export function Header() {
   const { activeTab, setActiveTab, cart, openCart } = useStore();
+  const settings = usePublicSettings();
   const navigate = useNavigate();
   const cartCount = cart.reduce((acc, item) => acc + item.quantity, 0);
-  const logoSrc = "/assets/pulsefit-logo-transparent.png";
+  const primaryColor = settings.store_primary_color || '#d68a00';
+  const secondaryColor = settings.store_secondary_color || '#111827';
   const publicPathByTab = {
     inicio: '/inicio',
     catalogo: '/catalogo',
@@ -35,7 +39,7 @@ export function Header() {
         className="flex items-center gap-2 cursor-pointer"
         onClick={() => goToTab('inicio')}
       >
-        <img src={logoSrc} alt="PulseFit" className="h-10 w-36 object-contain object-left" />
+        <BrandLogo />
       </motion.div>
 
       {/* Nav Links */}
@@ -47,7 +51,8 @@ export function Header() {
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.3 + index * 0.1 }}
-            className={`transition-colors ${activeTab === item.id ? 'text-purple-700 font-bold' : 'hover:text-purple-600'}`}
+            style={activeTab === item.id ? { color: primaryColor } : undefined}
+            className={`transition-colors ${activeTab === item.id ? 'font-bold' : 'hover:text-neutral-900'}`}
           >
             {item.label}
           </motion.button>
@@ -60,11 +65,14 @@ export function Header() {
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
           onClick={openCart}
-          className="relative p-2 text-neutral-500 hover:text-purple-700 transition-colors"
+          className="relative p-2 text-neutral-500 hover:text-neutral-900 transition-colors"
         >
           <ShoppingCart className="w-6 h-6" />
           {cartCount > 0 && (
-            <span className="absolute top-0 right-0 w-4 h-4 bg-gradient-to-r from-purple-800 to-purple-500 text-[10px] font-bold text-white flex items-center justify-center rounded-full">
+            <span
+              className="absolute top-0 right-0 w-4 h-4 text-[10px] font-bold text-white flex items-center justify-center rounded-full"
+              style={{ backgroundColor: primaryColor }}
+            >
               {cartCount}
             </span>
           )}
@@ -74,7 +82,8 @@ export function Header() {
           initial={{ opacity: 0, x: 20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8, delay: 0.6 }}
-          className="hidden sm:flex items-center justify-center px-5 py-2 bg-gradient-to-r from-purple-800 to-purple-500 text-white font-bold text-xs uppercase tracking-tight rounded-lg hover:from-purple-700 hover:to-purple-400 transition-all shadow-md shadow-purple-500/20"
+          className="hidden sm:flex items-center justify-center px-5 py-2 text-white font-bold text-xs uppercase tracking-tight rounded-lg transition-all shadow-md"
+          style={{ background: `linear-gradient(90deg, ${secondaryColor}, ${primaryColor})` }}
           onClick={() => goToTab('contato')}
         >
           Fale Conosco

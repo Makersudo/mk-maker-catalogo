@@ -10,8 +10,11 @@ import {
   requestAdminGate,
   startAdminTotpSetup,
 } from '../../../services/authService';
+import { BrandLogo } from '../../../components/brand/BrandLogo';
+import { usePublicSettings } from '../../../hooks/usePublicSettings';
 
 export function LoginView() {
+  const settings = usePublicSettings();
   const [accessCode, setAccessCode] = useState('');
   const [gateToken, setGateToken] = useState('');
   const [email, setEmail] = useState('');
@@ -26,7 +29,8 @@ export function LoginView() {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const setUser = useAuthStore((state) => state.setUser);
-  const logoSrc = "/assets/pulsefit-logo-transparent.png";
+  const primaryColor = settings.store_primary_color || '#d68a00';
+  const secondaryColor = settings.store_secondary_color || '#111827';
 
   useEffect(() => {
     let active = true;
@@ -118,9 +122,9 @@ export function LoginView() {
   return (
     <div className="min-h-screen bg-neutral-50 flex items-center justify-center p-4">
       <div className="w-full max-w-md bg-white rounded-2xl shadow-xl overflow-hidden border border-neutral-100">
-        <div className="bg-gradient-to-r from-purple-800 to-purple-600 p-8 text-center">
+        <div className="p-8 text-center" style={{ background: `linear-gradient(90deg, ${secondaryColor}, ${primaryColor})` }}>
           <div className="h-16 w-56 bg-white/95 rounded-xl flex items-center justify-center mx-auto mb-4 px-4 shadow-lg shadow-purple-950/20">
-            <img src={logoSrc} alt="PulseFit" className="h-12 w-full object-contain" />
+            <BrandLogo imageClassName="h-12 w-full object-contain" textClassName="text-xl font-black tracking-normal text-neutral-950" />
           </div>
           <h1 className="text-2xl font-bold text-white uppercase tracking-tight">Painel Admin</h1>
           <p className="text-purple-200 text-sm mt-2">Acesso Restrito</p>

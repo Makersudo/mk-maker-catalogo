@@ -1,4 +1,4 @@
-# PulseFit
+# MK MAKER
 
 Template piloto para catálogo fitness com frontend, backend e banco separados.
 
@@ -29,4 +29,3 @@ npm run dev:frontend
 npm run lint
 npm run build
 ```
-

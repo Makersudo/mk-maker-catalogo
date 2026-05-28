@@ -30,7 +30,7 @@ async function loadMobileStore(slugInput: string) {
     countOrdersThisMonth(),
   ]);
 
-  const configuredSlug = normalizeStoreSlug(settings.store_slug || 'pulsefit');
+  const configuredSlug = normalizeStoreSlug(settings.store_slug || 'mk-maker');
   if (slug !== configuredSlug) {
     throw new ApiError(404, 'Loja nao encontrada.');
   }
@@ -45,12 +45,12 @@ async function loadMobileStore(slugInput: string) {
   return {
     store: {
       id: 'store-default',
-      name: settings.store_name || 'PulseFit Suplementos',
+      name: settings.store_name || 'MK MAKER',
       slug: configuredSlug,
       whatsapp: settings.whatsapp_phone || '',
-      primaryColor: settings.store_primary_color || '#15b86a',
+      primaryColor: settings.store_primary_color || '#d68a00',
       banner: settings.store_banner || 'https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&w=1200&q=80',
-      logo: settings.store_logo || 'PF',
+      logo: settings.store_logo || 'MK',
       plan: plan.code,
       planUsage: usage,
     },

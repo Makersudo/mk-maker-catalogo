@@ -83,7 +83,7 @@ export function DashboardView() {
     <div className="flex flex-col gap-4 md:gap-8 max-w-7xl mx-auto pb-6">
       <header>
         <h1 className="text-2xl md:text-3xl font-bold uppercase tracking-tight text-neutral-900">Dashboard</h1>
-        <p className="text-xs md:text-sm text-neutral-500 mt-1">Visao geral do sistema de catalogo PulseFit.</p>
+        <p className="text-xs md:text-sm text-neutral-500 mt-1">Visao geral do sistema de catalogo MK MAKER.</p>
       </header>
 
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6">

@@ -1,0 +1,13 @@
+{
+  "storeName": "MK MAKER",
+  "storeSlug": "mk-maker",
+  "logoUrl": null,
+  "bannerUrl": null,
+  "primaryColor": "#d68a00",
+  "secondaryColor": "#111827",
+  "whatsappPhone": "",
+  "checkoutMode": "whatsapp",
+  "externalCheckoutUrl": null,
+  "planCode": "medium",
+  "isActive": true
+}

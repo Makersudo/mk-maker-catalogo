@@ -3,7 +3,7 @@ import { describe, it } from 'node:test';
 import { assertTrustedAdminOrigin } from './adminOrigin.js';
 import { ApiError } from '../lib/http.js';
 
-const allowedOrigins = ['https://pulsefitcatalogo.vercel.app', 'https://pulsefit-catalogos.vercel.app'];
+const allowedOrigins = ['https://mk-maker-catalogo.vercel.app', 'https://mk-maker.vercel.app'];
 
 describe('assertTrustedAdminOrigin', () => {
   it('rejects unsafe cookie-authenticated admin requests from untrusted origins', () => {
@@ -11,7 +11,7 @@ describe('assertTrustedAdminOrigin', () => {
       () => assertTrustedAdminOrigin({
         method: 'POST',
         headers: {
-          cookie: 'pulsefit_admin_session=session',
+          cookie: 'mk_maker_admin_session=session',
           origin: 'https://evil.example',
           'x-admin-request': 'true',
         },
@@ -25,7 +25,7 @@ describe('assertTrustedAdminOrigin', () => {
       () => assertTrustedAdminOrigin({
         method: 'DELETE',
         headers: {
-          cookie: 'pulsefit_admin_session=session',
+          cookie: 'mk_maker_admin_session=session',
           'x-admin-request': 'true',
         },
       }, allowedOrigins),
@@ -37,8 +37,8 @@ describe('assertTrustedAdminOrigin', () => {
     assert.doesNotThrow(() => assertTrustedAdminOrigin({
       method: 'PATCH',
       headers: {
-        cookie: 'pulsefit_admin_session=session',
-        origin: 'https://pulsefitcatalogo.vercel.app',
+        cookie: 'mk_maker_admin_session=session',
+        origin: 'https://mk-maker-catalogo.vercel.app',
         'x-admin-request': 'true',
       },
     }, allowedOrigins));

@@ -6,7 +6,7 @@ describe('normalizePublicSettingsPayload', () => {
   it('keeps only approved public setting keys', () => {
     assert.deepEqual(normalizePublicSettingsPayload({
       whatsapp_phone: ' 5511999999999 ',
-      store_name: ' PulseFit ',
+      store_name: ' MK MAKER ',
       jwt_secret: 'must-not-be-public',
       SUPABASE_SERVICE_ROLE_KEY: 'must-not-be-public',
     }), [
@@ -17,7 +17,7 @@ describe('normalizePublicSettingsPayload', () => {
       },
       {
         key: 'store_name',
-        value: 'PulseFit',
+        value: 'MK MAKER',
         is_public: true,
       },
     ]);

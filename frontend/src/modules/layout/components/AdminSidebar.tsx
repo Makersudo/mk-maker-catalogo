@@ -2,11 +2,11 @@ import { NavLink } from 'react-router-dom';
 import { LayoutDashboard, Package, Tag, Settings, LogOut, Image, BarChart, X } from 'lucide-react';
 import { useAuthStore } from '../../auth/store/useAuthStore';
 import { useUIStore } from '../store/useUIStore';
+import { BrandLogo } from '../../../components/brand/BrandLogo';
 
 export function AdminSidebar() {
   const logout = useAuthStore((state) => state.logout);
   const { isSidebarOpen, closeSidebar } = useUIStore();
-  const logoSrc = "/assets/pulsefit-logo-transparent.png";
 
   const menuItems = [
     { icon: LayoutDashboard, label: 'Dashboard', path: '/admin/dashboard' },
@@ -34,7 +34,7 @@ export function AdminSidebar() {
         ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'}
       `}>
         <div className="p-6 border-b border-neutral-100 mb-6 flex items-center justify-between lg:justify-center">
-          <img src={logoSrc} alt="PulseFit" className="h-12 w-40 object-contain object-left lg:object-center" />
+          <BrandLogo imageClassName="h-12 w-40 object-contain object-left lg:object-center" />
           <button onClick={closeSidebar} className="lg:hidden p-2 text-neutral-500 hover:text-neutral-900 hover:bg-neutral-100 rounded-lg">
             <X className="w-5 h-5" />
           </button>

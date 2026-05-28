@@ -1,10 +1,10 @@
 create table if not exists public.catalog_config (
   id boolean primary key default true check (id = true),
-  store_name text not null default 'PulseFit Suplementos',
-  store_slug text not null default 'pulsefit',
+  store_name text not null default 'MK MAKER',
+  store_slug text not null default 'mk-maker',
   logo_url text,
   banner_url text,
-  primary_color text not null default '#15b86a',
+  primary_color text not null default '#d68a00',
   secondary_color text not null default '#111827',
   whatsapp_phone text,
   checkout_mode text not null default 'whatsapp' check (checkout_mode in ('whatsapp', 'internal_order', 'external_link', 'pix_whatsapp')),
@@ -31,11 +31,11 @@ insert into public.catalog_config (
 )
 values (
   true,
-  coalesce((select value from public.settings where key = 'store_name'), 'PulseFit Suplementos'),
-  coalesce((select value from public.settings where key = 'store_slug'), 'pulsefit'),
+  coalesce((select value from public.settings where key = 'store_name'), 'MK MAKER'),
+  coalesce((select value from public.settings where key = 'store_slug'), 'mk-maker'),
   (select value from public.settings where key = 'store_logo'),
   (select value from public.settings where key = 'store_banner'),
-  coalesce((select value from public.settings where key = 'store_primary_color'), '#15b86a'),
+  coalesce((select value from public.settings where key = 'store_primary_color'), '#d68a00'),
   coalesce((select value from public.settings where key = 'store_secondary_color'), '#111827'),
   (select value from public.settings where key = 'whatsapp_phone'),
   coalesce((select value from public.settings where key = 'store_plan'), 'medium')

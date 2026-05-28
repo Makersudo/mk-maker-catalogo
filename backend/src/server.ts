@@ -53,7 +53,7 @@ app.get('/api/health', (_req, res) => {
 
   return ok(res, {
     status: 'ok',
-    service: 'pulsefit-backend',
+    service: 'mk-maker-backend',
     databaseConfigured,
   });
 });
@@ -73,5 +73,5 @@ app.use((error: unknown, _req: express.Request, res: express.Response, _next: ex
 });
 
 app.listen(env.port, '0.0.0.0', () => {
-  console.log(`PulseFit backend listening on port ${env.port}`);
+  console.log(`MK MAKER backend listening on port ${env.port}`);
 });

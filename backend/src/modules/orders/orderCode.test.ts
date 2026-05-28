@@ -3,15 +3,15 @@ import { describe, it } from 'node:test';
 import { generateOrderCode } from './orderCode.js';
 
 describe('generateOrderCode', () => {
-  it('creates a readable PulseFit code with date and six safe characters', () => {
+  it('creates a readable MK MAKER code with date and six safe characters', () => {
     const code = generateOrderCode(new Date('2026-04-22T12:00:00Z'), () => 'A8K4Q2');
 
-    assert.equal(code, 'PF-20260422-A8K4Q2');
+    assert.equal(code, 'MK-20260422-A8K4Q2');
   });
 
   it('removes unsafe random characters and pads short values', () => {
     const code = generateOrderCode(new Date('2026-04-22T12:00:00Z'), () => 'a!-1');
 
-    assert.equal(code, 'PF-20260422-A10000');
+    assert.equal(code, 'MK-20260422-A10000');
   });
 });

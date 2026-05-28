@@ -3,8 +3,8 @@ import assert from 'node:assert/strict';
 import { buildStoreUsage, mapMobileProduct, normalizeStoreSlug, resolveMobilePlan } from './contract.js';
 
 test('normalizes a store slug from direct code or public link', () => {
-  assert.equal(normalizeStoreSlug('PulseFit'), 'pulsefit');
-  assert.equal(normalizeStoreSlug('https://app.sistemalizecatalogo.com/loja/PulseFit?x=1'), 'pulsefit');
+  assert.equal(normalizeStoreSlug('MK MAKER'), 'mk-maker');
+  assert.equal(normalizeStoreSlug('https://app.sistemalizecatalogo.com/loja/MK-MAKER?x=1'), 'mk-maker');
 });
 
 test('falls back to medium plan for invalid plan codes', () => {

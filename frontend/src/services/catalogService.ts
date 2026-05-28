@@ -50,7 +50,7 @@ let cachedCatalog: {
 let pendingCatalogRequest: Promise<PublicCatalogBootstrapResponse> | null = null;
 const CATALOG_CACHE_TTL_MS = 5 * 60 * 1000;
 const CATALOG_STORAGE_TTL_MS = 15 * 60 * 1000;
-const CATALOG_STORAGE_KEY = 'pulsefit-public-catalog-v2';
+const CATALOG_STORAGE_KEY = 'mk-maker-public-catalog-v2';
 
 function isCatalogPayload(value: unknown): value is PublicCatalogBootstrapResponse {
   if (!value || typeof value !== 'object') return false;
