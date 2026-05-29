@@ -27,6 +27,7 @@ const PLAN_LABELS: Record<string, string> = {
   basic: 'Basico - R$ 149,90/mes',
   medium: 'Medio - R$ 399,90/mes',
   master: 'Master - R$ 749,90/mes',
+  custom: 'Personalizado - limites ajustados',
 };
 
 export function SettingsView() {

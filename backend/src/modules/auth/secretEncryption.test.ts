@@ -14,7 +14,7 @@ describe('secret encryption', () => {
     const encrypted = encryptSecret('JBSWY3DPEHPK3PXP', 'jwt-secret-for-tests');
     const parts = encrypted.split(':');
     const encryptedValue = parts[3] ?? '';
-    parts[3] = `${encryptedValue.slice(0, -1)}${encryptedValue.endsWith('A') ? 'B' : 'A'}`;
+    parts[3] = `${encryptedValue.startsWith('A') ? 'B' : 'A'}${encryptedValue.slice(1)}`;
 
     assert.throws(() => decryptSecret(parts.join(':'), 'jwt-secret-for-tests'));
   });

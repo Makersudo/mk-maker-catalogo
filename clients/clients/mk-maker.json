@@ -8,6 +8,9 @@
   "whatsappPhone": "",
   "checkoutMode": "whatsapp",
   "externalCheckoutUrl": null,
-  "planCode": "medium",
+  "planCode": "custom",
+  "maxProducts": 250,
+  "maxCategories": 12,
+  "maxSubcategories": 40,
   "isActive": true
 }
