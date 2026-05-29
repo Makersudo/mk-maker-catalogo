@@ -18,6 +18,10 @@ function getParentId(category: CatalogCategory) {
   return category.parent_id ?? category.parentId ?? null;
 }
 
+function getCategoryInitial(name: string) {
+  return name.trim().charAt(0).toUpperCase() || "#";
+}
+
 function CatalogSkeleton() {
   return (
     <div className="flex flex-col flex-1">
@@ -50,7 +54,11 @@ export function Catalog() {
   const catalogScrollRef = useRef<HTMLDivElement | null>(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(() => {
+    if (typeof window === "undefined") return false;
+    return window.innerWidth >= 1024;
+  });
+  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
   const [sortOption, setSortOption] = useState<CatalogSortOption>("relevance");
   const [storeCategories, setStoreCategories] = useState<CatalogCategory[]>([]);
   const [storeProducts, setStoreProducts] = useState<Product[]>([]);
@@ -70,10 +78,21 @@ export function Catalog() {
     window.requestAnimationFrame(scrollCatalogToTop);
   };
 
+  const selectCategory = (categoryId: string | null) => {
+    setActiveCategory(categoryId);
+    if (window.innerWidth < 1024) setIsSidebarOpen(false);
+  };
+
   useEffect(() => {
-    if (window.innerWidth >= 1024) {
-      setIsSidebarOpen(true);
-    }
+    const desktopQuery = window.matchMedia("(min-width: 1024px)");
+    const syncSidebarMode = () => setIsSidebarOpen(desktopQuery.matches);
+
+    syncSidebarMode();
+    desktopQuery.addEventListener("change", syncSidebarMode);
+
+    return () => {
+      desktopQuery.removeEventListener("change", syncSidebarMode);
+    };
   }, []);
 
   useEffect(() => {
@@ -154,6 +173,22 @@ export function Catalog() {
       return acc;
     }, {});
   }, [storeProducts]);
+  const compactCategoryItems = useMemo(() => {
+    return rootCategories.flatMap((category) => [
+      {
+        id: category.id,
+        name: category.name,
+        count: categoryProductCounts[category.id] ?? 0,
+        isSubcategory: false,
+      },
+      ...(subcategoriesByParent[category.id] ?? []).map((subcategory) => ({
+        id: subcategory.id,
+        name: subcategory.name,
+        count: categoryProductCounts[subcategory.id] ?? 0,
+        isSubcategory: true,
+      })),
+    ]);
+  }, [rootCategories, subcategoriesByParent, categoryProductCounts]);
   const activeCategoryData = storeCategories.find((category) => category.id === activeCategory);
   const activeCategoryLabel = activeCategory ? activeCategoryData?.name : "Todos os Itens";
 
@@ -204,18 +239,30 @@ export function Catalog() {
           fixed lg:static inset-y-0 left-0 z-50
           bg-white lg:bg-white/80 lg:backdrop-blur-md
           border-r border-neutral-200
-          transition-all duration-300 ease-in-out shrink-0 overflow-hidden
+          transition-all duration-300 ease-in-out shrink-0 overflow-visible
           ${
             isSidebarOpen
-              ? "translate-x-0 w-[min(20rem,calc(100vw-1rem))] lg:w-72 shadow-2xl lg:shadow-none pointer-events-auto"
-              : "-translate-x-full w-[min(20rem,calc(100vw-1rem))] border-r-0 opacity-0 pointer-events-none lg:translate-x-0 lg:w-0"
+              ? "translate-x-0 w-[min(20rem,calc(100vw-1rem))] shadow-2xl pointer-events-auto"
+              : "-translate-x-full w-[min(20rem,calc(100vw-1rem))] border-r-0 opacity-0 pointer-events-none"
           }
+          lg:translate-x-0 lg:border-r lg:opacity-100 lg:pointer-events-auto lg:shadow-none
+          ${isSidebarCollapsed ? "lg:w-20" : "lg:w-72"}
         `}
       >
-        <div className="w-[min(20rem,calc(100vw-1rem))] lg:w-72 flex h-full flex-col overflow-hidden">
-          <div className="border-b border-neutral-100 bg-white/95 px-5 py-5">
-            <div className="flex items-center justify-between gap-3">
-              <div className="min-w-0">
+        <button
+          type="button"
+          onClick={() => setIsSidebarCollapsed((collapsed) => !collapsed)}
+          className="absolute -right-4 top-16 z-20 hidden h-9 w-9 items-center justify-center rounded-full border border-purple-200 bg-white text-purple-700 shadow-md transition-all hover:border-purple-300 hover:bg-purple-50 lg:flex"
+          aria-label={isSidebarCollapsed ? "Expandir categorias" : "Recolher categorias"}
+          title={isSidebarCollapsed ? "Expandir categorias" : "Recolher categorias"}
+        >
+          {isSidebarCollapsed ? <ChevronRight className="h-5 w-5" /> : <ChevronLeft className="h-5 w-5" />}
+        </button>
+
+        <div className={`w-[min(20rem,calc(100vw-1rem))] ${isSidebarCollapsed ? "lg:w-20" : "lg:w-72"} flex h-full flex-col overflow-hidden`}>
+          <div className={`border-b border-neutral-100 bg-white/95 px-5 py-5 ${isSidebarCollapsed ? "lg:px-3" : "lg:px-5"}`}>
+            <div className={`flex items-center gap-3 ${isSidebarCollapsed ? "lg:justify-center" : "justify-between"}`}>
+              <div className={`min-w-0 ${isSidebarCollapsed ? "lg:hidden" : ""}`}>
                 <h3 className="text-[11px] font-black text-neutral-500 uppercase tracking-[0.22em]">
                   Categorias
                 </h3>
@@ -223,9 +270,12 @@ export function Catalog() {
                   Navegue por linha e tipo de produto
                 </p>
               </div>
+              <div className={`${isSidebarCollapsed ? "hidden lg:flex" : "hidden"} h-11 w-11 items-center justify-center rounded-2xl bg-purple-100 text-sm font-black uppercase tracking-tight text-purple-800`}>
+                Cat
+              </div>
               <button
                 onClick={() => setIsSidebarOpen(false)}
-                className="inline-flex shrink-0 items-center gap-1.5 rounded-lg border border-neutral-200 bg-white px-3 py-2 text-[10px] font-bold uppercase tracking-widest text-neutral-500 shadow-sm transition-colors hover:border-purple-200 hover:bg-purple-50 hover:text-purple-700"
+                className="inline-flex shrink-0 items-center gap-1.5 rounded-lg border border-neutral-200 bg-white px-3 py-2 text-[10px] font-bold uppercase tracking-widest text-neutral-500 shadow-sm transition-colors hover:border-purple-200 hover:bg-purple-50 hover:text-purple-700 lg:hidden"
                 aria-label="Fechar painel"
               >
                 <X className="w-3.5 h-3.5" />
@@ -234,8 +284,8 @@ export function Catalog() {
             </div>
           </div>
 
-          <div className="flex-1 overflow-y-auto px-4 py-5 custom-scrollbar">
-            <div className="flex flex-col gap-3">
+          <div className={`flex-1 overflow-y-auto py-5 custom-scrollbar ${isSidebarCollapsed ? "px-4 lg:px-2" : "px-4"}`}>
+            <div className={`${isSidebarCollapsed ? "lg:hidden" : ""} flex flex-col gap-3`}>
               {isLoading &&
                 Array.from({ length: 6 }).map((_, index) => (
                   <div key={index} className="h-12 animate-pulse rounded-xl bg-neutral-100" />
@@ -245,8 +295,7 @@ export function Catalog() {
                 <>
                   <button
                     onClick={() => {
-                      setActiveCategory(null);
-                      if (window.innerWidth < 1024) setIsSidebarOpen(false);
+                      selectCategory(null);
                     }}
                     className={`group flex w-full items-center justify-between gap-3 rounded-xl border px-4 py-3 text-left text-sm transition-all ${
                       activeCategory === null
@@ -268,8 +317,7 @@ export function Catalog() {
                       <div key={category.id} className="rounded-2xl border border-neutral-100 bg-white p-2 shadow-sm">
                         <button
                           onClick={() => {
-                            setActiveCategory(category.id);
-                            if (window.innerWidth < 1024) setIsSidebarOpen(false);
+                            selectCategory(category.id);
                           }}
                           className={`flex w-full items-center gap-3 rounded-xl px-3 py-3 text-left transition-all ${
                             isCategoryActive
@@ -301,8 +349,7 @@ export function Catalog() {
                                 <button
                                   key={subcategory.id}
                                   onClick={() => {
-                                    setActiveCategory(subcategory.id);
-                                    if (window.innerWidth < 1024) setIsSidebarOpen(false);
+                                    selectCategory(subcategory.id);
                                   }}
                                   className={`flex w-full items-center justify-between gap-2 rounded-lg px-3 py-2.5 text-left text-sm transition-all ${
                                     isSubcategoryActive
@@ -326,6 +373,52 @@ export function Catalog() {
                 </>
               )}
             </div>
+
+            <div className={`${isSidebarCollapsed ? "hidden lg:flex" : "hidden"} flex-col items-center gap-2`}>
+              {isLoading &&
+                Array.from({ length: 7 }).map((_, index) => (
+                  <div key={index} className="h-11 w-11 animate-pulse rounded-2xl bg-neutral-100" />
+                ))}
+
+              {!isLoading && (
+                <>
+                  <button
+                    onClick={() => selectCategory(null)}
+                    className={`relative flex h-12 w-12 items-center justify-center rounded-2xl border text-sm font-black transition-all ${
+                      activeCategory === null
+                        ? "border-purple-200 bg-purple-100 text-purple-800 shadow-sm"
+                        : "border-neutral-100 bg-white text-neutral-600 hover:border-purple-200 hover:bg-purple-50 hover:text-purple-800"
+                    }`}
+                    aria-label="Todos os Itens"
+                    title={`Todos os Itens (${storeProducts.length})`}
+                  >
+                    T
+                  </button>
+
+                  {compactCategoryItems.map((item) => {
+                    const isActive = activeCategory === item.id;
+
+                    return (
+                      <button
+                        key={item.id}
+                        onClick={() => selectCategory(item.id)}
+                        className={`relative flex items-center justify-center border font-black uppercase transition-all ${
+                          item.isSubcategory ? "h-9 w-9 rounded-xl text-[11px]" : "h-12 w-12 rounded-2xl text-sm"
+                        } ${
+                          isActive
+                            ? "border-purple-200 bg-purple-100 text-purple-800 shadow-sm"
+                            : "border-neutral-100 bg-white text-neutral-600 hover:border-purple-200 hover:bg-purple-50 hover:text-purple-800"
+                        }`}
+                        aria-label={item.name}
+                        title={`${item.name} (${item.count})`}
+                      >
+                        {getCategoryInitial(item.name)}
+                      </button>
+                    );
+                  })}
+                </>
+              )}
+            </div>
           </div>
         </div>
       </aside>
@@ -337,7 +430,7 @@ export function Catalog() {
               {!isSidebarOpen && (
                 <button
                   onClick={() => setIsSidebarOpen(true)}
-                  className="mt-1 p-2 bg-white border border-neutral-200 rounded-lg text-neutral-600 hover:text-purple-600 transition-colors shadow-sm flex items-center justify-center shrink-0"
+                  className="mt-1 flex shrink-0 items-center justify-center rounded-lg border border-neutral-200 bg-white p-2 text-neutral-600 shadow-sm transition-colors hover:text-purple-600 lg:hidden"
                   title="Abrir Categorias"
                   aria-label="Abrir categorias"
                 >
