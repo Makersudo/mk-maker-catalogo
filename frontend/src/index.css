@@ -42,4 +42,12 @@
   .font-display {
     font-family: var(--font-display);
   }
+  .hero-photo-gradient {
+    -webkit-mask-image: linear-gradient(90deg, transparent 0%, rgba(0, 0, 0, 0.18) 18%, rgba(0, 0, 0, 0.82) 43%, #000000 100%);
+    mask-image: linear-gradient(90deg, transparent 0%, rgba(0, 0, 0, 0.18) 18%, rgba(0, 0, 0, 0.82) 43%, #000000 100%);
+  }
+  .hero-photo-gradient-mobile {
+    -webkit-mask-image: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.75) 26%, #000000 100%);
+    mask-image: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.75) 26%, #000000 100%);
+  }
 }

@@ -34,10 +34,29 @@ export function Hero() {
           className="absolute inset-0"
           style={{
             background:
-              `radial-gradient(circle at 72% 28%, ${primaryColor}14 0, transparent 34%), linear-gradient(90deg, #ffffff 0%, #ffffff 56%, #fff7f5 100%)`
+              "linear-gradient(90deg, #ffffff 0%, #ffffff 48%, #fff7f5 100%)"
           }}
         />
-        <div className="absolute inset-0 dot-pattern opacity-60"></div>
+        <div className="absolute inset-0 dot-pattern opacity-55"></div>
+        <div className="absolute inset-y-0 right-0 hidden w-[64%] lg:block">
+          <img
+            src="/hero/makeup-products.jpg"
+            alt=""
+            aria-hidden="true"
+            className="hero-photo-gradient h-full w-full object-cover opacity-95"
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-white via-white/55 to-white/10" />
+          <div className="absolute inset-0 bg-gradient-to-b from-white/30 via-transparent to-white/35" />
+        </div>
+        <div className="absolute inset-x-0 bottom-0 h-[42%] sm:hidden">
+          <img
+            src="/hero/makeup-products.jpg"
+            alt=""
+            aria-hidden="true"
+            className="hero-photo-gradient-mobile h-full w-full object-cover opacity-40"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-white via-white/75 to-white/50" />
+        </div>
       </div>
 
       <div className="relative z-10 mx-auto grid w-full max-w-full flex-1 items-center gap-8 px-6 pb-56 pt-10 sm:container sm:pb-44 lg:grid-cols-[minmax(0,0.95fr)_minmax(360px,0.9fr)] lg:px-16 lg:pb-32 lg:pt-12">
@@ -113,25 +132,7 @@ export function Hero() {
           </motion.button>
         </div>
 
-        <motion.div
-          initial={{ opacity: 0, x: 48, scale: 0.96 }}
-          animate={{ opacity: 1, x: 0, scale: 1 }}
-          transition={{ duration: 0.9, delay: 0.35, ease: "easeOut" }}
-          className="relative mx-auto w-full min-w-0 max-w-[calc(100vw-3rem)] sm:max-w-[560px] lg:max-w-none"
-        >
-          <div
-            className="absolute -inset-4 rounded-lg opacity-35 blur-2xl"
-            style={{ background: `linear-gradient(135deg, ${primaryColor}55, transparent 62%)` }}
-          />
-          <div className="relative aspect-[4/3] overflow-hidden rounded-lg bg-white shadow-2xl shadow-neutral-900/10 ring-1 ring-white/70 lg:h-[min(58vh,520px)] lg:aspect-auto">
-            <img
-              src="/hero/makeup-products.jpg"
-              alt="Produtos de maquiagem MK MAKER"
-              className="h-full w-full object-cover"
-            />
-            <div className="pointer-events-none absolute inset-0 bg-gradient-to-tr from-white/18 via-transparent to-white/10" />
-          </div>
-        </motion.div>
+        <div className="hidden lg:block" aria-hidden="true" />
       </div>
 
       {/* Bottom Widget */}
