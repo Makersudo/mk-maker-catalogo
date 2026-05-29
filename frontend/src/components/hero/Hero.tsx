@@ -48,14 +48,15 @@ export function Hero() {
           <div className="absolute inset-0 bg-gradient-to-r from-white via-white/55 to-white/10" />
           <div className="absolute inset-0 bg-gradient-to-b from-white/30 via-transparent to-white/35" />
         </div>
-        <div className="absolute inset-x-0 bottom-0 h-[42%] sm:hidden">
+        <div className="absolute inset-0 sm:hidden">
           <img
             src="/hero/makeup-products.jpg"
             alt=""
             aria-hidden="true"
-            className="hero-photo-gradient-mobile h-full w-full object-cover opacity-40"
+            className="hero-photo-gradient-mobile h-full w-full object-cover opacity-75"
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-white via-white/75 to-white/50" />
+          <div className="absolute inset-0 bg-gradient-to-b from-white/90 via-white/70 to-white/42" />
+          <div className="absolute inset-0 bg-gradient-to-r from-white/86 via-white/60 to-white/20" />
         </div>
       </div>
 
