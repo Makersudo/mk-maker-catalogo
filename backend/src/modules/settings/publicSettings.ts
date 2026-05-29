@@ -3,6 +3,7 @@
   'store_name',
   'store_slug',
   'store_primary_color',
+  'store_secondary_color',
   'store_banner',
   'store_logo',
 ]);

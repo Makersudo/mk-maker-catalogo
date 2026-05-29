@@ -7,6 +7,7 @@ describe('normalizePublicSettingsPayload', () => {
     assert.deepEqual(normalizePublicSettingsPayload({
       whatsapp_phone: ' 5511999999999 ',
       store_name: ' MK MAKER ',
+      store_secondary_color: ' #111111 ',
       jwt_secret: 'must-not-be-public',
       SUPABASE_SERVICE_ROLE_KEY: 'must-not-be-public',
     }), [
@@ -18,6 +19,11 @@ describe('normalizePublicSettingsPayload', () => {
       {
         key: 'store_name',
         value: 'MK MAKER',
+        is_public: true,
+      },
+      {
+        key: 'store_secondary_color',
+        value: '#111111',
         is_public: true,
       },
     ]);

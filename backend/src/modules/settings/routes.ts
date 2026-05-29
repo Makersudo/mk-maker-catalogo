@@ -2,17 +2,10 @@ import { Router } from 'express';
 import { getSupabaseAdmin } from '../../lib/supabase.js';
 import { handleError, ok } from '../../lib/http.js';
 import { requireAuth } from '../../middleware/requireAuth.js';
-import { loadMergedPublicSettings } from '../catalogConfig/service.js';
+import { loadMergedPublicSettings, upsertCatalogConfigFromPublicSettings } from '../catalogConfig/service.js';
 import { normalizePublicSettingsPayload } from './publicSettings.js';
 
 export const settingsRouter = Router();
-
-function toObject(rows: any[] = []) {
-  return rows.reduce<Record<string, string>>((acc, row) => {
-    acc[row.key] = row.value ?? '';
-    return acc;
-  }, {});
-}
 
 settingsRouter.get('/', async (_req, res) => {
   try {
@@ -32,13 +25,16 @@ settingsRouter.put('/', requireAuth, async (req, res) => {
 
     if (entries.length === 0) return ok(res, {});
 
-    const { data, error } = await getSupabaseAdmin()
+    const supabase = getSupabaseAdmin();
+    const { error } = await supabase
       .from('settings')
       .upsert(entries, { onConflict: 'key' })
       .select('key,value,is_public');
 
     if (error) throw error;
-    return ok(res, toObject(data ?? []));
+
+    await upsertCatalogConfigFromPublicSettings(supabase, entries, now);
+    return ok(res, await loadMergedPublicSettings(supabase));
   } catch (error) {
     return handleError(res, error);
   }

@@ -21,6 +21,12 @@ type CatalogConfigRow = {
   is_active?: unknown;
 };
 
+type PublicSettingEntry = {
+  key: string;
+  value: string;
+  is_public: boolean;
+};
+
 const RESOURCE_LABELS: Record<CatalogResource, string> = {
   products: 'produtos',
   categories: 'categorias',
@@ -49,6 +55,15 @@ function normalizeLimit(value: unknown): number | null {
   if (value === null || value === undefined || value === '') return null;
   const parsed = Number(value);
   return Number.isInteger(parsed) && parsed >= 0 ? parsed : null;
+}
+
+function nullableTextSetting(value: string): string | null {
+  const normalized = String(value ?? '').trim();
+  return normalized || null;
+}
+
+function normalizeHexSetting(value: string): string {
+  return String(value ?? '').trim().toLowerCase();
 }
 
 export function normalizeCheckoutMode(value: unknown): CheckoutMode {
@@ -94,6 +109,55 @@ export function mapCatalogConfig(row: CatalogConfigRow = {}): Record<string, str
   }
 
   return settings;
+}
+
+export function mapPublicSettingsToCatalogConfigRow(entries: PublicSettingEntry[]): Record<string, unknown> {
+  const row: Record<string, unknown> = { id: true };
+
+  for (const entry of entries) {
+    if (!entry.is_public) continue;
+
+    switch (entry.key) {
+      case 'store_name':
+        row.store_name = String(entry.value ?? '').trim();
+        break;
+      case 'store_slug':
+        row.store_slug = String(entry.value ?? '').trim();
+        break;
+      case 'store_logo':
+        row.logo_url = nullableTextSetting(entry.value);
+        break;
+      case 'store_banner':
+        row.banner_url = nullableTextSetting(entry.value);
+        break;
+      case 'store_primary_color':
+        row.primary_color = normalizeHexSetting(entry.value);
+        break;
+      case 'store_secondary_color':
+        row.secondary_color = normalizeHexSetting(entry.value);
+        break;
+      case 'whatsapp_phone':
+        row.whatsapp_phone = nullableTextSetting(entry.value);
+        break;
+    }
+  }
+
+  return row;
+}
+
+export async function upsertCatalogConfigFromPublicSettings(
+  supabase: any,
+  entries: PublicSettingEntry[],
+  updatedAt = new Date().toISOString()
+) {
+  const row = mapPublicSettingsToCatalogConfigRow(entries);
+  if (Object.keys(row).length <= 1) return;
+
+  const { error } = await supabase
+    .from('catalog_config')
+    .upsert({ ...row, updated_at: updatedAt }, { onConflict: 'id' });
+
+  if (error) throw error;
 }
 
 export function mergeCatalogSettings(

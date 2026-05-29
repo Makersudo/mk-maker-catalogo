@@ -4,7 +4,15 @@ Este projeto separa frontend, backend e banco. Nao grave credenciais reais em ar
 
 ## Banco
 
-Execute a migration em `supabase/migrations/20260421000000_pulsefit_initial.sql` e, se desejar dados iniciais, execute `supabase/seed.sql`.
+Execute todas as migrations em ordem dentro de `supabase/migrations/`.
+Para um banco criado manualmente pelo painel do Supabase, use esta ordem:
+
+1. Execute `database/schema.sql`.
+2. Execute `database/policies.sql`.
+3. Execute `database/storage.sql`.
+4. Execute `database/seed.sql` se quiser categorias iniciais de beleza.
+
+Nao use seeds antigos de fitness/PulseFit neste projeto.
 
 Variaveis necessarias para o backend:
 

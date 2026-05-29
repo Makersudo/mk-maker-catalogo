@@ -3,6 +3,7 @@ import { getSupabaseAdmin } from '../../lib/supabase.js';
 import { ApiError, handleError, ok, optionalString, requireNumber, requireString } from '../../lib/http.js';
 import { requireAuth } from '../../middleware/requireAuth.js';
 import { invalidatePublicCatalogCache } from '../catalog/service.js';
+import { loadCheckoutWhatsappPhone } from './checkoutSettings.js';
 import { generateOrderCode } from './orderCode.js';
 import { createOrderWithItemsAndInventory } from './createOrder.js';
 
@@ -49,12 +50,6 @@ function formatWhatsAppMessage(order: any, items: any[]) {
   message += `\\n*TOTAL DO PEDIDO: R$ ${Number(order.total_amount).toFixed(2)}*\\n\\n`;
   message += 'Aguardando a confirmacao e instrucoes de pagamento.';
   return message;
-}
-
-async function getPublicSetting(key: string): Promise<string> {
-  const { data, error } = await getSupabaseAdmin().from('settings').select('value').eq('key', key).maybeSingle();
-  if (error) throw error;
-  return data?.value ?? '';
 }
 
 orderRouter.post('/', async (req, res) => {
@@ -145,7 +140,7 @@ orderRouter.post('/', async (req, res) => {
     const { order, createdItems } = await createOrderWithItemsAndInventory(supabase, orderPayload, normalizedItems);
     invalidatePublicCatalogCache();
 
-    const phone = await getPublicSetting('whatsapp_phone');
+    const phone = await loadCheckoutWhatsappPhone();
     const whatsappUrl = phone
       ? `https://wa.me/${phone}?text=${encodeURIComponent(formatWhatsAppMessage(order, createdItems ?? []))}`
       : '';

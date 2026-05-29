@@ -250,7 +250,7 @@ export function ProductFormModal({ onClose, productToEdit }: ProductFormModalPro
                 <div className="flex flex-col gap-1.5">
                   <label className="text-xs font-bold text-neutral-700 uppercase tracking-widest">Categoria Principal *</label>
                   <select required value={categoryId} onChange={(e) => setCategoryId(e.target.value)} className={`w-full px-4 py-3 ${rootCategories.length === 0 ? 'bg-red-50 border-red-300' : 'bg-neutral-50 border-neutral-200'} border rounded-xl text-sm focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500`}>
-                    <option value="" disabled>Selecione Masculina ou Feminina</option>
+                    <option value="" disabled>Selecione uma categoria principal</option>
                     {rootCategories.map((cat) => (
                       <option key={cat.id} value={cat.id}>{cat.name}</option>
                     ))}

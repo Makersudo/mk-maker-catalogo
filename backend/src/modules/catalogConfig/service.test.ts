@@ -4,6 +4,7 @@ import { ApiError } from '../../lib/http.js';
 import {
   assertCatalogLimit,
   mapCatalogConfig,
+  mapPublicSettingsToCatalogConfigRow,
   mergeCatalogSettings,
   normalizeCheckoutMode,
 } from './service.js';
@@ -57,6 +58,30 @@ describe('catalog config service', () => {
     assert.equal(normalizeCheckoutMode('internal_order'), 'internal_order');
     assert.equal(normalizeCheckoutMode('external_link'), 'external_link');
     assert.equal(normalizeCheckoutMode('unknown'), 'whatsapp');
+  });
+
+  it('maps editable public settings back to the catalog config row', () => {
+    assert.deepEqual(
+      mapPublicSettingsToCatalogConfigRow([
+        { key: 'store_name', value: 'MK MAKER', is_public: true },
+        { key: 'store_slug', value: 'mk-maker', is_public: true },
+        { key: 'store_logo', value: 'https://cdn.example.com/logo.png', is_public: true },
+        { key: 'store_banner', value: '', is_public: true },
+        { key: 'store_primary_color', value: '#C98F86', is_public: true },
+        { key: 'store_secondary_color', value: '#111111', is_public: true },
+        { key: 'whatsapp_phone', value: '5511999999999', is_public: true },
+      ]),
+      {
+        id: true,
+        store_name: 'MK MAKER',
+        store_slug: 'mk-maker',
+        logo_url: 'https://cdn.example.com/logo.png',
+        banner_url: null,
+        primary_color: '#c98f86',
+        secondary_color: '#111111',
+        whatsapp_phone: '5511999999999',
+      }
+    );
   });
 
   it('rejects writes above configured catalog limits', async () => {
