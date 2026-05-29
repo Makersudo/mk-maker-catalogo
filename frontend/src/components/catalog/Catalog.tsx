@@ -20,21 +20,6 @@ function getParentId(category: CatalogCategory) {
   return category.parent_id ?? category.parentId ?? null;
 }
 
-function getCompactBrandMark(name: string) {
-  const words = name.trim().split(/\s+/).filter(Boolean);
-  const firstWord = words[0] ?? "MK";
-
-  if (firstWord.length <= 3) {
-    return firstWord.slice(0, 2).toUpperCase();
-  }
-
-  return words
-    .slice(0, 2)
-    .map((word) => word.charAt(0))
-    .join("")
-    .toUpperCase() || firstWord.charAt(0).toUpperCase();
-}
-
 function CatalogSkeleton() {
   return (
     <div className="flex flex-col flex-1">
@@ -80,7 +65,6 @@ export function Catalog() {
   const [loadError, setLoadError] = useState("");
   const itemsPerPage = 8;
   const storeName = settings.store_name?.trim() || "MK MAKER";
-  const compactBrandMark = getCompactBrandMark(storeName);
 
   const scrollCatalogToTop = () => {
     catalogScrollRef.current?.scrollTo({ top: 0, left: 0, behavior: "auto" });
@@ -267,11 +251,11 @@ export function Catalog() {
               </div>
             ) : (
               <div
-                className="flex h-12 w-12 items-center justify-center rounded-2xl bg-purple-100 text-base font-black uppercase tracking-tight text-purple-800"
+                className="flex h-14 w-14 items-center justify-center overflow-hidden"
                 title={storeName}
                 aria-label={storeName}
               >
-                {compactBrandMark}
+                <BrandLogo imageClassName="h-14 w-14 object-contain object-center" />
               </div>
             )}
           </div>
