@@ -6,6 +6,8 @@ import { CatalogSortOption, sortCatalogProducts } from "./catalogSort";
 import { useStore } from "../../store/useStore";
 import { getPublicCatalogBootstrap } from "../../services/catalogService";
 import { Product } from "../../types";
+import { BrandLogo } from "../brand/BrandLogo";
+import { usePublicSettings } from "../../hooks/usePublicSettings";
 
 interface CatalogCategory {
   id: string;
@@ -18,8 +20,19 @@ function getParentId(category: CatalogCategory) {
   return category.parent_id ?? category.parentId ?? null;
 }
 
-function getCategoryInitial(name: string) {
-  return name.trim().charAt(0).toUpperCase() || "#";
+function getCompactBrandMark(name: string) {
+  const words = name.trim().split(/\s+/).filter(Boolean);
+  const firstWord = words[0] ?? "MK";
+
+  if (firstWord.length <= 3) {
+    return firstWord.slice(0, 2).toUpperCase();
+  }
+
+  return words
+    .slice(0, 2)
+    .map((word) => word.charAt(0))
+    .join("")
+    .toUpperCase() || firstWord.charAt(0).toUpperCase();
 }
 
 function CatalogSkeleton() {
@@ -51,6 +64,7 @@ function CatalogSkeleton() {
 
 export function Catalog() {
   const { activeCategory, setActiveCategory } = useStore();
+  const settings = usePublicSettings();
   const catalogScrollRef = useRef<HTMLDivElement | null>(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
@@ -65,6 +79,8 @@ export function Catalog() {
   const [isLoading, setIsLoading] = useState(true);
   const [loadError, setLoadError] = useState("");
   const itemsPerPage = 8;
+  const storeName = settings.store_name?.trim() || "MK MAKER";
+  const compactBrandMark = getCompactBrandMark(storeName);
 
   const scrollCatalogToTop = () => {
     catalogScrollRef.current?.scrollTo({ top: 0, left: 0, behavior: "auto" });
@@ -173,22 +189,6 @@ export function Catalog() {
       return acc;
     }, {});
   }, [storeProducts]);
-  const compactCategoryItems = useMemo(() => {
-    return rootCategories.flatMap((category) => [
-      {
-        id: category.id,
-        name: category.name,
-        count: categoryProductCounts[category.id] ?? 0,
-        isSubcategory: false,
-      },
-      ...(subcategoriesByParent[category.id] ?? []).map((subcategory) => ({
-        id: subcategory.id,
-        name: subcategory.name,
-        count: categoryProductCounts[subcategory.id] ?? 0,
-        isSubcategory: true,
-      })),
-    ]);
-  }, [rootCategories, subcategoriesByParent, categoryProductCounts]);
   const activeCategoryData = storeCategories.find((category) => category.id === activeCategory);
   const activeCategoryLabel = activeCategory ? activeCategoryData?.name : "Todos os Itens";
 
@@ -236,7 +236,7 @@ export function Catalog() {
 
       <aside
         className={`
-          fixed lg:static inset-y-0 left-0 z-50
+          fixed inset-y-0 left-0 z-[60]
           bg-white lg:bg-white/80 lg:backdrop-blur-md
           border-r border-neutral-200
           transition-all duration-300 ease-in-out shrink-0 overflow-visible
@@ -252,7 +252,7 @@ export function Catalog() {
         <button
           type="button"
           onClick={() => setIsSidebarCollapsed((collapsed) => !collapsed)}
-          className="absolute -right-4 top-16 z-20 hidden h-9 w-9 items-center justify-center rounded-full border border-purple-200 bg-white text-purple-700 shadow-md transition-all hover:border-purple-300 hover:bg-purple-50 lg:flex"
+          className="absolute -right-4 top-24 z-20 hidden h-9 w-9 items-center justify-center rounded-full border border-purple-200 bg-white text-purple-700 shadow-md transition-all hover:border-purple-300 hover:bg-purple-50 lg:flex"
           aria-label={isSidebarCollapsed ? "Expandir categorias" : "Recolher categorias"}
           title={isSidebarCollapsed ? "Expandir categorias" : "Recolher categorias"}
         >
@@ -260,18 +260,31 @@ export function Catalog() {
         </button>
 
         <div className={`w-[min(20rem,calc(100vw-1rem))] ${isSidebarCollapsed ? "lg:w-20" : "lg:w-72"} flex h-full flex-col overflow-hidden`}>
-          <div className={`border-b border-neutral-100 bg-white/95 px-5 py-5 ${isSidebarCollapsed ? "lg:px-3" : "lg:px-5"}`}>
+          <div className={`flex min-h-[92px] items-center bg-white/95 px-5 ${isSidebarCollapsed ? "justify-center lg:px-3" : "justify-start lg:px-5"}`}>
+            {!isSidebarCollapsed ? (
+              <div className="min-w-0">
+                <BrandLogo imageClassName="h-14 w-36 object-contain object-left" />
+              </div>
+            ) : (
+              <div
+                className="flex h-12 w-12 items-center justify-center rounded-2xl bg-purple-100 text-base font-black uppercase tracking-tight text-purple-800"
+                title={storeName}
+                aria-label={storeName}
+              >
+                {compactBrandMark}
+              </div>
+            )}
+          </div>
+
+          <div className={`border-b border-neutral-100 bg-white/95 px-5 py-5 ${isSidebarCollapsed ? "hidden" : "lg:px-5"}`}>
             <div className={`flex items-center gap-3 ${isSidebarCollapsed ? "lg:justify-center" : "justify-between"}`}>
-              <div className={`min-w-0 ${isSidebarCollapsed ? "lg:hidden" : ""}`}>
+              <div className="min-w-0">
                 <h3 className="text-[11px] font-black text-neutral-500 uppercase tracking-[0.22em]">
                   Categorias
                 </h3>
                 <p className="mt-1 truncate text-xs text-neutral-400">
                   Navegue por linha e tipo de produto
                 </p>
-              </div>
-              <div className={`${isSidebarCollapsed ? "hidden lg:flex" : "hidden"} h-11 w-11 items-center justify-center rounded-2xl bg-purple-100 text-sm font-black uppercase tracking-tight text-purple-800`}>
-                Cat
               </div>
               <button
                 onClick={() => setIsSidebarOpen(false)}
@@ -285,7 +298,7 @@ export function Catalog() {
           </div>
 
           <div className={`flex-1 overflow-y-auto py-5 custom-scrollbar ${isSidebarCollapsed ? "px-4 lg:px-2" : "px-4"}`}>
-            <div className={`${isSidebarCollapsed ? "lg:hidden" : ""} flex flex-col gap-3`}>
+            <div className={`${isSidebarCollapsed ? "hidden" : ""} flex flex-col gap-3`}>
               {isLoading &&
                 Array.from({ length: 6 }).map((_, index) => (
                   <div key={index} className="h-12 animate-pulse rounded-xl bg-neutral-100" />
@@ -374,56 +387,16 @@ export function Catalog() {
               )}
             </div>
 
-            <div className={`${isSidebarCollapsed ? "hidden lg:flex" : "hidden"} flex-col items-center gap-2`}>
-              {isLoading &&
-                Array.from({ length: 7 }).map((_, index) => (
-                  <div key={index} className="h-11 w-11 animate-pulse rounded-2xl bg-neutral-100" />
-                ))}
-
-              {!isLoading && (
-                <>
-                  <button
-                    onClick={() => selectCategory(null)}
-                    className={`relative flex h-12 w-12 items-center justify-center rounded-2xl border text-sm font-black transition-all ${
-                      activeCategory === null
-                        ? "border-purple-200 bg-purple-100 text-purple-800 shadow-sm"
-                        : "border-neutral-100 bg-white text-neutral-600 hover:border-purple-200 hover:bg-purple-50 hover:text-purple-800"
-                    }`}
-                    aria-label="Todos os Itens"
-                    title={`Todos os Itens (${storeProducts.length})`}
-                  >
-                    T
-                  </button>
-
-                  {compactCategoryItems.map((item) => {
-                    const isActive = activeCategory === item.id;
-
-                    return (
-                      <button
-                        key={item.id}
-                        onClick={() => selectCategory(item.id)}
-                        className={`relative flex items-center justify-center border font-black uppercase transition-all ${
-                          item.isSubcategory ? "h-9 w-9 rounded-xl text-[11px]" : "h-12 w-12 rounded-2xl text-sm"
-                        } ${
-                          isActive
-                            ? "border-purple-200 bg-purple-100 text-purple-800 shadow-sm"
-                            : "border-neutral-100 bg-white text-neutral-600 hover:border-purple-200 hover:bg-purple-50 hover:text-purple-800"
-                        }`}
-                        aria-label={item.name}
-                        title={`${item.name} (${item.count})`}
-                      >
-                        {getCategoryInitial(item.name)}
-                      </button>
-                    );
-                  })}
-                </>
-              )}
-            </div>
           </div>
         </div>
       </aside>
 
-      <div ref={catalogScrollRef} className="relative z-10 flex-1 flex flex-col p-4 lg:p-12 overflow-y-auto custom-scrollbar h-full">
+      <div
+        ref={catalogScrollRef}
+        className={`relative z-10 flex h-full flex-1 flex-col overflow-y-auto p-4 transition-[margin] duration-300 custom-scrollbar lg:p-12 ${
+          isSidebarCollapsed ? "lg:ml-20" : "lg:ml-72"
+        }`}
+      >
         <header className="mb-6 lg:mb-10 flex flex-col gap-4 lg:gap-6">
           <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
             <div className="flex items-start gap-4">
