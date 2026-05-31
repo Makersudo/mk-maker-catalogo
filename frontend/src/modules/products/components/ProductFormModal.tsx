@@ -29,6 +29,7 @@ export function ProductFormModal({ onClose, productToEdit }: ProductFormModalPro
   const [description, setDescription] = useState(productToEdit?.description || '');
   const [price, setPrice] = useState(productToEdit?.price.toString() || '');
   const [stockQuantity, setStockQuantity] = useState(String(productToEdit?.stockQuantity ?? 0));
+  const [brandLabel, setBrandLabel] = useState(productToEdit?.brandLabel || '');
   const rootCategories = categories.filter((category) => !getParentId(category));
   const [categoryId, setCategoryId] = useState(productToEdit?.categoryId || '');
   const [subcategoryId, setSubcategoryId] = useState(productToEdit?.subcategoryId || '');
@@ -137,6 +138,7 @@ export function ProductFormModal({ onClose, productToEdit }: ProductFormModalPro
       categoryId,
       subcategoryId: subcategoryId || null,
       audience: audience || null,
+      brandLabel: brandLabel.trim(),
       productType,
       variation: variation || null,
       features: featuresText.split('\n').map((item) => item.trim()).filter(Boolean),
@@ -393,6 +395,11 @@ export function ProductFormModal({ onClose, productToEdit }: ProductFormModalPro
                     <option value="masculino">Masculino</option>
                     <option value="suplemento">Suplemento</option>
                   </select>
+                </div>
+
+                <div className="flex flex-col gap-1.5">
+                  <label className="text-xs font-bold text-neutral-700 uppercase tracking-widest">Rotulo / marca</label>
+                  <input type="text" value={brandLabel} onChange={(e) => setBrandLabel(e.target.value)} className="w-full px-4 py-3 bg-neutral-50 border border-neutral-200 rounded-xl text-sm focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500" placeholder="Ex: DIOR, avon, MK MAKER" />
                 </div>
 
                 <div className="flex flex-col gap-1.5">

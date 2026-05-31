@@ -10,6 +10,7 @@ export interface Product {
   categoryId: string;
   subcategoryId?: string | null;
   audience?: 'feminino' | 'masculino' | 'suplemento' | null;
+  brandLabel?: string;
   productType?: string;
   variation?: string | null;
   features?: string[];

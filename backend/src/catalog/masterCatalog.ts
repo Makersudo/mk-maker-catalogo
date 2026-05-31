@@ -1,6 +1,16 @@
 export type Audience = 'feminino' | 'masculino' | 'suplemento';
 export type CatalogStatus = 'draft' | 'ready' | 'live';
 
+export const catalogBrandLabels = [
+  'M\u00B7A\u00B7C Cosmetics',
+  'avon',
+  'Fenty Beauty',
+  'DIOR',
+  'Lanc\u00F4me',
+] as const;
+
+export type CatalogBrandLabel = (typeof catalogBrandLabels)[number];
+
 export interface CatalogCategorySeed {
   slug: string;
   name: string;
@@ -18,6 +28,7 @@ export interface CatalogProductSeed {
   productType: string;
   variation: string | null;
   features: string[];
+  brandLabel: CatalogBrandLabel;
   imagePrompt: string;
   price: number;
   stockQuantity: number;
@@ -27,6 +38,10 @@ export interface CatalogProductSeed {
   isPromo: boolean;
   isNew: boolean;
 }
+
+type BaseCatalogProductSeed = Omit<CatalogProductSeed, 'brandLabel' | 'imagePrompt'> & {
+  imagePrompt?: string;
+};
 
 export const catalogCategorySeeds: CatalogCategorySeed[] = [
   {
@@ -331,7 +346,7 @@ export const catalogCategorySeeds: CatalogCategorySeed[] = [
   }
 ];
 
-export const masterCatalogProducts: CatalogProductSeed[] = [
+const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
   {
     "slug": "pele-preparacao-da-pele-primer-facial",
     "title": "Primer facial",
@@ -5577,3 +5592,47 @@ export const masterCatalogProducts: CatalogProductSeed[] = [
     "isNew": false
   }
 ];
+
+const categoryBrandRotation: Record<string, readonly CatalogBrandLabel[]> = {
+  pele: ['Fenty Beauty', 'Lanc\u00F4me', 'DIOR', 'M\u00B7A\u00B7C Cosmetics', 'avon'],
+  olhos: ['Lanc\u00F4me', 'M\u00B7A\u00B7C Cosmetics', 'avon', 'Fenty Beauty'],
+  sobrancelhas: ['M\u00B7A\u00B7C Cosmetics', 'avon', 'Fenty Beauty'],
+  boca: ['DIOR', 'M\u00B7A\u00B7C Cosmetics', 'avon', 'Fenty Beauty', 'Lanc\u00F4me'],
+  'pinceis-e-esponjas': ['M\u00B7A\u00B7C Cosmetics', 'Fenty Beauty', 'avon'],
+  'acessorios-de-maquiagem': ['avon', 'M\u00B7A\u00B7C Cosmetics', 'Fenty Beauty'],
+  'fixacao-e-finalizacao': ['M\u00B7A\u00B7C Cosmetics', 'Fenty Beauty', 'Lanc\u00F4me', 'avon'],
+  'maquiagem-artistica': ['M\u00B7A\u00B7C Cosmetics', 'avon', 'Fenty Beauty'],
+  'maquiagem-infantil': ['avon', 'Fenty Beauty'],
+  'demaquilantes-e-limpeza': ['Lanc\u00F4me', 'Fenty Beauty', 'avon'],
+  'kits-e-combos': ['M\u00B7A\u00B7C Cosmetics', 'Fenty Beauty', 'DIOR', 'Lanc\u00F4me', 'avon'],
+  unhas: ['avon', 'DIOR', 'M\u00B7A\u00B7C Cosmetics'],
+};
+
+function getBrandLabel(product: BaseCatalogProductSeed, index: number): CatalogBrandLabel {
+  const rotation = categoryBrandRotation[product.categorySlug] ?? catalogBrandLabels;
+  return rotation[index % rotation.length];
+}
+
+export function buildProductImagePrompt(product: BaseCatalogProductSeed, brandLabel: CatalogBrandLabel) {
+  const productType = product.productType.toLowerCase();
+
+  return [
+    `Mockup fotografico ultrarrealista de ${product.title}, produto de maquiagem e beleza para ${productType}.`,
+    'Produto unico em destaque, isolado no centro, totalmente visivel, pronto para card de e-commerce.',
+    'Fundo branco puro, iluminacao de estudio suave, sombras naturais discretas e acabamento premium.',
+    'Embalagem coerente com o tipo do produto, com materiais realistas como vidro, acrilico, metal, plastico fosco, po compacto, creme, pincel ou embalagem cartucho quando fizer sentido.',
+    'Paleta visual sofisticada em nude rosado C98F86, preto, prata, rose gold e tons do proprio produto.',
+    `Rotulo frontal legivel com o texto exato "${brandLabel}", aplicado na embalagem ou etiqueta principal.`,
+    'Nao incluir nenhum outro texto, selo, codigo, marca d agua, pessoas, maos, cenario, fundo colorido ou elementos extras.',
+  ].join(' ');
+}
+
+export const masterCatalogProducts: CatalogProductSeed[] = baseMasterCatalogProducts.map((product, index) => {
+  const brandLabel = getBrandLabel(product, index);
+
+  return {
+    ...product,
+    brandLabel,
+    imagePrompt: buildProductImagePrompt(product, brandLabel),
+  };
+});

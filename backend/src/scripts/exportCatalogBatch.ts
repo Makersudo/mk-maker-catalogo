@@ -18,6 +18,7 @@ async function main() {
     audience: product.audience,
     productType: product.productType,
     variation: product.variation,
+    brandLabel: product.brandLabel,
     features: product.features,
     imagePrompt: product.imagePrompt,
     catalogStatus: product.catalogStatus,
@@ -37,6 +38,7 @@ async function main() {
     images: products.map((product) => ({
       slug: product.slug,
       title: product.title,
+      brandLabel: product.brandLabel,
       imagePath: '',
       imageUrl: '',
       approved: false,
@@ -44,10 +46,11 @@ async function main() {
     })),
   };
 
-  const csvHeader = ['slug', 'title', 'category', 'subcategory', 'audience', 'variation', 'price', 'catalogStatus', 'isActive', 'hasImage', 'approved', 'notes'];
+  const csvHeader = ['slug', 'title', 'brandLabel', 'category', 'subcategory', 'audience', 'variation', 'price', 'catalogStatus', 'isActive', 'hasImage', 'approved', 'notes'];
   const csvRows = products.map((product) => [
     product.slug,
     product.title,
+    product.brandLabel,
     getCategoryName(product.categorySlug),
     getCategoryName(product.subcategorySlug),
     product.audience,
@@ -64,6 +67,7 @@ async function main() {
     `## ${index + 1}. ${product.title}`,
     '',
     `Slug: \`${product.slug}\``,
+    `Rotulo: ${product.brandLabel}`,
     `Categoria: ${getCategoryName(product.categorySlug)} / ${getCategoryName(product.subcategorySlug)}`,
     `Variacao: ${product.variation}`,
     '',

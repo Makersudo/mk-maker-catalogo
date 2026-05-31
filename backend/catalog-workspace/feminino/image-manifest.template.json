@@ -1,6 +1,6 @@
 {
   "audience": "feminino",
-  "generatedAt": "2026-05-29T22:15:24.603Z",
+  "generatedAt": "2026-05-31T00:41:13.237Z",
   "instructions": [
     "Preencha imagePath com um arquivo local ou imageUrl com uma URL publica para cada produto aprovado.",
     "Mantenha approved=false enquanto a imagem nao foi revisada.",
@@ -10,6 +10,7 @@
     {
       "slug": "pele-preparacao-da-pele-primer-facial",
       "title": "Primer facial",
+      "brandLabel": "Fenty Beauty",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -18,6 +19,7 @@
     {
       "slug": "pele-preparacao-da-pele-primer-matificante",
       "title": "Primer matificante",
+      "brandLabel": "Lancôme",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -26,6 +28,7 @@
     {
       "slug": "pele-preparacao-da-pele-primer-hidratante",
       "title": "Primer hidratante",
+      "brandLabel": "DIOR",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -34,6 +37,7 @@
     {
       "slug": "pele-preparacao-da-pele-bruma-hidratante",
       "title": "Bruma hidratante",
+      "brandLabel": "M·A·C Cosmetics",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -42,6 +46,7 @@
     {
       "slug": "pele-preparacao-da-pele-fixador-de-maquiagem",
       "title": "Fixador de maquiagem",
+      "brandLabel": "avon",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -50,6 +55,7 @@
     {
       "slug": "pele-preparacao-da-pele-protetor-solar-com-cor",
       "title": "Protetor solar com cor",
+      "brandLabel": "Fenty Beauty",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -58,6 +64,7 @@
     {
       "slug": "pele-bases-base-liquida",
       "title": "Base liquida",
+      "brandLabel": "Lancôme",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -66,6 +73,7 @@
     {
       "slug": "pele-bases-base-matte",
       "title": "Base matte",
+      "brandLabel": "DIOR",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -74,6 +82,7 @@
     {
       "slug": "pele-bases-base-glow",
       "title": "Base glow",
+      "brandLabel": "M·A·C Cosmetics",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -82,6 +91,7 @@
     {
       "slug": "pele-bases-base-em-bastao",
       "title": "Base em bastao",
+      "brandLabel": "avon",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -90,6 +100,7 @@
     {
       "slug": "pele-bases-base-compacta",
       "title": "Base compacta",
+      "brandLabel": "Fenty Beauty",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -98,6 +109,7 @@
     {
       "slug": "pele-bases-bb-cream",
       "title": "BB Cream",
+      "brandLabel": "Lancôme",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -106,6 +118,7 @@
     {
       "slug": "pele-corretivos-corretivo-liquido",
       "title": "Corretivo liquido",
+      "brandLabel": "DIOR",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -114,6 +127,7 @@
     {
       "slug": "pele-corretivos-corretivo-cremoso",
       "title": "Corretivo cremoso",
+      "brandLabel": "M·A·C Cosmetics",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -122,6 +136,7 @@
     {
       "slug": "pele-corretivos-corretivo-em-bastao",
       "title": "Corretivo em bastao",
+      "brandLabel": "avon",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -130,6 +145,7 @@
     {
       "slug": "pele-corretivos-corretivo-colorido",
       "title": "Corretivo colorido",
+      "brandLabel": "Fenty Beauty",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -138,6 +154,7 @@
     {
       "slug": "pele-corretivos-paleta-de-corretivos",
       "title": "Paleta de corretivos",
+      "brandLabel": "Lancôme",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -146,6 +163,7 @@
     {
       "slug": "pele-corretivos-corretivo-alta-cobertura",
       "title": "Corretivo alta cobertura",
+      "brandLabel": "DIOR",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -154,6 +172,7 @@
     {
       "slug": "pele-pos-faciais-po-compacto",
       "title": "Po compacto",
+      "brandLabel": "M·A·C Cosmetics",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -162,6 +181,7 @@
     {
       "slug": "pele-pos-faciais-po-solto",
       "title": "Po solto",
+      "brandLabel": "avon",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -170,6 +190,7 @@
     {
       "slug": "pele-pos-faciais-po-translucido",
       "title": "Po translucido",
+      "brandLabel": "Fenty Beauty",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -178,6 +199,7 @@
     {
       "slug": "pele-pos-faciais-po-banana",
       "title": "Po banana",
+      "brandLabel": "Lancôme",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -186,6 +208,7 @@
     {
       "slug": "pele-pos-faciais-po-matificante",
       "title": "Po matificante",
+      "brandLabel": "DIOR",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -194,6 +217,7 @@
     {
       "slug": "pele-pos-faciais-po-finalizador",
       "title": "Po finalizador",
+      "brandLabel": "M·A·C Cosmetics",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -202,6 +226,7 @@
     {
       "slug": "pele-contorno-e-bronzer-contorno-em-po",
       "title": "Contorno em po",
+      "brandLabel": "avon",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -210,6 +235,7 @@
     {
       "slug": "pele-contorno-e-bronzer-contorno-cremoso",
       "title": "Contorno cremoso",
+      "brandLabel": "Fenty Beauty",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -218,6 +244,7 @@
     {
       "slug": "pele-contorno-e-bronzer-contorno-em-bastao",
       "title": "Contorno em bastao",
+      "brandLabel": "Lancôme",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -226,6 +253,7 @@
     {
       "slug": "pele-contorno-e-bronzer-paleta-de-contorno",
       "title": "Paleta de contorno",
+      "brandLabel": "DIOR",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -234,6 +262,7 @@
     {
       "slug": "pele-contorno-e-bronzer-bronzer-em-po",
       "title": "Bronzer em po",
+      "brandLabel": "M·A·C Cosmetics",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -242,6 +271,7 @@
     {
       "slug": "pele-contorno-e-bronzer-bronzer-cremoso",
       "title": "Bronzer cremoso",
+      "brandLabel": "avon",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -250,6 +280,7 @@
     {
       "slug": "pele-blush-blush-em-po",
       "title": "Blush em po",
+      "brandLabel": "Fenty Beauty",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -258,6 +289,7 @@
     {
       "slug": "pele-blush-blush-liquido",
       "title": "Blush liquido",
+      "brandLabel": "Lancôme",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -266,6 +298,7 @@
     {
       "slug": "pele-blush-blush-cremoso",
       "title": "Blush cremoso",
+      "brandLabel": "DIOR",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -274,6 +307,7 @@
     {
       "slug": "pele-blush-blush-em-bastao",
       "title": "Blush em bastao",
+      "brandLabel": "M·A·C Cosmetics",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -282,6 +316,7 @@
     {
       "slug": "pele-blush-paleta-de-blush",
       "title": "Paleta de blush",
+      "brandLabel": "avon",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -290,6 +325,7 @@
     {
       "slug": "pele-blush-blush-compacto",
       "title": "Blush compacto",
+      "brandLabel": "Fenty Beauty",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -298,6 +334,7 @@
     {
       "slug": "pele-iluminador-iluminador-em-po",
       "title": "Iluminador em po",
+      "brandLabel": "Lancôme",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -306,6 +343,7 @@
     {
       "slug": "pele-iluminador-iluminador-liquido",
       "title": "Iluminador liquido",
+      "brandLabel": "DIOR",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -314,6 +352,7 @@
     {
       "slug": "pele-iluminador-iluminador-cremoso",
       "title": "Iluminador cremoso",
+      "brandLabel": "M·A·C Cosmetics",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -322,6 +361,7 @@
     {
       "slug": "pele-iluminador-iluminador-em-bastao",
       "title": "Iluminador em bastao",
+      "brandLabel": "avon",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -330,6 +370,7 @@
     {
       "slug": "pele-iluminador-paleta-de-iluminador",
       "title": "Paleta de iluminador",
+      "brandLabel": "Fenty Beauty",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -338,6 +379,7 @@
     {
       "slug": "pele-iluminador-iluminador-corporal",
       "title": "Iluminador corporal",
+      "brandLabel": "Lancôme",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -346,6 +388,7 @@
     {
       "slug": "olhos-sombras-paleta-de-sombras",
       "title": "Paleta de sombras",
+      "brandLabel": "avon",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -354,6 +397,7 @@
     {
       "slug": "olhos-sombras-sombra-unitaria",
       "title": "Sombra unitaria",
+      "brandLabel": "Fenty Beauty",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -362,6 +406,7 @@
     {
       "slug": "olhos-sombras-sombra-liquida",
       "title": "Sombra liquida",
+      "brandLabel": "Lancôme",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -370,6 +415,7 @@
     {
       "slug": "olhos-sombras-sombra-cremosa",
       "title": "Sombra cremosa",
+      "brandLabel": "M·A·C Cosmetics",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -378,6 +424,7 @@
     {
       "slug": "olhos-sombras-sombra-em-bastao",
       "title": "Sombra em bastao",
+      "brandLabel": "avon",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -386,6 +433,7 @@
     {
       "slug": "olhos-sombras-pigmento",
       "title": "Pigmento",
+      "brandLabel": "Fenty Beauty",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -394,6 +442,7 @@
     {
       "slug": "olhos-delineadores-delineador-liquido",
       "title": "Delineador liquido",
+      "brandLabel": "Lancôme",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -402,6 +451,7 @@
     {
       "slug": "olhos-delineadores-delineador-em-gel",
       "title": "Delineador em gel",
+      "brandLabel": "M·A·C Cosmetics",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -410,6 +460,7 @@
     {
       "slug": "olhos-delineadores-delineador-caneta",
       "title": "Delineador caneta",
+      "brandLabel": "avon",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -418,6 +469,7 @@
     {
       "slug": "olhos-delineadores-delineador-colorido",
       "title": "Delineador colorido",
+      "brandLabel": "Fenty Beauty",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -426,6 +478,7 @@
     {
       "slug": "olhos-delineadores-delineador-a-prova-d-agua",
       "title": "Delineador a prova d'agua",
+      "brandLabel": "Lancôme",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -434,6 +487,7 @@
     {
       "slug": "olhos-delineadores-delineador-glitter",
       "title": "Delineador glitter",
+      "brandLabel": "M·A·C Cosmetics",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -442,6 +496,7 @@
     {
       "slug": "olhos-lapis-de-olho-lapis-preto",
       "title": "Lapis preto",
+      "brandLabel": "avon",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -450,6 +505,7 @@
     {
       "slug": "olhos-lapis-de-olho-lapis-marrom",
       "title": "Lapis marrom",
+      "brandLabel": "Fenty Beauty",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -458,6 +514,7 @@
     {
       "slug": "olhos-lapis-de-olho-lapis-bege",
       "title": "Lapis bege",
+      "brandLabel": "Lancôme",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -466,6 +523,7 @@
     {
       "slug": "olhos-lapis-de-olho-lapis-branco",
       "title": "Lapis branco",
+      "brandLabel": "M·A·C Cosmetics",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -474,6 +532,7 @@
     {
       "slug": "olhos-lapis-de-olho-lapis-kajal",
       "title": "Lapis kajal",
+      "brandLabel": "avon",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -482,6 +541,7 @@
     {
       "slug": "olhos-lapis-de-olho-lapis-colorido",
       "title": "Lapis colorido",
+      "brandLabel": "Fenty Beauty",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -490,6 +550,7 @@
     {
       "slug": "olhos-mascara-de-cilios-mascara-alongadora",
       "title": "Mascara alongadora",
+      "brandLabel": "Lancôme",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -498,6 +559,7 @@
     {
       "slug": "olhos-mascara-de-cilios-mascara-volumizadora",
       "title": "Mascara volumizadora",
+      "brandLabel": "M·A·C Cosmetics",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -506,6 +568,7 @@
     {
       "slug": "olhos-mascara-de-cilios-mascara-a-prova-d-agua",
       "title": "Mascara a prova d'agua",
+      "brandLabel": "avon",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -514,6 +577,7 @@
     {
       "slug": "olhos-mascara-de-cilios-mascara-incolor",
       "title": "Mascara incolor",
+      "brandLabel": "Fenty Beauty",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -522,6 +586,7 @@
     {
       "slug": "olhos-mascara-de-cilios-mascara-efeito-boneca",
       "title": "Mascara efeito boneca",
+      "brandLabel": "Lancôme",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -530,6 +595,7 @@
     {
       "slug": "olhos-mascara-de-cilios-mascara-curva-cilios",
       "title": "Mascara curva cilios",
+      "brandLabel": "M·A·C Cosmetics",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -538,6 +604,7 @@
     {
       "slug": "olhos-cilios-posticos-cilios-naturais",
       "title": "Cilios naturais",
+      "brandLabel": "avon",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -546,6 +613,7 @@
     {
       "slug": "olhos-cilios-posticos-cilios-volume",
       "title": "Cilios volume",
+      "brandLabel": "Fenty Beauty",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -554,6 +622,7 @@
     {
       "slug": "olhos-cilios-posticos-cilios-tufinho",
       "title": "Cilios tufinho",
+      "brandLabel": "Lancôme",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -562,6 +631,7 @@
     {
       "slug": "olhos-cilios-posticos-cilios-fio-a-fio",
       "title": "Cilios fio a fio",
+      "brandLabel": "M·A·C Cosmetics",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -570,6 +640,7 @@
     {
       "slug": "olhos-cilios-posticos-cola-para-cilios",
       "title": "Cola para cilios",
+      "brandLabel": "avon",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -578,6 +649,7 @@
     {
       "slug": "olhos-cilios-posticos-aplicador-de-cilios",
       "title": "Aplicador de cilios",
+      "brandLabel": "Fenty Beauty",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -586,6 +658,7 @@
     {
       "slug": "sobrancelhas-produtos-para-sobrancelhas-lapis-para-sobrancelhas",
       "title": "Lapis para sobrancelhas",
+      "brandLabel": "M·A·C Cosmetics",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -594,6 +667,7 @@
     {
       "slug": "sobrancelhas-produtos-para-sobrancelhas-caneta-para-sobrancelhas",
       "title": "Caneta para sobrancelhas",
+      "brandLabel": "avon",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -602,6 +676,7 @@
     {
       "slug": "sobrancelhas-produtos-para-sobrancelhas-sombra-para-sobrancelhas",
       "title": "Sombra para sobrancelhas",
+      "brandLabel": "Fenty Beauty",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -610,6 +685,7 @@
     {
       "slug": "sobrancelhas-produtos-para-sobrancelhas-pomada-para-sobrancelhas",
       "title": "Pomada para sobrancelhas",
+      "brandLabel": "M·A·C Cosmetics",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -618,6 +694,7 @@
     {
       "slug": "sobrancelhas-produtos-para-sobrancelhas-gel-para-sobrancelhas",
       "title": "Gel para sobrancelhas",
+      "brandLabel": "avon",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -626,6 +703,7 @@
     {
       "slug": "sobrancelhas-produtos-para-sobrancelhas-mascara-para-sobrancelhas",
       "title": "Mascara para sobrancelhas",
+      "brandLabel": "Fenty Beauty",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -634,6 +712,7 @@
     {
       "slug": "sobrancelhas-acessorios-para-sobrancelhas-pinca",
       "title": "Pinca",
+      "brandLabel": "M·A·C Cosmetics",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -642,6 +721,7 @@
     {
       "slug": "sobrancelhas-acessorios-para-sobrancelhas-tesourinha",
       "title": "Tesourinha",
+      "brandLabel": "avon",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -650,6 +730,7 @@
     {
       "slug": "sobrancelhas-acessorios-para-sobrancelhas-escovinha",
       "title": "Escovinha",
+      "brandLabel": "Fenty Beauty",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -658,6 +739,7 @@
     {
       "slug": "sobrancelhas-acessorios-para-sobrancelhas-navalha",
       "title": "Navalha",
+      "brandLabel": "M·A·C Cosmetics",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -666,6 +748,7 @@
     {
       "slug": "sobrancelhas-acessorios-para-sobrancelhas-paquimetro-para-sobrancelhas",
       "title": "Paquimetro para sobrancelhas",
+      "brandLabel": "avon",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -674,6 +757,7 @@
     {
       "slug": "sobrancelhas-acessorios-para-sobrancelhas-molde-para-sobrancelhas",
       "title": "Molde para sobrancelhas",
+      "brandLabel": "Fenty Beauty",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -682,6 +766,7 @@
     {
       "slug": "boca-batons-batom-matte",
       "title": "Batom matte",
+      "brandLabel": "Lancôme",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -690,6 +775,7 @@
     {
       "slug": "boca-batons-batom-cremoso",
       "title": "Batom cremoso",
+      "brandLabel": "DIOR",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -698,6 +784,7 @@
     {
       "slug": "boca-batons-batom-liquido",
       "title": "Batom liquido",
+      "brandLabel": "M·A·C Cosmetics",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -706,6 +793,7 @@
     {
       "slug": "boca-batons-batom-em-bala",
       "title": "Batom em bala",
+      "brandLabel": "avon",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -714,6 +802,7 @@
     {
       "slug": "boca-batons-batom-cintilante",
       "title": "Batom cintilante",
+      "brandLabel": "Fenty Beauty",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -722,6 +811,7 @@
     {
       "slug": "boca-batons-batom-hidratante",
       "title": "Batom hidratante",
+      "brandLabel": "Lancôme",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -730,6 +820,7 @@
     {
       "slug": "boca-gloss-e-hidratantes-gloss-labial",
       "title": "Gloss labial",
+      "brandLabel": "DIOR",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -738,6 +829,7 @@
     {
       "slug": "boca-gloss-e-hidratantes-lip-oil",
       "title": "Lip oil",
+      "brandLabel": "M·A·C Cosmetics",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -746,6 +838,7 @@
     {
       "slug": "boca-gloss-e-hidratantes-lip-tint",
       "title": "Lip tint",
+      "brandLabel": "avon",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -754,6 +847,7 @@
     {
       "slug": "boca-gloss-e-hidratantes-balm-labial",
       "title": "Balm labial",
+      "brandLabel": "Fenty Beauty",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -762,6 +856,7 @@
     {
       "slug": "boca-gloss-e-hidratantes-mascara-labial",
       "title": "Mascara labial",
+      "brandLabel": "Lancôme",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -770,6 +865,7 @@
     {
       "slug": "boca-gloss-e-hidratantes-esfoliante-labial",
       "title": "Esfoliante labial",
+      "brandLabel": "DIOR",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -778,6 +874,7 @@
     {
       "slug": "boca-lapis-labial-lapis-de-boca-nude",
       "title": "Lapis de boca nude",
+      "brandLabel": "M·A·C Cosmetics",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -786,6 +883,7 @@
     {
       "slug": "boca-lapis-labial-lapis-de-boca-vermelho",
       "title": "Lapis de boca vermelho",
+      "brandLabel": "avon",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -794,6 +892,7 @@
     {
       "slug": "boca-lapis-labial-lapis-de-boca-marrom",
       "title": "Lapis de boca marrom",
+      "brandLabel": "Fenty Beauty",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -802,6 +901,7 @@
     {
       "slug": "boca-lapis-labial-lapis-de-boca-rosa",
       "title": "Lapis de boca rosa",
+      "brandLabel": "Lancôme",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -810,6 +910,7 @@
     {
       "slug": "boca-lapis-labial-delineador-labial",
       "title": "Delineador labial",
+      "brandLabel": "DIOR",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -818,6 +919,7 @@
     {
       "slug": "boca-lapis-labial-lapis-labial-retratil",
       "title": "Lapis labial retratil",
+      "brandLabel": "M·A·C Cosmetics",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -826,6 +928,7 @@
     {
       "slug": "pinceis-e-esponjas-pinceis-para-pele-pincel-para-base",
       "title": "Pincel para base",
+      "brandLabel": "M·A·C Cosmetics",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -834,6 +937,7 @@
     {
       "slug": "pinceis-e-esponjas-pinceis-para-pele-pincel-para-corretivo",
       "title": "Pincel para corretivo",
+      "brandLabel": "Fenty Beauty",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -842,6 +946,7 @@
     {
       "slug": "pinceis-e-esponjas-pinceis-para-pele-pincel-para-po",
       "title": "Pincel para po",
+      "brandLabel": "avon",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -850,6 +955,7 @@
     {
       "slug": "pinceis-e-esponjas-pinceis-para-pele-pincel-para-blush",
       "title": "Pincel para blush",
+      "brandLabel": "M·A·C Cosmetics",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -858,6 +964,7 @@
     {
       "slug": "pinceis-e-esponjas-pinceis-para-pele-pincel-para-contorno",
       "title": "Pincel para contorno",
+      "brandLabel": "Fenty Beauty",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -866,6 +973,7 @@
     {
       "slug": "pinceis-e-esponjas-pinceis-para-pele-pincel-para-iluminador",
       "title": "Pincel para iluminador",
+      "brandLabel": "avon",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -874,6 +982,7 @@
     {
       "slug": "pinceis-e-esponjas-pinceis-para-olhos-pincel-de-esfumar",
       "title": "Pincel de esfumar",
+      "brandLabel": "M·A·C Cosmetics",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -882,6 +991,7 @@
     {
       "slug": "pinceis-e-esponjas-pinceis-para-olhos-pincel-para-sombra",
       "title": "Pincel para sombra",
+      "brandLabel": "Fenty Beauty",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -890,6 +1000,7 @@
     {
       "slug": "pinceis-e-esponjas-pinceis-para-olhos-pincel-chanfrado",
       "title": "Pincel chanfrado",
+      "brandLabel": "avon",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -898,6 +1009,7 @@
     {
       "slug": "pinceis-e-esponjas-pinceis-para-olhos-pincel-delineador",
       "title": "Pincel delineador",
+      "brandLabel": "M·A·C Cosmetics",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -906,6 +1018,7 @@
     {
       "slug": "pinceis-e-esponjas-pinceis-para-olhos-pincel-lapis",
       "title": "Pincel lapis",
+      "brandLabel": "Fenty Beauty",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -914,6 +1027,7 @@
     {
       "slug": "pinceis-e-esponjas-pinceis-para-olhos-pincel-precisao",
       "title": "Pincel precisao",
+      "brandLabel": "avon",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -922,6 +1036,7 @@
     {
       "slug": "pinceis-e-esponjas-esponjas-esponja-gota",
       "title": "Esponja gota",
+      "brandLabel": "M·A·C Cosmetics",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -930,6 +1045,7 @@
     {
       "slug": "pinceis-e-esponjas-esponjas-esponja-chanfrada",
       "title": "Esponja chanfrada",
+      "brandLabel": "Fenty Beauty",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -938,6 +1054,7 @@
     {
       "slug": "pinceis-e-esponjas-esponjas-esponja-mini",
       "title": "Esponja mini",
+      "brandLabel": "avon",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -946,6 +1063,7 @@
     {
       "slug": "pinceis-e-esponjas-esponjas-esponja-para-po",
       "title": "Esponja para po",
+      "brandLabel": "M·A·C Cosmetics",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -954,6 +1072,7 @@
     {
       "slug": "pinceis-e-esponjas-esponjas-esponja-de-silicone",
       "title": "Esponja de silicone",
+      "brandLabel": "Fenty Beauty",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -962,6 +1081,7 @@
     {
       "slug": "pinceis-e-esponjas-esponjas-kit-de-esponjas",
       "title": "Kit de esponjas",
+      "brandLabel": "avon",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -970,6 +1090,7 @@
     {
       "slug": "pinceis-e-esponjas-kits-de-pinceis-kit-pinceis-iniciante",
       "title": "Kit pinceis iniciante",
+      "brandLabel": "M·A·C Cosmetics",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -978,6 +1099,7 @@
     {
       "slug": "pinceis-e-esponjas-kits-de-pinceis-kit-pinceis-profissional",
       "title": "Kit pinceis profissional",
+      "brandLabel": "Fenty Beauty",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -986,6 +1108,7 @@
     {
       "slug": "pinceis-e-esponjas-kits-de-pinceis-kit-pinceis-para-pele",
       "title": "Kit pinceis para pele",
+      "brandLabel": "avon",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -994,6 +1117,7 @@
     {
       "slug": "pinceis-e-esponjas-kits-de-pinceis-kit-pinceis-para-olhos",
       "title": "Kit pinceis para olhos",
+      "brandLabel": "M·A·C Cosmetics",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -1002,6 +1126,7 @@
     {
       "slug": "pinceis-e-esponjas-kits-de-pinceis-kit-pinceis-completo",
       "title": "Kit pinceis completo",
+      "brandLabel": "Fenty Beauty",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -1010,6 +1135,7 @@
     {
       "slug": "pinceis-e-esponjas-kits-de-pinceis-kit-pinceis-viagem",
       "title": "Kit pinceis viagem",
+      "brandLabel": "avon",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -1018,6 +1144,7 @@
     {
       "slug": "acessorios-de-maquiagem-organizacao-necessaire",
       "title": "Necessaire",
+      "brandLabel": "avon",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -1026,6 +1153,7 @@
     {
       "slug": "acessorios-de-maquiagem-organizacao-maleta-de-maquiagem",
       "title": "Maleta de maquiagem",
+      "brandLabel": "M·A·C Cosmetics",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -1034,6 +1162,7 @@
     {
       "slug": "acessorios-de-maquiagem-organizacao-porta-pinceis",
       "title": "Porta-pinceis",
+      "brandLabel": "Fenty Beauty",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -1042,6 +1171,7 @@
     {
       "slug": "acessorios-de-maquiagem-organizacao-organizador-acrilico",
       "title": "Organizador acrilico",
+      "brandLabel": "avon",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -1050,6 +1180,7 @@
     {
       "slug": "acessorios-de-maquiagem-organizacao-bolsa-de-maquiagem",
       "title": "Bolsa de maquiagem",
+      "brandLabel": "M·A·C Cosmetics",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -1058,6 +1189,7 @@
     {
       "slug": "acessorios-de-maquiagem-organizacao-estojo-de-maquiagem",
       "title": "Estojo de maquiagem",
+      "brandLabel": "Fenty Beauty",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -1066,6 +1198,7 @@
     {
       "slug": "acessorios-de-maquiagem-ferramentas-curvex",
       "title": "Curvex",
+      "brandLabel": "avon",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -1074,6 +1207,7 @@
     {
       "slug": "acessorios-de-maquiagem-ferramentas-apontador-de-lapis",
       "title": "Apontador de lapis",
+      "brandLabel": "M·A·C Cosmetics",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -1082,6 +1216,7 @@
     {
       "slug": "acessorios-de-maquiagem-ferramentas-espelho-de-maquiagem",
       "title": "Espelho de maquiagem",
+      "brandLabel": "Fenty Beauty",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -1090,6 +1225,7 @@
     {
       "slug": "acessorios-de-maquiagem-ferramentas-espelho-com-led",
       "title": "Espelho com LED",
+      "brandLabel": "avon",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -1098,6 +1234,7 @@
     {
       "slug": "acessorios-de-maquiagem-ferramentas-espatula-de-maquiagem",
       "title": "Espatula de maquiagem",
+      "brandLabel": "M·A·C Cosmetics",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -1106,6 +1243,7 @@
     {
       "slug": "acessorios-de-maquiagem-ferramentas-plaquinha-misturadora",
       "title": "Plaquinha misturadora",
+      "brandLabel": "Fenty Beauty",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -1114,6 +1252,7 @@
     {
       "slug": "acessorios-de-maquiagem-limpeza-de-pinceis-higienizador-de-pinceis",
       "title": "Higienizador de pinceis",
+      "brandLabel": "avon",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -1122,6 +1261,7 @@
     {
       "slug": "acessorios-de-maquiagem-limpeza-de-pinceis-sabonete-para-pinceis",
       "title": "Sabonete para pinceis",
+      "brandLabel": "M·A·C Cosmetics",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -1130,6 +1270,7 @@
     {
       "slug": "acessorios-de-maquiagem-limpeza-de-pinceis-tapete-limpa-pinceis",
       "title": "Tapete limpa-pinceis",
+      "brandLabel": "Fenty Beauty",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -1138,6 +1279,7 @@
     {
       "slug": "acessorios-de-maquiagem-limpeza-de-pinceis-luva-limpa-pinceis",
       "title": "Luva limpa-pinceis",
+      "brandLabel": "avon",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -1146,6 +1288,7 @@
     {
       "slug": "acessorios-de-maquiagem-limpeza-de-pinceis-spray-higienizador",
       "title": "Spray higienizador",
+      "brandLabel": "M·A·C Cosmetics",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -1154,6 +1297,7 @@
     {
       "slug": "acessorios-de-maquiagem-limpeza-de-pinceis-secador-de-pinceis",
       "title": "Secador de pinceis",
+      "brandLabel": "Fenty Beauty",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -1162,6 +1306,7 @@
     {
       "slug": "fixacao-e-finalizacao-fixadores-fixador-de-maquiagem",
       "title": "Fixador de maquiagem",
+      "brandLabel": "M·A·C Cosmetics",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -1170,6 +1315,7 @@
     {
       "slug": "fixacao-e-finalizacao-fixadores-bruma-fixadora",
       "title": "Bruma fixadora",
+      "brandLabel": "Fenty Beauty",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -1178,6 +1324,7 @@
     {
       "slug": "fixacao-e-finalizacao-fixadores-spray-matte",
       "title": "Spray matte",
+      "brandLabel": "Lancôme",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -1186,6 +1333,7 @@
     {
       "slug": "fixacao-e-finalizacao-fixadores-spray-glow",
       "title": "Spray glow",
+      "brandLabel": "avon",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -1194,6 +1342,7 @@
     {
       "slug": "fixacao-e-finalizacao-fixadores-spray-longa-duracao",
       "title": "Spray longa duracao",
+      "brandLabel": "M·A·C Cosmetics",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -1202,6 +1351,7 @@
     {
       "slug": "fixacao-e-finalizacao-fixadores-fixador-profissional",
       "title": "Fixador profissional",
+      "brandLabel": "Fenty Beauty",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -1210,6 +1360,7 @@
     {
       "slug": "fixacao-e-finalizacao-finalizadores-po-finalizador",
       "title": "Po finalizador",
+      "brandLabel": "Lancôme",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -1218,6 +1369,7 @@
     {
       "slug": "fixacao-e-finalizacao-finalizadores-po-translucido",
       "title": "Po translucido",
+      "brandLabel": "avon",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -1226,6 +1378,7 @@
     {
       "slug": "fixacao-e-finalizacao-finalizadores-lenco-antioleosidade",
       "title": "Lenco antioleosidade",
+      "brandLabel": "M·A·C Cosmetics",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -1234,6 +1387,7 @@
     {
       "slug": "fixacao-e-finalizacao-finalizadores-cola-glitter",
       "title": "Cola glitter",
+      "brandLabel": "Fenty Beauty",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -1242,6 +1396,7 @@
     {
       "slug": "fixacao-e-finalizacao-finalizadores-diluidor-de-maquiagem",
       "title": "Diluidor de maquiagem",
+      "brandLabel": "Lancôme",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -1250,6 +1405,7 @@
     {
       "slug": "fixacao-e-finalizacao-finalizadores-selante-de-maquiagem",
       "title": "Selante de maquiagem",
+      "brandLabel": "avon",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -1258,6 +1414,7 @@
     {
       "slug": "maquiagem-artistica-produtos-artisticos-tinta-facial",
       "title": "Tinta facial",
+      "brandLabel": "M·A·C Cosmetics",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -1266,6 +1423,7 @@
     {
       "slug": "maquiagem-artistica-produtos-artisticos-tinta-corporal",
       "title": "Tinta corporal",
+      "brandLabel": "avon",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -1274,6 +1432,7 @@
     {
       "slug": "maquiagem-artistica-produtos-artisticos-pancake-artistico",
       "title": "Pancake artistico",
+      "brandLabel": "Fenty Beauty",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -1282,6 +1441,7 @@
     {
       "slug": "maquiagem-artistica-produtos-artisticos-paleta-artistica",
       "title": "Paleta artistica",
+      "brandLabel": "M·A·C Cosmetics",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -1290,6 +1450,7 @@
     {
       "slug": "maquiagem-artistica-produtos-artisticos-pigmento-neon",
       "title": "Pigmento neon",
+      "brandLabel": "avon",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -1298,6 +1459,7 @@
     {
       "slug": "maquiagem-artistica-produtos-artisticos-pigmento-uv",
       "title": "Pigmento UV",
+      "brandLabel": "Fenty Beauty",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -1306,6 +1468,7 @@
     {
       "slug": "maquiagem-artistica-brilhos-e-aplicacoes-glitter-artistico",
       "title": "Glitter artistico",
+      "brandLabel": "M·A·C Cosmetics",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -1314,6 +1477,7 @@
     {
       "slug": "maquiagem-artistica-brilhos-e-aplicacoes-glitter-biodegradavel",
       "title": "Glitter biodegradavel",
+      "brandLabel": "avon",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -1322,6 +1486,7 @@
     {
       "slug": "maquiagem-artistica-brilhos-e-aplicacoes-pedrarias",
       "title": "Pedrarias",
+      "brandLabel": "Fenty Beauty",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -1330,6 +1495,7 @@
     {
       "slug": "maquiagem-artistica-brilhos-e-aplicacoes-cola-para-pedrarias",
       "title": "Cola para pedrarias",
+      "brandLabel": "M·A·C Cosmetics",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -1338,6 +1504,7 @@
     {
       "slug": "maquiagem-artistica-brilhos-e-aplicacoes-lantejoulas-faciais",
       "title": "Lantejoulas faciais",
+      "brandLabel": "avon",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -1346,6 +1513,7 @@
     {
       "slug": "maquiagem-artistica-brilhos-e-aplicacoes-strass-para-maquiagem",
       "title": "Strass para maquiagem",
+      "brandLabel": "Fenty Beauty",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -1354,6 +1522,7 @@
     {
       "slug": "maquiagem-artistica-efeitos-especiais-sangue-falso",
       "title": "Sangue falso",
+      "brandLabel": "M·A·C Cosmetics",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -1362,6 +1531,7 @@
     {
       "slug": "maquiagem-artistica-efeitos-especiais-latex-liquido",
       "title": "Latex liquido",
+      "brandLabel": "avon",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -1370,6 +1540,7 @@
     {
       "slug": "maquiagem-artistica-efeitos-especiais-massa-para-efeitos",
       "title": "Massa para efeitos",
+      "brandLabel": "Fenty Beauty",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -1378,6 +1549,7 @@
     {
       "slug": "maquiagem-artistica-efeitos-especiais-cola-teatral",
       "title": "Cola teatral",
+      "brandLabel": "M·A·C Cosmetics",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -1386,6 +1558,7 @@
     {
       "slug": "maquiagem-artistica-efeitos-especiais-cera-modeladora",
       "title": "Cera modeladora",
+      "brandLabel": "avon",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -1394,6 +1567,7 @@
     {
       "slug": "maquiagem-artistica-efeitos-especiais-removedor-artistico",
       "title": "Removedor artistico",
+      "brandLabel": "Fenty Beauty",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -1402,6 +1576,7 @@
     {
       "slug": "maquiagem-infantil-produtos-infantis-kit-maquiagem-infantil",
       "title": "Kit maquiagem infantil",
+      "brandLabel": "avon",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -1410,6 +1585,7 @@
     {
       "slug": "maquiagem-infantil-produtos-infantis-batom-infantil",
       "title": "Batom infantil",
+      "brandLabel": "Fenty Beauty",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -1418,6 +1594,7 @@
     {
       "slug": "maquiagem-infantil-produtos-infantis-gloss-infantil",
       "title": "Gloss infantil",
+      "brandLabel": "avon",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -1426,6 +1603,7 @@
     {
       "slug": "maquiagem-infantil-produtos-infantis-sombra-infantil",
       "title": "Sombra infantil",
+      "brandLabel": "Fenty Beauty",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -1434,6 +1612,7 @@
     {
       "slug": "maquiagem-infantil-produtos-infantis-blush-infantil",
       "title": "Blush infantil",
+      "brandLabel": "avon",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -1442,6 +1621,7 @@
     {
       "slug": "maquiagem-infantil-produtos-infantis-tinta-facial-infantil",
       "title": "Tinta facial infantil",
+      "brandLabel": "Fenty Beauty",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -1450,6 +1630,7 @@
     {
       "slug": "maquiagem-infantil-acessorios-infantis-pincel-infantil",
       "title": "Pincel infantil",
+      "brandLabel": "avon",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -1458,6 +1639,7 @@
     {
       "slug": "maquiagem-infantil-acessorios-infantis-esponja-infantil",
       "title": "Esponja infantil",
+      "brandLabel": "Fenty Beauty",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -1466,6 +1648,7 @@
     {
       "slug": "maquiagem-infantil-acessorios-infantis-glitter-infantil",
       "title": "Glitter infantil",
+      "brandLabel": "avon",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -1474,6 +1657,7 @@
     {
       "slug": "maquiagem-infantil-acessorios-infantis-necessaire-infantil",
       "title": "Necessaire infantil",
+      "brandLabel": "Fenty Beauty",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -1482,6 +1666,7 @@
     {
       "slug": "maquiagem-infantil-acessorios-infantis-espelho-infantil",
       "title": "Espelho infantil",
+      "brandLabel": "avon",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -1490,6 +1675,7 @@
     {
       "slug": "maquiagem-infantil-acessorios-infantis-kit-pintura-facial",
       "title": "Kit pintura facial",
+      "brandLabel": "Fenty Beauty",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -1498,6 +1684,7 @@
     {
       "slug": "demaquilantes-e-limpeza-removedores-demaquilante",
       "title": "Demaquilante",
+      "brandLabel": "Lancôme",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -1506,6 +1693,7 @@
     {
       "slug": "demaquilantes-e-limpeza-removedores-demaquilante-bifasico",
       "title": "Demaquilante bifasico",
+      "brandLabel": "Fenty Beauty",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -1514,6 +1702,7 @@
     {
       "slug": "demaquilantes-e-limpeza-removedores-agua-micelar",
       "title": "Agua micelar",
+      "brandLabel": "avon",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -1522,6 +1711,7 @@
     {
       "slug": "demaquilantes-e-limpeza-removedores-lenco-demaquilante",
       "title": "Lenco demaquilante",
+      "brandLabel": "Lancôme",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -1530,6 +1720,7 @@
     {
       "slug": "demaquilantes-e-limpeza-removedores-oleo-demaquilante",
       "title": "Oleo demaquilante",
+      "brandLabel": "Fenty Beauty",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -1538,6 +1729,7 @@
     {
       "slug": "demaquilantes-e-limpeza-removedores-cleansing-balm",
       "title": "Cleansing balm",
+      "brandLabel": "avon",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -1546,6 +1738,7 @@
     {
       "slug": "demaquilantes-e-limpeza-limpeza-facial-sabonete-facial",
       "title": "Sabonete facial",
+      "brandLabel": "Lancôme",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -1554,6 +1747,7 @@
     {
       "slug": "demaquilantes-e-limpeza-limpeza-facial-gel-de-limpeza",
       "title": "Gel de limpeza",
+      "brandLabel": "Fenty Beauty",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -1562,6 +1756,7 @@
     {
       "slug": "demaquilantes-e-limpeza-limpeza-facial-espuma-facial",
       "title": "Espuma facial",
+      "brandLabel": "avon",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -1570,6 +1765,7 @@
     {
       "slug": "demaquilantes-e-limpeza-limpeza-facial-tonico-facial",
       "title": "Tonico facial",
+      "brandLabel": "Lancôme",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -1578,6 +1774,7 @@
     {
       "slug": "demaquilantes-e-limpeza-limpeza-facial-esfoliante-facial",
       "title": "Esfoliante facial",
+      "brandLabel": "Fenty Beauty",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -1586,6 +1783,7 @@
     {
       "slug": "demaquilantes-e-limpeza-limpeza-facial-algodao-facial",
       "title": "Algodao facial",
+      "brandLabel": "avon",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -1594,6 +1792,7 @@
     {
       "slug": "kits-e-combos-kits-por-area-kit-pele-completa",
       "title": "Kit pele completa",
+      "brandLabel": "Lancôme",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -1602,6 +1801,7 @@
     {
       "slug": "kits-e-combos-kits-por-area-kit-olhos",
       "title": "Kit olhos",
+      "brandLabel": "avon",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -1610,6 +1810,7 @@
     {
       "slug": "kits-e-combos-kits-por-area-kit-sobrancelhas",
       "title": "Kit sobrancelhas",
+      "brandLabel": "M·A·C Cosmetics",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -1618,6 +1819,7 @@
     {
       "slug": "kits-e-combos-kits-por-area-kit-boca",
       "title": "Kit boca",
+      "brandLabel": "Fenty Beauty",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -1626,6 +1828,7 @@
     {
       "slug": "kits-e-combos-kits-por-area-kit-pinceis",
       "title": "Kit pinceis",
+      "brandLabel": "DIOR",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -1634,6 +1837,7 @@
     {
       "slug": "kits-e-combos-kits-por-area-kit-maquiagem-artistica",
       "title": "Kit maquiagem artistica",
+      "brandLabel": "Lancôme",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -1642,6 +1846,7 @@
     {
       "slug": "kits-e-combos-kits-por-perfil-kit-iniciante",
       "title": "Kit iniciante",
+      "brandLabel": "avon",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -1650,6 +1855,7 @@
     {
       "slug": "kits-e-combos-kits-por-perfil-kit-profissional",
       "title": "Kit profissional",
+      "brandLabel": "M·A·C Cosmetics",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -1658,6 +1864,7 @@
     {
       "slug": "kits-e-combos-kits-por-perfil-kit-noiva",
       "title": "Kit noiva",
+      "brandLabel": "Fenty Beauty",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -1666,6 +1873,7 @@
     {
       "slug": "kits-e-combos-kits-por-perfil-kit-festa",
       "title": "Kit festa",
+      "brandLabel": "DIOR",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -1674,6 +1882,7 @@
     {
       "slug": "kits-e-combos-kits-por-perfil-kit-maquiagem-nude",
       "title": "Kit maquiagem nude",
+      "brandLabel": "Lancôme",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -1682,6 +1891,7 @@
     {
       "slug": "kits-e-combos-kits-por-perfil-kit-maquiagem-colorida",
       "title": "Kit maquiagem colorida",
+      "brandLabel": "avon",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -1690,6 +1900,7 @@
     {
       "slug": "unhas-esmaltes-esmalte-cremoso",
       "title": "Esmalte cremoso",
+      "brandLabel": "avon",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -1698,6 +1909,7 @@
     {
       "slug": "unhas-esmaltes-esmalte-cintilante",
       "title": "Esmalte cintilante",
+      "brandLabel": "DIOR",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -1706,6 +1918,7 @@
     {
       "slug": "unhas-esmaltes-esmalte-glitter",
       "title": "Esmalte glitter",
+      "brandLabel": "M·A·C Cosmetics",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -1714,6 +1927,7 @@
     {
       "slug": "unhas-esmaltes-esmalte-matte",
       "title": "Esmalte matte",
+      "brandLabel": "avon",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -1722,6 +1936,7 @@
     {
       "slug": "unhas-esmaltes-esmalte-nude",
       "title": "Esmalte nude",
+      "brandLabel": "DIOR",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -1730,6 +1945,7 @@
     {
       "slug": "unhas-esmaltes-esmalte-vermelho",
       "title": "Esmalte vermelho",
+      "brandLabel": "M·A·C Cosmetics",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -1738,6 +1954,7 @@
     {
       "slug": "unhas-cuidados-com-unhas-base-fortalecedora",
       "title": "Base fortalecedora",
+      "brandLabel": "avon",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -1746,6 +1963,7 @@
     {
       "slug": "unhas-cuidados-com-unhas-extra-brilho",
       "title": "Extra brilho",
+      "brandLabel": "DIOR",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -1754,6 +1972,7 @@
     {
       "slug": "unhas-cuidados-com-unhas-top-coat",
       "title": "Top coat",
+      "brandLabel": "M·A·C Cosmetics",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -1762,6 +1981,7 @@
     {
       "slug": "unhas-cuidados-com-unhas-removedor-de-esmalte",
       "title": "Removedor de esmalte",
+      "brandLabel": "avon",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -1770,6 +1990,7 @@
     {
       "slug": "unhas-cuidados-com-unhas-acetona",
       "title": "Acetona",
+      "brandLabel": "DIOR",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -1778,6 +1999,7 @@
     {
       "slug": "unhas-cuidados-com-unhas-oleo-secante",
       "title": "Oleo secante",
+      "brandLabel": "M·A·C Cosmetics",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -1786,6 +2008,7 @@
     {
       "slug": "unhas-acessorios-de-unhas-lixa-de-unha",
       "title": "Lixa de unha",
+      "brandLabel": "avon",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -1794,6 +2017,7 @@
     {
       "slug": "unhas-acessorios-de-unhas-alicate",
       "title": "Alicate",
+      "brandLabel": "DIOR",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -1802,6 +2026,7 @@
     {
       "slug": "unhas-acessorios-de-unhas-espatula",
       "title": "Espatula",
+      "brandLabel": "M·A·C Cosmetics",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -1810,6 +2035,7 @@
     {
       "slug": "unhas-acessorios-de-unhas-kit-manicure",
       "title": "Kit manicure",
+      "brandLabel": "avon",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -1818,6 +2044,7 @@
     {
       "slug": "unhas-acessorios-de-unhas-unha-postica",
       "title": "Unha postica",
+      "brandLabel": "DIOR",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,
@@ -1826,6 +2053,7 @@
     {
       "slug": "unhas-acessorios-de-unhas-cola-para-unha",
       "title": "Cola para unha",
+      "brandLabel": "M·A·C Cosmetics",
       "imagePath": "",
       "imageUrl": "",
       "approved": false,

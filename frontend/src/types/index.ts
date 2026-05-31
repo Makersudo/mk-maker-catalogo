@@ -15,6 +15,7 @@ export interface Product {
   category: string;
   categoryId?: string;
   subcategoryId?: string | null;
+  brandLabel?: string;
   features?: string[];
   stockQuantity?: number;
   variantsEnabled?: boolean;

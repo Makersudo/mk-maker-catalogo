@@ -23,6 +23,7 @@ export interface PublicCatalogProduct {
   subcategoryId?: string | null;
   categoryName?: string | null;
   subcategoryName?: string | null;
+  brandLabel?: string;
   images: string[];
   features?: string[];
   stockQuantity?: number;

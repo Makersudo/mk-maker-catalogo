@@ -20,6 +20,7 @@ create table if not exists public.products (
   category_id uuid not null references public.categories(id) on delete restrict,
   subcategory_id uuid references public.categories(id) on delete set null,
   audience text check (audience in ('feminino', 'masculino', 'suplemento')),
+  brand_label text not null default 'MK MAKER',
   product_type text,
   variation text,
   features jsonb not null default '[]'::jsonb,

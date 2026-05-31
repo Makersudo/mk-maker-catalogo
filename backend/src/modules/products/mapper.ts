@@ -6,6 +6,7 @@ export interface ProductPayload {
   categoryId: string;
   subcategoryId?: string | null;
   audience?: 'feminino' | 'masculino' | 'suplemento' | null;
+  brandLabel?: string;
   productType?: string;
   variation?: string | null;
   features?: string[];
@@ -56,6 +57,7 @@ export function mapProduct(row: any) {
     categoryId: row.category_id,
     subcategoryId: row.subcategory_id ?? null,
     audience: row.audience ?? null,
+    brandLabel: row.brand_label ?? '',
     productType: row.product_type ?? '',
     variation: row.variation ?? null,
     features: Array.isArray(row.features) ? row.features : [],

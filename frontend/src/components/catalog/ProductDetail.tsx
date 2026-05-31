@@ -22,6 +22,7 @@ function toStoreProduct(product: PublicCatalogProduct): Product {
     category: product.subcategoryName || product.categoryName || "Diversos",
     categoryId: product.categoryId,
     subcategoryId: product.subcategoryId ?? null,
+    brandLabel: product.brandLabel ?? "",
     imageUrl: product.images[0] || "",
     images: product.images,
     features: product.features ?? [],

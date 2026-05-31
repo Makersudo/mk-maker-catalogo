@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { describe, it } from 'node:test';
-import { catalogCategorySeeds, masterCatalogProducts } from './masterCatalog.js';
+import { catalogBrandLabels, catalogCategorySeeds, masterCatalogProducts } from './masterCatalog.js';
 
 const expectedRootCategories = [
   'Pele',
@@ -57,6 +57,18 @@ describe('MK Maker master catalog', () => {
 
     for (const [subcategorySlug, total] of productsBySubcategory) {
       assert.ok(total <= 6, `${subcategorySlug} has ${total} products`);
+    }
+  });
+
+  it('keeps every product image prompt ready for labeled product mockups', () => {
+    const allowedBrands = new Set<string>(catalogBrandLabels);
+
+    for (const product of masterCatalogProducts) {
+      assert.ok(allowedBrands.has(product.brandLabel), `${product.slug} has invalid brand label`);
+      assert.ok(product.imagePrompt.includes(`"${product.brandLabel}"`), `${product.slug} prompt misses exact label`);
+      assert.match(product.imagePrompt, /Fundo branco puro/);
+      assert.match(product.imagePrompt, /Rotulo frontal legivel/);
+      assert.doesNotMatch(product.imagePrompt, /sem texto|sem logo|sem marcas famosas/i);
     }
   });
 });

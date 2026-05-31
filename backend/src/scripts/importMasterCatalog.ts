@@ -93,6 +93,7 @@ async function main() {
       category_id: categoryId,
       subcategory_id: subcategoryId,
       audience: product.audience,
+      brand_label: product.brandLabel,
       product_type: product.productType,
       variation: product.variation,
       features: product.features,

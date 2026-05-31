@@ -129,6 +129,7 @@ export function Catalog() {
             category: product.subcategoryName || product.categoryName || "Diversos",
             categoryId: product.categoryId,
             subcategoryId: product.subcategoryId ?? null,
+            brandLabel: product.brandLabel ?? "",
             imageUrl: product.images.length > 0 ? product.images[0] : "",
             images: product.images,
             features: product.features ?? [],

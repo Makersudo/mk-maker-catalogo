@@ -69,6 +69,11 @@ export const ProductCard = memo(function ProductCard({ product, priority = false
       </div>
 
       <div className="p-5 flex flex-col flex-1">
+        {product.brandLabel && (
+          <p className="mb-1 text-[10px] font-black uppercase tracking-widest text-neutral-700">
+            {product.brandLabel}
+          </p>
+        )}
         <h3 className="font-bold text-base text-neutral-900 leading-tight mb-2 group-hover:text-purple-700 transition-colors">
           {product.name}
         </h3>
