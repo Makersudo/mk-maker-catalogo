@@ -9,6 +9,7 @@ import { createOrderWithItemsAndInventory } from './createOrder.js';
 import { matchesOrderSearch, normalizeOrderStatus } from './status.js';
 import { selectActiveCampaignForProduct } from '../marketing/campaignRules.js';
 import { loadCandidateCampaigns } from '../marketing/campaignRepository.js';
+import { createNewOrderNotification, dispatchPushNotification } from '../notifications/service.js';
 
 export const orderRouter = Router();
 
@@ -150,6 +151,12 @@ orderRouter.post('/', async (req, res) => {
 
     const { order, createdItems } = await createOrderWithItemsAndInventory(supabase, orderPayload, normalizedItems);
     invalidatePublicCatalogCache();
+
+    createNewOrderNotification(supabase, order)
+      .then((notification) => notification ? dispatchPushNotification(supabase, notification) : null)
+      .catch((error) => {
+        console.error('Falha ao criar/enviar notificacao de novo pedido.', error);
+      });
 
     const phone = await loadCheckoutWhatsappPhone();
     const whatsappUrl = phone

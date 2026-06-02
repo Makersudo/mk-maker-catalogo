@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import type { ReactNode } from 'react';
 import { CheckCircle2, Clock, Copy, MapPin, MessageCircle, PackageCheck, Phone, Search, Truck, X } from 'lucide-react';
+import { useSearchParams } from 'react-router-dom';
 import { AdminOrder, OrderStatus, listOrders, updateOrderStatus } from '../../../services/adminOrderService';
 
 const columns: Array<{ status: OrderStatus; label: string; icon: typeof Clock; tone: string; dot: string }> = [
@@ -37,8 +38,10 @@ function whatsappLink(order: AdminOrder) {
 }
 
 export function OrdersKanbanView() {
+  const [searchParams] = useSearchParams();
+  const initialTicket = searchParams.get('ticket') ?? '';
   const [orders, setOrders] = useState<AdminOrder[]>([]);
-  const [search, setSearch] = useState('');
+  const [search, setSearch] = useState(initialTicket);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState('');
   const [selectedOrder, setSelectedOrder] = useState<AdminOrder | null>(null);
@@ -61,7 +64,7 @@ export function OrdersKanbanView() {
   };
 
   useEffect(() => {
-    fetchOrders('');
+    fetchOrders(initialTicket);
     const timer = window.setInterval(() => fetchOrders(searchRef.current), 30000);
     return () => window.clearInterval(timer);
   }, []);

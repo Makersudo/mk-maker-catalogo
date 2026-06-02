@@ -24,6 +24,9 @@ export const env = {
   loginRateLimitMaxAttempts: Number(process.env.LOGIN_RATE_LIMIT_MAX_ATTEMPTS ?? 5),
   mediaBucket: process.env.SUPABASE_MEDIA_BUCKET ?? 'mk-maker-media',
   productBucket: process.env.SUPABASE_PRODUCT_BUCKET ?? 'mk-maker-products',
+  webPushPublicKey: process.env.WEB_PUSH_PUBLIC_KEY ?? '',
+  webPushPrivateKey: process.env.WEB_PUSH_PRIVATE_KEY ?? '',
+  webPushSubject: process.env.WEB_PUSH_SUBJECT ?? 'mailto:admin@mk-maker.local',
 };
 
 export function assertSupabaseConfigured() {
