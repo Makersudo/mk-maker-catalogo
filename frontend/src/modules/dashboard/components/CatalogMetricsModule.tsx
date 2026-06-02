@@ -84,6 +84,9 @@ function OverviewTab({ metrics }: { metrics: CatalogMetrics }) {
       <div className="grid grid-cols-2 gap-3">
         <MiniMetric label="Receita valida" value={currency(metrics.sales.totalRevenue)} detail={`${metrics.sales.validOrders} pedidos`} />
         <MiniMetric label="Ticket medio" value={currency(metrics.sales.averageTicket)} detail={`${metrics.sales.unitsSold} itens vendidos`} />
+        <MiniMetric label="Valor em mercadoria" value={currency(metrics.inventoryValue.purchaseValue)} detail={`${metrics.inventoryValue.productsWithPurchaseCost} com custo`} />
+        <MiniMetric label="Potencial de venda" value={currency(metrics.inventoryValue.saleValue)} detail={`${metrics.stockHealth.totalUnits} unidades`} />
+        <MiniMetric label="Lucro bruto est." value={currency(metrics.inventoryValue.estimatedGrossProfit)} detail={`${metrics.inventoryValue.estimatedGrossMarginPercent}% margem`} />
         <MiniMetric label="Preco medio" value={currency(metrics.summary.averagePrice)} detail={`${currency(metrics.summary.priceMin)} - ${currency(metrics.summary.priceMax)}`} />
         <MiniMetric label="Estoque total" value={metrics.stockHealth.totalUnits} detail={`${metrics.stockHealth.variantManaged} com variantes`} />
         <MiniMetric label="Produtos live" value={metrics.summary.liveProducts} detail={`${metrics.summary.totalProducts} no total`} />

@@ -7,6 +7,7 @@ export interface Product {
   title: string;
   description: string;
   price: number;
+  purchaseCost?: number;
   categoryId: string;
   subcategoryId?: string | null;
   audience?: string | null;

@@ -42,10 +42,22 @@ describe('parseProductPayload', () => {
     const payload = parseProductPayload({
       title: 'Produto',
       price: 10,
+      purchaseCost: 4.5,
       categoryId: 'category-id',
     });
 
     assert.equal(payload.catalogStatus, 'draft');
     assert.equal(payload.isActive, false);
+    assert.equal(payload.purchaseCost, 4.5);
+  });
+
+  it('defaults purchase cost to zero for old product payloads', () => {
+    const payload = parseProductPayload({
+      title: 'Produto',
+      price: 10,
+      categoryId: 'category-id',
+    });
+
+    assert.equal(payload.purchaseCost, 0);
   });
 });

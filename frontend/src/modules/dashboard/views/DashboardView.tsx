@@ -17,6 +17,13 @@ const emptyCatalogMetrics: CatalogMetrics = {
     promoProducts: 0,
     newProducts: 0,
   },
+  inventoryValue: {
+    purchaseValue: 0,
+    saleValue: 0,
+    estimatedGrossProfit: 0,
+    estimatedGrossMarginPercent: 0,
+    productsWithPurchaseCost: 0,
+  },
   statusFunnel: { draft: 0, ready: 0, live: 0 },
   imageCoverage: { total: 0, withImage: 0, withoutImage: 0, percent: 0 },
   stockHealth: { totalUnits: 0, ok: 0, low: 0, zero: 0, variantManaged: 0, lowStockThreshold: 5 },

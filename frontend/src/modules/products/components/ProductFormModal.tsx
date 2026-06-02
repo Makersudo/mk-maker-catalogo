@@ -9,6 +9,7 @@ import {
   VARIATION_PRESETS,
   type VariationPresetId,
 } from './variantPresets';
+import { calculateSuggestedSalePrice } from './purchasePricing';
 
 interface ProductFormModalProps {
   onClose: () => void;
@@ -17,6 +18,10 @@ interface ProductFormModalProps {
 
 function getParentId(category: Category) {
   return category.parent_id ?? category.parentId ?? null;
+}
+
+function parseMoneyInput(value: string) {
+  return Number(String(value || '0').replace(',', '.'));
 }
 
 export function ProductFormModal({ onClose, productToEdit }: ProductFormModalProps) {
@@ -28,6 +33,8 @@ export function ProductFormModal({ onClose, productToEdit }: ProductFormModalPro
   const [slug, setSlug] = useState(productToEdit?.slug || '');
   const [description, setDescription] = useState(productToEdit?.description || '');
   const [price, setPrice] = useState(productToEdit?.price.toString() || '');
+  const [purchaseCost, setPurchaseCost] = useState(productToEdit?.purchaseCost?.toString() || '');
+  const [markupPercent, setMarkupPercent] = useState('80');
   const [stockQuantity, setStockQuantity] = useState(String(productToEdit?.stockQuantity ?? 0));
   const [brandLabel, setBrandLabel] = useState(productToEdit?.brandLabel || '');
   const rootCategories = categories.filter((category) => !getParentId(category));
@@ -123,9 +130,15 @@ export function ProductFormModal({ onClose, productToEdit }: ProductFormModalPro
       return;
     }
 
-    const parsedPrice = parseFloat(String(price).replace(',', '.'));
-    if (isNaN(parsedPrice)) {
+    const parsedPrice = parseMoneyInput(price);
+    if (!Number.isFinite(parsedPrice)) {
       setError("Preço inválido.");
+      return;
+    }
+
+    const parsedPurchaseCost = parseMoneyInput(purchaseCost);
+    if (!Number.isFinite(parsedPurchaseCost) || parsedPurchaseCost < 0) {
+      setError("Valor de compra invalido.");
       return;
     }
 
@@ -134,6 +147,7 @@ export function ProductFormModal({ onClose, productToEdit }: ProductFormModalPro
       title,
       description,
       price: parsedPrice,
+      purchaseCost: parsedPurchaseCost,
       categoryId,
       subcategoryId: subcategoryId || null,
       audience: null,
@@ -169,6 +183,20 @@ export function ProductFormModal({ onClose, productToEdit }: ProductFormModalPro
       console.error(err);
       setError("Erro ao tentar salvar o produto.");
     }
+  };
+
+  const handleSuggestSalePrice = () => {
+    setError('');
+    const parsedPurchaseCost = parseMoneyInput(purchaseCost);
+    const parsedMarkup = parseMoneyInput(markupPercent);
+    const suggestedPrice = calculateSuggestedSalePrice(parsedPurchaseCost, parsedMarkup);
+
+    if (suggestedPrice <= 0) {
+      setError('Informe valor de compra e percentual validos para sugerir o preco.');
+      return;
+    }
+
+    setPrice(suggestedPrice.toFixed(2));
   };
 
   const addPresetVariant = (value = '') => {
@@ -241,6 +269,29 @@ export function ProductFormModal({ onClose, productToEdit }: ProductFormModalPro
                 <div className="flex flex-col gap-1.5">
                   <label className="text-xs font-bold text-neutral-700 uppercase tracking-widest">Preço (R$) *</label>
                   <input required type="number" step="0.01" value={price} onChange={(e) => setPrice(e.target.value)} className="w-full px-4 py-3 bg-neutral-50 border border-neutral-200 rounded-xl text-sm focus:outline-none focus:border-[#C98F86] focus:ring-1 focus:ring-[#C98F86]" placeholder="199.90" />
+                </div>
+
+                <div className="flex flex-col gap-1.5">
+                  <label className="text-xs font-bold text-neutral-700 uppercase tracking-widest">Valor de compra (R$)</label>
+                  <input type="number" min="0" step="0.01" value={purchaseCost} onChange={(e) => setPurchaseCost(e.target.value)} className="w-full px-4 py-3 bg-neutral-50 border border-neutral-200 rounded-xl text-sm focus:outline-none focus:border-[#C98F86] focus:ring-1 focus:ring-[#C98F86]" placeholder="0.00" />
+                </div>
+
+                <div className="md:col-span-2 grid grid-cols-1 md:grid-cols-[minmax(0,1fr)_auto] gap-3 rounded-2xl border border-[#E7C9C4] bg-[#FDF8F7] p-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div className="flex flex-col gap-1.5">
+                      <label className="text-xs font-bold text-[#8D514B] uppercase tracking-widest">Percentual para sugestao (%)</label>
+                      <input type="number" min="0" step="1" value={markupPercent} onChange={(e) => setMarkupPercent(e.target.value)} className="w-full px-4 py-3 bg-white border border-[#E7C9C4] rounded-xl text-sm focus:outline-none focus:border-[#C98F86] focus:ring-1 focus:ring-[#C98F86]" placeholder="80" />
+                    </div>
+                    <div className="flex flex-col justify-center gap-1.5 rounded-xl bg-white border border-[#F3E3DF] px-4 py-3">
+                      <span className="text-[10px] font-black uppercase tracking-widest text-neutral-400">Preco sugerido</span>
+                      <strong className="text-lg font-black text-[#8D514B]">
+                        R$ {calculateSuggestedSalePrice(parseMoneyInput(purchaseCost), parseMoneyInput(markupPercent)).toFixed(2).replace('.', ',')}
+                      </strong>
+                    </div>
+                  </div>
+                  <button type="button" onClick={handleSuggestSalePrice} className="h-full min-h-[48px] rounded-xl bg-neutral-950 px-5 py-3 text-xs font-black uppercase tracking-widest text-white hover:bg-[#8D514B] transition-colors">
+                    Sugerir preco
+                  </button>
                 </div>
 
                 <div className="flex flex-col gap-1.5">

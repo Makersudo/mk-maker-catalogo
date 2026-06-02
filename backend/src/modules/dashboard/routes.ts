@@ -30,7 +30,7 @@ dashboardRouter.get('/stats', requireAuth, async (_req, res) => {
       supabase.from('orders').select('id,total_amount,status,created_at', { count: 'exact' }).order('created_at', { ascending: false }).limit(10),
       supabase
         .from('products')
-        .select('id,title,price,audience,catalog_status,is_active,is_featured,is_promo,is_new,stock_quantity,variants_enabled,category_id,subcategory_id,created_at,category:categories!products_category_id_fkey(id,name,slug),subcategory:categories!products_subcategory_id_fkey(id,name,slug),product_images(id,url),product_variants(id,stock_quantity,is_active)'),
+        .select('id,title,price,purchase_cost,audience,catalog_status,is_active,is_featured,is_promo,is_new,stock_quantity,variants_enabled,category_id,subcategory_id,created_at,category:categories!products_category_id_fkey(id,name,slug),subcategory:categories!products_subcategory_id_fkey(id,name,slug),product_images(id,url),product_variants(id,price,stock_quantity,is_active)'),
       supabase
         .from('categories')
         .select('id,name,slug,parent_id,is_active'),

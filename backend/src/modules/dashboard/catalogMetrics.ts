@@ -6,6 +6,7 @@ export interface CatalogMetricsProduct {
   id: string;
   title?: string | null;
   price?: number | string | null;
+  purchase_cost?: number | string | null;
   audience?: string | null;
   catalog_status?: CatalogStatus | string | null;
   is_active?: boolean | null;
@@ -20,7 +21,7 @@ export interface CatalogMetricsProduct {
   category?: { id?: string | null; name?: string | null; slug?: string | null; parent_id?: string | null } | null;
   subcategory?: { id?: string | null; name?: string | null; slug?: string | null; parent_id?: string | null } | null;
   product_images?: Array<{ id?: string | null; url?: string | null }> | null;
-  product_variants?: Array<{ id?: string | null; stock_quantity?: number | string | null; is_active?: boolean | null }> | null;
+  product_variants?: Array<{ id?: string | null; price?: number | string | null; stock_quantity?: number | string | null; is_active?: boolean | null }> | null;
 }
 
 export interface CatalogMetricsCategory {
@@ -117,6 +118,33 @@ function limitedIssueProducts(products: CatalogMetricsProduct[]): CountWithProdu
   };
 }
 
+function productInventoryValue(product: CatalogMetricsProduct) {
+  const purchaseCost = numberValue(product.purchase_cost);
+  const baseSalePrice = numberValue(product.price);
+
+  if (product.variants_enabled) {
+    return (product.product_variants ?? [])
+      .filter((variant) => variant.is_active !== false)
+      .reduce((total, variant) => {
+        const stock = numberValue(variant.stock_quantity);
+        const variantSalePrice = variant.price === null || variant.price === undefined
+          ? baseSalePrice
+          : numberValue(variant.price);
+
+        return {
+          purchaseValue: total.purchaseValue + purchaseCost * stock,
+          saleValue: total.saleValue + variantSalePrice * stock,
+        };
+      }, { purchaseValue: 0, saleValue: 0 });
+  }
+
+  const stock = numberValue(product.stock_quantity);
+  return {
+    purchaseValue: purchaseCost * stock,
+    saleValue: baseSalePrice * stock,
+  };
+}
+
 function categoryKey(category: CatalogMetricsCategory | { id?: string | null; slug?: string | null }): string {
   return category.slug?.trim() || category.id?.trim() || 'sem-categoria';
 }
@@ -209,6 +237,10 @@ export function buildCatalogMetrics(input: BuildCatalogMetricsInput, options: Bu
   }
 
   const stockRows = products.map((product) => ({ product, stock: productStock(product) }));
+  const inventoryRows = products.map((product) => ({ product, ...productInventoryValue(product) }));
+  const purchaseValue = roundMoney(inventoryRows.reduce((sum, row) => sum + row.purchaseValue, 0));
+  const saleValue = roundMoney(inventoryRows.reduce((sum, row) => sum + row.saleValue, 0));
+  const estimatedGrossProfit = roundMoney(saleValue - purchaseValue);
   const zeroStockProducts = stockRows.filter((row) => row.stock <= 0).map((row) => row.product);
   const lowStockProducts = stockRows
     .filter((row) => row.stock > 0 && row.stock <= lowStockThreshold)
@@ -347,6 +379,13 @@ export function buildCatalogMetrics(input: BuildCatalogMetricsInput, options: Bu
       zero: zeroStockProducts.length,
       variantManaged: products.filter((product) => product.variants_enabled === true).length,
       lowStockThreshold,
+    },
+    inventoryValue: {
+      purchaseValue,
+      saleValue,
+      estimatedGrossProfit,
+      estimatedGrossMarginPercent: percent(estimatedGrossProfit, saleValue),
+      productsWithPurchaseCost: products.filter((product) => numberValue(product.purchase_cost) > 0).length,
     },
     sales: {
       totalOrders: input.orders.length,

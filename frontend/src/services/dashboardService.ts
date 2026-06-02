@@ -14,6 +14,13 @@ export interface CatalogMetrics {
     promoProducts: number;
     newProducts: number;
   };
+  inventoryValue: {
+    purchaseValue: number;
+    saleValue: number;
+    estimatedGrossProfit: number;
+    estimatedGrossMarginPercent: number;
+    productsWithPurchaseCost: number;
+  };
   statusFunnel: {
     draft: number;
     ready: number;

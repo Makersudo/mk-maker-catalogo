@@ -16,6 +16,7 @@ describe('buildCatalogMetrics', () => {
           id: 'p1',
           title: 'Demaquilante bifasico',
           price: 79.9,
+          purchase_cost: 30,
           audience: 'masculino',
           catalog_status: 'live',
           is_active: true,
@@ -36,6 +37,7 @@ describe('buildCatalogMetrics', () => {
           id: 'p2',
           title: 'Paleta de sombras',
           price: 0,
+          purchase_cost: 12,
           audience: 'suplemento',
           catalog_status: 'ready',
           is_active: false,
@@ -56,6 +58,7 @@ describe('buildCatalogMetrics', () => {
           id: 'p3',
           title: 'Gloss labial',
           price: 99.9,
+          purchase_cost: 25,
           audience: 'feminino',
           catalog_status: 'draft',
           is_active: true,
@@ -71,8 +74,8 @@ describe('buildCatalogMetrics', () => {
           subcategory: null,
           product_images: [{ id: 'img3', url: 'https://cdn.test/p3.webp' }],
           product_variants: [
-            { id: 'v1', stock_quantity: 1, is_active: true },
-            { id: 'v2', stock_quantity: 0, is_active: true },
+            { id: 'v1', stock_quantity: 1, price: 109.9, is_active: true },
+            { id: 'v2', stock_quantity: 0, price: null, is_active: true },
           ],
         },
       ],
@@ -113,6 +116,13 @@ describe('buildCatalogMetrics', () => {
       zero: 1,
       variantManaged: 1,
       lowStockThreshold: 3,
+    });
+    assert.deepEqual(metrics.inventoryValue, {
+      purchaseValue: 325,
+      saleValue: 908.9,
+      estimatedGrossProfit: 583.9,
+      estimatedGrossMarginPercent: 64,
+      productsWithPurchaseCost: 3,
     });
     assert.equal(metrics.sales.totalRevenue, 259.7);
     assert.equal(metrics.sales.averageTicket, 259.7);

@@ -3,6 +3,7 @@ export interface ProductPayload {
   title: string;
   description: string;
   price: number;
+  purchaseCost: number;
   categoryId: string;
   subcategoryId?: string | null;
   audience?: string | null;
@@ -54,6 +55,7 @@ export function mapProduct(row: any) {
     title: row.title,
     description: row.description ?? '',
     price: Number(row.price ?? 0),
+    purchaseCost: Number(row.purchase_cost ?? 0),
     categoryId: row.category_id,
     subcategoryId: row.subcategory_id ?? null,
     audience: row.audience ?? null,
