@@ -61,8 +61,8 @@ async function main() {
     process.exit(1);
   }
 
-  const counts = masterCatalogProducts.reduce<Record<string, number>>((acc, product) => {
-    acc[product.audience] = (acc[product.audience] ?? 0) + 1;
+  const productsByRootCategory = masterCatalogProducts.reduce<Record<string, number>>((acc, product) => {
+    acc[product.categorySlug] = (acc[product.categorySlug] ?? 0) + 1;
     return acc;
   }, {});
 
@@ -72,9 +72,8 @@ async function main() {
     `Subcategorias: ${subcategories.length}/${MAX_SUBCATEGORIES}`,
     `Categorias totais: ${catalogCategorySeeds.length}`,
     `Produtos: ${masterCatalogProducts.length}`,
-    `Feminino: ${counts.feminino ?? 0}`,
-    `Masculino: ${counts.masculino ?? 0}`,
-    `Suplementos: ${counts.suplemento ?? 0}`,
+    `Linha do catalogo: beleza`,
+    `Produtos por categoria: ${Object.entries(productsByRootCategory).map(([slug, total]) => `${slug}=${total}`).join(', ')}`,
   ].join('\n'));
   process.stdout.write('\n');
 }

@@ -12,7 +12,7 @@ export function ProductsListView() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [productToEdit, setProductToEdit] = useState<Product | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
-  const [audienceFilter, setAudienceFilter] = useState('all');
+  const [categoryFilter, setCategoryFilter] = useState('all');
   const [catalogStatusFilter, setCatalogStatusFilter] = useState('all');
   const [imageFilter, setImageFilter] = useState('all');
   const [selectedProductIds, setSelectedProductIds] = useState<string[]>([]);
@@ -28,11 +28,11 @@ export function ProductsListView() {
       product.productType || '',
       product.variation || '',
     ].some((value) => value.toLowerCase().includes(term));
-    const matchesAudience = audienceFilter === 'all' || product.audience === audienceFilter;
+    const matchesCategory = categoryFilter === 'all' || product.categoryId === categoryFilter || product.subcategoryId === categoryFilter;
     const matchesCatalogStatus = catalogStatusFilter === 'all' || product.catalogStatus === catalogStatusFilter;
     const matchesImage = imageFilter === 'all' || (imageFilter === 'with-image' ? product.images.length > 0 : product.images.length === 0);
 
-    return matchesSearch && matchesAudience && matchesCatalogStatus && matchesImage;
+    return matchesSearch && matchesCategory && matchesCatalogStatus && matchesImage;
   });
 
   const filteredProductIds = useMemo(
@@ -138,7 +138,7 @@ export function ProductsListView() {
         </div>
         <button
           onClick={handleCreate}
-          className="flex items-center justify-center w-full md:w-auto gap-2 bg-gradient-to-r from-purple-800 to-purple-600 text-white px-5 py-2.5 rounded-xl font-bold text-sm hover:from-purple-700 hover:to-purple-500 transition-colors shadow-md shadow-purple-500/20"
+          className="flex items-center justify-center w-full md:w-auto gap-2 bg-gradient-to-r from-neutral-950 to-[#A76D65] text-white px-5 py-2.5 rounded-xl font-bold text-sm hover:from-neutral-900 hover:to-[#C98F86] transition-colors shadow-md shadow-[#C98F86]/20"
         >
           <Plus className="w-5 h-5" />
           Novo Produto
@@ -153,27 +153,29 @@ export function ProductsListView() {
             value={searchTerm}
             onChange={(event) => setSearchTerm(event.target.value)}
             placeholder="Buscar por nome, slug, tipo ou variacao..."
-            className="w-full pl-9 md:pl-10 pr-4 py-2 bg-neutral-50 border border-neutral-200 rounded-lg md:rounded-xl text-xs md:text-sm focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500"
+            className="w-full pl-9 md:pl-10 pr-4 py-2 bg-neutral-50 border border-neutral-200 rounded-lg md:rounded-xl text-xs md:text-sm focus:outline-none focus:border-[#C98F86] focus:ring-1 focus:ring-[#C98F86]"
           />
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 w-full xl:w-auto">
           <div className="relative">
             <Filter className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-neutral-400" />
             <select
-              value={audienceFilter}
-              onChange={(event) => setAudienceFilter(event.target.value)}
-              className="w-full sm:w-44 pl-9 pr-3 py-2 bg-neutral-50 border border-neutral-200 rounded-lg md:rounded-xl text-xs md:text-sm focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500"
+              value={categoryFilter}
+              onChange={(event) => setCategoryFilter(event.target.value)}
+              className="w-full sm:w-44 pl-9 pr-3 py-2 bg-neutral-50 border border-neutral-200 rounded-lg md:rounded-xl text-xs md:text-sm focus:outline-none focus:border-[#C98F86] focus:ring-1 focus:ring-[#C98F86]"
             >
-              <option value="all">Todos os publicos</option>
-              <option value="feminino">Feminino</option>
-              <option value="masculino">Masculino</option>
-              <option value="suplemento">Suplementos</option>
+              <option value="all">Todas categorias</option>
+              {categories.map((category) => (
+                <option key={category.id} value={category.id}>
+                  {category.parentId || category.parent_id ? `- ${category.name}` : category.name}
+                </option>
+              ))}
             </select>
           </div>
           <select
             value={catalogStatusFilter}
             onChange={(event) => setCatalogStatusFilter(event.target.value)}
-            className="w-full sm:w-40 px-3 py-2 bg-neutral-50 border border-neutral-200 rounded-lg md:rounded-xl text-xs md:text-sm focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500"
+            className="w-full sm:w-40 px-3 py-2 bg-neutral-50 border border-neutral-200 rounded-lg md:rounded-xl text-xs md:text-sm focus:outline-none focus:border-[#C98F86] focus:ring-1 focus:ring-[#C98F86]"
           >
             <option value="all">Todos status</option>
             <option value="draft">Rascunho</option>
@@ -183,7 +185,7 @@ export function ProductsListView() {
           <select
             value={imageFilter}
             onChange={(event) => setImageFilter(event.target.value)}
-            className="w-full sm:w-40 px-3 py-2 bg-neutral-50 border border-neutral-200 rounded-lg md:rounded-xl text-xs md:text-sm focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500"
+            className="w-full sm:w-40 px-3 py-2 bg-neutral-50 border border-neutral-200 rounded-lg md:rounded-xl text-xs md:text-sm focus:outline-none focus:border-[#C98F86] focus:ring-1 focus:ring-[#C98F86]"
           >
             <option value="all">Todas imagens</option>
             <option value="missing-image">Sem imagem</option>
@@ -194,7 +196,7 @@ export function ProductsListView() {
 
       <section className="bg-white p-4 rounded-xl md:rounded-2xl border border-neutral-200 shadow-sm flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
         <div className="flex items-start gap-3">
-          <div className="p-2 rounded-lg bg-purple-50 text-purple-700">
+          <div className="p-2 rounded-lg bg-[#F8EEEC] text-[#8D514B]">
             <Layers3 className="w-5 h-5" />
           </div>
           <div>
@@ -211,13 +213,13 @@ export function ProductsListView() {
             step={1}
             value={bulkStockQuantity}
             onChange={(event) => setBulkStockQuantity(event.target.value)}
-            className="w-full sm:w-36 px-3 py-2 bg-neutral-50 border border-neutral-200 rounded-lg text-sm focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500"
+            className="w-full sm:w-36 px-3 py-2 bg-neutral-50 border border-neutral-200 rounded-lg text-sm focus:outline-none focus:border-[#C98F86] focus:ring-1 focus:ring-[#C98F86]"
             placeholder="Quantidade"
           />
           <button
             onClick={() => applyBulkStock('selected')}
             disabled={bulkActionLoading !== null}
-            className="px-4 py-2 rounded-lg text-sm font-bold border border-purple-200 text-purple-700 bg-purple-50 hover:bg-purple-100 disabled:opacity-60 disabled:cursor-not-allowed"
+            className="px-4 py-2 rounded-lg text-sm font-bold border border-[#E7C9C4] text-[#8D514B] bg-[#F8EEEC] hover:bg-[#F3E3DF] disabled:opacity-60 disabled:cursor-not-allowed"
           >
             {bulkActionLoading === 'selected' ? 'Aplicando...' : `Aplicar selecionados (${selectedProductIds.length})`}
           </button>
@@ -239,9 +241,9 @@ export function ProductsListView() {
         <div className="grid grid-cols-2 gap-2 md:flex md:flex-wrap">
           <button disabled={visibilityActionLoading} onClick={() => applyBulkVisibility({ isActive: true })} className="px-4 py-2 rounded-lg text-xs font-bold border border-emerald-200 bg-emerald-50 text-emerald-700 disabled:opacity-60">Ativar</button>
           <button disabled={visibilityActionLoading} onClick={() => applyBulkVisibility({ isActive: false })} className="px-4 py-2 rounded-lg text-xs font-bold border border-neutral-200 bg-neutral-50 text-neutral-700 disabled:opacity-60">Desativar</button>
-          <button disabled={visibilityActionLoading} onClick={() => applyBulkVisibility({ catalogStatus: 'live', isActive: true })} className="px-4 py-2 rounded-lg text-xs font-bold border border-purple-200 bg-purple-50 text-purple-700 disabled:opacity-60">Publicar</button>
+          <button disabled={visibilityActionLoading} onClick={() => applyBulkVisibility({ catalogStatus: 'live', isActive: true })} className="px-4 py-2 rounded-lg text-xs font-bold border border-[#E7C9C4] bg-[#F8EEEC] text-[#8D514B] disabled:opacity-60">Publicar</button>
           <button disabled={visibilityActionLoading} onClick={() => applyBulkVisibility({ isFeatured: true })} className="px-4 py-2 rounded-lg text-xs font-bold border border-amber-200 bg-amber-50 text-amber-700 disabled:opacity-60">Destacar</button>
-          <button disabled={visibilityActionLoading} onClick={() => applyBulkVisibility({ isNew: true })} className="px-4 py-2 rounded-lg text-xs font-bold border border-blue-200 bg-blue-50 text-blue-700 disabled:opacity-60">Lancamento</button>
+          <button disabled={visibilityActionLoading} onClick={() => applyBulkVisibility({ isNew: true })} className="px-4 py-2 rounded-lg text-xs font-bold border border-[#E7C9C4] bg-white text-[#8D514B] disabled:opacity-60">Lancamento</button>
         </div>
       </section>
 
@@ -256,7 +258,7 @@ export function ProductsListView() {
                     checked={allFilteredSelected}
                     onChange={toggleAllFilteredSelection}
                     aria-label="Selecionar todos os produtos filtrados"
-                    className="w-4 h-4 accent-purple-600"
+                    className="w-4 h-4 accent-[#C98F86]"
                   />
                 </th>
                 <th className="p-4">Produto</th>
@@ -290,7 +292,7 @@ export function ProductsListView() {
                         checked={selectedProductIds.includes(product.id)}
                         onChange={() => toggleProductSelection(product.id)}
                         aria-label={`Selecionar ${product.title}`}
-                        className="w-4 h-4 accent-purple-600"
+                        className="w-4 h-4 accent-[#C98F86]"
                       />
                     </td>
                     <td className="p-4">
@@ -304,7 +306,7 @@ export function ProductsListView() {
                           <h4 className="font-bold text-neutral-900 text-sm">{product.title}</h4>
                           <span className="text-xs text-neutral-500">{product.slug || `ID: ${product.id.split('-')[0].toUpperCase()}`}</span>
                           <div className="mt-1 flex flex-wrap gap-1">
-                            {product.audience && <span className="px-1.5 py-0.5 text-[9px] font-bold uppercase bg-neutral-100 text-neutral-600 rounded">{product.audience}</span>}
+                            {product.brandLabel && <span className="px-1.5 py-0.5 text-[9px] font-bold uppercase bg-[#F8EEEC] text-[#8D514B] rounded">{product.brandLabel}</span>}
                             {product.productType && <span className="px-1.5 py-0.5 text-[9px] font-bold uppercase bg-neutral-100 text-neutral-600 rounded">{product.productType}</span>}
                           </div>
                         </div>
@@ -324,7 +326,7 @@ export function ProductsListView() {
                         )}
                         {product.isFeatured && <span className="px-2 py-1 text-[10px] font-bold uppercase bg-emerald-100 text-emerald-700 rounded border border-emerald-200">Destaque</span>}
                         {product.isPromo && <span className="px-2 py-1 text-[10px] font-bold uppercase bg-rose-100 text-rose-700 rounded border border-rose-200">Promo</span>}
-                        {product.isNew && <span className="px-2 py-1 text-[10px] font-bold uppercase bg-blue-100 text-blue-700 rounded border border-blue-200">Novo</span>}
+                        {product.isNew && <span className="px-2 py-1 text-[10px] font-bold uppercase bg-[#F8EEEC] text-[#8D514B] rounded border border-[#E7C9C4]">Novo</span>}
                         {product.images.length === 0 && (
                           <span className="inline-flex items-center gap-1 px-2 py-1 text-[10px] font-bold uppercase bg-orange-50 text-orange-700 rounded border border-orange-200">
                             <ImageOff className="w-3 h-3" />
@@ -351,7 +353,7 @@ export function ProductsListView() {
                         </label>
                         <button
                           onClick={() => handleEdit(product)}
-                          className="p-2 text-neutral-400 hover:text-purple-600 rounded-lg hover:bg-purple-50 transition-colors"
+                          className="p-2 text-neutral-400 hover:text-[#8D514B] rounded-lg hover:bg-[#F8EEEC] transition-colors"
                           title="Editar Produto"
                         >
                           <Edit2 className="w-4 h-4" />

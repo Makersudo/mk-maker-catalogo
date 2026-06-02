@@ -41,7 +41,7 @@ export interface CatalogMetrics {
     averageTicket: number;
     unitsSold: number;
   };
-  audience: Array<{
+  catalogLines: Array<{
     key: string;
     label: string;
     total: number;
@@ -107,7 +107,8 @@ interface MetricIssueList {
 interface ProductRanking {
   id: string;
   title: string;
-  audience: string;
+  lineKey: string;
+  lineLabel: string;
   unitsSold: number;
   revenue: number;
 }

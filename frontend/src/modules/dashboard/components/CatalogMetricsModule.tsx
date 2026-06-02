@@ -7,18 +7,18 @@ import {
   CheckCircle2,
   DollarSign,
   Image,
-  Layers3,
   PackageCheck,
+  Palette,
   PieChart,
   TrendingUp,
 } from 'lucide-react';
 import type { CatalogMetrics } from '../../../services/dashboardService';
 
-type MetricsTab = 'overview' | 'audience' | 'publication' | 'stock' | 'sales' | 'quality';
+type MetricsTab = 'overview' | 'lines' | 'publication' | 'stock' | 'sales' | 'quality';
 
 const tabs: Array<{ id: MetricsTab; label: string; icon: typeof BarChart3 }> = [
   { id: 'overview', label: 'Visao Geral', icon: BarChart3 },
-  { id: 'audience', label: 'Publicos', icon: Layers3 },
+  { id: 'lines', label: 'Linhas', icon: Palette },
   { id: 'publication', label: 'Publicacao', icon: PackageCheck },
   { id: 'stock', label: 'Estoque', icon: Boxes },
   { id: 'sales', label: 'Vendas', icon: DollarSign },
@@ -32,17 +32,17 @@ export function CatalogMetricsModule({ metrics }: { metrics: CatalogMetrics }) {
     <section className="bg-white border border-neutral-200 rounded-xl md:rounded-2xl p-4 md:p-6 shadow-sm">
       <div className="flex flex-col xl:flex-row xl:items-start xl:justify-between gap-4 mb-5">
         <div>
-          <span className="inline-flex items-center gap-2 rounded-full bg-purple-50 px-3 py-1 text-[10px] font-black uppercase tracking-widest text-purple-700">
+          <span className="inline-flex items-center gap-2 rounded-full bg-[#F8EEEC] px-3 py-1 text-[10px] font-black uppercase tracking-widest text-[#8D514B]">
             <PieChart className="w-3.5 h-3.5" />
-            Modulo de graficos
+            Painel da vitrine
           </span>
-          <h2 className="text-lg md:text-2xl font-black text-neutral-900 uppercase tracking-tight mt-3">Metricas de Catalogo</h2>
-          <p className="text-xs md:text-sm text-neutral-500 mt-1">Graficos separados por qualidade, publicacao, estoque, vendas e publico.</p>
+          <h2 className="text-lg md:text-2xl font-black text-neutral-900 uppercase tracking-tight mt-3">Metricas da Loja</h2>
+          <p className="text-xs md:text-sm text-neutral-500 mt-1">Indicadores por categoria, publicacao, estoque, pedidos e qualidade da vitrine.</p>
         </div>
-        <div className="rounded-2xl bg-neutral-950 text-white p-4 min-w-[190px]">
-          <p className="text-[10px] font-black uppercase tracking-widest text-neutral-400">Score do catalogo</p>
+        <div className="rounded-2xl bg-gradient-to-br from-neutral-950 to-[#7A4944] text-white p-4 min-w-[190px]">
+          <p className="text-[10px] font-black uppercase tracking-widest text-[#F3E3DF]">Qualidade da vitrine</p>
           <strong className="block text-4xl font-black mt-1">{metrics.summary.completionScore}%</strong>
-          <div className="mt-3">{ProgressBar({ value: metrics.summary.completionScore, color: 'bg-emerald-400' })}</div>
+          <div className="mt-3">{ProgressBar({ value: metrics.summary.completionScore, color: 'bg-[#C98F86]' })}</div>
         </div>
       </div>
 
@@ -58,7 +58,7 @@ export function CatalogMetricsModule({ metrics }: { metrics: CatalogMetrics }) {
               className={`inline-flex items-center gap-2 rounded-xl px-3 py-2 text-xs font-black uppercase tracking-tight whitespace-nowrap border transition-colors ${
                 selected
                   ? 'bg-neutral-950 text-white border-neutral-950'
-                  : 'bg-white text-neutral-500 border-neutral-200 hover:border-purple-200 hover:text-purple-700'
+                  : 'bg-white text-neutral-500 border-neutral-200 hover:border-[#E7C9C4] hover:text-[#8D514B]'
               }`}
             >
               <Icon className="w-4 h-4" />
@@ -69,7 +69,7 @@ export function CatalogMetricsModule({ metrics }: { metrics: CatalogMetrics }) {
       </div>
 
       {activeTab === 'overview' && <OverviewTab metrics={metrics} />}
-      {activeTab === 'audience' && <AudienceTab metrics={metrics} />}
+      {activeTab === 'lines' && <CatalogLinesTab metrics={metrics} />}
       {activeTab === 'publication' && <PublicationTab metrics={metrics} />}
       {activeTab === 'stock' && <StockTab metrics={metrics} />}
       {activeTab === 'sales' && <SalesTab metrics={metrics} />}
@@ -89,15 +89,15 @@ function OverviewTab({ metrics }: { metrics: CatalogMetrics }) {
         <MiniMetric label="Produtos live" value={metrics.summary.liveProducts} detail={`${metrics.summary.totalProducts} no total`} />
         <MiniMetric label="Imagens" value={`${metrics.imageCoverage.percent}%`} detail={`${metrics.imageCoverage.withImage} com imagem`} />
       </div>
-      <div className="rounded-2xl border border-neutral-100 bg-gradient-to-br from-neutral-950 to-neutral-800 p-5 text-white">
+      <div className="rounded-2xl border border-neutral-100 bg-gradient-to-br from-neutral-950 to-[#7A4944] p-5 text-white">
         <h3 className="text-xs font-black uppercase tracking-widest text-neutral-300 flex items-center gap-2">
           <TrendingUp className="w-4 h-4" />
           Saude geral do catalogo
         </h3>
         <div className="mt-5 space-y-4">
-          <GraphLine label="Publicados" value={percentOf(metrics.summary.liveProducts, metrics.summary.totalProducts)} color="bg-emerald-400" dark />
-          <GraphLine label="Com imagem" value={metrics.imageCoverage.percent} color="bg-blue-400" dark />
-          <GraphLine label="Estoque saudavel" value={percentOf(metrics.stockHealth.ok, metrics.summary.totalProducts)} color="bg-purple-400" dark />
+          <GraphLine label="Publicados" value={percentOf(metrics.summary.liveProducts, metrics.summary.totalProducts)} color="bg-[#C98F86]" dark />
+          <GraphLine label="Com imagem" value={metrics.imageCoverage.percent} color="bg-[#E7C9C4]" dark />
+          <GraphLine label="Estoque saudavel" value={percentOf(metrics.stockHealth.ok, metrics.summary.totalProducts)} color="bg-white" dark />
         </div>
         <div className="grid grid-cols-3 gap-2 mt-5 text-center">
           <DarkMini label="Novos" value={metrics.summary.newProducts} />
@@ -109,10 +109,10 @@ function OverviewTab({ metrics }: { metrics: CatalogMetrics }) {
   );
 }
 
-function AudienceTab({ metrics }: { metrics: CatalogMetrics }) {
+function CatalogLinesTab({ metrics }: { metrics: CatalogMetrics }) {
   return (
     <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-      {metrics.audience.map((item) => (
+      {metrics.catalogLines.map((item) => (
         <div key={item.key} className="rounded-2xl border border-neutral-100 bg-neutral-50 p-4">
           <div className="flex items-center justify-between gap-3 mb-4">
             <div>
@@ -122,9 +122,9 @@ function AudienceTab({ metrics }: { metrics: CatalogMetrics }) {
             <strong className="text-xl font-black text-neutral-900">{currency(item.revenue)}</strong>
           </div>
           <div className="space-y-3">
-            <GraphLine label="Publicado" value={percentOf(item.live, item.total)} color={audienceColor(item.key)} />
-            <GraphLine label="Com imagem" value={percentOf(item.withImage, item.total)} color="bg-blue-600" />
-            <GraphLine label="Ativo" value={percentOf(item.active, item.total)} color="bg-emerald-600" />
+            <GraphLine label="Publicado" value={percentOf(item.live, item.total)} color={lineColor(item.key, 0)} />
+            <GraphLine label="Com imagem" value={percentOf(item.withImage, item.total)} color={lineColor(item.key, 1)} />
+            <GraphLine label="Ativo" value={percentOf(item.active, item.total)} color={lineColor(item.key, 2)} />
           </div>
           <div className="grid grid-cols-3 gap-2 mt-4">
             <MiniMetric label="Estoque" value={item.stockUnits} />
@@ -209,7 +209,7 @@ function QualityTab({ metrics }: { metrics: CatalogMetrics }) {
     { label: 'Sem categoria', count: metrics.quality.withoutCategory.count, tone: 'amber' },
     { label: 'Sem subcategoria', count: metrics.quality.withoutSubcategory.count, tone: 'amber' },
     { label: 'Estoque zerado', count: metrics.quality.zeroStock.count, tone: 'red' },
-    { label: 'Categorias vazias', count: metrics.quality.emptyCategories.count, tone: 'blue' },
+    { label: 'Categorias vazias', count: metrics.quality.emptyCategories.count, tone: 'neutral' },
   ];
 
   return (
@@ -229,7 +229,7 @@ function QualityTab({ metrics }: { metrics: CatalogMetrics }) {
         ) : (
           <div className="flex flex-col gap-3">
             {metrics.alerts.slice(0, 6).map((alert) => (
-              <div key={alert.label} className={`rounded-xl border p-3 ${alert.severity === 'critical' ? 'bg-red-50 border-red-100 text-red-700' : alert.severity === 'warning' ? 'bg-amber-50 border-amber-100 text-amber-800' : 'bg-blue-50 border-blue-100 text-blue-700'}`}>
+              <div key={alert.label} className={`rounded-xl border p-3 ${alert.severity === 'critical' ? 'bg-red-50 border-red-100 text-red-700' : alert.severity === 'warning' ? 'bg-amber-50 border-amber-100 text-amber-800' : 'bg-[#F8EEEC] border-[#E7C9C4] text-[#8D514B]'}`}>
                 <div className="flex items-center justify-between gap-3">
                   <strong className="text-sm">{alert.label}</strong>
                   <span className="text-lg font-black">{alert.count}</span>
@@ -279,7 +279,7 @@ function RankingList({ title, items, valueType }: {
             <div key={`${title}-${item.id}`} className="flex items-center justify-between gap-3 text-sm">
               <div className="min-w-0">
                 <p className="font-bold text-neutral-800 truncate">{index + 1}. {item.title}</p>
-                <span className="text-[11px] uppercase tracking-widest text-neutral-400">{item.audience}</span>
+                <span className="text-[11px] uppercase tracking-widest text-neutral-400">{item.lineLabel}</span>
               </div>
               <strong className="shrink-0 text-neutral-900">
                 {valueType === 'revenue' ? currency(item.revenue) : `${item.unitsSold} un.`}
@@ -310,7 +310,7 @@ function GraphLine({ label, value, color, count, dark = false }: {
   );
 }
 
-function ProgressBar({ value, color = 'bg-purple-700' }: { value: number; color?: string }) {
+function ProgressBar({ value, color = 'bg-[#8D514B]' }: { value: number; color?: string }) {
   return (
     <div className="h-2.5 bg-white/10 rounded-full overflow-hidden ring-1 ring-black/5">
       <div className={`h-full rounded-full ${color}`} style={{ width: `${Math.min(Math.max(value, 0), 100)}%` }} />
@@ -343,7 +343,7 @@ function IssueCard({ label, count, tone }: { label: string; count: number; tone:
     ? 'bg-red-50 border-red-100 text-red-700'
     : tone === 'amber'
       ? 'bg-amber-50 border-amber-100 text-amber-800'
-      : 'bg-blue-50 border-blue-100 text-blue-700';
+      : 'bg-[#F8EEEC] border-[#E7C9C4] text-[#8D514B]';
   return (
     <div className={`rounded-2xl border p-4 ${classes}`}>
       <p className="text-xs font-black uppercase tracking-widest opacity-75">{label}</p>
@@ -352,11 +352,10 @@ function IssueCard({ label, count, tone }: { label: string; count: number; tone:
   );
 }
 
-function audienceColor(key: string) {
-  if (key === 'masculino') return 'bg-blue-600';
-  if (key === 'suplemento') return 'bg-emerald-600';
-  if (key === 'feminino') return 'bg-pink-600';
-  return 'bg-neutral-600';
+function lineColor(key: string, offset = 0) {
+  const palette = ['bg-[#8D514B]', 'bg-[#C98F86]', 'bg-neutral-900', 'bg-[#D9B0AA]', 'bg-[#7A4944]', 'bg-neutral-600'];
+  const hash = Array.from(key).reduce((sum, char) => sum + char.charCodeAt(0), 0);
+  return palette[(hash + offset) % palette.length];
 }
 
 function currency(value: number) {

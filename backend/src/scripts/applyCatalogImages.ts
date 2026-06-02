@@ -71,7 +71,7 @@ async function fileToDataUrl(filePath: string) {
 
 async function main() {
   const workspaceRoot = getWorkspaceRoot();
-  const manifestPath = getArg('manifest', path.join('backend', 'catalog-workspace', 'feminino', 'image-manifest.json'));
+  const manifestPath = getArg('manifest', path.join('backend', 'catalog-workspace', 'beleza', 'image-manifest.json'));
   const apply = hasFlag('apply');
   const raw = await fs.readFile(path.resolve(workspaceRoot, manifestPath), 'utf8');
   const manifest = JSON.parse(raw.replace(/^\uFEFF/, '')) as ImageManifest;

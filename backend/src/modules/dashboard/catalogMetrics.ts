@@ -1,12 +1,12 @@
-type AudienceKey = 'feminino' | 'masculino' | 'suplemento' | 'sem_publico';
 type CatalogStatus = 'draft' | 'ready' | 'live';
 type AlertSeverity = 'critical' | 'warning' | 'info';
+type CatalogLineKey = string;
 
 export interface CatalogMetricsProduct {
   id: string;
   title?: string | null;
   price?: number | string | null;
-  audience?: AudienceKey | string | null;
+  audience?: string | null;
   catalog_status?: CatalogStatus | string | null;
   is_active?: boolean | null;
   is_featured?: boolean | null;
@@ -17,8 +17,8 @@ export interface CatalogMetricsProduct {
   category_id?: string | null;
   subcategory_id?: string | null;
   created_at?: string | null;
-  category?: { id?: string | null; name?: string | null; slug?: string | null } | null;
-  subcategory?: { id?: string | null; name?: string | null; slug?: string | null } | null;
+  category?: { id?: string | null; name?: string | null; slug?: string | null; parent_id?: string | null } | null;
+  subcategory?: { id?: string | null; name?: string | null; slug?: string | null; parent_id?: string | null } | null;
   product_images?: Array<{ id?: string | null; url?: string | null }> | null;
   product_variants?: Array<{ id?: string | null; stock_quantity?: number | string | null; is_active?: boolean | null }> | null;
 }
@@ -59,6 +59,12 @@ interface CountWithProducts {
   products: Array<{ id: string; title: string }>;
 }
 
+interface CatalogLineInfo {
+  key: CatalogLineKey;
+  label: string;
+  order: number;
+}
+
 function numberValue(value: unknown): number {
   const parsed = typeof value === 'number' ? value : Number(value ?? 0);
   return Number.isFinite(parsed) ? parsed : 0;
@@ -71,11 +77,6 @@ function roundMoney(value: number): number {
 function percent(part: number, total: number): number {
   if (total <= 0) return 0;
   return Math.round((part / total) * 100);
-}
-
-function audienceKey(value: unknown): AudienceKey {
-  if (value === 'feminino' || value === 'masculino' || value === 'suplemento') return value;
-  return 'sem_publico';
 }
 
 function statusKey(value: unknown): CatalogStatus {
@@ -116,6 +117,58 @@ function limitedIssueProducts(products: CatalogMetricsProduct[]): CountWithProdu
   };
 }
 
+function categoryKey(category: CatalogMetricsCategory | { id?: string | null; slug?: string | null }): string {
+  return category.slug?.trim() || category.id?.trim() || 'sem-categoria';
+}
+
+function buildCatalogLineResolver(categories: CatalogMetricsCategory[]) {
+  const categoryById = new Map(categories.map((category) => [category.id, category]));
+  const rootOrder = new Map<string, number>();
+  categories
+    .filter((category) => !category.parent_id)
+    .forEach((category, index) => rootOrder.set(categoryKey(category), index));
+
+  function rootCategory(categoryId?: string | null): CatalogMetricsCategory | null {
+    if (!categoryId) return null;
+
+    let current = categoryById.get(categoryId) ?? null;
+    const visited = new Set<string>();
+    while (current?.parent_id && !visited.has(current.id)) {
+      visited.add(current.id);
+      current = categoryById.get(current.parent_id) ?? current;
+      if (!current.parent_id) break;
+    }
+
+    return current;
+  }
+
+  return (product: CatalogMetricsProduct): CatalogLineInfo => {
+    const productCategoryId = product.category_id ?? product.category?.id ?? product.subcategory_id ?? product.subcategory?.id ?? null;
+    const root = rootCategory(productCategoryId);
+
+    if (root) {
+      const key = categoryKey(root);
+      return {
+        key,
+        label: root.name?.trim() || product.category?.name?.trim() || 'Categoria sem nome',
+        order: rootOrder.get(key) ?? Number.MAX_SAFE_INTEGER - 1,
+      };
+    }
+
+    const inlineCategory = product.category ?? product.subcategory;
+    if (inlineCategory?.id || inlineCategory?.slug || inlineCategory?.name) {
+      const key = categoryKey(inlineCategory);
+      return {
+        key,
+        label: inlineCategory.name?.trim() || 'Categoria sem nome',
+        order: rootOrder.get(key) ?? Number.MAX_SAFE_INTEGER - 1,
+      };
+    }
+
+    return { key: 'sem-categoria', label: 'Sem categoria', order: Number.MAX_SAFE_INTEGER };
+  };
+}
+
 export function buildCatalogMetrics(input: BuildCatalogMetricsInput, options: BuildCatalogMetricsOptions = {}) {
   const now = options.now ?? new Date();
   const lowStockThreshold = options.lowStockThreshold ?? 5;
@@ -132,6 +185,7 @@ export function buildCatalogMetrics(input: BuildCatalogMetricsInput, options: Bu
   const withoutCategoryProducts = products.filter((product) => !product.category_id && !product.category?.id);
   const withoutSubcategoryProducts = products.filter((product) => !product.subcategory_id && !product.subcategory?.id);
   const liveProducts = products.filter((product) => statusKey(product.catalog_status) === 'live').length;
+  const resolveCatalogLine = buildCatalogLineResolver(categories);
 
   const unitsByProduct = new Map<string, { units: number; revenue: number }>();
   let totalRevenue = 0;
@@ -162,37 +216,43 @@ export function buildCatalogMetrics(input: BuildCatalogMetricsInput, options: Bu
 
   const productsByCategory = new Map<string, CatalogMetricsProduct[]>();
   for (const product of products) {
-    const categoryId = product.category_id ?? product.category?.id;
-    if (!categoryId) continue;
-    productsByCategory.set(categoryId, [...(productsByCategory.get(categoryId) ?? []), product]);
+    const categoryIds = new Set([
+      product.category_id ?? product.category?.id ?? null,
+      product.subcategory_id ?? product.subcategory?.id ?? null,
+    ].filter((categoryId): categoryId is string => typeof categoryId === 'string' && categoryId.trim().length > 0));
+
+    for (const categoryId of categoryIds) {
+      productsByCategory.set(categoryId, [...(productsByCategory.get(categoryId) ?? []), product]);
+    }
   }
 
   const emptyCategories = categories.filter((category) => category.is_active !== false && !(productsByCategory.get(category.id)?.length));
   const productSales = products.map((product) => {
     const sales = unitsByProduct.get(product.id) ?? { units: 0, revenue: 0 };
+    const catalogLine = resolveCatalogLine(product);
     return {
       id: product.id,
       title: productTitle(product),
-      audience: audienceKey(product.audience),
+      lineKey: catalogLine.key,
+      lineLabel: catalogLine.label,
       unitsSold: sales.units,
       revenue: roundMoney(sales.revenue),
     };
   });
 
-  const audienceLabels: Record<AudienceKey, string> = {
-    feminino: 'Feminino',
-    masculino: 'Masculino',
-    suplemento: 'Suplementos',
-    sem_publico: 'Sem publico',
-  };
+  const lineByKey = new Map<string, CatalogLineInfo>();
+  for (const product of products) {
+    const line = resolveCatalogLine(product);
+    lineByKey.set(line.key, line);
+  }
 
-  const audience = (['feminino', 'masculino', 'suplemento', 'sem_publico'] as AudienceKey[]).map((key) => {
-    const scoped = products.filter((product) => audienceKey(product.audience) === key);
+  const catalogLines = Array.from(lineByKey.values()).map((line) => {
+    const scoped = products.filter((product) => resolveCatalogLine(product).key === line.key);
     const scopedIds = new Set(scoped.map((product) => product.id));
     const scopedSales = productSales.filter((item) => scopedIds.has(item.id));
     return {
-      key,
-      label: audienceLabels[key],
+      key: line.key,
+      label: line.label,
       total: scoped.length,
       active: scoped.filter((product) => product.is_active === true).length,
       inactive: scoped.filter((product) => product.is_active !== true).length,
@@ -206,7 +266,11 @@ export function buildCatalogMetrics(input: BuildCatalogMetricsInput, options: Bu
       unitsSold: scopedSales.reduce((sum, item) => sum + item.unitsSold, 0),
       revenue: roundMoney(scopedSales.reduce((sum, item) => sum + item.revenue, 0)),
     };
-  }).filter((item) => item.total > 0 || item.key !== 'sem_publico');
+  }).sort((a, b) => {
+    const aOrder = lineByKey.get(a.key)?.order ?? Number.MAX_SAFE_INTEGER;
+    const bOrder = lineByKey.get(b.key)?.order ?? Number.MAX_SAFE_INTEGER;
+    return aOrder - bOrder || a.label.localeCompare(b.label);
+  });
 
   const categoryPerformance = categories.map((category) => {
     const scoped = productsByCategory.get(category.id) ?? [];
@@ -292,7 +356,7 @@ export function buildCatalogMetrics(input: BuildCatalogMetricsInput, options: Bu
       averageTicket: roundMoney(validOrders.length ? totalRevenue / validOrders.length : 0),
       unitsSold,
     },
-    audience,
+    catalogLines,
     quality: {
       withoutImage: limitedIssueProducts(withoutImageProducts),
       withoutPrice: limitedIssueProducts(withoutPriceProducts),

@@ -1,4 +1,4 @@
-export type Audience = 'feminino' | 'masculino' | 'suplemento';
+﻿export type Audience = 'beleza';
 export type CatalogStatus = 'draft' | 'ready' | 'live';
 
 export const catalogBrandLabels = [
@@ -353,7 +353,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Primer facial para preparacao da pele, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "pele",
     "subcategorySlug": "pele-preparacao-da-pele",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Preparacao da Pele",
     "variation": "Primer facial",
     "features": [
@@ -376,7 +376,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Primer matificante para preparacao da pele, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "pele",
     "subcategorySlug": "pele-preparacao-da-pele",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Preparacao da Pele",
     "variation": "Primer matificante",
     "features": [
@@ -399,7 +399,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Primer hidratante para preparacao da pele, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "pele",
     "subcategorySlug": "pele-preparacao-da-pele",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Preparacao da Pele",
     "variation": "Primer hidratante",
     "features": [
@@ -422,7 +422,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Bruma hidratante para preparacao da pele, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "pele",
     "subcategorySlug": "pele-preparacao-da-pele",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Preparacao da Pele",
     "variation": "Bruma hidratante",
     "features": [
@@ -445,7 +445,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Fixador de maquiagem para preparacao da pele, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "pele",
     "subcategorySlug": "pele-preparacao-da-pele",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Preparacao da Pele",
     "variation": "Fixador de maquiagem",
     "features": [
@@ -468,7 +468,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Protetor solar com cor para preparacao da pele, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "pele",
     "subcategorySlug": "pele-preparacao-da-pele",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Preparacao da Pele",
     "variation": "Protetor solar com cor",
     "features": [
@@ -491,7 +491,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Base liquida para bases, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "pele",
     "subcategorySlug": "pele-bases",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Bases",
     "variation": "Base liquida",
     "features": [
@@ -514,7 +514,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Base matte para bases, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "pele",
     "subcategorySlug": "pele-bases",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Bases",
     "variation": "Base matte",
     "features": [
@@ -537,7 +537,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Base glow para bases, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "pele",
     "subcategorySlug": "pele-bases",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Bases",
     "variation": "Base glow",
     "features": [
@@ -560,7 +560,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Base em bastao para bases, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "pele",
     "subcategorySlug": "pele-bases",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Bases",
     "variation": "Base em bastao",
     "features": [
@@ -583,7 +583,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Base compacta para bases, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "pele",
     "subcategorySlug": "pele-bases",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Bases",
     "variation": "Base compacta",
     "features": [
@@ -606,7 +606,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "BB Cream para bases, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "pele",
     "subcategorySlug": "pele-bases",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Bases",
     "variation": "BB Cream",
     "features": [
@@ -629,7 +629,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Corretivo liquido para corretivos, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "pele",
     "subcategorySlug": "pele-corretivos",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Corretivos",
     "variation": "Corretivo liquido",
     "features": [
@@ -652,7 +652,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Corretivo cremoso para corretivos, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "pele",
     "subcategorySlug": "pele-corretivos",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Corretivos",
     "variation": "Corretivo cremoso",
     "features": [
@@ -675,7 +675,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Corretivo em bastao para corretivos, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "pele",
     "subcategorySlug": "pele-corretivos",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Corretivos",
     "variation": "Corretivo em bastao",
     "features": [
@@ -698,7 +698,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Corretivo colorido para corretivos, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "pele",
     "subcategorySlug": "pele-corretivos",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Corretivos",
     "variation": "Corretivo colorido",
     "features": [
@@ -721,7 +721,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Paleta de corretivos para corretivos, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "pele",
     "subcategorySlug": "pele-corretivos",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Corretivos",
     "variation": "Paleta de corretivos",
     "features": [
@@ -744,7 +744,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Corretivo alta cobertura para corretivos, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "pele",
     "subcategorySlug": "pele-corretivos",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Corretivos",
     "variation": "Corretivo alta cobertura",
     "features": [
@@ -767,7 +767,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Po compacto para pos faciais, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "pele",
     "subcategorySlug": "pele-pos-faciais",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Pos Faciais",
     "variation": "Po compacto",
     "features": [
@@ -790,7 +790,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Po solto para pos faciais, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "pele",
     "subcategorySlug": "pele-pos-faciais",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Pos Faciais",
     "variation": "Po solto",
     "features": [
@@ -813,7 +813,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Po translucido para pos faciais, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "pele",
     "subcategorySlug": "pele-pos-faciais",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Pos Faciais",
     "variation": "Po translucido",
     "features": [
@@ -836,7 +836,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Po banana para pos faciais, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "pele",
     "subcategorySlug": "pele-pos-faciais",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Pos Faciais",
     "variation": "Po banana",
     "features": [
@@ -859,7 +859,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Po matificante para pos faciais, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "pele",
     "subcategorySlug": "pele-pos-faciais",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Pos Faciais",
     "variation": "Po matificante",
     "features": [
@@ -882,7 +882,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Po finalizador para pos faciais, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "pele",
     "subcategorySlug": "pele-pos-faciais",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Pos Faciais",
     "variation": "Po finalizador",
     "features": [
@@ -905,7 +905,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Contorno em po para contorno e bronzer, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "pele",
     "subcategorySlug": "pele-contorno-e-bronzer",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Contorno e Bronzer",
     "variation": "Contorno em po",
     "features": [
@@ -928,7 +928,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Contorno cremoso para contorno e bronzer, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "pele",
     "subcategorySlug": "pele-contorno-e-bronzer",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Contorno e Bronzer",
     "variation": "Contorno cremoso",
     "features": [
@@ -951,7 +951,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Contorno em bastao para contorno e bronzer, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "pele",
     "subcategorySlug": "pele-contorno-e-bronzer",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Contorno e Bronzer",
     "variation": "Contorno em bastao",
     "features": [
@@ -974,7 +974,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Paleta de contorno para contorno e bronzer, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "pele",
     "subcategorySlug": "pele-contorno-e-bronzer",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Contorno e Bronzer",
     "variation": "Paleta de contorno",
     "features": [
@@ -997,7 +997,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Bronzer em po para contorno e bronzer, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "pele",
     "subcategorySlug": "pele-contorno-e-bronzer",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Contorno e Bronzer",
     "variation": "Bronzer em po",
     "features": [
@@ -1020,7 +1020,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Bronzer cremoso para contorno e bronzer, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "pele",
     "subcategorySlug": "pele-contorno-e-bronzer",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Contorno e Bronzer",
     "variation": "Bronzer cremoso",
     "features": [
@@ -1043,7 +1043,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Blush em po para blush, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "pele",
     "subcategorySlug": "pele-blush",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Blush",
     "variation": "Blush em po",
     "features": [
@@ -1066,7 +1066,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Blush liquido para blush, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "pele",
     "subcategorySlug": "pele-blush",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Blush",
     "variation": "Blush liquido",
     "features": [
@@ -1089,7 +1089,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Blush cremoso para blush, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "pele",
     "subcategorySlug": "pele-blush",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Blush",
     "variation": "Blush cremoso",
     "features": [
@@ -1112,7 +1112,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Blush em bastao para blush, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "pele",
     "subcategorySlug": "pele-blush",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Blush",
     "variation": "Blush em bastao",
     "features": [
@@ -1135,7 +1135,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Paleta de blush para blush, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "pele",
     "subcategorySlug": "pele-blush",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Blush",
     "variation": "Paleta de blush",
     "features": [
@@ -1158,7 +1158,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Blush compacto para blush, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "pele",
     "subcategorySlug": "pele-blush",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Blush",
     "variation": "Blush compacto",
     "features": [
@@ -1181,7 +1181,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Iluminador em po para iluminador, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "pele",
     "subcategorySlug": "pele-iluminador",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Iluminador",
     "variation": "Iluminador em po",
     "features": [
@@ -1204,7 +1204,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Iluminador liquido para iluminador, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "pele",
     "subcategorySlug": "pele-iluminador",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Iluminador",
     "variation": "Iluminador liquido",
     "features": [
@@ -1227,7 +1227,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Iluminador cremoso para iluminador, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "pele",
     "subcategorySlug": "pele-iluminador",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Iluminador",
     "variation": "Iluminador cremoso",
     "features": [
@@ -1250,7 +1250,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Iluminador em bastao para iluminador, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "pele",
     "subcategorySlug": "pele-iluminador",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Iluminador",
     "variation": "Iluminador em bastao",
     "features": [
@@ -1273,7 +1273,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Paleta de iluminador para iluminador, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "pele",
     "subcategorySlug": "pele-iluminador",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Iluminador",
     "variation": "Paleta de iluminador",
     "features": [
@@ -1296,7 +1296,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Iluminador corporal para iluminador, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "pele",
     "subcategorySlug": "pele-iluminador",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Iluminador",
     "variation": "Iluminador corporal",
     "features": [
@@ -1319,7 +1319,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Paleta de sombras para sombras, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "olhos",
     "subcategorySlug": "olhos-sombras",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Sombras",
     "variation": "Paleta de sombras",
     "features": [
@@ -1342,7 +1342,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Sombra unitaria para sombras, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "olhos",
     "subcategorySlug": "olhos-sombras",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Sombras",
     "variation": "Sombra unitaria",
     "features": [
@@ -1365,7 +1365,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Sombra liquida para sombras, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "olhos",
     "subcategorySlug": "olhos-sombras",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Sombras",
     "variation": "Sombra liquida",
     "features": [
@@ -1388,7 +1388,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Sombra cremosa para sombras, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "olhos",
     "subcategorySlug": "olhos-sombras",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Sombras",
     "variation": "Sombra cremosa",
     "features": [
@@ -1411,7 +1411,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Sombra em bastao para sombras, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "olhos",
     "subcategorySlug": "olhos-sombras",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Sombras",
     "variation": "Sombra em bastao",
     "features": [
@@ -1434,7 +1434,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Pigmento para sombras, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "olhos",
     "subcategorySlug": "olhos-sombras",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Sombras",
     "variation": "Pigmento",
     "features": [
@@ -1457,7 +1457,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Delineador liquido para delineadores, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "olhos",
     "subcategorySlug": "olhos-delineadores",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Delineadores",
     "variation": "Delineador liquido",
     "features": [
@@ -1480,7 +1480,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Delineador em gel para delineadores, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "olhos",
     "subcategorySlug": "olhos-delineadores",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Delineadores",
     "variation": "Delineador em gel",
     "features": [
@@ -1503,7 +1503,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Delineador caneta para delineadores, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "olhos",
     "subcategorySlug": "olhos-delineadores",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Delineadores",
     "variation": "Delineador caneta",
     "features": [
@@ -1526,7 +1526,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Delineador colorido para delineadores, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "olhos",
     "subcategorySlug": "olhos-delineadores",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Delineadores",
     "variation": "Delineador colorido",
     "features": [
@@ -1549,7 +1549,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Delineador a prova d'agua para delineadores, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "olhos",
     "subcategorySlug": "olhos-delineadores",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Delineadores",
     "variation": "Delineador a prova d'agua",
     "features": [
@@ -1572,7 +1572,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Delineador glitter para delineadores, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "olhos",
     "subcategorySlug": "olhos-delineadores",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Delineadores",
     "variation": "Delineador glitter",
     "features": [
@@ -1595,7 +1595,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Lapis preto para lapis de olho, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "olhos",
     "subcategorySlug": "olhos-lapis-de-olho",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Lapis de Olho",
     "variation": "Lapis preto",
     "features": [
@@ -1618,7 +1618,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Lapis marrom para lapis de olho, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "olhos",
     "subcategorySlug": "olhos-lapis-de-olho",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Lapis de Olho",
     "variation": "Lapis marrom",
     "features": [
@@ -1641,7 +1641,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Lapis bege para lapis de olho, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "olhos",
     "subcategorySlug": "olhos-lapis-de-olho",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Lapis de Olho",
     "variation": "Lapis bege",
     "features": [
@@ -1664,7 +1664,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Lapis branco para lapis de olho, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "olhos",
     "subcategorySlug": "olhos-lapis-de-olho",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Lapis de Olho",
     "variation": "Lapis branco",
     "features": [
@@ -1687,7 +1687,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Lapis kajal para lapis de olho, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "olhos",
     "subcategorySlug": "olhos-lapis-de-olho",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Lapis de Olho",
     "variation": "Lapis kajal",
     "features": [
@@ -1710,7 +1710,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Lapis colorido para lapis de olho, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "olhos",
     "subcategorySlug": "olhos-lapis-de-olho",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Lapis de Olho",
     "variation": "Lapis colorido",
     "features": [
@@ -1733,7 +1733,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Mascara alongadora para mascara de cilios, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "olhos",
     "subcategorySlug": "olhos-mascara-de-cilios",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Mascara de Cilios",
     "variation": "Mascara alongadora",
     "features": [
@@ -1756,7 +1756,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Mascara volumizadora para mascara de cilios, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "olhos",
     "subcategorySlug": "olhos-mascara-de-cilios",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Mascara de Cilios",
     "variation": "Mascara volumizadora",
     "features": [
@@ -1779,7 +1779,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Mascara a prova d'agua para mascara de cilios, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "olhos",
     "subcategorySlug": "olhos-mascara-de-cilios",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Mascara de Cilios",
     "variation": "Mascara a prova d'agua",
     "features": [
@@ -1802,7 +1802,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Mascara incolor para mascara de cilios, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "olhos",
     "subcategorySlug": "olhos-mascara-de-cilios",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Mascara de Cilios",
     "variation": "Mascara incolor",
     "features": [
@@ -1825,7 +1825,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Mascara efeito boneca para mascara de cilios, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "olhos",
     "subcategorySlug": "olhos-mascara-de-cilios",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Mascara de Cilios",
     "variation": "Mascara efeito boneca",
     "features": [
@@ -1848,7 +1848,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Mascara curva cilios para mascara de cilios, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "olhos",
     "subcategorySlug": "olhos-mascara-de-cilios",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Mascara de Cilios",
     "variation": "Mascara curva cilios",
     "features": [
@@ -1871,7 +1871,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Cilios naturais para cilios posticos, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "olhos",
     "subcategorySlug": "olhos-cilios-posticos",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Cilios Posticos",
     "variation": "Cilios naturais",
     "features": [
@@ -1894,7 +1894,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Cilios volume para cilios posticos, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "olhos",
     "subcategorySlug": "olhos-cilios-posticos",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Cilios Posticos",
     "variation": "Cilios volume",
     "features": [
@@ -1917,7 +1917,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Cilios tufinho para cilios posticos, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "olhos",
     "subcategorySlug": "olhos-cilios-posticos",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Cilios Posticos",
     "variation": "Cilios tufinho",
     "features": [
@@ -1940,7 +1940,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Cilios fio a fio para cilios posticos, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "olhos",
     "subcategorySlug": "olhos-cilios-posticos",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Cilios Posticos",
     "variation": "Cilios fio a fio",
     "features": [
@@ -1963,7 +1963,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Cola para cilios para cilios posticos, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "olhos",
     "subcategorySlug": "olhos-cilios-posticos",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Cilios Posticos",
     "variation": "Cola para cilios",
     "features": [
@@ -1986,7 +1986,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Aplicador de cilios para cilios posticos, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "olhos",
     "subcategorySlug": "olhos-cilios-posticos",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Cilios Posticos",
     "variation": "Aplicador de cilios",
     "features": [
@@ -2009,7 +2009,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Lapis para sobrancelhas para produtos para sobrancelhas, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "sobrancelhas",
     "subcategorySlug": "sobrancelhas-produtos-para-sobrancelhas",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Produtos para Sobrancelhas",
     "variation": "Lapis para sobrancelhas",
     "features": [
@@ -2032,7 +2032,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Caneta para sobrancelhas para produtos para sobrancelhas, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "sobrancelhas",
     "subcategorySlug": "sobrancelhas-produtos-para-sobrancelhas",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Produtos para Sobrancelhas",
     "variation": "Caneta para sobrancelhas",
     "features": [
@@ -2055,7 +2055,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Sombra para sobrancelhas para produtos para sobrancelhas, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "sobrancelhas",
     "subcategorySlug": "sobrancelhas-produtos-para-sobrancelhas",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Produtos para Sobrancelhas",
     "variation": "Sombra para sobrancelhas",
     "features": [
@@ -2078,7 +2078,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Pomada para sobrancelhas para produtos para sobrancelhas, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "sobrancelhas",
     "subcategorySlug": "sobrancelhas-produtos-para-sobrancelhas",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Produtos para Sobrancelhas",
     "variation": "Pomada para sobrancelhas",
     "features": [
@@ -2101,7 +2101,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Gel para sobrancelhas para produtos para sobrancelhas, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "sobrancelhas",
     "subcategorySlug": "sobrancelhas-produtos-para-sobrancelhas",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Produtos para Sobrancelhas",
     "variation": "Gel para sobrancelhas",
     "features": [
@@ -2124,7 +2124,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Mascara para sobrancelhas para produtos para sobrancelhas, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "sobrancelhas",
     "subcategorySlug": "sobrancelhas-produtos-para-sobrancelhas",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Produtos para Sobrancelhas",
     "variation": "Mascara para sobrancelhas",
     "features": [
@@ -2147,7 +2147,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Pinca para acessorios para sobrancelhas, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "sobrancelhas",
     "subcategorySlug": "sobrancelhas-acessorios-para-sobrancelhas",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Acessorios para Sobrancelhas",
     "variation": "Pinca",
     "features": [
@@ -2170,7 +2170,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Tesourinha para acessorios para sobrancelhas, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "sobrancelhas",
     "subcategorySlug": "sobrancelhas-acessorios-para-sobrancelhas",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Acessorios para Sobrancelhas",
     "variation": "Tesourinha",
     "features": [
@@ -2193,7 +2193,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Escovinha para acessorios para sobrancelhas, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "sobrancelhas",
     "subcategorySlug": "sobrancelhas-acessorios-para-sobrancelhas",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Acessorios para Sobrancelhas",
     "variation": "Escovinha",
     "features": [
@@ -2216,7 +2216,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Navalha para acessorios para sobrancelhas, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "sobrancelhas",
     "subcategorySlug": "sobrancelhas-acessorios-para-sobrancelhas",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Acessorios para Sobrancelhas",
     "variation": "Navalha",
     "features": [
@@ -2239,7 +2239,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Paquimetro para sobrancelhas para acessorios para sobrancelhas, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "sobrancelhas",
     "subcategorySlug": "sobrancelhas-acessorios-para-sobrancelhas",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Acessorios para Sobrancelhas",
     "variation": "Paquimetro para sobrancelhas",
     "features": [
@@ -2262,7 +2262,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Molde para sobrancelhas para acessorios para sobrancelhas, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "sobrancelhas",
     "subcategorySlug": "sobrancelhas-acessorios-para-sobrancelhas",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Acessorios para Sobrancelhas",
     "variation": "Molde para sobrancelhas",
     "features": [
@@ -2285,7 +2285,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Batom matte para batons, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "boca",
     "subcategorySlug": "boca-batons",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Batons",
     "variation": "Batom matte",
     "features": [
@@ -2308,7 +2308,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Batom cremoso para batons, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "boca",
     "subcategorySlug": "boca-batons",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Batons",
     "variation": "Batom cremoso",
     "features": [
@@ -2331,7 +2331,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Batom liquido para batons, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "boca",
     "subcategorySlug": "boca-batons",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Batons",
     "variation": "Batom liquido",
     "features": [
@@ -2354,7 +2354,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Batom em bala para batons, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "boca",
     "subcategorySlug": "boca-batons",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Batons",
     "variation": "Batom em bala",
     "features": [
@@ -2377,7 +2377,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Batom cintilante para batons, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "boca",
     "subcategorySlug": "boca-batons",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Batons",
     "variation": "Batom cintilante",
     "features": [
@@ -2400,7 +2400,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Batom hidratante para batons, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "boca",
     "subcategorySlug": "boca-batons",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Batons",
     "variation": "Batom hidratante",
     "features": [
@@ -2423,7 +2423,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Gloss labial para gloss e hidratantes, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "boca",
     "subcategorySlug": "boca-gloss-e-hidratantes",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Gloss e Hidratantes",
     "variation": "Gloss labial",
     "features": [
@@ -2446,7 +2446,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Lip oil para gloss e hidratantes, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "boca",
     "subcategorySlug": "boca-gloss-e-hidratantes",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Gloss e Hidratantes",
     "variation": "Lip oil",
     "features": [
@@ -2469,7 +2469,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Lip tint para gloss e hidratantes, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "boca",
     "subcategorySlug": "boca-gloss-e-hidratantes",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Gloss e Hidratantes",
     "variation": "Lip tint",
     "features": [
@@ -2492,7 +2492,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Balm labial para gloss e hidratantes, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "boca",
     "subcategorySlug": "boca-gloss-e-hidratantes",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Gloss e Hidratantes",
     "variation": "Balm labial",
     "features": [
@@ -2515,7 +2515,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Mascara labial para gloss e hidratantes, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "boca",
     "subcategorySlug": "boca-gloss-e-hidratantes",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Gloss e Hidratantes",
     "variation": "Mascara labial",
     "features": [
@@ -2538,7 +2538,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Esfoliante labial para gloss e hidratantes, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "boca",
     "subcategorySlug": "boca-gloss-e-hidratantes",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Gloss e Hidratantes",
     "variation": "Esfoliante labial",
     "features": [
@@ -2561,7 +2561,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Lapis de boca nude para lapis labial, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "boca",
     "subcategorySlug": "boca-lapis-labial",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Lapis Labial",
     "variation": "Lapis de boca nude",
     "features": [
@@ -2584,7 +2584,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Lapis de boca vermelho para lapis labial, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "boca",
     "subcategorySlug": "boca-lapis-labial",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Lapis Labial",
     "variation": "Lapis de boca vermelho",
     "features": [
@@ -2607,7 +2607,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Lapis de boca marrom para lapis labial, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "boca",
     "subcategorySlug": "boca-lapis-labial",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Lapis Labial",
     "variation": "Lapis de boca marrom",
     "features": [
@@ -2630,7 +2630,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Lapis de boca rosa para lapis labial, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "boca",
     "subcategorySlug": "boca-lapis-labial",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Lapis Labial",
     "variation": "Lapis de boca rosa",
     "features": [
@@ -2653,7 +2653,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Delineador labial para lapis labial, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "boca",
     "subcategorySlug": "boca-lapis-labial",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Lapis Labial",
     "variation": "Delineador labial",
     "features": [
@@ -2676,7 +2676,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Lapis labial retratil para lapis labial, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "boca",
     "subcategorySlug": "boca-lapis-labial",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Lapis Labial",
     "variation": "Lapis labial retratil",
     "features": [
@@ -2699,7 +2699,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Pincel para base para pinceis para pele, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "pinceis-e-esponjas",
     "subcategorySlug": "pinceis-e-esponjas-pinceis-para-pele",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Pinceis para Pele",
     "variation": "Pincel para base",
     "features": [
@@ -2722,7 +2722,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Pincel para corretivo para pinceis para pele, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "pinceis-e-esponjas",
     "subcategorySlug": "pinceis-e-esponjas-pinceis-para-pele",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Pinceis para Pele",
     "variation": "Pincel para corretivo",
     "features": [
@@ -2745,7 +2745,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Pincel para po para pinceis para pele, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "pinceis-e-esponjas",
     "subcategorySlug": "pinceis-e-esponjas-pinceis-para-pele",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Pinceis para Pele",
     "variation": "Pincel para po",
     "features": [
@@ -2768,7 +2768,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Pincel para blush para pinceis para pele, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "pinceis-e-esponjas",
     "subcategorySlug": "pinceis-e-esponjas-pinceis-para-pele",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Pinceis para Pele",
     "variation": "Pincel para blush",
     "features": [
@@ -2791,7 +2791,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Pincel para contorno para pinceis para pele, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "pinceis-e-esponjas",
     "subcategorySlug": "pinceis-e-esponjas-pinceis-para-pele",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Pinceis para Pele",
     "variation": "Pincel para contorno",
     "features": [
@@ -2814,7 +2814,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Pincel para iluminador para pinceis para pele, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "pinceis-e-esponjas",
     "subcategorySlug": "pinceis-e-esponjas-pinceis-para-pele",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Pinceis para Pele",
     "variation": "Pincel para iluminador",
     "features": [
@@ -2837,7 +2837,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Pincel de esfumar para pinceis para olhos, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "pinceis-e-esponjas",
     "subcategorySlug": "pinceis-e-esponjas-pinceis-para-olhos",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Pinceis para Olhos",
     "variation": "Pincel de esfumar",
     "features": [
@@ -2860,7 +2860,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Pincel para sombra para pinceis para olhos, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "pinceis-e-esponjas",
     "subcategorySlug": "pinceis-e-esponjas-pinceis-para-olhos",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Pinceis para Olhos",
     "variation": "Pincel para sombra",
     "features": [
@@ -2883,7 +2883,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Pincel chanfrado para pinceis para olhos, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "pinceis-e-esponjas",
     "subcategorySlug": "pinceis-e-esponjas-pinceis-para-olhos",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Pinceis para Olhos",
     "variation": "Pincel chanfrado",
     "features": [
@@ -2906,7 +2906,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Pincel delineador para pinceis para olhos, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "pinceis-e-esponjas",
     "subcategorySlug": "pinceis-e-esponjas-pinceis-para-olhos",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Pinceis para Olhos",
     "variation": "Pincel delineador",
     "features": [
@@ -2929,7 +2929,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Pincel lapis para pinceis para olhos, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "pinceis-e-esponjas",
     "subcategorySlug": "pinceis-e-esponjas-pinceis-para-olhos",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Pinceis para Olhos",
     "variation": "Pincel lapis",
     "features": [
@@ -2952,7 +2952,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Pincel precisao para pinceis para olhos, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "pinceis-e-esponjas",
     "subcategorySlug": "pinceis-e-esponjas-pinceis-para-olhos",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Pinceis para Olhos",
     "variation": "Pincel precisao",
     "features": [
@@ -2975,7 +2975,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Esponja gota para esponjas, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "pinceis-e-esponjas",
     "subcategorySlug": "pinceis-e-esponjas-esponjas",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Esponjas",
     "variation": "Esponja gota",
     "features": [
@@ -2998,7 +2998,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Esponja chanfrada para esponjas, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "pinceis-e-esponjas",
     "subcategorySlug": "pinceis-e-esponjas-esponjas",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Esponjas",
     "variation": "Esponja chanfrada",
     "features": [
@@ -3021,7 +3021,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Esponja mini para esponjas, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "pinceis-e-esponjas",
     "subcategorySlug": "pinceis-e-esponjas-esponjas",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Esponjas",
     "variation": "Esponja mini",
     "features": [
@@ -3044,7 +3044,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Esponja para po para esponjas, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "pinceis-e-esponjas",
     "subcategorySlug": "pinceis-e-esponjas-esponjas",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Esponjas",
     "variation": "Esponja para po",
     "features": [
@@ -3067,7 +3067,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Esponja de silicone para esponjas, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "pinceis-e-esponjas",
     "subcategorySlug": "pinceis-e-esponjas-esponjas",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Esponjas",
     "variation": "Esponja de silicone",
     "features": [
@@ -3090,7 +3090,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Kit de esponjas para esponjas, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "pinceis-e-esponjas",
     "subcategorySlug": "pinceis-e-esponjas-esponjas",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Esponjas",
     "variation": "Kit de esponjas",
     "features": [
@@ -3113,7 +3113,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Kit pinceis iniciante para kits de pinceis, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "pinceis-e-esponjas",
     "subcategorySlug": "pinceis-e-esponjas-kits-de-pinceis",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Kits de Pinceis",
     "variation": "Kit pinceis iniciante",
     "features": [
@@ -3136,7 +3136,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Kit pinceis profissional para kits de pinceis, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "pinceis-e-esponjas",
     "subcategorySlug": "pinceis-e-esponjas-kits-de-pinceis",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Kits de Pinceis",
     "variation": "Kit pinceis profissional",
     "features": [
@@ -3159,7 +3159,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Kit pinceis para pele para kits de pinceis, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "pinceis-e-esponjas",
     "subcategorySlug": "pinceis-e-esponjas-kits-de-pinceis",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Kits de Pinceis",
     "variation": "Kit pinceis para pele",
     "features": [
@@ -3182,7 +3182,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Kit pinceis para olhos para kits de pinceis, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "pinceis-e-esponjas",
     "subcategorySlug": "pinceis-e-esponjas-kits-de-pinceis",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Kits de Pinceis",
     "variation": "Kit pinceis para olhos",
     "features": [
@@ -3205,7 +3205,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Kit pinceis completo para kits de pinceis, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "pinceis-e-esponjas",
     "subcategorySlug": "pinceis-e-esponjas-kits-de-pinceis",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Kits de Pinceis",
     "variation": "Kit pinceis completo",
     "features": [
@@ -3228,7 +3228,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Kit pinceis viagem para kits de pinceis, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "pinceis-e-esponjas",
     "subcategorySlug": "pinceis-e-esponjas-kits-de-pinceis",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Kits de Pinceis",
     "variation": "Kit pinceis viagem",
     "features": [
@@ -3251,7 +3251,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Necessaire para organizacao, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "acessorios-de-maquiagem",
     "subcategorySlug": "acessorios-de-maquiagem-organizacao",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Organizacao",
     "variation": "Necessaire",
     "features": [
@@ -3274,7 +3274,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Maleta de maquiagem para organizacao, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "acessorios-de-maquiagem",
     "subcategorySlug": "acessorios-de-maquiagem-organizacao",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Organizacao",
     "variation": "Maleta de maquiagem",
     "features": [
@@ -3297,7 +3297,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Porta-pinceis para organizacao, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "acessorios-de-maquiagem",
     "subcategorySlug": "acessorios-de-maquiagem-organizacao",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Organizacao",
     "variation": "Porta-pinceis",
     "features": [
@@ -3320,7 +3320,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Organizador acrilico para organizacao, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "acessorios-de-maquiagem",
     "subcategorySlug": "acessorios-de-maquiagem-organizacao",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Organizacao",
     "variation": "Organizador acrilico",
     "features": [
@@ -3343,7 +3343,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Bolsa de maquiagem para organizacao, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "acessorios-de-maquiagem",
     "subcategorySlug": "acessorios-de-maquiagem-organizacao",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Organizacao",
     "variation": "Bolsa de maquiagem",
     "features": [
@@ -3366,7 +3366,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Estojo de maquiagem para organizacao, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "acessorios-de-maquiagem",
     "subcategorySlug": "acessorios-de-maquiagem-organizacao",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Organizacao",
     "variation": "Estojo de maquiagem",
     "features": [
@@ -3389,7 +3389,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Curvex para ferramentas, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "acessorios-de-maquiagem",
     "subcategorySlug": "acessorios-de-maquiagem-ferramentas",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Ferramentas",
     "variation": "Curvex",
     "features": [
@@ -3412,7 +3412,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Apontador de lapis para ferramentas, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "acessorios-de-maquiagem",
     "subcategorySlug": "acessorios-de-maquiagem-ferramentas",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Ferramentas",
     "variation": "Apontador de lapis",
     "features": [
@@ -3435,7 +3435,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Espelho de maquiagem para ferramentas, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "acessorios-de-maquiagem",
     "subcategorySlug": "acessorios-de-maquiagem-ferramentas",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Ferramentas",
     "variation": "Espelho de maquiagem",
     "features": [
@@ -3458,7 +3458,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Espelho com LED para ferramentas, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "acessorios-de-maquiagem",
     "subcategorySlug": "acessorios-de-maquiagem-ferramentas",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Ferramentas",
     "variation": "Espelho com LED",
     "features": [
@@ -3481,7 +3481,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Espatula de maquiagem para ferramentas, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "acessorios-de-maquiagem",
     "subcategorySlug": "acessorios-de-maquiagem-ferramentas",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Ferramentas",
     "variation": "Espatula de maquiagem",
     "features": [
@@ -3504,7 +3504,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Plaquinha misturadora para ferramentas, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "acessorios-de-maquiagem",
     "subcategorySlug": "acessorios-de-maquiagem-ferramentas",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Ferramentas",
     "variation": "Plaquinha misturadora",
     "features": [
@@ -3527,7 +3527,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Higienizador de pinceis para limpeza de pinceis, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "acessorios-de-maquiagem",
     "subcategorySlug": "acessorios-de-maquiagem-limpeza-de-pinceis",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Limpeza de Pinceis",
     "variation": "Higienizador de pinceis",
     "features": [
@@ -3550,7 +3550,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Sabonete para pinceis para limpeza de pinceis, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "acessorios-de-maquiagem",
     "subcategorySlug": "acessorios-de-maquiagem-limpeza-de-pinceis",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Limpeza de Pinceis",
     "variation": "Sabonete para pinceis",
     "features": [
@@ -3573,7 +3573,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Tapete limpa-pinceis para limpeza de pinceis, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "acessorios-de-maquiagem",
     "subcategorySlug": "acessorios-de-maquiagem-limpeza-de-pinceis",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Limpeza de Pinceis",
     "variation": "Tapete limpa-pinceis",
     "features": [
@@ -3596,7 +3596,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Luva limpa-pinceis para limpeza de pinceis, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "acessorios-de-maquiagem",
     "subcategorySlug": "acessorios-de-maquiagem-limpeza-de-pinceis",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Limpeza de Pinceis",
     "variation": "Luva limpa-pinceis",
     "features": [
@@ -3619,7 +3619,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Spray higienizador para limpeza de pinceis, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "acessorios-de-maquiagem",
     "subcategorySlug": "acessorios-de-maquiagem-limpeza-de-pinceis",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Limpeza de Pinceis",
     "variation": "Spray higienizador",
     "features": [
@@ -3642,7 +3642,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Secador de pinceis para limpeza de pinceis, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "acessorios-de-maquiagem",
     "subcategorySlug": "acessorios-de-maquiagem-limpeza-de-pinceis",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Limpeza de Pinceis",
     "variation": "Secador de pinceis",
     "features": [
@@ -3665,7 +3665,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Fixador de maquiagem para fixadores, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "fixacao-e-finalizacao",
     "subcategorySlug": "fixacao-e-finalizacao-fixadores",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Fixadores",
     "variation": "Fixador de maquiagem",
     "features": [
@@ -3688,7 +3688,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Bruma fixadora para fixadores, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "fixacao-e-finalizacao",
     "subcategorySlug": "fixacao-e-finalizacao-fixadores",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Fixadores",
     "variation": "Bruma fixadora",
     "features": [
@@ -3711,7 +3711,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Spray matte para fixadores, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "fixacao-e-finalizacao",
     "subcategorySlug": "fixacao-e-finalizacao-fixadores",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Fixadores",
     "variation": "Spray matte",
     "features": [
@@ -3734,7 +3734,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Spray glow para fixadores, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "fixacao-e-finalizacao",
     "subcategorySlug": "fixacao-e-finalizacao-fixadores",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Fixadores",
     "variation": "Spray glow",
     "features": [
@@ -3757,7 +3757,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Spray longa duracao para fixadores, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "fixacao-e-finalizacao",
     "subcategorySlug": "fixacao-e-finalizacao-fixadores",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Fixadores",
     "variation": "Spray longa duracao",
     "features": [
@@ -3780,7 +3780,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Fixador profissional para fixadores, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "fixacao-e-finalizacao",
     "subcategorySlug": "fixacao-e-finalizacao-fixadores",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Fixadores",
     "variation": "Fixador profissional",
     "features": [
@@ -3803,7 +3803,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Po finalizador para finalizadores, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "fixacao-e-finalizacao",
     "subcategorySlug": "fixacao-e-finalizacao-finalizadores",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Finalizadores",
     "variation": "Po finalizador",
     "features": [
@@ -3826,7 +3826,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Po translucido para finalizadores, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "fixacao-e-finalizacao",
     "subcategorySlug": "fixacao-e-finalizacao-finalizadores",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Finalizadores",
     "variation": "Po translucido",
     "features": [
@@ -3849,7 +3849,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Lenco antioleosidade para finalizadores, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "fixacao-e-finalizacao",
     "subcategorySlug": "fixacao-e-finalizacao-finalizadores",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Finalizadores",
     "variation": "Lenco antioleosidade",
     "features": [
@@ -3872,7 +3872,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Cola glitter para finalizadores, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "fixacao-e-finalizacao",
     "subcategorySlug": "fixacao-e-finalizacao-finalizadores",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Finalizadores",
     "variation": "Cola glitter",
     "features": [
@@ -3895,7 +3895,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Diluidor de maquiagem para finalizadores, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "fixacao-e-finalizacao",
     "subcategorySlug": "fixacao-e-finalizacao-finalizadores",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Finalizadores",
     "variation": "Diluidor de maquiagem",
     "features": [
@@ -3918,7 +3918,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Selante de maquiagem para finalizadores, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "fixacao-e-finalizacao",
     "subcategorySlug": "fixacao-e-finalizacao-finalizadores",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Finalizadores",
     "variation": "Selante de maquiagem",
     "features": [
@@ -3941,7 +3941,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Tinta facial para produtos artisticos, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "maquiagem-artistica",
     "subcategorySlug": "maquiagem-artistica-produtos-artisticos",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Produtos Artisticos",
     "variation": "Tinta facial",
     "features": [
@@ -3964,7 +3964,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Tinta corporal para produtos artisticos, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "maquiagem-artistica",
     "subcategorySlug": "maquiagem-artistica-produtos-artisticos",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Produtos Artisticos",
     "variation": "Tinta corporal",
     "features": [
@@ -3987,7 +3987,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Pancake artistico para produtos artisticos, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "maquiagem-artistica",
     "subcategorySlug": "maquiagem-artistica-produtos-artisticos",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Produtos Artisticos",
     "variation": "Pancake artistico",
     "features": [
@@ -4010,7 +4010,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Paleta artistica para produtos artisticos, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "maquiagem-artistica",
     "subcategorySlug": "maquiagem-artistica-produtos-artisticos",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Produtos Artisticos",
     "variation": "Paleta artistica",
     "features": [
@@ -4033,7 +4033,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Pigmento neon para produtos artisticos, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "maquiagem-artistica",
     "subcategorySlug": "maquiagem-artistica-produtos-artisticos",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Produtos Artisticos",
     "variation": "Pigmento neon",
     "features": [
@@ -4056,7 +4056,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Pigmento UV para produtos artisticos, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "maquiagem-artistica",
     "subcategorySlug": "maquiagem-artistica-produtos-artisticos",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Produtos Artisticos",
     "variation": "Pigmento UV",
     "features": [
@@ -4079,7 +4079,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Glitter artistico para brilhos e aplicacoes, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "maquiagem-artistica",
     "subcategorySlug": "maquiagem-artistica-brilhos-e-aplicacoes",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Brilhos e Aplicacoes",
     "variation": "Glitter artistico",
     "features": [
@@ -4102,7 +4102,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Glitter biodegradavel para brilhos e aplicacoes, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "maquiagem-artistica",
     "subcategorySlug": "maquiagem-artistica-brilhos-e-aplicacoes",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Brilhos e Aplicacoes",
     "variation": "Glitter biodegradavel",
     "features": [
@@ -4125,7 +4125,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Pedrarias para brilhos e aplicacoes, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "maquiagem-artistica",
     "subcategorySlug": "maquiagem-artistica-brilhos-e-aplicacoes",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Brilhos e Aplicacoes",
     "variation": "Pedrarias",
     "features": [
@@ -4148,7 +4148,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Cola para pedrarias para brilhos e aplicacoes, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "maquiagem-artistica",
     "subcategorySlug": "maquiagem-artistica-brilhos-e-aplicacoes",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Brilhos e Aplicacoes",
     "variation": "Cola para pedrarias",
     "features": [
@@ -4171,7 +4171,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Lantejoulas faciais para brilhos e aplicacoes, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "maquiagem-artistica",
     "subcategorySlug": "maquiagem-artistica-brilhos-e-aplicacoes",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Brilhos e Aplicacoes",
     "variation": "Lantejoulas faciais",
     "features": [
@@ -4194,7 +4194,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Strass para maquiagem para brilhos e aplicacoes, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "maquiagem-artistica",
     "subcategorySlug": "maquiagem-artistica-brilhos-e-aplicacoes",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Brilhos e Aplicacoes",
     "variation": "Strass para maquiagem",
     "features": [
@@ -4217,7 +4217,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Sangue falso para efeitos especiais, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "maquiagem-artistica",
     "subcategorySlug": "maquiagem-artistica-efeitos-especiais",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Efeitos Especiais",
     "variation": "Sangue falso",
     "features": [
@@ -4240,7 +4240,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Latex liquido para efeitos especiais, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "maquiagem-artistica",
     "subcategorySlug": "maquiagem-artistica-efeitos-especiais",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Efeitos Especiais",
     "variation": "Latex liquido",
     "features": [
@@ -4263,7 +4263,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Massa para efeitos para efeitos especiais, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "maquiagem-artistica",
     "subcategorySlug": "maquiagem-artistica-efeitos-especiais",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Efeitos Especiais",
     "variation": "Massa para efeitos",
     "features": [
@@ -4286,7 +4286,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Cola teatral para efeitos especiais, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "maquiagem-artistica",
     "subcategorySlug": "maquiagem-artistica-efeitos-especiais",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Efeitos Especiais",
     "variation": "Cola teatral",
     "features": [
@@ -4309,7 +4309,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Cera modeladora para efeitos especiais, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "maquiagem-artistica",
     "subcategorySlug": "maquiagem-artistica-efeitos-especiais",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Efeitos Especiais",
     "variation": "Cera modeladora",
     "features": [
@@ -4332,7 +4332,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Removedor artistico para efeitos especiais, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "maquiagem-artistica",
     "subcategorySlug": "maquiagem-artistica-efeitos-especiais",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Efeitos Especiais",
     "variation": "Removedor artistico",
     "features": [
@@ -4355,7 +4355,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Kit maquiagem infantil para produtos infantis, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "maquiagem-infantil",
     "subcategorySlug": "maquiagem-infantil-produtos-infantis",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Produtos Infantis",
     "variation": "Kit maquiagem infantil",
     "features": [
@@ -4378,7 +4378,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Batom infantil para produtos infantis, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "maquiagem-infantil",
     "subcategorySlug": "maquiagem-infantil-produtos-infantis",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Produtos Infantis",
     "variation": "Batom infantil",
     "features": [
@@ -4401,7 +4401,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Gloss infantil para produtos infantis, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "maquiagem-infantil",
     "subcategorySlug": "maquiagem-infantil-produtos-infantis",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Produtos Infantis",
     "variation": "Gloss infantil",
     "features": [
@@ -4424,7 +4424,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Sombra infantil para produtos infantis, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "maquiagem-infantil",
     "subcategorySlug": "maquiagem-infantil-produtos-infantis",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Produtos Infantis",
     "variation": "Sombra infantil",
     "features": [
@@ -4447,7 +4447,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Blush infantil para produtos infantis, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "maquiagem-infantil",
     "subcategorySlug": "maquiagem-infantil-produtos-infantis",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Produtos Infantis",
     "variation": "Blush infantil",
     "features": [
@@ -4470,7 +4470,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Tinta facial infantil para produtos infantis, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "maquiagem-infantil",
     "subcategorySlug": "maquiagem-infantil-produtos-infantis",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Produtos Infantis",
     "variation": "Tinta facial infantil",
     "features": [
@@ -4493,7 +4493,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Pincel infantil para acessorios infantis, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "maquiagem-infantil",
     "subcategorySlug": "maquiagem-infantil-acessorios-infantis",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Acessorios Infantis",
     "variation": "Pincel infantil",
     "features": [
@@ -4516,7 +4516,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Esponja infantil para acessorios infantis, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "maquiagem-infantil",
     "subcategorySlug": "maquiagem-infantil-acessorios-infantis",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Acessorios Infantis",
     "variation": "Esponja infantil",
     "features": [
@@ -4539,7 +4539,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Glitter infantil para acessorios infantis, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "maquiagem-infantil",
     "subcategorySlug": "maquiagem-infantil-acessorios-infantis",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Acessorios Infantis",
     "variation": "Glitter infantil",
     "features": [
@@ -4562,7 +4562,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Necessaire infantil para acessorios infantis, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "maquiagem-infantil",
     "subcategorySlug": "maquiagem-infantil-acessorios-infantis",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Acessorios Infantis",
     "variation": "Necessaire infantil",
     "features": [
@@ -4585,7 +4585,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Espelho infantil para acessorios infantis, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "maquiagem-infantil",
     "subcategorySlug": "maquiagem-infantil-acessorios-infantis",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Acessorios Infantis",
     "variation": "Espelho infantil",
     "features": [
@@ -4608,7 +4608,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Kit pintura facial para acessorios infantis, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "maquiagem-infantil",
     "subcategorySlug": "maquiagem-infantil-acessorios-infantis",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Acessorios Infantis",
     "variation": "Kit pintura facial",
     "features": [
@@ -4631,7 +4631,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Demaquilante para removedores, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "demaquilantes-e-limpeza",
     "subcategorySlug": "demaquilantes-e-limpeza-removedores",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Removedores",
     "variation": "Demaquilante",
     "features": [
@@ -4654,7 +4654,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Demaquilante bifasico para removedores, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "demaquilantes-e-limpeza",
     "subcategorySlug": "demaquilantes-e-limpeza-removedores",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Removedores",
     "variation": "Demaquilante bifasico",
     "features": [
@@ -4677,7 +4677,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Agua micelar para removedores, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "demaquilantes-e-limpeza",
     "subcategorySlug": "demaquilantes-e-limpeza-removedores",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Removedores",
     "variation": "Agua micelar",
     "features": [
@@ -4700,7 +4700,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Lenco demaquilante para removedores, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "demaquilantes-e-limpeza",
     "subcategorySlug": "demaquilantes-e-limpeza-removedores",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Removedores",
     "variation": "Lenco demaquilante",
     "features": [
@@ -4723,7 +4723,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Oleo demaquilante para removedores, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "demaquilantes-e-limpeza",
     "subcategorySlug": "demaquilantes-e-limpeza-removedores",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Removedores",
     "variation": "Oleo demaquilante",
     "features": [
@@ -4746,7 +4746,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Cleansing balm para removedores, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "demaquilantes-e-limpeza",
     "subcategorySlug": "demaquilantes-e-limpeza-removedores",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Removedores",
     "variation": "Cleansing balm",
     "features": [
@@ -4769,7 +4769,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Sabonete facial para limpeza facial, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "demaquilantes-e-limpeza",
     "subcategorySlug": "demaquilantes-e-limpeza-limpeza-facial",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Limpeza Facial",
     "variation": "Sabonete facial",
     "features": [
@@ -4792,7 +4792,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Gel de limpeza para limpeza facial, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "demaquilantes-e-limpeza",
     "subcategorySlug": "demaquilantes-e-limpeza-limpeza-facial",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Limpeza Facial",
     "variation": "Gel de limpeza",
     "features": [
@@ -4815,7 +4815,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Espuma facial para limpeza facial, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "demaquilantes-e-limpeza",
     "subcategorySlug": "demaquilantes-e-limpeza-limpeza-facial",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Limpeza Facial",
     "variation": "Espuma facial",
     "features": [
@@ -4838,7 +4838,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Tonico facial para limpeza facial, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "demaquilantes-e-limpeza",
     "subcategorySlug": "demaquilantes-e-limpeza-limpeza-facial",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Limpeza Facial",
     "variation": "Tonico facial",
     "features": [
@@ -4861,7 +4861,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Esfoliante facial para limpeza facial, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "demaquilantes-e-limpeza",
     "subcategorySlug": "demaquilantes-e-limpeza-limpeza-facial",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Limpeza Facial",
     "variation": "Esfoliante facial",
     "features": [
@@ -4884,7 +4884,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Algodao facial para limpeza facial, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "demaquilantes-e-limpeza",
     "subcategorySlug": "demaquilantes-e-limpeza-limpeza-facial",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Limpeza Facial",
     "variation": "Algodao facial",
     "features": [
@@ -4907,7 +4907,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Kit pele completa para kits por area, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "kits-e-combos",
     "subcategorySlug": "kits-e-combos-kits-por-area",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Kits por Area",
     "variation": "Kit pele completa",
     "features": [
@@ -4930,7 +4930,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Kit olhos para kits por area, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "kits-e-combos",
     "subcategorySlug": "kits-e-combos-kits-por-area",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Kits por Area",
     "variation": "Kit olhos",
     "features": [
@@ -4953,7 +4953,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Kit sobrancelhas para kits por area, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "kits-e-combos",
     "subcategorySlug": "kits-e-combos-kits-por-area",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Kits por Area",
     "variation": "Kit sobrancelhas",
     "features": [
@@ -4976,7 +4976,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Kit boca para kits por area, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "kits-e-combos",
     "subcategorySlug": "kits-e-combos-kits-por-area",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Kits por Area",
     "variation": "Kit boca",
     "features": [
@@ -4999,7 +4999,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Kit pinceis para kits por area, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "kits-e-combos",
     "subcategorySlug": "kits-e-combos-kits-por-area",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Kits por Area",
     "variation": "Kit pinceis",
     "features": [
@@ -5022,7 +5022,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Kit maquiagem artistica para kits por area, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "kits-e-combos",
     "subcategorySlug": "kits-e-combos-kits-por-area",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Kits por Area",
     "variation": "Kit maquiagem artistica",
     "features": [
@@ -5045,7 +5045,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Kit iniciante para kits por perfil, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "kits-e-combos",
     "subcategorySlug": "kits-e-combos-kits-por-perfil",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Kits por Perfil",
     "variation": "Kit iniciante",
     "features": [
@@ -5068,7 +5068,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Kit profissional para kits por perfil, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "kits-e-combos",
     "subcategorySlug": "kits-e-combos-kits-por-perfil",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Kits por Perfil",
     "variation": "Kit profissional",
     "features": [
@@ -5091,7 +5091,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Kit noiva para kits por perfil, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "kits-e-combos",
     "subcategorySlug": "kits-e-combos-kits-por-perfil",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Kits por Perfil",
     "variation": "Kit noiva",
     "features": [
@@ -5114,7 +5114,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Kit festa para kits por perfil, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "kits-e-combos",
     "subcategorySlug": "kits-e-combos-kits-por-perfil",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Kits por Perfil",
     "variation": "Kit festa",
     "features": [
@@ -5137,7 +5137,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Kit maquiagem nude para kits por perfil, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "kits-e-combos",
     "subcategorySlug": "kits-e-combos-kits-por-perfil",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Kits por Perfil",
     "variation": "Kit maquiagem nude",
     "features": [
@@ -5160,7 +5160,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Kit maquiagem colorida para kits por perfil, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "kits-e-combos",
     "subcategorySlug": "kits-e-combos-kits-por-perfil",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Kits por Perfil",
     "variation": "Kit maquiagem colorida",
     "features": [
@@ -5183,7 +5183,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Esmalte cremoso para esmaltes, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "unhas",
     "subcategorySlug": "unhas-esmaltes",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Esmaltes",
     "variation": "Esmalte cremoso",
     "features": [
@@ -5206,7 +5206,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Esmalte cintilante para esmaltes, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "unhas",
     "subcategorySlug": "unhas-esmaltes",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Esmaltes",
     "variation": "Esmalte cintilante",
     "features": [
@@ -5229,7 +5229,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Esmalte glitter para esmaltes, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "unhas",
     "subcategorySlug": "unhas-esmaltes",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Esmaltes",
     "variation": "Esmalte glitter",
     "features": [
@@ -5252,7 +5252,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Esmalte matte para esmaltes, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "unhas",
     "subcategorySlug": "unhas-esmaltes",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Esmaltes",
     "variation": "Esmalte matte",
     "features": [
@@ -5275,7 +5275,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Esmalte nude para esmaltes, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "unhas",
     "subcategorySlug": "unhas-esmaltes",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Esmaltes",
     "variation": "Esmalte nude",
     "features": [
@@ -5298,7 +5298,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Esmalte vermelho para esmaltes, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "unhas",
     "subcategorySlug": "unhas-esmaltes",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Esmaltes",
     "variation": "Esmalte vermelho",
     "features": [
@@ -5321,7 +5321,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Base fortalecedora para cuidados com unhas, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "unhas",
     "subcategorySlug": "unhas-cuidados-com-unhas",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Cuidados com Unhas",
     "variation": "Base fortalecedora",
     "features": [
@@ -5344,7 +5344,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Extra brilho para cuidados com unhas, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "unhas",
     "subcategorySlug": "unhas-cuidados-com-unhas",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Cuidados com Unhas",
     "variation": "Extra brilho",
     "features": [
@@ -5367,7 +5367,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Top coat para cuidados com unhas, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "unhas",
     "subcategorySlug": "unhas-cuidados-com-unhas",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Cuidados com Unhas",
     "variation": "Top coat",
     "features": [
@@ -5390,7 +5390,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Removedor de esmalte para cuidados com unhas, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "unhas",
     "subcategorySlug": "unhas-cuidados-com-unhas",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Cuidados com Unhas",
     "variation": "Removedor de esmalte",
     "features": [
@@ -5413,7 +5413,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Acetona para cuidados com unhas, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "unhas",
     "subcategorySlug": "unhas-cuidados-com-unhas",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Cuidados com Unhas",
     "variation": "Acetona",
     "features": [
@@ -5436,7 +5436,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Oleo secante para cuidados com unhas, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "unhas",
     "subcategorySlug": "unhas-cuidados-com-unhas",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Cuidados com Unhas",
     "variation": "Oleo secante",
     "features": [
@@ -5459,7 +5459,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Lixa de unha para acessorios de unhas, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "unhas",
     "subcategorySlug": "unhas-acessorios-de-unhas",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Acessorios de Unhas",
     "variation": "Lixa de unha",
     "features": [
@@ -5482,7 +5482,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Alicate para acessorios de unhas, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "unhas",
     "subcategorySlug": "unhas-acessorios-de-unhas",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Acessorios de Unhas",
     "variation": "Alicate",
     "features": [
@@ -5505,7 +5505,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Espatula para acessorios de unhas, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "unhas",
     "subcategorySlug": "unhas-acessorios-de-unhas",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Acessorios de Unhas",
     "variation": "Espatula",
     "features": [
@@ -5528,7 +5528,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Kit manicure para acessorios de unhas, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "unhas",
     "subcategorySlug": "unhas-acessorios-de-unhas",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Acessorios de Unhas",
     "variation": "Kit manicure",
     "features": [
@@ -5551,7 +5551,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Unha postica para acessorios de unhas, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "unhas",
     "subcategorySlug": "unhas-acessorios-de-unhas",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Acessorios de Unhas",
     "variation": "Unha postica",
     "features": [
@@ -5574,7 +5574,7 @@ const baseMasterCatalogProducts: BaseCatalogProductSeed[] = [
     "description": "Cola para unha para acessorios de unhas, com apresentacao profissional para catalogo de maquiagem e beleza.",
     "categorySlug": "unhas",
     "subcategorySlug": "unhas-acessorios-de-unhas",
-    "audience": "feminino",
+    "audience": "beleza",
     "productType": "Acessorios de Unhas",
     "variation": "Cola para unha",
     "features": [
@@ -5636,3 +5636,4 @@ export const masterCatalogProducts: CatalogProductSeed[] = baseMasterCatalogProd
     imagePrompt: buildProductImagePrompt(product, brandLabel),
   };
 });
+

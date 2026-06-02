@@ -48,6 +48,7 @@ describe('MK Maker master catalog', () => {
       assert.equal(product.catalogStatus, 'draft');
       assert.equal(product.isActive, false);
       assert.equal(product.price, 0);
+      assert.equal(product.audience, 'beleza');
 
       productsBySubcategory.set(
         product.subcategorySlug,

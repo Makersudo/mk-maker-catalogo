@@ -16,9 +16,7 @@ export const productRouter = Router();
 export function parseProductPayload(body: any): ProductPayload {
   const rawSubcategoryId = body.subcategoryId ?? body.subcategory_id;
   const rawAudience = body.audience;
-  const audience = rawAudience === 'feminino' || rawAudience === 'masculino' || rawAudience === 'suplemento'
-    ? rawAudience
-    : null;
+  const audience = typeof rawAudience === 'string' && rawAudience.trim() ? rawAudience.trim() : null;
   const rawCatalogStatus = body.catalogStatus ?? body.catalog_status;
   const catalogStatus = rawCatalogStatus === 'draft' || rawCatalogStatus === 'ready' || rawCatalogStatus === 'live'
     ? rawCatalogStatus

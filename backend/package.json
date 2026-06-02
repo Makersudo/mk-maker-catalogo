@@ -22,8 +22,8 @@
     "catalog:set-pricing": "tsx src/scripts/setCatalogBatchPricing.ts",
     "catalog:apply-images": "tsx src/scripts/applyCatalogImages.ts",
     "catalog:activate": "tsx src/scripts/activateCatalogBatch.ts",
-    "catalog:cleanup-empty-subcategories": "tsx src/scripts/cleanupEmptyAudienceSubcategories.ts",
-    "catalog:cleanup-empty-feminino": "tsx src/scripts/cleanupEmptyFeminineSubcategories.ts"
+    "catalog:cleanup-empty-subcategories": "tsx src/scripts/cleanupEmptyCatalogSubcategories.ts",
+    "catalog:cleanup-empty-categories": "tsx src/scripts/cleanupEmptyCatalogSubcategories.ts"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.104.0",

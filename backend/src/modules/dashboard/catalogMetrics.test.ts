@@ -3,17 +3,18 @@ import { describe, it } from 'node:test';
 import { buildCatalogMetrics } from './catalogMetrics.js';
 
 describe('buildCatalogMetrics', () => {
-  it('aggregates catalog health, quality, inventory, audience and sales metrics', () => {
+  it('aggregates catalog health, quality, inventory, catalog line and sales metrics', () => {
     const metrics = buildCatalogMetrics({
       categories: [
-        { id: 'cat-men', name: 'Masculina', slug: 'masculina', parent_id: null, is_active: true },
-        { id: 'cat-sup', name: 'Suplementos', slug: 'suplementos', parent_id: null, is_active: true },
+        { id: 'cat-skin', name: 'Pele', slug: 'pele', parent_id: null, is_active: true },
+        { id: 'cat-eyes', name: 'Olhos', slug: 'olhos', parent_id: null, is_active: true },
+        { id: 'cat-removers', name: 'Removedores', slug: 'removedores', parent_id: 'cat-skin', is_active: true },
         { id: 'cat-empty', name: 'Vazia', slug: 'vazia', parent_id: null, is_active: true },
       ],
       products: [
         {
           id: 'p1',
-          title: 'Regata masculina',
+          title: 'Demaquilante bifasico',
           price: 79.9,
           audience: 'masculino',
           catalog_status: 'live',
@@ -23,17 +24,17 @@ describe('buildCatalogMetrics', () => {
           is_new: false,
           stock_quantity: 10,
           variants_enabled: false,
-          category_id: 'cat-men',
-          subcategory_id: null,
+          category_id: 'cat-skin',
+          subcategory_id: 'cat-removers',
           created_at: '2026-04-23T10:00:00.000Z',
-          category: { id: 'cat-men', name: 'Masculina', slug: 'masculina' },
-          subcategory: null,
+          category: { id: 'cat-skin', name: 'Pele', slug: 'pele' },
+          subcategory: { id: 'cat-removers', name: 'Removedores', slug: 'removedores' },
           product_images: [{ id: 'img1', url: 'https://cdn.test/p1.webp' }],
           product_variants: [],
         },
         {
           id: 'p2',
-          title: 'Whey protein',
+          title: 'Paleta de sombras',
           price: 0,
           audience: 'suplemento',
           catalog_status: 'ready',
@@ -43,17 +44,17 @@ describe('buildCatalogMetrics', () => {
           is_new: true,
           stock_quantity: 0,
           variants_enabled: false,
-          category_id: 'cat-sup',
+          category_id: 'cat-eyes',
           subcategory_id: null,
           created_at: '2026-04-20T10:00:00.000Z',
-          category: { id: 'cat-sup', name: 'Suplementos', slug: 'suplementos' },
+          category: { id: 'cat-eyes', name: 'Olhos', slug: 'olhos' },
           subcategory: null,
           product_images: [],
           product_variants: [],
         },
         {
           id: 'p3',
-          title: 'Short feminino',
+          title: 'Gloss labial',
           price: 99.9,
           audience: 'feminino',
           catalog_status: 'draft',
@@ -117,16 +118,18 @@ describe('buildCatalogMetrics', () => {
     assert.equal(metrics.sales.averageTicket, 259.7);
     assert.equal(metrics.sales.unitsSold, 3);
     assert.equal(metrics.sales.validOrders, 1);
-    assert.equal(metrics.audience.find((item) => item.key === 'masculino')?.unitsSold, 2);
-    assert.equal(metrics.audience.find((item) => item.key === 'suplemento')?.withoutPrice, 1);
+    assert.equal(metrics.catalogLines.find((item) => item.key === 'pele')?.unitsSold, 2);
+    assert.equal(metrics.catalogLines.find((item) => item.key === 'olhos')?.withoutPrice, 1);
+    assert.deepEqual(metrics.catalogLines.map((item) => item.label), ['Pele', 'Olhos', 'Sem categoria']);
     assert.equal(metrics.quality.withoutImage.count, 1);
     assert.equal(metrics.quality.withoutPrice.count, 1);
     assert.equal(metrics.quality.withoutCategory.count, 1);
-    assert.equal(metrics.quality.withoutSubcategory.count, 3);
+    assert.equal(metrics.quality.withoutSubcategory.count, 2);
     assert.equal(metrics.quality.emptyCategories.count, 1);
     assert.equal(metrics.topProductsByRevenue[0].id, 'p1');
     assert.equal(metrics.topProductsByRevenue[0].revenue, 159.8);
-    assert.equal(metrics.categoryPerformance[0].categoryId, 'cat-men');
+    assert.equal(metrics.topProductsByRevenue[0].lineLabel, 'Pele');
+    assert.equal(metrics.categoryPerformance[0].categoryId, 'cat-skin');
     assert.equal(metrics.categoryPerformance[0].revenue, 159.8);
     assert.equal(metrics.activity.productsCreatedLast7Days, 2);
     assert.equal(metrics.activity.ordersLast7Days, 1);

@@ -13,12 +13,12 @@ export function hasFlag(name: string) {
   return process.argv.includes(`--${name}`);
 }
 
-export function parseAudience(fallback: CatalogAudience = 'feminino'): CatalogAudience {
+export function parseAudience(fallback: CatalogAudience = 'beleza'): CatalogAudience {
   const value = getArg('audience', fallback);
-  if (value === 'all' || value === 'feminino' || value === 'masculino' || value === 'suplemento') {
+  if (value === 'all' || value === 'beleza') {
     return value;
   }
-  throw new Error(`Audiencia invalida: ${value}. Use feminino, masculino, suplemento ou all.`);
+  throw new Error(`Linha de catalogo invalida: ${value}. Use beleza ou all.`);
 }
 
 export function getOutputDir(defaultDir: string) {

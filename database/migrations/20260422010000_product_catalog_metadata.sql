@@ -1,6 +1,6 @@
 alter table public.products
 add column if not exists slug text,
-add column if not exists audience text check (audience in ('feminino', 'masculino', 'suplemento')),
+add column if not exists audience text check (audience is null or audience in ('beleza')),
 add column if not exists product_type text,
 add column if not exists variation text,
 add column if not exists features jsonb not null default '[]'::jsonb,

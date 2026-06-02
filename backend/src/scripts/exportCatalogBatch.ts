@@ -3,7 +3,7 @@ import path from 'path';
 import { csvValue, getCategoryName, getOutputDir, getProductsByAudience, parseAudience } from './catalogCli.js';
 
 async function main() {
-  const audience = parseAudience('feminino');
+  const audience = parseAudience('beleza');
   const outputDir = getOutputDir(path.join('catalog-workspace', audience));
   const products = getProductsByAudience(audience);
 
@@ -15,7 +15,7 @@ async function main() {
     description: product.description,
     category: getCategoryName(product.categorySlug),
     subcategory: getCategoryName(product.subcategorySlug),
-    audience: product.audience,
+    catalogLine: product.audience,
     productType: product.productType,
     variation: product.variation,
     brandLabel: product.brandLabel,
@@ -28,7 +28,7 @@ async function main() {
   }));
 
   const manifest = {
-    audience,
+    catalogLine: audience,
     generatedAt: new Date().toISOString(),
     instructions: [
       'Preencha imagePath com um arquivo local ou imageUrl com uma URL publica para cada produto aprovado.',
@@ -46,7 +46,7 @@ async function main() {
     })),
   };
 
-  const csvHeader = ['slug', 'title', 'brandLabel', 'category', 'subcategory', 'audience', 'variation', 'price', 'catalogStatus', 'isActive', 'hasImage', 'approved', 'notes'];
+  const csvHeader = ['slug', 'title', 'brandLabel', 'category', 'subcategory', 'catalogLine', 'variation', 'price', 'catalogStatus', 'isActive', 'hasImage', 'approved', 'notes'];
   const csvRows = products.map((product) => [
     product.slug,
     product.title,

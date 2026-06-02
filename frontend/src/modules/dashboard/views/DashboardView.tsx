@@ -21,7 +21,7 @@ const emptyCatalogMetrics: CatalogMetrics = {
   imageCoverage: { total: 0, withImage: 0, withoutImage: 0, percent: 0 },
   stockHealth: { totalUnits: 0, ok: 0, low: 0, zero: 0, variantManaged: 0, lowStockThreshold: 5 },
   sales: { totalOrders: 0, validOrders: 0, cancelledOrders: 0, totalRevenue: 0, averageTicket: 0, unitsSold: 0 },
-  audience: [],
+  catalogLines: [],
   quality: {
     withoutImage: { count: 0, products: [] },
     withoutPrice: { count: 0, products: [] },
@@ -73,10 +73,10 @@ export function DashboardView() {
   const metrics = dashboard.catalogMetrics ?? emptyCatalogMetrics;
   const recentProducts = dashboard.recentProducts.slice(0, 4);
   const stats = [
-    { label: 'Total de Produtos', value: dashboard.totalProducts.toString(), icon: Package, color: 'text-purple-600', bg: 'bg-purple-100' },
-    { label: 'Produtos Ativos', value: dashboard.activeProducts.toString(), icon: ShoppingBag, color: 'text-blue-600', bg: 'bg-blue-100' },
-    { label: 'Categorias Ativas', value: dashboard.categories.toString(), icon: Tag, color: 'text-indigo-600', bg: 'bg-indigo-100' },
-    { label: 'Destaques/Promocoes', value: (dashboard.featuredProducts + dashboard.promoProducts).toString(), icon: TrendingUp, color: 'text-emerald-600', bg: 'bg-emerald-100' },
+    { label: 'Total de Produtos', value: dashboard.totalProducts.toString(), icon: Package, color: 'text-[#8D514B]', bg: 'bg-[#F8EEEC]' },
+    { label: 'Produtos Ativos', value: dashboard.activeProducts.toString(), icon: ShoppingBag, color: 'text-neutral-900', bg: 'bg-neutral-100' },
+    { label: 'Categorias Ativas', value: dashboard.categories.toString(), icon: Tag, color: 'text-[#C98F86]', bg: 'bg-[#FBF5F3]' },
+    { label: 'Destaques/Promocoes', value: (dashboard.featuredProducts + dashboard.promoProducts).toString(), icon: TrendingUp, color: 'text-[#7A4944]', bg: 'bg-[#F3E3DF]' },
   ];
 
   return (

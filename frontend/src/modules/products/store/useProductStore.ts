@@ -9,7 +9,7 @@ export interface Product {
   price: number;
   categoryId: string;
   subcategoryId?: string | null;
-  audience?: 'feminino' | 'masculino' | 'suplemento' | null;
+  audience?: string | null;
   brandLabel?: string;
   productType?: string;
   variation?: string | null;

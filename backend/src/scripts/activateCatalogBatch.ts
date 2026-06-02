@@ -3,8 +3,8 @@ import { env, assertSupabaseConfigured } from '../config/env.js';
 import { hasFlag, parseAudience } from './catalogCli.js';
 
 async function main() {
-  const audience = parseAudience('feminino');
-  if (audience === 'all') throw new Error('Ativacao em lote exige audiencia especifica.');
+  const audience = parseAudience('beleza');
+  if (audience === 'all') throw new Error('Ativacao em lote exige linha de catalogo especifica.');
 
   const apply = hasFlag('apply');
   assertSupabaseConfigured();
@@ -29,7 +29,7 @@ async function main() {
   const blocked = (products ?? []).filter((product: any) => !candidates.some((candidate: any) => candidate.id === product.id));
 
   process.stdout.write([
-    `Audiencia: ${audience}`,
+    `Linha: ${audience}`,
     `Produtos ready encontrados: ${products?.length ?? 0}`,
     `Candidatos seguros para ativar: ${candidates.length}`,
     `Bloqueados por preco/imagem/status: ${blocked.length}`,

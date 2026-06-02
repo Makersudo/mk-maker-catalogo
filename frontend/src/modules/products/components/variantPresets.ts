@@ -22,27 +22,27 @@ export interface VariationPreset {
 export const VARIATION_PRESETS: VariationPreset[] = [
   {
     id: "clothing-size",
-    label: "Tamanho roupa",
+    label: "Tamanho",
     optionName: "Tamanho",
     placeholderValue: "M",
     placeholderLabel: "Tamanho: M",
-    values: ["PP", "P", "M", "G", "GG", "XG", "XXG"],
+    values: ["Mini", "P", "M", "G", "Kit", "Refil"],
   },
   {
     id: "shoe-size",
-    label: "Tamanho tenis",
-    optionName: "Tamanho tenis",
-    placeholderValue: "38",
-    placeholderLabel: "Tamanho tenis: 38",
-    values: ["36", "37", "38", "39", "40", "41", "42", "43", "44"],
+    label: "Tonalidade",
+    optionName: "Tonalidade",
+    placeholderValue: "Nude",
+    placeholderLabel: "Tonalidade: Nude",
+    values: ["Claro", "Medio", "Escuro", "Nude", "Rose", "Vermelho"],
   },
   {
     id: "pants-size",
-    label: "Tamanho calca",
-    optionName: "Tamanho calca",
-    placeholderValue: "38",
-    placeholderLabel: "Tamanho calca: 38",
-    values: ["34", "36", "38", "40", "42", "44", "46", "48"],
+    label: "Acabamento",
+    optionName: "Acabamento",
+    placeholderValue: "Matte",
+    placeholderLabel: "Acabamento: Matte",
+    values: ["Matte", "Glow", "Cremoso", "Cintilante", "Glitter", "Translucido"],
   },
   {
     id: "color",
@@ -50,23 +50,23 @@ export const VARIATION_PRESETS: VariationPreset[] = [
     optionName: "Cor",
     placeholderValue: "Preto",
     placeholderLabel: "Cor: Preto",
-    values: ["Preto", "Branco", "Cinza", "Rosa", "Azul", "Verde"],
+    values: ["Preto", "Branco", "Nude", "Rosa", "Rose", "Marrom"],
   },
   {
     id: "flavor",
-    label: "Sabor",
-    optionName: "Sabor",
-    placeholderValue: "Chocolate",
-    placeholderLabel: "Sabor: Chocolate",
-    values: ["Chocolate", "Baunilha", "Morango", "Cookies"],
+    label: "Linha",
+    optionName: "Linha",
+    placeholderValue: "Profissional",
+    placeholderLabel: "Linha: Profissional",
+    values: ["Basica", "Premium", "Profissional", "Artistica"],
   },
   {
     id: "voltage",
-    label: "Voltagem",
-    optionName: "Voltagem",
-    placeholderValue: "110V",
-    placeholderLabel: "Voltagem: 110V",
-    values: ["110V", "220V", "Bivolt"],
+    label: "Volume",
+    optionName: "Volume",
+    placeholderValue: "10ml",
+    placeholderLabel: "Volume: 10ml",
+    values: ["5ml", "10ml", "30ml", "50ml", "100ml", "200ml"],
   },
   {
     id: "model",
@@ -93,15 +93,15 @@ export function getVariationPreset(id: VariationPresetId) {
 export function inferPresetIdFromVariants(variants: ProductVariant[] | undefined): VariationPresetId {
   const firstOptionName = variants?.find((variant) => variant.options?.[0]?.name)?.options[0]?.name?.toLowerCase() ?? "";
 
-  if (firstOptionName.includes("tenis")) return "shoe-size";
-  if (firstOptionName.includes("calca") || firstOptionName.includes("pants")) return "pants-size";
+  if (firstOptionName.includes("tonalidade") || firstOptionName.includes("tom")) return "shoe-size";
+  if (firstOptionName.includes("acabamento")) return "pants-size";
   if (firstOptionName.includes("cor")) return "color";
-  if (firstOptionName.includes("sabor")) return "flavor";
-  if (firstOptionName.includes("voltagem")) return "voltage";
+  if (firstOptionName.includes("linha")) return "flavor";
+  if (firstOptionName.includes("volume") || firstOptionName.includes("ml")) return "voltage";
   if (firstOptionName.includes("modelo")) return "model";
   if (firstOptionName.includes("tamanho")) return "clothing-size";
 
-  return "clothing-size";
+  return "shoe-size";
 }
 
 export function createVariantFromPreset(presetId: VariationPresetId, value = ""): ProductVariant {

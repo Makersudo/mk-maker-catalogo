@@ -19,7 +19,7 @@ create table if not exists public.products (
   price numeric(12,2) not null check (price >= 0),
   category_id uuid not null references public.categories(id) on delete restrict,
   subcategory_id uuid references public.categories(id) on delete set null,
-  audience text check (audience in ('feminino', 'masculino', 'suplemento')),
+  audience text check (audience is null or audience in ('beleza')),
   brand_label text not null default 'MK MAKER',
   product_type text,
   variation text,

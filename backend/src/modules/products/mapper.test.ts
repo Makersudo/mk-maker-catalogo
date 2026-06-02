@@ -13,7 +13,7 @@ describe('product mapper', () => {
       category_id: 'category-id',
       subcategory_id: 'subcategory-id',
       brand_label: 'DIOR',
-      audience: 'feminino',
+      audience: 'beleza',
       product_type: 'Batons',
       variation: 'Batom matte',
       features: ['acabamento premium'],

@@ -77,54 +77,42 @@ function matchesAny(text: string, values: string[]) {
 function getPricingBand(product: Pick<ProductRow, 'slug' | 'title' | 'product_type'>): PricingBand {
   const text = `${product.slug} ${product.title} ${product.product_type ?? ''}`.toLowerCase();
 
-  if (matchesAny(text, ['tenis', 'calcado'])) {
-    return { label: 'calcados', min: 219.9, max: 299.99 };
+  if (matchesAny(text, ['kit', 'combo', 'maleta', 'paleta'])) {
+    return { label: 'kits-paletas', min: 89.9, max: 189.99 };
   }
 
-  if (matchesAny(text, ['calca', 'jogger', 'compressao termica'])) {
-    return { label: 'calcas', min: 119.9, max: 189.99 };
+  if (matchesAny(text, ['base', 'bb cream', 'corretivo', 'contorno', 'bronzer'])) {
+    return { label: 'pele-cobertura', min: 59.9, max: 129.99 };
   }
 
-  if (matchesAny(text, ['jaqueta', 'moletom', 'colete', 'casaco'])) {
-    return { label: 'casacos', min: 149.9, max: 249.99 };
+  if (matchesAny(text, ['po ', 'po-', 'blush', 'iluminador'])) {
+    return { label: 'pele-finalizacao', min: 39.9, max: 89.99 };
   }
 
-  if (matchesAny(text, ['bermuda', 'short'])) {
-    return { label: 'bermudas-shorts', min: 79.9, max: 139.99 };
+  if (matchesAny(text, ['batom', 'gloss', 'lip', 'balm', 'lapis labial'])) {
+    return { label: 'boca', min: 29.9, max: 79.99 };
   }
 
-  if (matchesAny(text, ['camiseta', 'regata'])) {
-    return { label: 'camisetas-regatas', min: 59.9, max: 99.99 };
+  if (matchesAny(text, ['mascara', 'cilios', 'delineador', 'lapis de olho', 'sombra', 'pigmento'])) {
+    return { label: 'olhos', min: 34.9, max: 119.99 };
   }
 
-  if (matchesAny(text, ['mochila', 'bolsa'])) {
-    return { label: 'bolsas-mochilas', min: 129.9, max: 219.99 };
+  if (matchesAny(text, ['pincel', 'esponja', 'necessaire', 'organizador', 'espelho'])) {
+    return { label: 'acessorios', min: 24.9, max: 99.99 };
   }
 
-  if (matchesAny(text, ['cinto'])) {
-    return { label: 'acessorio-pesado', min: 99.9, max: 169.99 };
+  if (matchesAny(text, ['demaquilante', 'micelar', 'sabonete', 'tonico', 'limpeza', 'removedor'])) {
+    return { label: 'limpeza', min: 29.9, max: 79.99 };
   }
 
-  if (matchesAny(text, ['galao'])) {
-    return { label: 'hidratacao-grande', min: 89.9, max: 149.99 };
+  if (matchesAny(text, ['esmalte', 'unha', 'manicure', 'acetona', 'top coat'])) {
+    return { label: 'unhas', min: 19.9, max: 74.99 };
   }
 
-  if (matchesAny(text, ['garrafa'])) {
-    return { label: 'hidratacao', min: 59.9, max: 99.99 };
-  }
-
-  if (matchesAny(text, ['joelheira', 'luva'])) {
-    return { label: 'acessorio-suporte', min: 69.9, max: 119.99 };
-  }
-
-  return { label: 'acessorios-gerais', min: 49.9, max: 89.99 };
+  return { label: 'beleza-geral', min: 39.9, max: 99.99 };
 }
 
-function getEffectivePricingBand(product: ProductRow, audience: string, min: number, max: number): PricingBand {
-  if (audience === 'suplemento') {
-    return { label: 'suplementos', min, max };
-  }
-
+function getEffectivePricingBand(product: ProductRow, min: number, max: number): PricingBand {
   const baseBand = getPricingBand(product);
   const boundedBand = {
     ...baseBand,
@@ -181,8 +169,8 @@ async function syncWorkspaceProducts(workspaceRoot: string, audience: string, pr
 }
 
 async function main() {
-  const audience = parseAudience('masculino');
-  if (audience === 'all') throw new Error('Precificacao em lote exige audiencia especifica.');
+  const audience = parseAudience('beleza');
+  if (audience === 'all') throw new Error('Precificacao em lote exige linha de catalogo especifica.');
 
   const apply = hasFlag('apply');
   const workspaceRoot = getWorkspaceRoot();
@@ -206,11 +194,11 @@ async function main() {
   if (error) throw error;
   const products = (data ?? []) as ProductRow[];
   if (products.length === 0) {
-    throw new Error(`Nenhum produto encontrado para audiencia ${audience}.`);
+    throw new Error(`Nenhum produto encontrado para linha ${audience}.`);
   }
 
   const pricing = products.map((product) => {
-    const boundedBand = getEffectivePricingBand(product, audience, min, max);
+    const boundedBand = getEffectivePricingBand(product, min, max);
     const nextPrice = choosePrice(product.slug, boundedBand);
     return {
       ...product,
@@ -223,7 +211,7 @@ async function main() {
   const minAssigned = Math.min(...pricing.map((item) => item.nextPrice));
   const maxAssigned = Math.max(...pricing.map((item) => item.nextPrice));
   const summary = [
-    `Audiencia: ${audience}`,
+    `Linha: ${audience}`,
     `Produtos encontrados: ${pricing.length}`,
     `Faixa configurada: R$ ${min.toFixed(2)} -> R$ ${max.toFixed(2)}`,
     `Faixa aplicada: R$ ${minAssigned.toFixed(2)} -> R$ ${maxAssigned.toFixed(2)}`,
