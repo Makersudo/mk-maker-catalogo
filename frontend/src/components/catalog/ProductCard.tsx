@@ -65,16 +65,22 @@ export const ProductCard = memo(function ProductCard({ product, priority = false
           </div>
         )}
         {product.campaign && (
-          <div className="absolute left-3 top-3 flex flex-col gap-1">
-            <span className="w-fit rounded-full bg-[#8f5e59] px-3 py-1 text-[10px] font-black uppercase tracking-widest text-white shadow-md">
-              {product.campaign.badgeLabel}
-            </span>
-            {product.campaign.endsAt && <CampaignCountdown endsAt={product.campaign.endsAt} compact={compact} />}
-          </div>
+          <CampaignTagGroup
+            product={product}
+            compact={compact}
+            className="absolute left-3 top-3 hidden flex-col gap-1 md:flex"
+          />
         )}
       </div>
 
       <div className={`flex flex-1 flex-col ${compact ? "p-3 lg:p-5" : "p-5"}`}>
+        {product.campaign && (
+          <CampaignTagGroup
+            product={product}
+            compact={compact}
+            className="mb-3 flex flex-wrap items-center gap-1.5 md:hidden"
+          />
+        )}
         <p className={`mb-1 font-black uppercase tracking-widest text-[#9d6a63] ${compact ? "line-clamp-1 text-[8px] lg:text-[9px]" : "text-[9px]"}`}>
           {product.category}
         </p>
@@ -119,6 +125,27 @@ export const ProductCard = memo(function ProductCard({ product, priority = false
     </div>
   );
 });
+
+function CampaignTagGroup({
+  product,
+  compact,
+  className,
+}: {
+  product: Product;
+  compact: boolean;
+  className: string;
+}) {
+  if (!product.campaign) return null;
+
+  return (
+    <div className={className}>
+      <span className="w-fit rounded-full bg-[#8f5e59] px-3 py-1 text-[10px] font-black uppercase tracking-widest text-white shadow-md">
+        {product.campaign.badgeLabel}
+      </span>
+      {product.campaign.endsAt && <CampaignCountdown endsAt={product.campaign.endsAt} compact={compact} />}
+    </div>
+  );
+}
 
 function CampaignCountdown({ endsAt, compact }: { endsAt: string; compact: boolean }) {
   const [remainingMs, setRemainingMs] = useState(() => Math.max(0, new Date(endsAt).getTime() - Date.now()));
