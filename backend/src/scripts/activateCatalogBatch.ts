@@ -23,7 +23,7 @@ async function main() {
 
   const candidates = (products ?? []).filter((product: any) => {
     const hasImage = Array.isArray(product.product_images) && product.product_images.length > 0;
-    return Number(product.price) > 0 && hasImage && product.is_active === false;
+    return Number(product.price) > 0 && hasImage;
   });
 
   const blocked = (products ?? []).filter((product: any) => !candidates.some((candidate: any) => candidate.id === product.id));

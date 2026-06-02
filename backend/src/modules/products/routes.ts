@@ -225,6 +225,63 @@ productRouter.patch('/bulk/stock', requireAuth, async (req, res) => {
   }
 });
 
+productRouter.patch('/bulk/visibility', requireAuth, async (req, res) => {
+  try {
+    const productIds = Array.isArray(req.body.productIds)
+      ? req.body.productIds.filter((id: unknown) => typeof id === 'string' && id.trim()).map((id: string) => id.trim())
+      : [];
+
+    if (productIds.length === 0) throw new ApiError(400, 'Selecione ao menos um produto.');
+
+    const updatePayload: Record<string, unknown> = { updated_at: new Date().toISOString() };
+    if (typeof req.body.isActive === 'boolean') updatePayload.is_active = req.body.isActive;
+    if (typeof req.body.isFeatured === 'boolean') updatePayload.is_featured = req.body.isFeatured;
+    if (typeof req.body.isPromo === 'boolean') updatePayload.is_promo = req.body.isPromo;
+    if (typeof req.body.isNew === 'boolean') updatePayload.is_new = req.body.isNew;
+    if (['draft', 'ready', 'live'].includes(String(req.body.catalogStatus))) updatePayload.catalog_status = req.body.catalogStatus;
+
+    if (Object.keys(updatePayload).length === 1) throw new ApiError(400, 'Informe ao menos uma alteracao de vitrine.');
+
+    const { data, error } = await getSupabaseAdmin()
+      .from('products')
+      .update(updatePayload)
+      .in('id', productIds)
+      .select(productSelect());
+
+    if (error) throw error;
+    invalidatePublicCatalogCache();
+    return ok(res, (data ?? []).map(mapProduct));
+  } catch (error) {
+    return handleError(res, error);
+  }
+});
+
+productRouter.patch('/:id/visibility', requireAuth, async (req, res) => {
+  try {
+    const updatePayload: Record<string, unknown> = { updated_at: new Date().toISOString() };
+    if (typeof req.body.isActive === 'boolean') updatePayload.is_active = req.body.isActive;
+    if (typeof req.body.isFeatured === 'boolean') updatePayload.is_featured = req.body.isFeatured;
+    if (typeof req.body.isPromo === 'boolean') updatePayload.is_promo = req.body.isPromo;
+    if (typeof req.body.isNew === 'boolean') updatePayload.is_new = req.body.isNew;
+    if (['draft', 'ready', 'live'].includes(String(req.body.catalogStatus))) updatePayload.catalog_status = req.body.catalogStatus;
+
+    if (Object.keys(updatePayload).length === 1) throw new ApiError(400, 'Informe ao menos uma alteracao de vitrine.');
+
+    const { data, error } = await getSupabaseAdmin()
+      .from('products')
+      .update(updatePayload)
+      .eq('id', req.params.id)
+      .select(productSelect())
+      .single();
+
+    if (error) throw error;
+    invalidatePublicCatalogCache();
+    return ok(res, mapProduct(data));
+  } catch (error) {
+    return handleError(res, error);
+  }
+});
+
 productRouter.patch('/:id/status', requireAuth, async (req, res) => {
   try {
     const fieldMap: Record<string, string> = {

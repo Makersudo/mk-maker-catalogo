@@ -40,6 +40,22 @@ export async function toggleProductStatus(id: string, field: 'isActive' | 'isFea
   });
 }
 
+export async function updateProductVisibility(id: string, updates: Partial<Pick<Product, 'isActive' | 'isFeatured' | 'isPromo' | 'isNew' | 'catalogStatus'>>) {
+  return apiRequest<Product>(`/api/products/${id}/visibility`, {
+    method: 'PATCH',
+    auth: true,
+    body: JSON.stringify(updates),
+  });
+}
+
+export async function bulkUpdateProductVisibility(productIds: string[], updates: Partial<Pick<Product, 'isActive' | 'isFeatured' | 'isPromo' | 'isNew' | 'catalogStatus'>>) {
+  return apiRequest<Product[]>('/api/products/bulk/visibility', {
+    method: 'PATCH',
+    auth: true,
+    body: JSON.stringify({ productIds, ...updates }),
+  });
+}
+
 export async function bulkUpdateProductStock(productIds: string[], stockQuantity: number) {
   return apiRequest<Product[]>('/api/products/bulk/stock', {
     method: 'PATCH',

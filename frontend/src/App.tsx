@@ -14,6 +14,8 @@ const ProductsListView = lazy(() => import('./modules/products/views/ProductsLis
 const CategoriesView = lazy(() => import('./modules/categories/views/CategoriesView').then((module) => ({ default: module.CategoriesView })));
 const MediaView = lazy(() => import('./modules/media/views/MediaView').then((module) => ({ default: module.MediaView })));
 const HighlightsView = lazy(() => import('./modules/highlights/views/HighlightsView').then((module) => ({ default: module.HighlightsView })));
+const MarketingView = lazy(() => import('./modules/marketing/views/MarketingView').then((module) => ({ default: module.MarketingView })));
+const OrdersKanbanView = lazy(() => import('./modules/orders/views/OrdersKanbanView').then((module) => ({ default: module.OrdersKanbanView })));
 const SettingsView = lazy(() => import('./modules/settings/views/SettingsView').then((module) => ({ default: module.SettingsView })));
 const ContactView = lazy(() => import('./modules/contact/views/ContactView').then((module) => ({ default: module.ContactView })));
 
@@ -137,6 +139,22 @@ export default function App() {
             element={(
               <Suspense fallback={<RouteFallback />}>
                 <HighlightsView />
+              </Suspense>
+            )}
+          />
+          <Route
+            path="marketing"
+            element={(
+              <Suspense fallback={<RouteFallback />}>
+                <MarketingView />
+              </Suspense>
+            )}
+          />
+          <Route
+            path="orders"
+            element={(
+              <Suspense fallback={<RouteFallback />}>
+                <OrdersKanbanView />
               </Suspense>
             )}
           />

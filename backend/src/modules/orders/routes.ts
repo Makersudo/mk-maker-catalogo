@@ -6,6 +6,9 @@ import { invalidatePublicCatalogCache } from '../catalog/service.js';
 import { loadCheckoutWhatsappPhone } from './checkoutSettings.js';
 import { generateOrderCode } from './orderCode.js';
 import { createOrderWithItemsAndInventory } from './createOrder.js';
+import { matchesOrderSearch, normalizeOrderStatus } from './status.js';
+import { selectActiveCampaignForProduct } from '../marketing/campaignRules.js';
+import { loadCandidateCampaigns } from '../marketing/campaignRepository.js';
 
 export const orderRouter = Router();
 
@@ -59,17 +62,24 @@ orderRouter.post('/', async (req, res) => {
     if (items.length === 0) throw new ApiError(400, 'Pedido sem itens.');
 
     const productIds = items.map((item: any) => requireString(item.productId ?? item.product?.id, 'productId'));
-    const { data: products, error: productsError } = await getSupabaseAdmin()
-      .from('products')
-      .select('id,title,price,is_active,stock_quantity,product_variants(id,label,options,price,stock_quantity,is_active)')
-      .in('id', productIds)
-      .eq('is_active', true)
-      .eq('catalog_status', 'live');
+    const supabase = getSupabaseAdmin();
+    const [productsResult, campaignRows] = await Promise.all([
+      supabase
+        .from('products')
+        .select('id,title,price,is_active,stock_quantity,product_variants(id,label,options,price,stock_quantity,is_active)')
+        .in('id', productIds)
+        .eq('is_active', true)
+        .eq('catalog_status', 'live'),
+      loadCandidateCampaigns(supabase),
+    ]);
 
+    const products = productsResult.data;
+    const productsError = productsResult.error;
     if (productsError) throw productsError;
     if (!products || products.length !== productIds.length) {
       throw new ApiError(400, 'Um ou mais produtos nao estao disponiveis.');
     }
+    const now = new Date();
 
     const normalizedItems: NormalizedOrderItem[] = items.map((item: any) => {
       const productId = requireString(item.productId ?? item.product?.id, 'productId');
@@ -83,9 +93,11 @@ orderRouter.post('/', async (req, res) => {
       if (selectedVariant && Number(selectedVariant.stock_quantity ?? 0) < quantity) {
         throw new ApiError(400, `Estoque insuficiente para ${product.title} - ${selectedVariant.label}.`);
       }
-      const unitPrice = selectedVariant?.price !== null && selectedVariant?.price !== undefined
+      const baseUnitPrice = selectedVariant?.price !== null && selectedVariant?.price !== undefined
         ? Number(selectedVariant.price)
         : Number(product.price);
+      const activeCampaign = selectActiveCampaignForProduct(product.id, baseUnitPrice, campaignRows, now);
+      const unitPrice = activeCampaign?.finalPrice ?? baseUnitPrice;
       const subtotal = unitPrice * quantity;
 
       return {
@@ -136,7 +148,6 @@ orderRouter.post('/', async (req, res) => {
       status: 'new',
     };
 
-    const supabase = getSupabaseAdmin();
     const { order, createdItems } = await createOrderWithItemsAndInventory(supabase, orderPayload, normalizedItems);
     invalidatePublicCatalogCache();
 
@@ -151,15 +162,25 @@ orderRouter.post('/', async (req, res) => {
   }
 });
 
-orderRouter.get('/', requireAuth, async (_req, res) => {
+orderRouter.get('/', requireAuth, async (req, res) => {
   try {
-    const { data, error } = await getSupabaseAdmin()
+    const status = req.query.status ? normalizeOrderStatus(req.query.status) : null;
+    const search = String(req.query.search ?? req.query.q ?? '').trim();
+    let query = getSupabaseAdmin()
       .from('orders')
-      .select('*, order_items(*)')
+      .select('*, order_items(*), order_status_events(*)')
       .order('created_at', { ascending: false });
 
+    if (status) query = query.eq('status', status);
+
+    const { data, error } = await query;
+
     if (error) throw error;
-    return ok(res, data ?? []);
+    const orders = search
+      ? (data ?? []).filter((order) => matchesOrderSearch(order, search))
+      : data ?? [];
+
+    return ok(res, orders);
   } catch (error) {
     return handleError(res, error);
   }
@@ -167,31 +188,48 @@ orderRouter.get('/', requireAuth, async (_req, res) => {
 
 orderRouter.patch('/:id/status', requireAuth, async (req, res) => {
   try {
-    const statusMap: Record<string, string> = {
-      new: 'new',
-      confirmed: 'confirmed',
-      paid: 'paid',
-      sent: 'sent',
-      cancelled: 'cancelled',
-      'Aguardando WhatsApp': 'new',
-      Confirmado: 'confirmed',
-      'Em separacao': 'confirmed',
-      'Saiu para entrega': 'sent',
-      Entregue: 'paid',
-      Cancelado: 'cancelled',
-    };
-    const nextStatus = statusMap[String(req.body.status)];
+    const nextStatus = normalizeOrderStatus(req.body.status);
     if (!nextStatus) throw new ApiError(400, 'Status de pedido invalido.');
+
+    const supabase = getSupabaseAdmin();
+    const { data: current, error: currentError } = await supabase
+      .from('orders')
+      .select('id,status')
+      .eq('id', req.params.id)
+      .single();
+
+    if (currentError) throw currentError;
 
     const { data, error } = await getSupabaseAdmin()
       .from('orders')
       .update({ status: nextStatus, updated_at: new Date().toISOString() })
       .eq('id', req.params.id)
-      .select('*, order_items(*)')
+      .select('*, order_items(*), order_status_events(*)')
       .single();
 
     if (error) throw error;
-    return ok(res, data);
+
+    if (current?.status !== nextStatus) {
+      const { error: eventError } = await supabase
+        .from('order_status_events')
+        .insert({
+          order_id: req.params.id,
+          previous_status: current?.status ?? null,
+          next_status: nextStatus,
+          note: optionalString(req.body.note),
+        });
+
+      if (eventError) throw eventError;
+    }
+
+    const { data: refreshed, error: refreshedError } = await supabase
+      .from('orders')
+      .select('*, order_items(*), order_status_events(*)')
+      .eq('id', data.id)
+      .single();
+
+    if (refreshedError) throw refreshedError;
+    return ok(res, refreshed);
   } catch (error) {
     return handleError(res, error);
   }

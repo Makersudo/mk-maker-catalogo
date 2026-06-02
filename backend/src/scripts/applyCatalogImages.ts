@@ -30,6 +30,39 @@ function getMimeType(filePath: string) {
   return 'image/jpeg';
 }
 
+function sleep(ms: number) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+function describeError(error: unknown) {
+  if (error instanceof Error) return error.message;
+  if (error && typeof error === 'object' && 'message' in error) {
+    return String((error as { message?: unknown }).message);
+  }
+  return String(error);
+}
+
+async function withRetry<T>(label: string, operation: () => Promise<T>, maxAttempts = 4): Promise<T> {
+  let lastError: unknown;
+
+  for (let attempt = 1; attempt <= maxAttempts; attempt += 1) {
+    try {
+      return await operation();
+    } catch (error) {
+      lastError = error;
+      if (attempt === maxAttempts) break;
+
+      const delayMs = 1000 * attempt * attempt;
+      process.stdout.write(
+        `Falha temporaria em ${label}; tentativa ${attempt}/${maxAttempts}. Retentando em ${delayMs}ms: ${describeError(error)}\n`
+      );
+      await sleep(delayMs);
+    }
+  }
+
+  throw lastError;
+}
+
 async function fileToDataUrl(filePath: string) {
   const absolutePath = path.resolve(getWorkspaceRoot(), filePath);
   const buffer = await fs.readFile(absolutePath);
@@ -59,36 +92,38 @@ async function main() {
   });
 
   for (const item of approved) {
-    const { data: product, error: productError } = await supabase
-      .from('products')
-      .select('id,title')
-      .eq('slug', item.slug)
-      .single();
+    await withRetry(item.slug, async () => {
+      const { data: product, error: productError } = await supabase
+        .from('products')
+        .select('id,title')
+        .eq('slug', item.slug)
+        .single();
 
-    if (productError || !product) {
-      throw new Error(`Produto nao encontrado para slug ${item.slug}: ${productError?.message ?? 'sem retorno'}`);
-    }
+      if (productError || !product) {
+        throw new Error(`Produto nao encontrado para slug ${item.slug}: ${productError?.message ?? 'sem retorno'}`);
+      }
 
-    const source = item.imageUrl || await fileToDataUrl(item.imagePath!);
-    const uploaded = await uploadProductImageDataUrl(source, item.slug);
+      const source = item.imageUrl || await fileToDataUrl(item.imagePath!);
+      const uploaded = await uploadProductImageDataUrl(source, item.slug);
 
-    const { error: deleteError } = await supabase.from('product_images').delete().eq('product_id', product.id);
-    if (deleteError) throw deleteError;
+      const { error: deleteError } = await supabase.from('product_images').delete().eq('product_id', product.id);
+      if (deleteError) throw deleteError;
 
-    const { error: imageError } = await supabase.from('product_images').insert({
-      product_id: product.id,
-      url: uploaded.url,
-      path: uploaded.path,
-      name: product.title,
-      sort_order: 0,
+      const { error: imageError } = await supabase.from('product_images').insert({
+        product_id: product.id,
+        url: uploaded.url,
+        path: uploaded.path,
+        name: product.title,
+        sort_order: 0,
+      });
+      if (imageError) throw imageError;
+
+      const { error: updateError } = await supabase
+        .from('products')
+        .update({ catalog_status: 'ready', updated_at: new Date().toISOString() })
+        .eq('id', product.id);
+      if (updateError) throw updateError;
     });
-    if (imageError) throw imageError;
-
-    const { error: updateError } = await supabase
-      .from('products')
-      .update({ catalog_status: 'ready', updated_at: new Date().toISOString() })
-      .eq('id', product.id);
-    if (updateError) throw updateError;
 
     process.stdout.write(`Imagem vinculada e produto marcado como ready: ${item.slug}\n`);
   }

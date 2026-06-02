@@ -13,6 +13,18 @@ export interface PublicCatalogProduct {
   title: string;
   description: string;
   price: number;
+  campaign?: {
+    id: string;
+    name: string;
+    badgeLabel: string;
+    startsAt?: string | null;
+    endsAt?: string | null;
+    discountType: 'none' | 'percent' | 'fixed' | 'override_price';
+    discountValue: number;
+    originalPrice: number;
+    finalPrice: number;
+    priority: number;
+  } | null;
   isFeatured?: boolean;
   isNew?: boolean;
   created_at?: string;

@@ -1,8 +1,9 @@
 import { useState, useMemo, useEffect, useRef } from "react";
 import { motion } from "motion/react";
-import { Search, ChevronLeft, ChevronRight, PackageX, Menu, X } from "lucide-react";
+import { Grid2X2, Rows3, Search, ChevronDown, ChevronLeft, ChevronRight, PackageX, Menu, X } from "lucide-react";
 import { ProductCard } from "./ProductCard";
 import { CatalogSortOption, sortCatalogProducts } from "./catalogSort";
+import { getCatalogSampleImage } from "./catalogSampleImages";
 import { useStore } from "../../store/useStore";
 import { getPublicCatalogBootstrap } from "../../services/catalogService";
 import { Product } from "../../types";
@@ -20,12 +21,48 @@ function getParentId(category: CatalogCategory) {
   return category.parent_id ?? category.parentId ?? null;
 }
 
+type PaginationItem = number | "start-ellipsis" | "end-ellipsis";
+type MobileGridMode = "single" | "compact";
+
+function buildPaginationItems(currentPage: number, totalPages: number): PaginationItem[] {
+  if (totalPages <= 7) {
+    return Array.from({ length: totalPages }, (_, index) => index + 1);
+  }
+
+  const pages = new Set<number>([1, totalPages, currentPage]);
+
+  if (currentPage <= 4) {
+    [2, 3, 4, 5].forEach((page) => pages.add(page));
+  } else if (currentPage >= totalPages - 3) {
+    [totalPages - 4, totalPages - 3, totalPages - 2, totalPages - 1].forEach((page) => pages.add(page));
+  } else {
+    [currentPage - 1, currentPage + 1].forEach((page) => pages.add(page));
+  }
+
+  const orderedPages = Array.from(pages)
+    .filter((page) => page >= 1 && page <= totalPages)
+    .sort((a, b) => a - b);
+  const items: PaginationItem[] = [];
+
+  orderedPages.forEach((page, index) => {
+    const previousPage = orderedPages[index - 1];
+    if (previousPage && page - previousPage === 2) {
+      items.push(previousPage + 1);
+    } else if (previousPage && page - previousPage > 2) {
+      items.push(index === 1 ? "start-ellipsis" : "end-ellipsis");
+    }
+    items.push(page);
+  });
+
+  return items;
+}
+
 function CatalogSkeleton() {
   return (
     <div className="flex flex-col flex-1">
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 lg:gap-6 content-start mb-10 border-t border-neutral-200 pt-6">
         {Array.from({ length: 8 }).map((_, index) => (
-          <div key={index} className="overflow-hidden rounded-2xl border border-neutral-200 bg-white">
+          <div key={index} className="catalog-panel-surface overflow-hidden rounded-2xl border">
             <div className="aspect-square animate-pulse bg-neutral-100" />
             <div className="space-y-3 p-5">
               <div className="h-4 w-24 animate-pulse rounded bg-neutral-100" />
@@ -58,7 +95,9 @@ export function Catalog() {
     return window.innerWidth >= 1024;
   });
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
+  const [expandedCategoryIds, setExpandedCategoryIds] = useState<Set<string>>(new Set());
   const [sortOption, setSortOption] = useState<CatalogSortOption>("relevance");
+  const [mobileGridMode, setMobileGridMode] = useState<MobileGridMode>("single");
   const [storeCategories, setStoreCategories] = useState<CatalogCategory[]>([]);
   const [storeProducts, setStoreProducts] = useState<Product[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -114,29 +153,36 @@ export function Catalog() {
         );
 
         setStoreProducts(
-          products.map((product) => ({
-            id: product.id,
-            slug: product.slug ?? null,
-            name: product.title,
-            description: product.description,
-            price: product.price,
-            isFeatured: product.isFeatured ?? false,
-            isNew: product.isNew ?? false,
-            createdAt: product.created_at,
-            relevanceScore: product.relevanceScore ?? 0,
-            relevanceUnitsSold: product.relevanceUnitsSold ?? 0,
-            relevanceOrderCount: product.relevanceOrderCount ?? 0,
-            category: product.subcategoryName || product.categoryName || "Diversos",
-            categoryId: product.categoryId,
-            subcategoryId: product.subcategoryId ?? null,
-            brandLabel: product.brandLabel ?? "",
-            imageUrl: product.images.length > 0 ? product.images[0] : "",
-            images: product.images,
-            features: product.features ?? [],
-            stockQuantity: product.stockQuantity ?? 0,
-            variantsEnabled: product.variantsEnabled ?? false,
-            variants: product.variants ?? [],
-          }))
+          products.map((product) => {
+            const sampleImage = getCatalogSampleImage(product);
+            const images = product.images.length > 0 ? product.images : [sampleImage];
+
+            return {
+              id: product.id,
+              slug: product.slug ?? null,
+              name: product.title,
+              description: product.description,
+              price: product.campaign?.finalPrice ?? product.price,
+              originalPrice: product.campaign?.originalPrice ?? product.price,
+              campaign: product.campaign ?? null,
+              isFeatured: product.isFeatured ?? false,
+              isNew: product.isNew ?? false,
+              createdAt: product.created_at,
+              relevanceScore: product.relevanceScore ?? 0,
+              relevanceUnitsSold: product.relevanceUnitsSold ?? 0,
+              relevanceOrderCount: product.relevanceOrderCount ?? 0,
+              category: product.subcategoryName || product.categoryName || "Diversos",
+              categoryId: product.categoryId,
+              subcategoryId: product.subcategoryId ?? null,
+              brandLabel: product.brandLabel ?? "",
+              imageUrl: images[0],
+              images,
+              features: product.features ?? [],
+              stockQuantity: product.stockQuantity ?? 0,
+              variantsEnabled: product.variantsEnabled ?? false,
+              variants: product.variants ?? [],
+            };
+          })
         );
       })
       .catch(() => {
@@ -198,6 +244,11 @@ export function Catalog() {
   }, [filteredProducts, sortOption]);
 
   const totalPages = Math.ceil(sortedProducts.length / itemsPerPage) || 1;
+  const paginationItems = buildPaginationItems(currentPage, totalPages);
+  const isCompactMobileGrid = mobileGridMode === "compact";
+  const productGridClass = isCompactMobileGrid
+    ? "grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-3 xl:grid-cols-4 lg:gap-6 content-start mb-10 border-t border-neutral-200 pt-6"
+    : "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 lg:gap-6 content-start mb-10 border-t border-neutral-200 pt-6";
   const paginatedProducts = sortedProducts.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
@@ -208,9 +259,37 @@ export function Catalog() {
     window.requestAnimationFrame(scrollCatalogToTop);
   }, [activeCategory, searchTerm, sortOption]);
 
+  useEffect(() => {
+    if (!activeCategory) return;
+    const selectedCategory = storeCategories.find((category) => category.id === activeCategory);
+    const parentId = selectedCategory ? getParentId(selectedCategory) : null;
+    const categoryIdToExpand = parentId || selectedCategory?.id;
+    if (!categoryIdToExpand) return;
+
+    setExpandedCategoryIds((current) => {
+      if (current.has(categoryIdToExpand)) return current;
+      const next = new Set(current);
+      next.add(categoryIdToExpand);
+      return next;
+    });
+  }, [activeCategory, storeCategories]);
+
+  const toggleCategoryDropdown = (categoryId: string) => {
+    setExpandedCategoryIds((current) => {
+      const next = new Set(current);
+      if (next.has(categoryId)) {
+        next.delete(categoryId);
+      } else {
+        next.add(categoryId);
+      }
+      return next;
+    });
+  };
+
   return (
-    <div className="relative w-full flex-1 flex overflow-hidden bg-neutral-50/50">
+    <div className="catalog-brand-surface relative w-full flex-1 flex overflow-hidden">
       <div className="absolute inset-0 dot-pattern opacity-60 pointer-events-none" />
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-28 bg-gradient-to-b from-white/90 to-transparent" />
 
       {isSidebarOpen && (
         <div
@@ -222,7 +301,7 @@ export function Catalog() {
       <aside
         className={`
           fixed inset-y-0 left-0 z-[60]
-          bg-white lg:bg-white/80 lg:backdrop-blur-md
+          bg-white lg:bg-white/95 lg:backdrop-blur-md
           border-r border-neutral-200
           transition-all duration-300 ease-in-out shrink-0 overflow-visible
           ${
@@ -237,7 +316,7 @@ export function Catalog() {
         <button
           type="button"
           onClick={() => setIsSidebarCollapsed((collapsed) => !collapsed)}
-          className="absolute -right-4 top-24 z-20 hidden h-9 w-9 items-center justify-center rounded-full border border-purple-200 bg-white text-purple-700 shadow-md transition-all hover:border-purple-300 hover:bg-purple-50 lg:flex"
+          className="absolute -right-4 top-24 z-20 hidden h-9 w-9 items-center justify-center rounded-full border border-neutral-200 bg-white text-[#8f5e59] shadow-md shadow-neutral-900/10 transition-all hover:border-[#ead5d2] hover:bg-neutral-50 lg:flex"
           aria-label={isSidebarCollapsed ? "Expandir categorias" : "Recolher categorias"}
           title={isSidebarCollapsed ? "Expandir categorias" : "Recolher categorias"}
         >
@@ -245,7 +324,7 @@ export function Catalog() {
         </button>
 
         <div className={`w-[min(20rem,calc(100vw-1rem))] ${isSidebarCollapsed ? "lg:w-20" : "lg:w-72"} flex h-full flex-col overflow-hidden`}>
-          <div className={`flex min-h-[92px] items-center bg-white/95 px-5 ${isSidebarCollapsed ? "justify-center lg:px-3" : "justify-start lg:px-5"}`}>
+          <div className={`flex min-h-[92px] items-center bg-white px-5 ${isSidebarCollapsed ? "justify-center lg:px-3" : "justify-start lg:px-5"}`}>
             {!isSidebarCollapsed ? (
               <div className="min-w-0">
                 <BrandLogo imageClassName="h-14 w-36 object-contain object-left" />
@@ -264,16 +343,16 @@ export function Catalog() {
           <div className={`border-b border-neutral-100 bg-white/95 px-5 py-5 ${isSidebarCollapsed ? "hidden" : "lg:px-5"}`}>
             <div className={`flex items-center gap-3 ${isSidebarCollapsed ? "lg:justify-center" : "justify-between"}`}>
               <div className="min-w-0">
-                <h3 className="text-[11px] font-black text-neutral-500 uppercase tracking-[0.22em]">
+                <h3 className="text-[11px] font-black text-[#7c4f4a] uppercase tracking-[0.22em]">
                   Categorias
                 </h3>
-                <p className="mt-1 truncate text-xs text-neutral-400">
+                <p className="mt-1 truncate text-xs text-neutral-500">
                   Navegue por linha e tipo de produto
                 </p>
               </div>
               <button
                 onClick={() => setIsSidebarOpen(false)}
-                className="inline-flex shrink-0 items-center gap-1.5 rounded-lg border border-neutral-200 bg-white px-3 py-2 text-[10px] font-bold uppercase tracking-widest text-neutral-500 shadow-sm transition-colors hover:border-purple-200 hover:bg-purple-50 hover:text-purple-700 lg:hidden"
+                className="inline-flex shrink-0 items-center gap-1.5 rounded-lg border border-neutral-200 bg-white px-3 py-2 text-[10px] font-bold uppercase tracking-widest text-neutral-500 shadow-sm shadow-neutral-900/5 transition-colors hover:border-[#ead5d2] hover:bg-neutral-50 hover:text-[#8f5e59] lg:hidden"
                 aria-label="Fechar painel"
               >
                 <X className="w-3.5 h-3.5" />
@@ -297,8 +376,8 @@ export function Catalog() {
                     }}
                     className={`group flex w-full items-center justify-between gap-3 rounded-xl border px-4 py-3 text-left text-sm transition-all ${
                       activeCategory === null
-                        ? "border-purple-200 bg-purple-100 text-purple-800 font-black shadow-sm"
-                        : "border-transparent bg-white text-neutral-700 hover:border-purple-100 hover:bg-purple-50 hover:text-purple-800"
+                        ? "border-[#ead5d2] bg-white text-[#7c4f4a] font-black shadow-sm shadow-neutral-900/5"
+                        : "border-neutral-100 bg-white text-neutral-700 hover:border-[#f0dddd] hover:bg-neutral-50 hover:text-[#7c4f4a]"
                     }`}
                   >
                     <span className="min-w-0 truncate">Todos os Itens</span>
@@ -310,21 +389,24 @@ export function Catalog() {
                   {rootCategories.map((category) => {
                     const subcategories = subcategoriesByParent[category.id] ?? [];
                     const isCategoryActive = activeCategory === category.id;
+                    const hasSubcategories = subcategories.length > 0;
+                    const isExpanded = expandedCategoryIds.has(category.id);
 
                     return (
-                      <div key={category.id} className="rounded-2xl border border-neutral-100 bg-white p-2 shadow-sm">
+                      <div key={category.id} className="catalog-panel-surface rounded-2xl border p-2">
                         <button
                           onClick={() => {
+                            if (hasSubcategories) toggleCategoryDropdown(category.id);
                             selectCategory(category.id);
                           }}
                           className={`flex w-full items-center gap-3 rounded-xl px-3 py-3 text-left transition-all ${
                             isCategoryActive
-                              ? "bg-purple-100 text-purple-800 shadow-sm"
-                              : "text-neutral-700 hover:bg-purple-50 hover:text-purple-800"
+                              ? "bg-[#fbf4f3] text-[#7c4f4a] shadow-sm"
+                              : "text-neutral-700 hover:bg-neutral-50 hover:text-[#7c4f4a]"
                           }`}
                           title={category.name}
                         >
-                          <span className={`h-8 w-1 rounded-full ${isCategoryActive ? "bg-purple-600" : "bg-neutral-200"}`} />
+                          <span className={`h-8 w-1 rounded-full ${isCategoryActive ? "bg-[#c98f86]" : "bg-neutral-200"}`} />
                           <span className="min-w-0 flex-1">
                             <span className="block truncate text-sm font-bold">{category.name}</span>
                             {subcategories.length > 0 && (
@@ -336,10 +418,17 @@ export function Catalog() {
                           <span className="rounded-full bg-neutral-100 px-2 py-0.5 text-[11px] font-bold text-neutral-500">
                             {categoryProductCounts[category.id] ?? 0}
                           </span>
+                          {hasSubcategories && (
+                            <ChevronDown
+                              className={`h-4 w-4 shrink-0 text-neutral-400 transition-transform ${
+                                isExpanded ? "rotate-180" : ""
+                              }`}
+                            />
+                          )}
                         </button>
 
-                        {subcategories.length > 0 && (
-                          <div className="mt-1 flex flex-col gap-1 border-l border-neutral-100 pl-3">
+                        {hasSubcategories && isExpanded && (
+                          <div className="mt-1 flex flex-col gap-1 border-l border-[#ead5d2] pl-3">
                             {subcategories.map((subcategory) => {
                               const isSubcategoryActive = activeCategory === subcategory.id;
 
@@ -351,13 +440,13 @@ export function Catalog() {
                                   }}
                                   className={`flex w-full items-center justify-between gap-2 rounded-lg px-3 py-2.5 text-left text-sm transition-all ${
                                     isSubcategoryActive
-                                      ? "bg-purple-50 text-purple-800 font-bold"
-                                      : "text-neutral-600 hover:bg-neutral-50 hover:text-purple-800"
+                                      ? "bg-[#fbf4f3] text-[#7c4f4a] font-bold"
+                                      : "text-neutral-600 hover:bg-neutral-50 hover:text-[#7c4f4a]"
                                   }`}
                                   title={subcategory.name}
                                 >
                                   <span className="min-w-0 truncate">{subcategory.name}</span>
-                                  <span className="shrink-0 rounded-full bg-white px-2 py-0.5 text-[10px] font-bold text-neutral-400">
+                                  <span className="shrink-0 rounded-full bg-neutral-50 px-2 py-0.5 text-[10px] font-bold text-neutral-400">
                                     {categoryProductCounts[subcategory.id] ?? 0}
                                   </span>
                                 </button>
@@ -388,7 +477,7 @@ export function Catalog() {
               {!isSidebarOpen && (
                 <button
                   onClick={() => setIsSidebarOpen(true)}
-                  className="mt-1 flex shrink-0 items-center justify-center rounded-lg border border-neutral-200 bg-white p-2 text-neutral-600 shadow-sm transition-colors hover:text-purple-600 lg:hidden"
+                  className="mt-1 flex shrink-0 items-center justify-center rounded-lg border border-neutral-200 bg-white p-2 text-neutral-600 shadow-sm shadow-neutral-900/5 transition-colors hover:bg-neutral-50 hover:text-[#8f5e59] lg:hidden"
                   title="Abrir Categorias"
                   aria-label="Abrir categorias"
                 >
@@ -398,7 +487,7 @@ export function Catalog() {
               <div>
                 <h2 className="text-2xl lg:text-4xl font-bold uppercase tracking-tight text-neutral-900 mb-1 lg:mb-2">
                   Makeup{" "}
-                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-800 to-purple-500">
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#6f4844] to-[#c98f86]">
                     & Beauty
                   </span>
                 </h2>
@@ -408,7 +497,7 @@ export function Catalog() {
 
             <div className="w-full lg:w-[260px] lg:pt-1">
               <label
-                className="mb-2 block text-xs font-bold uppercase tracking-[0.2em] text-neutral-400"
+                className="mb-2 block text-xs font-bold uppercase tracking-[0.2em] text-[#9d6a63]"
                 htmlFor="catalog-sort"
               >
                 Ordenar por
@@ -418,7 +507,7 @@ export function Catalog() {
                 value={sortOption}
                 onChange={(event) => setSortOption(event.target.value as CatalogSortOption)}
                 disabled={isLoading}
-                className="w-full rounded-xl border border-neutral-200 bg-white px-4 py-2.5 text-sm font-medium text-neutral-700 shadow-sm outline-none transition-colors focus:border-purple-500 focus:ring-1 focus:ring-purple-500 disabled:bg-neutral-100 disabled:text-neutral-400"
+                className="w-full rounded-xl border border-neutral-200 bg-white px-4 py-2.5 text-sm font-medium text-neutral-700 shadow-sm shadow-neutral-900/5 outline-none transition-colors focus:border-[#c98f86] focus:ring-1 focus:ring-[#c98f86] disabled:bg-neutral-100 disabled:text-neutral-400"
               >
                 <option value="relevance">Mais Relevante</option>
                 <option value="price-asc">Menor Preço</option>
@@ -435,8 +524,42 @@ export function Catalog() {
               onChange={(event) => setSearchTerm(event.target.value)}
               placeholder="Buscar por nome ou descricao..."
               disabled={isLoading}
-              className="w-full pl-9 pr-4 py-2.5 bg-white border border-neutral-200 rounded-xl text-sm focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-colors shadow-sm disabled:bg-neutral-100 disabled:text-neutral-400"
+              className="w-full pl-9 pr-4 py-2.5 bg-white border border-neutral-200 rounded-xl text-sm focus:outline-none focus:border-[#c98f86] focus:ring-1 focus:ring-[#c98f86] transition-colors shadow-sm shadow-neutral-900/5 disabled:bg-neutral-100 disabled:text-neutral-400"
             />
+          </div>
+
+          <div className="flex items-center justify-between gap-3 rounded-2xl border border-neutral-200 bg-white p-2 shadow-sm shadow-neutral-900/5 lg:hidden">
+            <span className="pl-2 text-[10px] font-black uppercase tracking-[0.2em] text-neutral-400">
+              Grade mobile
+            </span>
+            <div className="grid grid-cols-2 gap-1 rounded-xl bg-neutral-100 p-1">
+              <button
+                type="button"
+                onClick={() => setMobileGridMode("single")}
+                aria-pressed={mobileGridMode === "single"}
+                className={`flex h-9 items-center justify-center gap-1.5 rounded-lg px-3 text-xs font-black transition-all ${
+                  mobileGridMode === "single"
+                    ? "bg-white text-[#8f5e59] shadow-sm"
+                    : "text-neutral-500 hover:text-neutral-800"
+                }`}
+              >
+                <Rows3 className="h-4 w-4" />
+                1
+              </button>
+              <button
+                type="button"
+                onClick={() => setMobileGridMode("compact")}
+                aria-pressed={mobileGridMode === "compact"}
+                className={`flex h-9 items-center justify-center gap-1.5 rounded-lg px-3 text-xs font-black transition-all ${
+                  mobileGridMode === "compact"
+                    ? "bg-white text-[#8f5e59] shadow-sm"
+                    : "text-neutral-500 hover:text-neutral-800"
+                }`}
+              >
+                <Grid2X2 className="h-4 w-4" />
+                4
+              </button>
+            </div>
           </div>
         </header>
 
@@ -446,9 +569,9 @@ export function Catalog() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="flex-1 flex flex-col items-center justify-center text-center p-8 border border-neutral-200 border-dashed rounded-2xl bg-white shadow-sm backdrop-blur-sm"
+            className="catalog-panel-surface flex-1 flex flex-col items-center justify-center text-center p-8 border border-dashed rounded-2xl backdrop-blur-sm"
           >
-            <div className="w-16 h-16 bg-rose-50 rounded-full flex items-center justify-center text-rose-400 mb-4">
+            <div className="w-16 h-16 bg-[#fbf4f3] rounded-full flex items-center justify-center text-[#c98f86] mb-4">
               <PackageX className="w-8 h-8" />
             </div>
             <h3 className="text-lg font-bold text-neutral-800 mb-2 uppercase tracking-wide">
@@ -457,7 +580,7 @@ export function Catalog() {
             <p className="text-sm text-neutral-500 max-w-md">{loadError}</p>
             <button
               onClick={() => window.location.reload()}
-              className="mt-6 px-6 py-2 bg-purple-100 text-purple-700 font-bold rounded-lg text-sm hover:bg-purple-200 transition-colors"
+              className="mt-6 px-6 py-2 bg-[#f3dfdc] text-[#7c4f4a] font-bold rounded-lg text-sm hover:bg-[#ead0cb] transition-colors"
             >
               Tentar novamente
             </button>
@@ -466,9 +589,9 @@ export function Catalog() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="flex-1 flex flex-col items-center justify-center text-center p-8 border border-neutral-200 border-dashed rounded-2xl bg-white shadow-sm backdrop-blur-sm"
+            className="catalog-panel-surface flex-1 flex flex-col items-center justify-center text-center p-8 border border-dashed rounded-2xl backdrop-blur-sm"
           >
-            <div className="w-16 h-16 bg-purple-50 rounded-full flex items-center justify-center text-purple-400 mb-4">
+            <div className="w-16 h-16 bg-[#fbf4f3] rounded-full flex items-center justify-center text-[#c98f86] mb-4">
               <PackageX className="w-8 h-8" />
             </div>
             <h3 className="text-lg font-bold text-neutral-800 mb-2 uppercase tracking-wide">
@@ -486,7 +609,7 @@ export function Catalog() {
             {searchTerm && (
               <button
                 onClick={() => setSearchTerm("")}
-                className="mt-6 px-6 py-2 bg-purple-100 text-purple-700 font-bold rounded-lg text-sm hover:bg-purple-200 transition-colors"
+                className="mt-6 px-6 py-2 bg-[#f3dfdc] text-[#7c4f4a] font-bold rounded-lg text-sm hover:bg-[#ead0cb] transition-colors"
               >
                 Limpar busca
               </button>
@@ -494,7 +617,7 @@ export function Catalog() {
           </motion.div>
         ) : (
           <div className="flex flex-col flex-1">
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 lg:gap-6 content-start mb-10 border-t border-neutral-200 pt-6">
+            <div className={productGridClass}>
               {paginatedProducts.map((product, index) => (
                 <motion.div
                   key={product.id}
@@ -502,13 +625,13 @@ export function Catalog() {
                   animate={{ opacity: 1, scale: 1 }}
                   layout
                 >
-                  <ProductCard product={product} priority={currentPage === 1 && index < 4} />
+                  <ProductCard product={product} priority={currentPage === 1 && index < 4} compact={isCompactMobileGrid} />
                 </motion.div>
               ))}
             </div>
 
             {totalPages > 1 && (
-              <div className="mt-auto flex items-center justify-center gap-4 pt-6 border-t border-neutral-200">
+              <div className="mt-auto flex flex-col items-center justify-center gap-3 border-t border-neutral-200 pt-6 sm:flex-row sm:gap-4">
                 <button
                   onClick={() => setCatalogPage(currentPage - 1)}
                   disabled={currentPage === 1}
@@ -516,21 +639,34 @@ export function Catalog() {
                 >
                   <ChevronLeft className="w-5 h-5" />
                 </button>
-                <div className="flex gap-2">
-                  {Array.from({ length: totalPages }).map((_, index) => (
-                    <button
-                      key={index}
-                      onClick={() => setCatalogPage(index + 1)}
-                      className={`w-10 h-10 rounded-lg text-sm font-bold transition-colors ${
-                        currentPage === index + 1
-                          ? "bg-purple-600 text-white shadow-md"
-                          : "bg-white text-neutral-600 border border-neutral-200 hover:bg-neutral-50"
-                      }`}
-                    >
-                      {index + 1}
-                    </button>
-                  ))}
+                <div className="flex max-w-full flex-wrap items-center justify-center gap-2">
+                  {paginationItems.map((item) =>
+                    typeof item === "number" ? (
+                      <button
+                        key={item}
+                        onClick={() => setCatalogPage(item)}
+                        className={`h-10 min-w-10 rounded-lg px-3 text-sm font-bold transition-colors ${
+                          currentPage === item
+                            ? "bg-[#8f5e59] text-white shadow-md"
+                            : "border border-neutral-200 bg-white text-neutral-600 hover:bg-neutral-50 hover:text-[#7c4f4a]"
+                        }`}
+                        aria-current={currentPage === item ? "page" : undefined}
+                      >
+                        {item}
+                      </button>
+                    ) : (
+                      <span
+                        key={item}
+                        className="flex h-10 min-w-10 items-center justify-center rounded-lg border border-transparent px-2 text-sm font-bold text-neutral-400"
+                      >
+                        ...
+                      </span>
+                    )
+                  )}
                 </div>
+                <span className="order-first text-xs font-bold uppercase tracking-widest text-neutral-400 sm:order-none">
+                  Pagina {currentPage} de {totalPages}
+                </span>
                 <button
                   onClick={() => setCatalogPage(currentPage + 1)}
                   disabled={currentPage === totalPages}

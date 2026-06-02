@@ -33,8 +33,41 @@
     box-shadow: 0 8px 32px rgba(201, 143, 134, 0.16);
   }
   .dot-pattern {
-    background-image: radial-gradient(#e5e7eb 1px, transparent 1px);
-    background-size: 20px 20px;
+    background-image: radial-gradient(rgba(55, 65, 81, 0.07) 1px, transparent 1px);
+    background-size: 24px 24px;
+  }
+  .catalog-brand-surface {
+    background:
+      linear-gradient(90deg, rgba(201, 143, 134, 0.08), transparent 18%, transparent 82%, rgba(201, 143, 134, 0.06)),
+      linear-gradient(180deg, #ffffff 0%, #fbfaf9 42%, #f7f6f5 100%);
+  }
+  .catalog-panel-surface {
+    background: #ffffff;
+    border-color: rgba(229, 231, 235, 0.95);
+    box-shadow: 0 14px 34px rgba(17, 24, 39, 0.04);
+  }
+  .product-photo-surface {
+    background: #ffffff;
+  }
+  .admin-input {
+    width: 100%;
+    border-radius: 0.75rem;
+    border: 1px solid #e5e7eb;
+    background: #ffffff;
+    padding: 0.625rem 0.875rem;
+    font-size: 0.875rem;
+    color: #111827;
+    outline: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+  .admin-input:focus {
+    border-color: #c98f86;
+    box-shadow: 0 0 0 1px #c98f86;
+  }
+  .mk-header-surface {
+    background: #ffffff;
+    border-bottom: 1px solid rgba(229, 231, 235, 0.85);
+    box-shadow: 0 8px 24px rgba(17, 24, 39, 0.04);
   }
   .font-script {
     font-family: var(--font-script);

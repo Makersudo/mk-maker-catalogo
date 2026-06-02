@@ -1,5 +1,5 @@
 import { NavLink } from 'react-router-dom';
-import { LayoutDashboard, Package, Tag, Settings, LogOut, Image, BarChart, X } from 'lucide-react';
+import { LayoutDashboard, Package, Tag, Settings, LogOut, Image, BarChart, X, ClipboardList, Megaphone } from 'lucide-react';
 import { useAuthStore } from '../../auth/store/useAuthStore';
 import { useUIStore } from '../store/useUIStore';
 import { BrandLogo } from '../../../components/brand/BrandLogo';
@@ -14,6 +14,8 @@ export function AdminSidebar() {
     { icon: Tag, label: 'Categorias', path: '/admin/categories' },
     { icon: Image, label: 'Mídia e Imagens', path: '/admin/media' },
     { icon: BarChart, label: 'Destaques', path: '/admin/highlights' },
+    { icon: Megaphone, label: 'Marketing', path: '/admin/marketing' },
+    { icon: ClipboardList, label: 'Pedidos', path: '/admin/orders' },
     { icon: Settings, label: 'Configurações', path: '/admin/settings' },
   ];
 

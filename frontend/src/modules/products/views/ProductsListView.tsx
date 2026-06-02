@@ -5,7 +5,7 @@ import { useCategoryStore } from '../../categories/store/useCategoryStore';
 import { ProductFormModal } from '../components/ProductFormModal';
 
 export function ProductsListView() {
-  const { products, deleteProduct, toggleStatus, fetchProducts, bulkUpdateStock } = useProductStore();
+  const { products, deleteProduct, updateVisibility, bulkUpdateVisibility, fetchProducts, bulkUpdateStock } = useProductStore();
   const categories = useCategoryStore((state) => state.categories);
   const fetchCategories = useCategoryStore((state) => state.fetchCategories);
 
@@ -18,6 +18,7 @@ export function ProductsListView() {
   const [selectedProductIds, setSelectedProductIds] = useState<string[]>([]);
   const [bulkStockQuantity, setBulkStockQuantity] = useState('0');
   const [bulkActionLoading, setBulkActionLoading] = useState<'selected' | 'filtered' | null>(null);
+  const [visibilityActionLoading, setVisibilityActionLoading] = useState(false);
 
   const filteredProducts = products.filter((product) => {
     const term = searchTerm.toLowerCase();
@@ -109,6 +110,22 @@ export function ProductsListView() {
       window.alert(error instanceof Error ? error.message : 'Nao foi possivel atualizar o estoque em lote.');
     } finally {
       setBulkActionLoading(null);
+    }
+  };
+
+  const applyBulkVisibility = async (updates: Parameters<typeof bulkUpdateVisibility>[1]) => {
+    if (selectedProductIds.length === 0) {
+      window.alert('Selecione ao menos um produto.');
+      return;
+    }
+
+    setVisibilityActionLoading(true);
+    try {
+      await bulkUpdateVisibility(selectedProductIds, updates);
+    } catch (error) {
+      window.alert(error instanceof Error ? error.message : 'Nao foi possivel atualizar a vitrine em lote.');
+    } finally {
+      setVisibilityActionLoading(false);
     }
   };
 
@@ -214,6 +231,20 @@ export function ProductsListView() {
         </div>
       </section>
 
+      <section className="bg-white p-4 rounded-xl md:rounded-2xl border border-neutral-200 shadow-sm flex flex-col gap-4 xl:flex-row xl:items-center xl:justify-between">
+        <div>
+          <h2 className="text-sm font-bold uppercase tracking-wide text-neutral-900">Acoes rapidas de vitrine</h2>
+          <p className="text-xs text-neutral-500 mt-1">Ative, desative ou publique produtos selecionados sem abrir o modal.</p>
+        </div>
+        <div className="grid grid-cols-2 gap-2 md:flex md:flex-wrap">
+          <button disabled={visibilityActionLoading} onClick={() => applyBulkVisibility({ isActive: true })} className="px-4 py-2 rounded-lg text-xs font-bold border border-emerald-200 bg-emerald-50 text-emerald-700 disabled:opacity-60">Ativar</button>
+          <button disabled={visibilityActionLoading} onClick={() => applyBulkVisibility({ isActive: false })} className="px-4 py-2 rounded-lg text-xs font-bold border border-neutral-200 bg-neutral-50 text-neutral-700 disabled:opacity-60">Desativar</button>
+          <button disabled={visibilityActionLoading} onClick={() => applyBulkVisibility({ catalogStatus: 'live', isActive: true })} className="px-4 py-2 rounded-lg text-xs font-bold border border-purple-200 bg-purple-50 text-purple-700 disabled:opacity-60">Publicar</button>
+          <button disabled={visibilityActionLoading} onClick={() => applyBulkVisibility({ isFeatured: true })} className="px-4 py-2 rounded-lg text-xs font-bold border border-amber-200 bg-amber-50 text-amber-700 disabled:opacity-60">Destacar</button>
+          <button disabled={visibilityActionLoading} onClick={() => applyBulkVisibility({ isNew: true })} className="px-4 py-2 rounded-lg text-xs font-bold border border-blue-200 bg-blue-50 text-blue-700 disabled:opacity-60">Lancamento</button>
+        </div>
+      </section>
+
       <div className="bg-white rounded-xl md:rounded-2xl border border-neutral-200 shadow-sm overflow-hidden">
         <div className="overflow-x-auto custom-scrollbar">
           <table className="w-full text-left border-collapse">
@@ -313,7 +344,7 @@ export function ProductsListView() {
                           <input
                             type="checkbox"
                             checked={product.isActive}
-                            onChange={() => toggleStatus(product.id, 'isActive')}
+                            onChange={() => updateVisibility(product.id, { isActive: !product.isActive })}
                             className="w-4 h-4 accent-emerald-600"
                           />
                           <span className="sr-only">Ativo no catalogo</span>

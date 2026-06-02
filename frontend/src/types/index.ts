@@ -4,6 +4,8 @@ export interface Product {
   name: string;
   description: string;
   price: number;
+  originalPrice?: number;
+  campaign?: ProductCampaign | null;
   isFeatured?: boolean;
   isNew?: boolean;
   createdAt?: string;
@@ -20,6 +22,19 @@ export interface Product {
   stockQuantity?: number;
   variantsEnabled?: boolean;
   variants?: ProductVariant[];
+}
+
+export interface ProductCampaign {
+  id: string;
+  name: string;
+  badgeLabel: string;
+  startsAt?: string | null;
+  endsAt?: string | null;
+  discountType: 'none' | 'percent' | 'fixed' | 'override_price';
+  discountValue: number;
+  originalPrice: number;
+  finalPrice: number;
+  priority: number;
 }
 
 export interface ProductVariant {

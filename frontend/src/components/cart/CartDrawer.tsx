@@ -1,6 +1,6 @@
 import { type ChangeEvent, type FormEvent, useEffect, useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { X, Minus, Plus, Trash2, Send, ShoppingCart, MapPin, Store } from "lucide-react";
+import { X, Minus, Plus, Trash2, Send, ShoppingCart, MapPin, Store, Copy, CheckCircle2 } from "lucide-react";
 import { useStore } from "../../store/useStore";
 import { CheckoutData } from "../../types";
 import { createOrder } from "../../services/orderService";
@@ -18,6 +18,7 @@ export function CartDrawer() {
   const [checkoutLoading, setCheckoutLoading] = useState(false);
   const [checkoutError, setCheckoutError] = useState("");
   const [orderCode, setOrderCode] = useState("");
+  const [ticketCopied, setTicketCopied] = useState(false);
   const [cepLoading, setCepLoading] = useState(false);
 
   const [formData, setFormData] = useState<CheckoutData>({
@@ -89,6 +90,7 @@ export function CartDrawer() {
     if (cart.length === 0) return;
     setCheckoutError("");
     setOrderCode("");
+    setTicketCopied(false);
 
     const validation = validateCheckout();
     if (validation) {
@@ -117,6 +119,13 @@ export function CartDrawer() {
     const unitPrice = item.variant?.price ?? item.product.price;
     return acc + unitPrice * item.quantity;
   }, 0);
+
+  const copyTicket = async () => {
+    if (!orderCode) return;
+    await navigator.clipboard.writeText(orderCode);
+    setTicketCopied(true);
+    window.setTimeout(() => setTicketCopied(false), 1800);
+  };
 
   return (
     <AnimatePresence>
@@ -152,9 +161,26 @@ export function CartDrawer() {
             <main className="flex-1 overflow-y-auto custom-scrollbar flex flex-col">
               {cart.length === 0 ? (
                 <div className="flex-1 flex flex-col items-center justify-center p-8 text-center text-neutral-400">
-                  <ShoppingCart className="w-12 h-12 mb-4 opacity-30" />
-                  <p>Seu carrinho esta vazio.</p>
-                  {orderCode && <p className="mt-3 text-sm font-bold text-purple-700">Pedido enviado: {orderCode}</p>}
+                  {orderCode ? (
+                    <div className="w-full max-w-sm rounded-2xl border border-emerald-200 bg-emerald-50 p-6 text-emerald-900">
+                      <CheckCircle2 className="mx-auto mb-4 h-12 w-12 text-emerald-600" />
+                      <h3 className="text-lg font-black uppercase tracking-tight">Pedido recebido</h3>
+                      <p className="mt-2 text-sm text-emerald-800">Informe este ticket para retirada ou atendimento.</p>
+                      <div className="mt-5 rounded-xl border border-emerald-200 bg-white px-4 py-3">
+                        <span className="text-[10px] font-black uppercase tracking-widest text-emerald-600">Ticket</span>
+                        <p className="mt-1 text-xl font-black text-neutral-900">{orderCode}</p>
+                      </div>
+                      <button onClick={copyTicket} className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-emerald-600 px-4 py-3 text-sm font-black uppercase tracking-wide text-white">
+                        <Copy className="h-4 w-4" />
+                        {ticketCopied ? "Copiado" : "Copiar ticket"}
+                      </button>
+                    </div>
+                  ) : (
+                    <>
+                      <ShoppingCart className="w-12 h-12 mb-4 opacity-30" />
+                      <p>Seu carrinho esta vazio.</p>
+                    </>
+                  )}
                 </div>
               ) : (
                 <div className="p-6 flex flex-col gap-6">
@@ -270,7 +296,7 @@ export function CartDrawer() {
 
               <button type="submit" form="checkout-form" disabled={cart.length === 0 || checkoutLoading} className="w-full flex items-center justify-center gap-2 py-3.5 bg-gradient-to-r from-purple-800 to-purple-500 text-white font-bold text-sm uppercase tracking-tight rounded-xl hover:from-purple-700 hover:to-purple-400 disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-md shadow-purple-500/20">
                 <Send className="w-4 h-4" />
-                {checkoutLoading ? "Enviando Pedido..." : "Enviar pedido pelo WhatsApp"}
+                {checkoutLoading ? "Enviando pedido..." : "Finalizar compra"}
               </button>
             </footer>
           </motion.div>

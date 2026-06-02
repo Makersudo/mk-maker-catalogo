@@ -5,6 +5,8 @@ import { productSelect } from '../products/select.js';
 import { applyPublicCatalogProductVisibility } from './publicQueryGuard.js';
 import { buildProductRelevanceMap } from './relevance.js';
 import type { OrderRelevanceSource, ProductRelevanceSource } from './relevance.js';
+import { selectActiveCampaignForProduct } from '../marketing/campaignRules.js';
+import { loadCandidateCampaigns } from '../marketing/campaignRepository.js';
 
 const PUBLIC_CATALOG_CACHE_TTL_MS = 5 * 60_000;
 const PUBLIC_CATALOG_STALE_TTL_MS = 30 * 60_000;
@@ -31,7 +33,7 @@ async function refreshPublicCatalogSnapshot(): Promise<PublicCatalogSnapshot> {
     supabase.from('products').select(productSelect()) as any
   );
 
-  const [categoriesResult, productsResult, ordersResult] = await Promise.all([
+  const [categoriesResult, productsResult, ordersResult, campaignRows] = await Promise.all([
     supabase
       .from('categories')
       .select('*')
@@ -46,6 +48,7 @@ async function refreshPublicCatalogSnapshot(): Promise<PublicCatalogSnapshot> {
       .neq('status', 'cancelled')
       .order('created_at', { ascending: false })
       .limit(RELEVANCE_ORDER_LIMIT),
+    loadCandidateCampaigns(supabase),
   ]);
 
   const failed = [categoriesResult, productsResult, ordersResult].find((result) => result.error);
@@ -55,6 +58,7 @@ async function refreshPublicCatalogSnapshot(): Promise<PublicCatalogSnapshot> {
 
   const productRows = ((productsResult.data ?? []) as unknown) as ProductRelevanceSource[];
   const orderRows = ((ordersResult.data ?? []) as unknown) as OrderRelevanceSource[];
+  const now = new Date();
 
   const relevanceByProductId = buildProductRelevanceMap(productRows, orderRows);
   const mappedProducts = productRows.map((row) => {
@@ -65,8 +69,11 @@ async function refreshPublicCatalogSnapshot(): Promise<PublicCatalogSnapshot> {
       orderCount: 0,
     };
 
+    const activeCampaign = selectActiveCampaignForProduct(mappedProduct.id, mappedProduct.price, campaignRows, now);
+
     return {
       ...mappedProduct,
+      campaign: activeCampaign,
       relevanceScore: relevance.score,
       relevanceUnitsSold: relevance.unitsSold,
       relevanceOrderCount: relevance.orderCount,

@@ -1,6 +1,6 @@
 import { ShoppingCart } from "lucide-react";
 import { motion } from "motion/react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { BrandLogo } from "../brand/BrandLogo";
 import { usePublicSettings } from "../../hooks/usePublicSettings";
 import { useStore } from "../../store/useStore";
@@ -8,9 +8,11 @@ import { useStore } from "../../store/useStore";
 export function Header() {
   const { activeTab, setActiveTab, cart, openCart } = useStore();
   const settings = usePublicSettings();
+  const location = useLocation();
   const navigate = useNavigate();
   const cartCount = cart.reduce((acc, item) => acc + item.quantity, 0);
-  const isCatalogSurface = activeTab === 'catalogo';
+  const isProductPage = location.pathname.startsWith('/produto/');
+  const isCatalogSurface = activeTab === 'catalogo' && !isProductPage;
   const primaryColor = settings.store_primary_color || '#c98f86';
   const secondaryColor = settings.store_secondary_color || '#111111';
   const publicPathByTab = {
@@ -31,7 +33,7 @@ export function Header() {
   ] as const;
 
   return (
-    <header className="sticky top-0 z-50 bg-white/95 px-4 py-3 backdrop-blur-xl md:px-6 lg:px-16">
+    <header className="mk-header-surface sticky top-0 z-50 px-4 py-3 backdrop-blur-xl md:px-6 lg:px-16">
       <div className={`grid min-h-16 grid-cols-[auto_1fr_auto] items-center gap-3 md:min-h-20 ${isCatalogSurface ? 'lg:grid-cols-[1fr_auto_1fr]' : ''}`}>
         {/* Logo */}
         {isCatalogSurface && <div className="hidden lg:block" aria-hidden="true" />}
@@ -46,7 +48,7 @@ export function Header() {
         </motion.div>
 
         {/* Nav Links */}
-        <nav className="hidden justify-self-center rounded-full bg-white/80 p-1 text-sm font-bold uppercase tracking-wider text-neutral-500 shadow-sm shadow-neutral-200/70 ring-1 ring-neutral-200/70 md:flex">
+        <nav className="hidden justify-self-center rounded-full bg-white p-1 text-sm font-bold uppercase tracking-wider text-neutral-500 shadow-sm shadow-neutral-900/5 ring-1 ring-neutral-200/80 md:flex">
           {navItems.map((item, index) => (
             <motion.button
               key={item.id}
@@ -55,7 +57,7 @@ export function Header() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.3 + index * 0.1 }}
               style={activeTab === item.id ? { color: primaryColor } : undefined}
-              className={`rounded-full px-4 py-2 transition-all ${activeTab === item.id ? 'bg-white font-black shadow-sm' : 'hover:bg-white/70 hover:text-neutral-900'}`}
+              className={`rounded-full px-4 py-2 transition-all ${activeTab === item.id ? 'bg-white font-black shadow-sm shadow-neutral-900/5 ring-1 ring-neutral-200/80' : 'hover:bg-neutral-50 hover:text-neutral-900'}`}
             >
               {item.label}
             </motion.button>
@@ -68,7 +70,7 @@ export function Header() {
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             onClick={openCart}
-            className="relative flex h-11 w-11 items-center justify-center rounded-full bg-white text-neutral-500 shadow-sm ring-1 ring-neutral-200 transition-colors hover:text-neutral-900"
+            className="relative flex h-11 w-11 items-center justify-center rounded-full bg-white text-neutral-500 shadow-sm shadow-neutral-900/5 ring-1 ring-neutral-200/80 transition-colors hover:bg-neutral-50 hover:text-neutral-900"
             aria-label="Abrir carrinho"
           >
             <ShoppingCart className="h-6 w-6" />
@@ -95,13 +97,13 @@ export function Header() {
         </div>
       </div>
 
-      <nav className="mt-2 flex justify-center rounded-full bg-white/85 p-1 text-xs font-bold uppercase tracking-wider text-neutral-500 shadow-sm ring-1 ring-neutral-200/70 md:hidden">
+      <nav className="mt-2 flex justify-center rounded-full bg-white p-1 text-xs font-bold uppercase tracking-wider text-neutral-500 shadow-sm shadow-neutral-900/5 ring-1 ring-neutral-200/80 md:hidden">
         {navItems.map((item) => (
           <button
             key={item.id}
             onClick={() => goToTab(item.id)}
             style={activeTab === item.id ? { color: primaryColor } : undefined}
-            className={`flex-1 rounded-full px-3 py-2 transition-all ${activeTab === item.id ? 'bg-white font-black shadow-sm' : 'hover:bg-white/70 hover:text-neutral-900'}`}
+            className={`flex-1 rounded-full px-3 py-2 transition-all ${activeTab === item.id ? 'bg-white font-black shadow-sm shadow-neutral-900/5 ring-1 ring-neutral-200/80' : 'hover:bg-neutral-50 hover:text-neutral-900'}`}
           >
             {item.label}
           </button>

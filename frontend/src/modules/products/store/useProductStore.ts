@@ -49,6 +49,8 @@ interface ProductState {
   updateProduct: (id: string, product: Partial<Product>) => Promise<void>;
   deleteProduct: (id: string) => Promise<void>;
   toggleStatus: (id: string, field: 'isActive' | 'isFeatured' | 'isPromo' | 'isNew') => Promise<void>;
+  updateVisibility: (id: string, updates: Partial<Pick<Product, 'isActive' | 'isFeatured' | 'isPromo' | 'isNew' | 'catalogStatus'>>) => Promise<void>;
+  bulkUpdateVisibility: (productIds: string[], updates: Partial<Pick<Product, 'isActive' | 'isFeatured' | 'isPromo' | 'isNew' | 'catalogStatus'>>) => Promise<void>;
   bulkUpdateStock: (productIds: string[], stockQuantity: number) => Promise<void>;
 }
 
@@ -86,6 +88,20 @@ export const useProductStore = create<ProductState>((set) => ({
     const updated = await productService.toggleProductStatus(id, field);
     set((state) => ({
       products: state.products.map((product) => product.id === id ? updated : product),
+    }));
+  },
+  updateVisibility: async (id, updates) => {
+    const updated = await productService.updateProductVisibility(id, updates);
+    set((state) => ({
+      products: state.products.map((product) => product.id === id ? updated : product),
+    }));
+  },
+  bulkUpdateVisibility: async (productIds, updates) => {
+    const updatedProducts = await productService.bulkUpdateProductVisibility(productIds, updates);
+    const updatedById = new Map(updatedProducts.map((product) => [product.id, product]));
+
+    set((state) => ({
+      products: state.products.map((product) => updatedById.get(product.id) ?? product),
     }));
   },
   bulkUpdateStock: async (productIds, stockQuantity) => {

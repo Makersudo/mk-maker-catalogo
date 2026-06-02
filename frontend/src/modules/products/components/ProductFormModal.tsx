@@ -447,29 +447,6 @@ export function ProductFormModal({ onClose, productToEdit }: ProductFormModalPro
                </div>
             </div>
 
-            {/* Visibilidade e Flags */}
-            <div className="flex flex-col gap-5">
-              <h3 className="text-xs font-bold text-neutral-400 uppercase tracking-widest border-b border-neutral-100 pb-2">Configuração de Vitrine</h3>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <label className="flex items-center gap-3 p-4 border border-neutral-200 rounded-xl cursor-pointer hover:bg-neutral-50 transition-colors">
-                  <input type="checkbox" checked={isActive} onChange={(e) => setIsActive(e.target.checked)} className="w-5 h-5 text-purple-600 rounded focus:ring-purple-500 accent-purple-600" />
-                  <div><p className="text-sm font-bold text-neutral-900">Produto Ativo</p><p className="text-xs text-neutral-500">Visível no catálogo</p></div>
-                </label>
-                <label className="flex items-center gap-3 p-4 border border-emerald-200 bg-emerald-50/50 rounded-xl cursor-pointer hover:bg-emerald-50 transition-colors">
-                  <input type="checkbox" checked={isFeatured} onChange={(e) => setIsFeatured(e.target.checked)} className="w-5 h-5 text-emerald-600 rounded focus:ring-emerald-500 accent-emerald-600" />
-                  <div><p className="text-sm font-bold text-emerald-900">Estrela / Destaque</p><p className="text-xs text-emerald-600">Aparece no painel destaque</p></div>
-                </label>
-                <label className="flex items-center gap-3 p-4 border border-rose-200 bg-rose-50/50 rounded-xl cursor-pointer hover:bg-rose-50 transition-colors">
-                  <input type="checkbox" checked={isPromo} onChange={(e) => setIsPromo(e.target.checked)} className="w-5 h-5 text-rose-600 rounded focus:ring-rose-500 accent-rose-600" />
-                  <div><p className="text-sm font-bold text-rose-900">Status: Promoção</p><p className="text-xs text-rose-600">Aplica tag de promoção</p></div>
-                </label>
-                <label className="flex items-center gap-3 p-4 border border-blue-200 bg-blue-50/50 rounded-xl cursor-pointer hover:bg-blue-50 transition-colors">
-                  <input type="checkbox" checked={isNew} onChange={(e) => setIsNew(e.target.checked)} className="w-5 h-5 text-blue-600 rounded focus:ring-blue-500 accent-blue-600" />
-                  <div><p className="text-sm font-bold text-blue-900">Status: Lançamento</p><p className="text-xs text-blue-600">Aplica tag de novidade</p></div>
-                </label>
-              </div>
-            </div>
-
           </form>
         </div>
 
