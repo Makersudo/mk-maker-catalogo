@@ -3,14 +3,14 @@ import type { ReactNode } from 'react';
 import { CheckCircle2, Clock, Copy, MapPin, MessageCircle, PackageCheck, Phone, Search, Truck, X } from 'lucide-react';
 import { AdminOrder, OrderStatus, listOrders, updateOrderStatus } from '../../../services/adminOrderService';
 
-const columns: Array<{ status: OrderStatus; label: string; icon: typeof Clock; tone: string }> = [
-  { status: 'new', label: 'Novo', icon: Clock, tone: 'border-blue-200 bg-blue-50 text-blue-700' },
-  { status: 'confirmed', label: 'Confirmado', icon: CheckCircle2, tone: 'border-emerald-200 bg-emerald-50 text-emerald-700' },
-  { status: 'preparing', label: 'Em separacao', icon: PackageCheck, tone: 'border-amber-200 bg-amber-50 text-amber-700' },
-  { status: 'ready_for_pickup', label: 'Pronto retirada', icon: PackageCheck, tone: 'border-purple-200 bg-purple-50 text-purple-700' },
-  { status: 'sent', label: 'Saiu entrega', icon: Truck, tone: 'border-indigo-200 bg-indigo-50 text-indigo-700' },
-  { status: 'completed', label: 'Finalizado', icon: CheckCircle2, tone: 'border-neutral-200 bg-neutral-50 text-neutral-700' },
-  { status: 'cancelled', label: 'Cancelado', icon: X, tone: 'border-rose-200 bg-rose-50 text-rose-700' },
+const columns: Array<{ status: OrderStatus; label: string; icon: typeof Clock; tone: string; dot: string }> = [
+  { status: 'new', label: 'Novo', icon: Clock, tone: 'border-[#d8e5ff] bg-[#f3f7ff] text-[#315caa]', dot: 'bg-[#5d87d8]' },
+  { status: 'confirmed', label: 'Confirmado', icon: CheckCircle2, tone: 'border-[#ccebdc] bg-[#f2fbf6] text-[#27724d]', dot: 'bg-[#42a36f]' },
+  { status: 'preparing', label: 'Em separacao', icon: PackageCheck, tone: 'border-[#f2dfb5] bg-[#fff9ed] text-[#986316]', dot: 'bg-[#d99b2b]' },
+  { status: 'ready_for_pickup', label: 'Pronto retirada', icon: PackageCheck, tone: 'border-[#ead5d2] bg-[#fbf4f3] text-[#8f5e59]', dot: 'bg-[#c98f86]' },
+  { status: 'sent', label: 'Saiu entrega', icon: Truck, tone: 'border-[#d8ddff] bg-[#f4f5ff] text-[#4d55b8]', dot: 'bg-[#747ee5]' },
+  { status: 'completed', label: 'Finalizado', icon: CheckCircle2, tone: 'border-neutral-200 bg-white text-neutral-700', dot: 'bg-neutral-500' },
+  { status: 'cancelled', label: 'Cancelado', icon: X, tone: 'border-[#f3ccd2] bg-[#fff5f6] text-[#b43b4e]', dot: 'bg-[#d6576b]' },
 ];
 
 const statusOrder = columns.map((column) => column.status);
@@ -73,6 +73,8 @@ export function OrdersKanbanView() {
     }, {} as Record<OrderStatus, AdminOrder[]>);
   }, [orders]);
 
+  const totalOrders = orders.length;
+
   const moveOrder = async (order: AdminOrder, status: OrderStatus) => {
     const updated = await updateOrderStatus(order.id, status);
     setOrders((current) => current.map((item) => item.id === updated.id ? updated : item));
@@ -80,8 +82,8 @@ export function OrdersKanbanView() {
   };
 
   return (
-    <div className="mx-auto flex max-w-[1800px] flex-col gap-6 pb-20">
-      <header className="flex flex-col gap-4 xl:flex-row xl:items-center xl:justify-between">
+    <div className="mx-auto flex max-w-[1800px] flex-col gap-5 pb-20">
+      <header className="flex flex-col gap-4 xl:flex-row xl:items-end xl:justify-between">
         <div>
           <h1 className="text-2xl font-black uppercase tracking-tight text-neutral-900 md:text-3xl">Pedidos</h1>
           <p className="mt-1 text-sm text-neutral-500">Kanban dos pedidos finalizados no catalogo, com ticket, cliente e produtos.</p>
@@ -110,58 +112,77 @@ export function OrdersKanbanView() {
 
       {error && <div className="rounded-xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm font-bold text-rose-700">{error}</div>}
 
-      <section className="grid min-h-[70vh] gap-4 overflow-x-auto pb-2 xl:grid-cols-7">
-        {columns.map((column) => {
-          const ColumnIcon = column.icon;
-          const columnOrders = groupedOrders[column.status] ?? [];
+      <section className="overflow-hidden rounded-2xl border border-neutral-200 bg-white shadow-sm">
+        <div className="flex flex-col gap-3 border-b border-neutral-100 px-4 py-3 lg:flex-row lg:items-center lg:justify-between">
+          <div>
+            <p className="text-[10px] font-black uppercase tracking-[0.24em] text-[#9d6a63]">Mini kanban</p>
+            <h2 className="mt-0.5 text-sm font-black text-neutral-900">{totalOrders} pedidos no atendimento</h2>
+          </div>
+          <div className="flex flex-wrap gap-2">
+            {columns.map((column) => (
+              <span key={column.status} className="inline-flex items-center gap-1.5 rounded-full border border-neutral-200 bg-neutral-50 px-2.5 py-1 text-[11px] font-bold text-neutral-600">
+                <span className={`h-2 w-2 rounded-full ${column.dot}`} />
+                {groupedOrders[column.status]?.length ?? 0}
+              </span>
+            ))}
+          </div>
+        </div>
 
-          return (
-            <div key={column.status} className="min-w-[280px] rounded-2xl border border-neutral-200 bg-neutral-50 p-3">
-              <div className={`mb-3 flex items-center justify-between rounded-xl border px-3 py-2 ${column.tone}`}>
-                <div className="flex items-center gap-2">
-                  <ColumnIcon className="h-4 w-4" />
-                  <h2 className="text-xs font-black uppercase tracking-widest">{column.label}</h2>
-                </div>
-                <span className="rounded-full bg-white/80 px-2 py-0.5 text-[11px] font-black">{columnOrders.length}</span>
-              </div>
+        <div className="overflow-x-auto">
+          <div className="flex min-h-[58vh] gap-3 p-3">
+            {columns.map((column) => {
+              const ColumnIcon = column.icon;
+              const columnOrders = groupedOrders[column.status] ?? [];
 
-              <div className="flex flex-col gap-3">
-                {isLoading && column.status === 'new' && <p className="p-4 text-sm text-neutral-500">Carregando pedidos...</p>}
-                {!isLoading && columnOrders.length === 0 && (
-                  <div className="rounded-xl border border-dashed border-neutral-200 bg-white p-4 text-center text-xs text-neutral-400">
-                    Sem pedidos
+              return (
+                <div key={column.status} className="flex w-[236px] shrink-0 flex-col rounded-2xl border border-neutral-200 bg-[#fbfbfb] shadow-[0_10px_30px_rgba(15,23,42,0.04)] md:w-[252px]">
+                  <div className={`m-2 mb-0 flex items-center justify-between rounded-xl border px-3 py-2 ${column.tone}`}>
+                    <div className="flex min-w-0 items-center gap-2">
+                      <ColumnIcon className="h-4 w-4 shrink-0" />
+                      <h2 className="truncate text-[11px] font-black uppercase tracking-[0.16em]">{column.label}</h2>
+                    </div>
+                    <span className="ml-2 shrink-0 rounded-full bg-white/90 px-2 py-0.5 text-[11px] font-black">{columnOrders.length}</span>
                   </div>
-                )}
-                {columnOrders.map((order) => (
-                  <button
-                    key={order.id}
-                    onClick={() => setSelectedOrder(order)}
-                    className="rounded-2xl border border-neutral-200 bg-white p-4 text-left shadow-sm transition-all hover:-translate-y-0.5 hover:border-[#c98f86] hover:shadow-md"
-                  >
-                    <div className="flex items-start justify-between gap-3">
-                      <div>
-                        <p className="text-[10px] font-black uppercase tracking-widest text-[#9d6a63]">Ticket</p>
-                        <h3 className="mt-1 text-sm font-black text-neutral-900">{order.order_code || 'Sem ticket'}</h3>
+
+                  <div className="flex max-h-[calc(100vh-300px)] min-h-[360px] flex-col gap-2 overflow-y-auto p-2">
+                    {isLoading && column.status === 'new' && <p className="rounded-xl bg-white p-3 text-xs font-bold text-neutral-500">Carregando pedidos...</p>}
+                    {!isLoading && columnOrders.length === 0 && (
+                      <div className="rounded-xl border border-dashed border-neutral-200 bg-white px-3 py-4 text-center text-xs text-neutral-400">
+                        Sem pedidos
                       </div>
-                      <span className="rounded-full bg-neutral-100 px-2 py-1 text-[10px] font-bold text-neutral-500">
-                        {order.fulfillment_type === 'pickup' ? 'Retirada' : 'Entrega'}
-                      </span>
-                    </div>
-                    <p className="mt-3 line-clamp-1 text-sm font-bold text-neutral-800">{order.customer_name}</p>
-                    <p className="mt-1 flex items-center gap-1 text-xs text-neutral-500">
-                      <Phone className="h-3.5 w-3.5" />
-                      {order.customer_phone || 'Telefone nao informado'}
-                    </p>
-                    <div className="mt-4 flex items-center justify-between border-t border-neutral-100 pt-3">
-                      <span className="text-xs font-bold text-neutral-500">{order.order_items?.length ?? 0} itens</span>
-                      <strong className="text-sm text-[#8f5e59]">{formatCurrency(Number(order.total_amount))}</strong>
-                    </div>
-                  </button>
-                ))}
-              </div>
-            </div>
-          );
-        })}
+                    )}
+                    {columnOrders.map((order) => (
+                      <button
+                        key={order.id}
+                        onClick={() => setSelectedOrder(order)}
+                        className="group rounded-xl border border-neutral-200 bg-white p-3 text-left shadow-sm transition-all hover:-translate-y-0.5 hover:border-[#c98f86] hover:shadow-md"
+                      >
+                        <div className="flex items-start justify-between gap-2">
+                          <div className="min-w-0">
+                            <p className="text-[9px] font-black uppercase tracking-[0.2em] text-[#9d6a63]">Ticket</p>
+                            <h3 className="mt-1 line-clamp-2 break-all text-[12px] font-black leading-tight text-neutral-900">{order.order_code || 'Sem ticket'}</h3>
+                          </div>
+                          <span className="shrink-0 rounded-full bg-[#fbf4f3] px-2 py-1 text-[9px] font-black uppercase text-[#8f5e59]">
+                            {order.fulfillment_type === 'pickup' ? 'Retirada' : 'Entrega'}
+                          </span>
+                        </div>
+                        <p className="mt-3 line-clamp-2 text-xs font-black leading-snug text-neutral-800">{order.customer_name}</p>
+                        <p className="mt-1 flex min-w-0 items-center gap-1 text-[11px] text-neutral-500">
+                          <Phone className="h-3 w-3 shrink-0" />
+                          <span className="truncate">{order.customer_phone || 'Telefone nao informado'}</span>
+                        </p>
+                        <div className="mt-3 flex items-center justify-between gap-2 border-t border-neutral-100 pt-2">
+                          <span className="text-[11px] font-bold text-neutral-500">{order.order_items?.length ?? 0} itens</span>
+                          <strong className="truncate text-xs text-[#8f5e59]">{formatCurrency(Number(order.total_amount))}</strong>
+                        </div>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
       </section>
 
       {selectedOrder && (
