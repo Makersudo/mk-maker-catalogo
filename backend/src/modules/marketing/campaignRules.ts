@@ -9,6 +9,7 @@ export interface CampaignProductRow {
 export interface CampaignRow {
   id: string;
   name: string;
+  type?: string | null;
   badge_label?: string | null;
   status: string;
   is_active?: boolean | null;
@@ -24,6 +25,7 @@ export interface CampaignRow {
 export interface ActiveProductCampaign {
   id: string;
   name: string;
+  type: string;
   badgeLabel: string;
   startsAt: string | null;
   endsAt: string | null;
@@ -32,6 +34,8 @@ export interface ActiveProductCampaign {
   originalPrice: number;
   finalPrice: number;
   priority: number;
+  sortOrder: number;
+  isHighlight: boolean;
 }
 
 const ACTIVE_STATUSES = new Set(['active', 'scheduled']);
@@ -114,6 +118,7 @@ export function selectActiveCampaignForProduct(
       return {
         id: campaign.id,
         name: campaign.name,
+        type: campaign.type || 'promotion',
         badgeLabel: campaign.badge_label || 'OFERTA',
         startsAt: campaign.starts_at ?? null,
         endsAt: campaign.ends_at ?? null,
@@ -122,6 +127,8 @@ export function selectActiveCampaignForProduct(
         originalPrice,
         finalPrice,
         priority: Number(campaign.priority ?? 0),
+        sortOrder: Math.max(0, Math.floor(toNumber(productLink.sort_order, 0))),
+        isHighlight: true,
         createdAt: toTimestamp(campaign.created_at) ?? 0,
         endsAtSort: toTimestamp(campaign.ends_at) ?? Number.MAX_SAFE_INTEGER,
       };
@@ -129,6 +136,7 @@ export function selectActiveCampaignForProduct(
     .filter((campaign): campaign is ActiveProductCampaign & { createdAt: number; endsAtSort: number } => Boolean(campaign))
     .sort((a, b) => {
       if (b.priority !== a.priority) return b.priority - a.priority;
+      if (a.sortOrder !== b.sortOrder) return a.sortOrder - b.sortOrder;
       if (a.endsAtSort !== b.endsAtSort) return a.endsAtSort - b.endsAtSort;
       return b.createdAt - a.createdAt;
     });
@@ -139,6 +147,7 @@ export function selectActiveCampaignForProduct(
   return {
     id: selected.id,
     name: selected.name,
+    type: selected.type,
     badgeLabel: selected.badgeLabel,
     startsAt: selected.startsAt,
     endsAt: selected.endsAt,
@@ -147,5 +156,7 @@ export function selectActiveCampaignForProduct(
     originalPrice: selected.originalPrice,
     finalPrice: selected.finalPrice,
     priority: selected.priority,
+    sortOrder: selected.sortOrder,
+    isHighlight: selected.isHighlight,
   };
 }

@@ -52,6 +52,34 @@ describe('campaign rules', () => {
     assert.equal(selected?.badgeLabel, 'RELAMPAGO');
   });
 
+  it('exposes campaign type and product sort order for public catalog focus', () => {
+    const selected = selectActiveCampaignForProduct(
+      'prod-focus',
+      150,
+      [
+        {
+          id: 'campaign-featured',
+          name: 'Destaques Pele',
+          type: 'featured',
+          badge_label: 'DESTAQUE',
+          status: 'active',
+          is_active: true,
+          starts_at: '2026-06-01T08:00:00.000Z',
+          ends_at: '2026-06-01T20:00:00.000Z',
+          priority: 7,
+          discount_type: 'none',
+          discount_value: 0,
+          marketing_campaign_products: [{ product_id: 'prod-focus', campaign_price: null, sort_order: 3 }],
+        },
+      ],
+      new Date('2026-06-01T12:00:00.000Z'),
+    );
+
+    assert.equal(selected?.type, 'featured');
+    assert.equal(selected?.sortOrder, 3);
+    assert.equal(selected?.isHighlight, true);
+  });
+
   it('ignores expired, paused and unrelated campaigns', () => {
     const selected = selectActiveCampaignForProduct(
       'prod-1',

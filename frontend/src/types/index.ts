@@ -27,6 +27,7 @@ export interface Product {
 export interface ProductCampaign {
   id: string;
   name: string;
+  type: string;
   badgeLabel: string;
   startsAt?: string | null;
   endsAt?: string | null;
@@ -35,6 +36,8 @@ export interface ProductCampaign {
   originalPrice: number;
   finalPrice: number;
   priority: number;
+  sortOrder: number;
+  isHighlight: boolean;
 }
 
 export interface ProductVariant {

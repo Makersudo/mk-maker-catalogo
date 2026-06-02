@@ -243,13 +243,33 @@ export function Catalog() {
     return sortCatalogProducts(filteredProducts, sortOption);
   }, [filteredProducts, sortOption]);
 
-  const totalPages = Math.ceil(sortedProducts.length / itemsPerPage) || 1;
+  const campaignFocusProducts = useMemo(() => {
+    return sortCatalogProducts(
+      filteredProducts.filter((product) => Boolean(product.campaign?.isHighlight ?? product.campaign)),
+      "relevance"
+    );
+  }, [filteredProducts]);
+
+  const campaignFocusProductIds = useMemo(
+    () => new Set(campaignFocusProducts.map((product) => product.id)),
+    [campaignFocusProducts]
+  );
+
+  const regularSortedProducts = useMemo(
+    () => sortedProducts.filter((product) => !campaignFocusProductIds.has(product.id)),
+    [sortedProducts, campaignFocusProductIds]
+  );
+
+  const totalPages = Math.ceil(regularSortedProducts.length / itemsPerPage) || 1;
   const paginationItems = buildPaginationItems(currentPage, totalPages);
   const isCompactMobileGrid = mobileGridMode === "compact";
-  const productGridClass = isCompactMobileGrid
-    ? "grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-3 xl:grid-cols-4 lg:gap-6 content-start mb-10 border-t border-neutral-200 pt-6"
-    : "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 lg:gap-6 content-start mb-10 border-t border-neutral-200 pt-6";
-  const paginatedProducts = sortedProducts.slice(
+  const baseProductGridClass = isCompactMobileGrid
+    ? "grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-3 xl:grid-cols-4 lg:gap-6"
+    : "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 lg:gap-6";
+  const productGridClass = `${baseProductGridClass} content-start mb-10 border-t border-neutral-200 pt-6`;
+  const focusGridClass = `${baseProductGridClass} content-start`;
+  const campaignFocusTitle = activeCategory ? `Destaques em ${activeCategoryLabel}` : "Destaques da campanha";
+  const paginatedProducts = regularSortedProducts.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   );
@@ -617,20 +637,48 @@ export function Catalog() {
           </motion.div>
         ) : (
           <div className="flex flex-col flex-1">
-            <div className={productGridClass}>
-              {paginatedProducts.map((product, index) => (
-                <motion.div
-                  key={product.id}
-                  initial={{ opacity: 0, scale: 0.95 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  layout
-                >
-                  <ProductCard product={product} priority={currentPage === 1 && index < 4} compact={isCompactMobileGrid} />
-                </motion.div>
-              ))}
-            </div>
+            {campaignFocusProducts.length > 0 && (
+              <section className="mb-6 rounded-2xl border border-[#ead5d2] bg-white p-4 shadow-sm shadow-[#c98f86]/10 lg:p-5">
+                <div className="mb-4 flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+                  <div>
+                    <p className="text-[10px] font-black uppercase tracking-[0.24em] text-[#9d6a63]">Campanha ativa</p>
+                    <h3 className="mt-1 text-lg font-black uppercase tracking-tight text-neutral-900">{campaignFocusTitle}</h3>
+                  </div>
+                  <span className="w-fit rounded-full bg-[#fbf4f3] px-3 py-1 text-[11px] font-black uppercase tracking-widest text-[#8f5e59]">
+                    {campaignFocusProducts.length} produtos em foco
+                  </span>
+                </div>
+                <div className={focusGridClass}>
+                  {campaignFocusProducts.map((product, index) => (
+                    <motion.div
+                      key={product.id}
+                      initial={{ opacity: 0, scale: 0.95 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      layout
+                    >
+                      <ProductCard product={product} priority={index < 4} compact={isCompactMobileGrid} />
+                    </motion.div>
+                  ))}
+                </div>
+              </section>
+            )}
 
-            {totalPages > 1 && (
+            {paginatedProducts.length > 0 && (
+              <div className={productGridClass}>
+                {paginatedProducts.map((product, index) => (
+                  <motion.div
+                    key={product.id}
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    layout
+                  >
+                    <ProductCard product={product} priority={campaignFocusProducts.length === 0 && currentPage === 1 && index < 4} compact={isCompactMobileGrid} />
+                  </motion.div>
+                ))}
+              </div>
+            )}
+
+            {regularSortedProducts.length > itemsPerPage && (
               <div className="mt-auto flex flex-col items-center justify-center gap-3 border-t border-neutral-200 pt-6 sm:flex-row sm:gap-4">
                 <button
                   onClick={() => setCatalogPage(currentPage - 1)}

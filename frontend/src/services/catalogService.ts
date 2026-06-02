@@ -16,6 +16,7 @@ export interface PublicCatalogProduct {
   campaign?: {
     id: string;
     name: string;
+    type: string;
     badgeLabel: string;
     startsAt?: string | null;
     endsAt?: string | null;
@@ -24,6 +25,8 @@ export interface PublicCatalogProduct {
     originalPrice: number;
     finalPrice: number;
     priority: number;
+    sortOrder: number;
+    isHighlight: boolean;
   } | null;
   isFeatured?: boolean;
   isNew?: boolean;
