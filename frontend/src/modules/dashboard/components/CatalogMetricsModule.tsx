@@ -80,8 +80,8 @@ export function CatalogMetricsModule({ metrics }: { metrics: CatalogMetrics }) {
 
 function OverviewTab({ metrics }: { metrics: CatalogMetrics }) {
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-      <div className="grid grid-cols-2 gap-3">
+    <div className="grid grid-cols-1 xl:grid-cols-[1.15fr_0.85fr] gap-4 items-start">
+      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-3">
         <MiniMetric label="Receita valida" value={currency(metrics.sales.totalRevenue)} detail={`${metrics.sales.validOrders} pedidos`} />
         <MiniMetric label="Ticket medio" value={currency(metrics.sales.averageTicket)} detail={`${metrics.sales.unitsSold} itens vendidos`} />
         <MiniMetric label="Valor em mercadoria" value={currency(metrics.inventoryValue.purchaseValue)} detail={`${metrics.inventoryValue.productsWithPurchaseCost} com custo`} />
@@ -92,7 +92,7 @@ function OverviewTab({ metrics }: { metrics: CatalogMetrics }) {
         <MiniMetric label="Produtos live" value={metrics.summary.liveProducts} detail={`${metrics.summary.totalProducts} no total`} />
         <MiniMetric label="Imagens" value={`${metrics.imageCoverage.percent}%`} detail={`${metrics.imageCoverage.withImage} com imagem`} />
       </div>
-      <div className="rounded-2xl border border-neutral-100 bg-gradient-to-br from-neutral-950 to-[#7A4944] p-5 text-white">
+      <div className="self-start rounded-2xl border border-neutral-100 bg-gradient-to-br from-neutral-950 to-[#7A4944] p-5 text-white">
         <h3 className="text-xs font-black uppercase tracking-widest text-neutral-300 flex items-center gap-2">
           <TrendingUp className="w-4 h-4" />
           Saude geral do catalogo
@@ -102,10 +102,13 @@ function OverviewTab({ metrics }: { metrics: CatalogMetrics }) {
           <GraphLine label="Com imagem" value={metrics.imageCoverage.percent} color="bg-[#E7C9C4]" dark />
           <GraphLine label="Estoque saudavel" value={percentOf(metrics.stockHealth.ok, metrics.summary.totalProducts)} color="bg-white" dark />
         </div>
-        <div className="grid grid-cols-3 gap-2 mt-5 text-center">
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 mt-5 text-center">
           <DarkMini label="Novos" value={metrics.summary.newProducts} />
           <DarkMini label="Promo" value={metrics.summary.promoProducts} />
           <DarkMini label="Destaques" value={metrics.summary.featuredProducts} />
+          <DarkMini label="Com custo" value={metrics.inventoryValue.productsWithPurchaseCost} />
+          <DarkMini label="Pedidos" value={metrics.sales.validOrders} />
+          <DarkMini label="Margem" value={`${metrics.inventoryValue.estimatedGrossMarginPercent}%`} />
         </div>
       </div>
     </div>

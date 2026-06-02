@@ -130,7 +130,7 @@ export function ProductsListView() {
   };
 
   return (
-    <div className="flex flex-col gap-4 md:gap-8 max-w-7xl mx-auto pb-6 md:pb-20">
+    <div className="flex h-full min-h-0 flex-col gap-4 md:gap-6 max-w-7xl mx-auto pb-4 md:pb-6">
       <header className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
           <h1 className="text-2xl md:text-3xl font-bold uppercase tracking-tight text-neutral-900">Produtos</h1>
@@ -247,10 +247,10 @@ export function ProductsListView() {
         </div>
       </section>
 
-      <div className="bg-white rounded-xl md:rounded-2xl border border-neutral-200 shadow-sm overflow-hidden">
-        <div className="overflow-x-auto custom-scrollbar">
-          <table className="w-full text-left border-collapse">
-            <thead>
+      <div className="min-h-0 bg-white rounded-xl md:rounded-2xl border border-neutral-200 shadow-sm overflow-hidden">
+        <div className="max-h-[calc(100vh-390px)] min-h-[320px] overflow-auto custom-scrollbar">
+          <table className="w-full min-w-[980px] text-left border-collapse">
+            <thead className="sticky top-0 z-10">
               <tr className="bg-neutral-50 border-b border-neutral-200 text-xs font-bold text-neutral-500 uppercase tracking-widest">
                 <th className="p-4 w-12">
                   <input
