@@ -22,11 +22,11 @@ export function AdminLayout() {
   }
 
   return (
-    <div className="flex h-screen bg-neutral-50">
+    <div className="flex h-dvh overflow-hidden bg-neutral-50">
       <AdminSidebar />
-      <div className="flex-1 flex flex-col overflow-hidden">
+      <div className="min-w-0 flex-1 flex flex-col overflow-hidden">
         <AdminHeader />
-        <main className="flex-1 overflow-x-hidden overflow-y-auto bg-neutral-50/50 p-4 md:p-8">
+        <main className="min-h-0 flex-1 overflow-x-hidden overflow-y-auto bg-neutral-50/50 p-4 md:p-8">
           <Outlet />
         </main>
       </div>
