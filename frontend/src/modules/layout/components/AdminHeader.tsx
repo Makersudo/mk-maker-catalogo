@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { Menu, Bell, Search, User, LogOut, Smartphone, CheckCheck } from 'lucide-react';
 import { useAuthStore } from '../../auth/store/useAuthStore';
 import { useUIStore } from '../store/useUIStore';
@@ -45,12 +45,14 @@ export function AdminHeader() {
   const logout = useAuthStore((state) => state.logout);
   const toggleSidebar = useUIStore((state) => state.toggleSidebar);
   const navigate = useNavigate();
+  const location = useLocation();
   const [isNotificationOpen, setIsNotificationOpen] = useState(false);
   const [notifications, setNotifications] = useState<AdminNotification[]>([]);
   const [unreadCount, setUnreadCount] = useState(0);
   const [pushConfig, setPushConfig] = useState<PushPublicConfig>({ enabled: false, publicKey: '' });
   const [pushStatus, setPushStatus] = useState('');
   const previousUnreadRef = useRef<number | null>(null);
+  const isProductsRoute = location.pathname.startsWith('/admin/products');
 
   const handleLogout = async () => {
     await logout();
@@ -120,6 +122,7 @@ export function AdminHeader() {
           <Menu className="w-6 h-6" />
         </button>
 
+        {!isProductsRoute && (
         <div className="flex-1 max-w-xl hidden sm:block">
           <div className="relative">
             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -132,6 +135,7 @@ export function AdminHeader() {
             />
           </div>
         </div>
+        )}
       </div>
 
       <div className="flex items-center gap-4 md:gap-6 ml-4">

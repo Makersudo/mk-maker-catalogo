@@ -5,7 +5,7 @@ import { useCategoryStore } from '../../categories/store/useCategoryStore';
 import { ProductFormModal } from '../components/ProductFormModal';
 
 export function ProductsListView() {
-  const { products, deleteProduct, updateVisibility, bulkUpdateVisibility, fetchProducts, bulkUpdateStock } = useProductStore();
+  const { products, isLoading, error, deleteProduct, updateVisibility, bulkUpdateVisibility, fetchProducts, bulkUpdateStock } = useProductStore();
   const categories = useCategoryStore((state) => state.categories);
   const fetchCategories = useCategoryStore((state) => state.fetchCategories);
 
@@ -130,7 +130,7 @@ export function ProductsListView() {
   };
 
   return (
-    <div className="flex flex-col gap-4 md:gap-6 max-w-7xl mx-auto pb-4 md:pb-6">
+    <div className="flex flex-col gap-4 md:gap-6 max-w-[1800px] mx-auto pb-4 md:pb-6">
       <header className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
           <h1 className="text-2xl md:text-3xl font-bold uppercase tracking-tight text-neutral-900">Produtos</h1>
@@ -145,111 +145,116 @@ export function ProductsListView() {
         </button>
       </header>
 
-      <div className="bg-white p-3 md:p-4 rounded-xl md:rounded-2xl border border-neutral-200 shadow-sm flex flex-col xl:flex-row gap-3 md:gap-4 items-center justify-between">
-        <div className="relative w-full md:max-w-md">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 md:w-5 md:h-5 text-neutral-400" />
-          <input
-            type="text"
-            value={searchTerm}
-            onChange={(event) => setSearchTerm(event.target.value)}
-            placeholder="Buscar por nome, slug, tipo ou variacao..."
-            className="w-full pl-9 md:pl-10 pr-4 py-2 bg-neutral-50 border border-neutral-200 rounded-lg md:rounded-xl text-xs md:text-sm focus:outline-none focus:border-[#C98F86] focus:ring-1 focus:ring-[#C98F86]"
-          />
+      {error && (
+        <div className="rounded-xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm font-bold text-rose-700">
+          {error}
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 w-full xl:w-auto">
-          <div className="relative">
-            <Filter className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-neutral-400" />
+      )}
+
+      <section className="overflow-hidden rounded-xl md:rounded-2xl border border-neutral-200 bg-white shadow-sm">
+        <div className="flex flex-col gap-3 border-b border-neutral-100 p-3 md:p-4 xl:flex-row xl:items-center xl:justify-between">
+          <div className="flex min-w-0 items-center gap-3">
+            <div className="hidden rounded-lg bg-[#F8EEEC] p-2 text-[#8D514B] sm:block">
+              <Layers3 className="h-5 w-5" />
+            </div>
+            <div>
+              <p className="text-[10px] font-black uppercase tracking-[0.22em] text-[#9d6a63]">Operacao da lista</p>
+              <h2 className="text-sm font-black text-neutral-900">{filteredProducts.length} produtos encontrados</h2>
+            </div>
+          </div>
+          <div className="rounded-full bg-neutral-50 px-3 py-1 text-xs font-bold text-neutral-500">
+            {selectedProductIds.length} selecionados
+          </div>
+        </div>
+
+        <div className="grid gap-3 p-3 md:p-4 xl:grid-cols-[minmax(360px,1fr)_auto] xl:items-center">
+          <div className="grid gap-3 md:grid-cols-[minmax(260px,1fr)_repeat(3,minmax(150px,190px))]">
+            <div className="relative">
+              <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-neutral-400" />
+              <input
+                type="text"
+                value={searchTerm}
+                onChange={(event) => setSearchTerm(event.target.value)}
+                placeholder="Buscar por nome, slug, tipo ou variacao..."
+                className="h-10 w-full rounded-xl border border-neutral-200 bg-neutral-50 pl-9 pr-4 text-sm focus:border-[#C98F86] focus:outline-none focus:ring-1 focus:ring-[#C98F86]"
+              />
+            </div>
+            <div className="relative">
+              <Filter className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-neutral-400" />
+              <select
+                value={categoryFilter}
+                onChange={(event) => setCategoryFilter(event.target.value)}
+                className="h-10 w-full rounded-xl border border-neutral-200 bg-neutral-50 pl-9 pr-3 text-sm focus:border-[#C98F86] focus:outline-none focus:ring-1 focus:ring-[#C98F86]"
+              >
+                <option value="all">Todas categorias</option>
+                {categories.map((category) => (
+                  <option key={category.id} value={category.id}>
+                    {category.parentId || category.parent_id ? `- ${category.name}` : category.name}
+                  </option>
+                ))}
+              </select>
+            </div>
             <select
-              value={categoryFilter}
-              onChange={(event) => setCategoryFilter(event.target.value)}
-              className="w-full sm:w-44 pl-9 pr-3 py-2 bg-neutral-50 border border-neutral-200 rounded-lg md:rounded-xl text-xs md:text-sm focus:outline-none focus:border-[#C98F86] focus:ring-1 focus:ring-[#C98F86]"
+              value={catalogStatusFilter}
+              onChange={(event) => setCatalogStatusFilter(event.target.value)}
+              className="h-10 w-full rounded-xl border border-neutral-200 bg-neutral-50 px-3 text-sm focus:border-[#C98F86] focus:outline-none focus:ring-1 focus:ring-[#C98F86]"
             >
-              <option value="all">Todas categorias</option>
-              {categories.map((category) => (
-                <option key={category.id} value={category.id}>
-                  {category.parentId || category.parent_id ? `- ${category.name}` : category.name}
-                </option>
-              ))}
+              <option value="all">Todos status</option>
+              <option value="draft">Rascunho</option>
+              <option value="ready">Pronto</option>
+              <option value="live">Publicado</option>
+            </select>
+            <select
+              value={imageFilter}
+              onChange={(event) => setImageFilter(event.target.value)}
+              className="h-10 w-full rounded-xl border border-neutral-200 bg-neutral-50 px-3 text-sm focus:border-[#C98F86] focus:outline-none focus:ring-1 focus:ring-[#C98F86]"
+            >
+              <option value="all">Todas imagens</option>
+              <option value="missing-image">Sem imagem</option>
+              <option value="with-image">Com imagem</option>
             </select>
           </div>
-          <select
-            value={catalogStatusFilter}
-            onChange={(event) => setCatalogStatusFilter(event.target.value)}
-            className="w-full sm:w-40 px-3 py-2 bg-neutral-50 border border-neutral-200 rounded-lg md:rounded-xl text-xs md:text-sm focus:outline-none focus:border-[#C98F86] focus:ring-1 focus:ring-[#C98F86]"
-          >
-            <option value="all">Todos status</option>
-            <option value="draft">Rascunho</option>
-            <option value="ready">Pronto</option>
-            <option value="live">Publicado</option>
-          </select>
-          <select
-            value={imageFilter}
-            onChange={(event) => setImageFilter(event.target.value)}
-            className="w-full sm:w-40 px-3 py-2 bg-neutral-50 border border-neutral-200 rounded-lg md:rounded-xl text-xs md:text-sm focus:outline-none focus:border-[#C98F86] focus:ring-1 focus:ring-[#C98F86]"
-          >
-            <option value="all">Todas imagens</option>
-            <option value="missing-image">Sem imagem</option>
-            <option value="with-image">Com imagem</option>
-          </select>
-        </div>
-      </div>
 
-      <section className="bg-white p-4 rounded-xl md:rounded-2xl border border-neutral-200 shadow-sm flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
-        <div className="flex items-start gap-3">
-          <div className="p-2 rounded-lg bg-[#F8EEEC] text-[#8D514B]">
-            <Layers3 className="w-5 h-5" />
-          </div>
-          <div>
-            <h2 className="text-sm font-bold uppercase tracking-wide text-neutral-900">Ajuste de estoque em lote</h2>
-            <p className="text-xs text-neutral-500 mt-1">
-              Atualize a quantidade para os produtos selecionados ou para todos os produtos filtrados na lista atual.
-            </p>
+          <div className="flex flex-col gap-2 lg:flex-row lg:items-center">
+            <input
+              type="number"
+              min={0}
+              step={1}
+              value={bulkStockQuantity}
+              onChange={(event) => setBulkStockQuantity(event.target.value)}
+              className="h-10 w-full rounded-xl border border-neutral-200 bg-neutral-50 px-3 text-sm focus:border-[#C98F86] focus:outline-none focus:ring-1 focus:ring-[#C98F86] lg:w-24"
+              placeholder="Qtd."
+              aria-label="Quantidade para estoque em lote"
+            />
+            <button
+              onClick={() => applyBulkStock('selected')}
+              disabled={bulkActionLoading !== null}
+              className="h-10 rounded-xl border border-[#E7C9C4] bg-[#F8EEEC] px-3 text-xs font-black uppercase text-[#8D514B] hover:bg-[#F3E3DF] disabled:cursor-not-allowed disabled:opacity-60"
+            >
+              {bulkActionLoading === 'selected' ? 'Aplicando' : 'Estoque selecionados'}
+            </button>
+            <button
+              onClick={() => applyBulkStock('filtered')}
+              disabled={bulkActionLoading !== null}
+              className="h-10 rounded-xl border border-neutral-200 bg-neutral-50 px-3 text-xs font-black uppercase text-neutral-700 hover:bg-neutral-100 disabled:cursor-not-allowed disabled:opacity-60"
+            >
+              {bulkActionLoading === 'filtered' ? 'Aplicando' : 'Estoque filtrados'}
+            </button>
           </div>
         </div>
-        <div className="flex flex-col sm:flex-row gap-2 w-full lg:w-auto">
-          <input
-            type="number"
-            min={0}
-            step={1}
-            value={bulkStockQuantity}
-            onChange={(event) => setBulkStockQuantity(event.target.value)}
-            className="w-full sm:w-36 px-3 py-2 bg-neutral-50 border border-neutral-200 rounded-lg text-sm focus:outline-none focus:border-[#C98F86] focus:ring-1 focus:ring-[#C98F86]"
-            placeholder="Quantidade"
-          />
-          <button
-            onClick={() => applyBulkStock('selected')}
-            disabled={bulkActionLoading !== null}
-            className="px-4 py-2 rounded-lg text-sm font-bold border border-[#E7C9C4] text-[#8D514B] bg-[#F8EEEC] hover:bg-[#F3E3DF] disabled:opacity-60 disabled:cursor-not-allowed"
-          >
-            {bulkActionLoading === 'selected' ? 'Aplicando...' : `Aplicar selecionados (${selectedProductIds.length})`}
-          </button>
-          <button
-            onClick={() => applyBulkStock('filtered')}
-            disabled={bulkActionLoading !== null}
-            className="px-4 py-2 rounded-lg text-sm font-bold border border-neutral-200 text-neutral-700 bg-neutral-50 hover:bg-neutral-100 disabled:opacity-60 disabled:cursor-not-allowed"
-          >
-            {bulkActionLoading === 'filtered' ? 'Aplicando...' : `Aplicar todos filtrados (${filteredProducts.length})`}
-          </button>
-        </div>
-      </section>
 
-      <section className="bg-white p-4 rounded-xl md:rounded-2xl border border-neutral-200 shadow-sm flex flex-col gap-4 xl:flex-row xl:items-center xl:justify-between">
-        <div>
-          <h2 className="text-sm font-bold uppercase tracking-wide text-neutral-900">Acoes rapidas de vitrine</h2>
-          <p className="text-xs text-neutral-500 mt-1">Ative, desative ou publique produtos selecionados sem abrir o modal.</p>
-        </div>
-        <div className="grid grid-cols-2 gap-2 md:flex md:flex-wrap">
-          <button disabled={visibilityActionLoading} onClick={() => applyBulkVisibility({ isActive: true })} className="px-4 py-2 rounded-lg text-xs font-bold border border-emerald-200 bg-emerald-50 text-emerald-700 disabled:opacity-60">Ativar</button>
-          <button disabled={visibilityActionLoading} onClick={() => applyBulkVisibility({ isActive: false })} className="px-4 py-2 rounded-lg text-xs font-bold border border-neutral-200 bg-neutral-50 text-neutral-700 disabled:opacity-60">Desativar</button>
-          <button disabled={visibilityActionLoading} onClick={() => applyBulkVisibility({ catalogStatus: 'live', isActive: true })} className="px-4 py-2 rounded-lg text-xs font-bold border border-[#E7C9C4] bg-[#F8EEEC] text-[#8D514B] disabled:opacity-60">Publicar</button>
-          <button disabled={visibilityActionLoading} onClick={() => applyBulkVisibility({ isFeatured: true })} className="px-4 py-2 rounded-lg text-xs font-bold border border-amber-200 bg-amber-50 text-amber-700 disabled:opacity-60">Destacar</button>
-          <button disabled={visibilityActionLoading} onClick={() => applyBulkVisibility({ isNew: true })} className="px-4 py-2 rounded-lg text-xs font-bold border border-[#E7C9C4] bg-white text-[#8D514B] disabled:opacity-60">Lancamento</button>
+        <div className="flex flex-wrap gap-2 border-t border-neutral-100 p-3 md:p-4">
+          <button disabled={visibilityActionLoading} onClick={() => applyBulkVisibility({ isActive: true })} className="rounded-lg border border-emerald-200 bg-emerald-50 px-3 py-2 text-xs font-black uppercase text-emerald-700 disabled:opacity-60">Ativar</button>
+          <button disabled={visibilityActionLoading} onClick={() => applyBulkVisibility({ isActive: false })} className="rounded-lg border border-neutral-200 bg-neutral-50 px-3 py-2 text-xs font-black uppercase text-neutral-700 disabled:opacity-60">Desativar</button>
+          <button disabled={visibilityActionLoading} onClick={() => applyBulkVisibility({ catalogStatus: 'live', isActive: true })} className="rounded-lg border border-[#E7C9C4] bg-[#F8EEEC] px-3 py-2 text-xs font-black uppercase text-[#8D514B] disabled:opacity-60">Publicar</button>
+          <button disabled={visibilityActionLoading} onClick={() => applyBulkVisibility({ isFeatured: true })} className="rounded-lg border border-amber-200 bg-amber-50 px-3 py-2 text-xs font-black uppercase text-amber-700 disabled:opacity-60">Destacar</button>
+          <button disabled={visibilityActionLoading} onClick={() => applyBulkVisibility({ isNew: true })} className="rounded-lg border border-[#E7C9C4] bg-white px-3 py-2 text-xs font-black uppercase text-[#8D514B] disabled:opacity-60">Lancamento</button>
         </div>
       </section>
 
       <div className="bg-white rounded-xl md:rounded-2xl border border-neutral-200 shadow-sm overflow-hidden">
         <div className="overflow-x-auto custom-scrollbar">
-          <table className="w-full min-w-[1080px] text-left border-collapse">
+          <table className="w-full min-w-[1320px] text-left border-collapse">
             <thead>
               <tr className="bg-neutral-50 border-b border-neutral-200 text-xs font-bold text-neutral-500 uppercase tracking-widest">
                 <th className="p-4 w-12">
@@ -261,17 +266,23 @@ export function ProductsListView() {
                     className="w-4 h-4 accent-[#C98F86]"
                   />
                 </th>
-                <th className="p-4">Produto</th>
-                <th className="p-4">Categoria</th>
-                <th className="p-4">Preco</th>
-                <th className="p-4">Estoque</th>
-                <th className="p-4">Tags</th>
-                <th className="p-4">Status</th>
-                <th className="p-4 text-right">Acoes</th>
+                <th className="p-4 min-w-[380px]">Produto</th>
+                <th className="p-4 w-64">Categoria</th>
+                <th className="p-4 w-32 whitespace-nowrap">Preco</th>
+                <th className="p-4 w-24 whitespace-nowrap">Estoque</th>
+                <th className="p-4 min-w-[240px]">Tags</th>
+                <th className="p-4 w-28 whitespace-nowrap">Status</th>
+                <th className="p-4 w-40 text-right whitespace-nowrap">Acoes</th>
               </tr>
             </thead>
             <tbody>
-              {filteredProducts.length === 0 ? (
+              {isLoading ? (
+                <tr>
+                  <td colSpan={8} className="py-16 text-center text-sm font-bold text-neutral-500">
+                    Carregando produtos...
+                  </td>
+                </tr>
+              ) : filteredProducts.length === 0 ? (
                 <tr>
                   <td colSpan={8} className="py-20 text-center">
                     <div className="flex flex-col items-center justify-center text-neutral-400">
@@ -297,12 +308,12 @@ export function ProductsListView() {
                     </td>
                     <td className="p-4">
                       <div className="flex items-center gap-3">
-                        <div className="w-12 h-12 bg-neutral-200 rounded-lg shrink-0 overflow-hidden">
+                        <div className="w-14 h-14 bg-white rounded-lg shrink-0 overflow-hidden border border-neutral-200">
                           {product.images[0]
-                            ? <img src={product.images[0]} alt={product.title} className="w-full h-full object-cover" />
-                            : <Package className="w-5 h-5 m-auto text-neutral-400 mt-3" />}
+                            ? <img src={product.images[0]} alt={product.title} className="w-full h-full object-contain p-1" />
+                            : <Package className="w-5 h-5 m-auto text-neutral-400 mt-4" />}
                         </div>
-                        <div>
+                        <div className="min-w-0">
                           <h4 className="font-bold text-neutral-900 text-sm">{product.title}</h4>
                           <span className="text-xs text-neutral-500">{product.slug || `ID: ${product.id.split('-')[0].toUpperCase()}`}</span>
                           <div className="mt-1 flex flex-wrap gap-1">
@@ -312,9 +323,11 @@ export function ProductsListView() {
                         </div>
                       </div>
                     </td>
-                    <td className="p-4 text-sm text-neutral-600">{getCategoryLabel(product)}</td>
-                    <td className="p-4 text-sm font-bold text-neutral-900">R$ {product.price.toFixed(2).replace('.', ',')}</td>
-                    <td className="p-4 text-sm">
+                    <td className="p-4 text-sm text-neutral-600">
+                      <span className="line-clamp-2">{getCategoryLabel(product)}</span>
+                    </td>
+                    <td className="p-4 text-sm font-bold text-neutral-900 whitespace-nowrap">R$ {product.price.toFixed(2).replace('.', ',')}</td>
+                    <td className="p-4 text-sm whitespace-nowrap">
                       <span className="font-bold text-neutral-900">{product.stockQuantity ?? 0}</span>
                     </td>
                     <td className="p-4">
