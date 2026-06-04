@@ -12,7 +12,7 @@ import {
 } from '../../../services/authService';
 import { usePublicSettings } from '../../../hooks/usePublicSettings';
 
-const ADMIN_LOGIN_LOGO = '/assets/mk-maker-logo-ultra-realista.png';
+const ADMIN_LOGIN_LOGO = '/assets/mk-maker-logo-symbol-transparent.png';
 
 export function LoginView() {
   const settings = usePublicSettings();
@@ -161,11 +161,11 @@ export function LoginView() {
 
             <div className="relative z-10 flex h-full flex-col justify-between gap-10">
               <div>
-                <div className="inline-flex rounded-[1.75rem] border border-neutral-200 bg-white px-6 py-5 shadow-[0_22px_60px_rgba(106,68,63,0.12)]">
+                <div className="inline-flex max-w-full">
                   <img
                     src={ADMIN_LOGIN_LOGO}
                     alt="MK Maker"
-                    className="h-28 w-64 object-contain object-left sm:h-32 sm:w-72"
+                    className="h-32 w-72 object-contain object-left drop-shadow-[0_18px_34px_rgba(106,68,63,0.16)] sm:h-36 sm:w-80"
                   />
                 </div>
 
