@@ -12,6 +12,8 @@ import {
   markNotificationRead,
 } from '../../../services/notificationService';
 
+const ADMIN_LOGO_SRC = '/assets/mk-maker-logo-ultra-realista.png';
+
 function playNewOrderSound() {
   try {
     const AudioContextClass = window.AudioContext || (window as any).webkitAudioContext;
@@ -113,7 +115,7 @@ export function AdminHeader() {
   };
 
   return (
-    <header className="h-16 md:h-20 bg-white border-b border-neutral-200 px-4 md:px-8 flex items-center justify-between shrink-0 sticky top-0 z-30">
+    <header className="h-16 md:h-20 bg-white/95 backdrop-blur border-b border-neutral-200 px-4 md:px-8 flex items-center justify-between shrink-0 sticky top-0 z-30">
       <div className="flex items-center gap-2 md:gap-4 flex-1">
         <button 
           onClick={toggleSidebar} 
@@ -121,6 +123,14 @@ export function AdminHeader() {
         >
           <Menu className="w-6 h-6" />
         </button>
+
+        <div className="hidden min-w-0 items-center gap-3 rounded-2xl border border-neutral-200 bg-white px-3 py-2 shadow-sm sm:flex">
+          <img src={ADMIN_LOGO_SRC} alt="MK Maker" className="h-9 w-16 object-contain object-left" />
+          <div className="hidden min-w-0 xl:block">
+            <p className="truncate text-sm font-black text-neutral-950">MK Maker Admin</p>
+            <p className="truncate text-[10px] font-black uppercase tracking-[0.2em] text-[#9B5F58]">Painel operacional</p>
+          </div>
+        </div>
 
         {!isProductsRoute && (
         <div className="flex-1 max-w-xl hidden sm:block">
