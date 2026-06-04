@@ -1,6 +1,6 @@
-import { type CSSProperties, type FormEvent, type ReactNode, useEffect, useMemo, useState } from 'react';
+import { type FormEvent, type ReactNode, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowRight, KeyRound, Lock, Mail, ShieldCheck, Sparkles, Store } from 'lucide-react';
+import { ArrowRight, Bell, KeyRound, Lock, Mail, PackageCheck, ShieldCheck, Store } from 'lucide-react';
 import { useAuthStore } from '../store/useAuthStore';
 import {
   type AdminTotpSetup,
@@ -10,8 +10,9 @@ import {
   requestAdminGate,
   startAdminTotpSetup,
 } from '../../../services/authService';
-import { BrandLogo } from '../../../components/brand/BrandLogo';
 import { usePublicSettings } from '../../../hooks/usePublicSettings';
+
+const ADMIN_LOGIN_LOGO = '/assets/mk-maker-logo-ultra-realista.png';
 
 export function LoginView() {
   const settings = usePublicSettings();
@@ -30,19 +31,6 @@ export function LoginView() {
   const navigate = useNavigate();
   const setUser = useAuthStore((state) => state.setUser);
   const primaryColor = settings.store_primary_color || '#c98f86';
-  const secondaryColor = settings.store_secondary_color || '#111111';
-
-  const shellStyle = useMemo(() => ({
-    '--mk-primary': primaryColor,
-    '--mk-secondary': secondaryColor,
-  }) as CSSProperties, [primaryColor, secondaryColor]);
-
-  const visualStyle = useMemo(() => ({
-    background:
-      `radial-gradient(circle at 24% 18%, ${primaryColor}66 0, transparent 32%), ` +
-      `radial-gradient(circle at 86% 88%, ${primaryColor}38 0, transparent 34%), ` +
-      `linear-gradient(135deg, ${secondaryColor} 0%, #2b1715 52%, #7a4944 100%)`,
-  }), [primaryColor, secondaryColor]);
 
   useEffect(() => {
     let active = true;
@@ -138,65 +126,80 @@ export function LoginView() {
       : 'Validar autenticador';
 
   return (
-    <div className="min-h-screen overflow-hidden bg-white text-neutral-950" style={shellStyle}>
+    <div className="min-h-screen overflow-hidden bg-[#fbfaf9] text-neutral-950">
+      <div
+        aria-hidden="true"
+        className="pointer-events-none fixed inset-0 dot-pattern opacity-60"
+      />
       <div
         aria-hidden="true"
         className="pointer-events-none fixed inset-0"
         style={{
           background:
-            'radial-gradient(circle at 10% 10%, rgba(201, 143, 134, 0.18), transparent 28%), radial-gradient(circle at 92% 4%, rgba(17, 17, 17, 0.08), transparent 26%), linear-gradient(180deg, #ffffff 0%, #faf7f6 100%)',
+            `radial-gradient(circle at 8% 10%, ${primaryColor}28 0, transparent 30%), ` +
+            `radial-gradient(circle at 86% 84%, ${primaryColor}24 0, transparent 32%), ` +
+            'linear-gradient(180deg, rgba(255,255,255,0.96) 0%, rgba(251,250,249,0.96) 100%)',
         }}
       />
 
-      <main className="relative mx-auto flex min-h-screen w-full max-w-[1440px] items-center justify-center p-4 sm:p-6 lg:p-10">
-        <section className="grid w-full max-w-6xl overflow-hidden rounded-[2rem] border border-neutral-200 bg-white shadow-[0_34px_90px_rgba(17,24,39,0.12)] lg:grid-cols-[0.92fr_1.08fr]">
-          <aside className="relative hidden min-h-[680px] overflow-hidden p-8 text-white lg:flex lg:flex-col lg:justify-between" style={visualStyle}>
-            <div aria-hidden="true" className="absolute inset-0 bg-[radial-gradient(rgba(255,255,255,0.18)_1px,transparent_1px)] [background-size:22px_22px] opacity-30" />
-            <div aria-hidden="true" className="absolute -right-24 top-20 h-72 w-72 rounded-full border border-white/15" />
-            <div aria-hidden="true" className="absolute bottom-20 left-10 h-44 w-44 rounded-full border border-white/10" />
+      <main className="relative mx-auto flex min-h-screen w-full max-w-[1480px] items-center justify-center p-4 sm:p-6 lg:p-10">
+        <section className="grid w-full max-w-7xl overflow-hidden rounded-[2rem] border border-neutral-200 bg-white shadow-[0_34px_90px_rgba(17,24,39,0.12)] lg:grid-cols-[minmax(0,1fr)_480px]">
+          <aside
+            className="relative overflow-hidden border-b border-neutral-200 bg-white p-6 sm:p-10 lg:min-h-[700px] lg:border-b-0 lg:p-12"
+            aria-label="Central administrativa MK Maker"
+          >
+            <div
+              aria-hidden="true"
+              className="absolute inset-0"
+              style={{
+                background:
+                  `linear-gradient(135deg, ${primaryColor}18 0%, transparent 30%, transparent 68%, ${primaryColor}14 100%)`,
+              }}
+            />
+            <div aria-hidden="true" className="absolute -right-24 top-16 h-72 w-72 rounded-full border border-[#e8d2cf]" />
+            <div aria-hidden="true" className="absolute -bottom-24 left-16 h-64 w-64 rounded-full border border-[#ead8d5]" />
 
-            <div className="relative z-10 flex items-center justify-between">
-              <div className="rounded-2xl bg-white/96 px-4 py-3 shadow-[0_16px_36px_rgba(0,0,0,0.20)]">
-                <BrandLogo imageClassName="h-16 w-36 object-contain" textClassName="text-xl font-black text-neutral-950" />
-              </div>
-              <div className="rounded-full border border-white/20 bg-white/10 px-4 py-2 text-xs font-black uppercase tracking-[0.24em] text-white/80 backdrop-blur">
-                Admin
-              </div>
-            </div>
-
-            <div className="relative z-10 max-w-md">
-              <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-2 text-xs font-black uppercase tracking-[0.22em] text-white/80 backdrop-blur">
-                <Sparkles className="h-4 w-4" />
-                Painel de operacao
-              </div>
-              <h1 className="font-display text-5xl font-semibold leading-[0.95] tracking-normal">
-                Controle seu catalogo com clareza.
-              </h1>
-              <p className="mt-5 max-w-sm text-sm font-medium leading-6 text-white/72">
-                Acesso reservado para gerenciar produtos, pedidos, campanhas e dados da vitrine MK Maker.
-              </p>
-            </div>
-
-            <div className="relative z-10 grid grid-cols-3 gap-3">
-              {[
-                ['Live', 'Catalogo'],
-                ['Kanban', 'Pedidos'],
-                ['2FA', 'Protegido'],
-              ].map(([value, label]) => (
-                <div key={label} className="rounded-2xl border border-white/12 bg-white/10 p-4 backdrop-blur">
-                  <span className="block text-2xl font-black">{value}</span>
-                  <span className="mt-1 block text-[10px] font-black uppercase tracking-widest text-white/55">{label}</span>
+            <div className="relative z-10 flex h-full flex-col justify-between gap-10">
+              <div>
+                <div className="inline-flex rounded-[1.75rem] border border-neutral-200 bg-white px-6 py-5 shadow-[0_22px_60px_rgba(106,68,63,0.12)]">
+                  <img
+                    src={ADMIN_LOGIN_LOGO}
+                    alt="MK Maker"
+                    className="h-28 w-64 object-contain object-left sm:h-32 sm:w-72"
+                  />
                 </div>
-              ))}
+
+                <div className="mt-10 inline-flex items-center gap-2 rounded-full border border-[#E7C9C4] bg-[#F8EEEC] px-4 py-2 text-[11px] font-black uppercase tracking-[0.22em] text-[#8D514B]">
+                  <Store className="h-4 w-4" />
+                  Central privada da vitrine
+                </div>
+
+                <h1 className="mt-5 max-w-3xl font-display text-5xl font-semibold leading-[0.96] tracking-normal text-neutral-950 sm:text-6xl lg:text-7xl">
+                  Central administrativa <span className="text-[#9B5F58]">MK Maker</span>
+                </h1>
+
+                <p className="mt-6 max-w-xl text-base font-medium leading-7 text-neutral-600">
+                  Entrada reservada para operar produtos, campanhas, pedidos, estoque e notificacoes do catalogo.
+                </p>
+              </div>
+
+              <div className="grid gap-3 sm:grid-cols-3">
+                <LoginFeatureCard icon={<PackageCheck className="h-5 w-5" />} title="Catalogo live" text="Produtos e vitrine publicados." />
+                <LoginFeatureCard icon={<Bell className="h-5 w-5" />} title="Alertas" text="Pedidos novos na central." />
+                <LoginFeatureCard icon={<ShieldCheck className="h-5 w-5" />} title="2FA ativo" text="Acesso com autenticador." />
+              </div>
             </div>
           </aside>
 
-          <section className="flex min-h-[640px] items-center justify-center bg-white p-5 sm:p-8 lg:p-12">
+          <section className="relative flex items-center justify-center bg-[#fffdfc] p-5 sm:p-8 lg:border-l lg:border-neutral-200 lg:p-10">
+            <div aria-hidden="true" className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-neutral-950 via-[#9B5F58] to-[#C98F86]" />
+
             <div className="w-full max-w-md">
-              <div className="mb-8 flex items-center justify-between gap-4 lg:hidden">
-                <BrandLogo imageClassName="h-16 w-36 object-contain object-left" textClassName="text-xl font-black text-neutral-950" />
-                <div className="rounded-full border border-neutral-200 bg-white px-3 py-1.5 text-[10px] font-black uppercase tracking-[0.22em] text-[#8D514B] shadow-sm">
-                  Admin
+              <div className="mb-7 flex items-center gap-4 rounded-3xl border border-neutral-200 bg-white p-4 shadow-[0_12px_34px_rgba(17,24,39,0.05)] lg:hidden">
+                <img src={ADMIN_LOGIN_LOGO} alt="MK Maker" className="h-16 w-32 object-contain object-left" />
+                <div>
+                  <p className="text-sm font-black text-neutral-950">MK Maker Admin</p>
+                  <p className="text-xs font-semibold text-neutral-500">Central privada</p>
                 </div>
               </div>
 
@@ -205,7 +208,7 @@ export function LoginView() {
               <div className="mt-5">
                 <h2 className="text-3xl font-black tracking-tight text-neutral-950 sm:text-4xl">Entrar no painel</h2>
                 <p className="mt-3 text-sm font-medium leading-6 text-neutral-500">
-                  Use o autenticador e suas credenciais para acessar a central administrativa.
+                  Use o autenticador e suas credenciais para liberar a central administrativa.
                 </p>
               </div>
 
@@ -264,7 +267,7 @@ export function LoginView() {
                       <>
                         <div className="rounded-2xl border border-neutral-200 bg-neutral-50 p-4">
                           <p className="text-xs font-black uppercase tracking-widest text-neutral-500">Chave de configuracao</p>
-                          <div className="mt-3 rounded-xl border border-neutral-200 bg-white p-3 font-mono text-xs text-neutral-700 break-all">
+                          <div className="mt-3 break-all rounded-xl border border-neutral-200 bg-white p-3 font-mono text-xs text-neutral-700">
                             {setup.setupKey}
                           </div>
                           <p className="mt-3 text-xs font-medium leading-5 text-neutral-500">
@@ -353,7 +356,7 @@ export function LoginView() {
                 )}
               </div>
 
-              <div className="mt-5 flex items-center gap-3 rounded-2xl border border-neutral-200 bg-neutral-50 px-4 py-3 text-xs font-semibold text-neutral-500">
+              <div className="mt-5 flex items-center gap-3 rounded-2xl border border-neutral-200 bg-white px-4 py-3 text-xs font-semibold text-neutral-500 shadow-sm">
                 <Store className="h-4 w-4 shrink-0 text-[#8D514B]" />
                 Central privada do catalogo. Mantenha o acesso restrito aos responsaveis da loja.
               </div>
@@ -361,6 +364,18 @@ export function LoginView() {
           </section>
         </section>
       </main>
+    </div>
+  );
+}
+
+function LoginFeatureCard({ icon, title, text }: { icon: ReactNode; title: string; text: string }) {
+  return (
+    <div className="rounded-2xl border border-neutral-200 bg-white/86 p-4 shadow-[0_14px_36px_rgba(106,68,63,0.08)] backdrop-blur">
+      <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-xl bg-[#F8EEEC] text-[#8D514B]">
+        {icon}
+      </div>
+      <p className="text-base font-black text-neutral-950">{title}</p>
+      <p className="mt-1 text-xs font-semibold leading-5 text-neutral-500">{text}</p>
     </div>
   );
 }
