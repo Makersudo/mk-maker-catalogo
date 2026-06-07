@@ -1,6 +1,8 @@
 import { useMemo, useState } from 'react';
 import { Boxes, CircleDollarSign, PackageCheck, ShieldCheck, Tags } from 'lucide-react';
+import { motion, useReducedMotion } from 'motion/react';
 import type { CatalogMetrics, DashboardAnalytics, TrendPoint } from '../../../services/dashboardService';
+import { dashboardAnimation } from '../dashboardAnimation';
 import { AnimatedCounter } from './AnimatedCounter';
 import { RoundedBarChart } from './RoundedBarChart';
 
@@ -15,6 +17,16 @@ const tabs: Array<{ id: InsightTab; label: string; icon: typeof Boxes }> = [
   { id: 'categories', label: 'Categorias', icon: Tags },
   { id: 'quality', label: 'Qualidade', icon: ShieldCheck },
 ];
+
+const insightItemVariants = {
+  hidden: { opacity: 0, y: 14, scale: 0.98 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: { duration: dashboardAnimation.cardDuration, ease: dashboardAnimation.easeOut },
+  },
+};
 
 function currency(value: number) {
   return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(value || 0);
@@ -45,6 +57,7 @@ export function DashboardInsightsPanel({
   analytics: DashboardAnalytics;
 }) {
   const [activeTab, setActiveTab] = useState<InsightTab>('sales');
+  const reducedMotion = useReducedMotion();
 
   return (
     <section className="mt-5 rounded-2xl border border-neutral-200 bg-white p-4 shadow-[0_14px_38px_rgba(27,31,36,0.06)] md:p-5">
@@ -74,13 +87,19 @@ export function DashboardInsightsPanel({
         </div>
       </div>
 
-      <div className="mt-5">
+      <motion.div
+        key={activeTab}
+        className="mt-5"
+        initial={reducedMotion ? false : 'hidden'}
+        animate="visible"
+        variants={{ visible: { transition: { staggerChildren: dashboardAnimation.cardStagger } } }}
+      >
         {activeTab === 'sales' && <SalesInsight metrics={metrics} analytics={analytics} />}
         {activeTab === 'stock' && <StockInsight metrics={metrics} analytics={analytics} />}
         {activeTab === 'products' && <ProductsInsight metrics={metrics} analytics={analytics} />}
         {activeTab === 'categories' && <CategoriesInsight metrics={metrics} />}
         {activeTab === 'quality' && <QualityInsight metrics={metrics} />}
-      </div>
+      </motion.div>
     </section>
   );
 }
@@ -210,46 +229,53 @@ function InsightLayout({
   metrics: InsightMetric[];
   side: React.ReactNode;
 }) {
+  const reducedMotion = useReducedMotion();
+
   return (
-    <div className="grid gap-4 xl:grid-cols-[minmax(0,1fr)_320px]">
-      <div className="rounded-2xl border border-neutral-100 bg-[#FBFCFB] p-4">
+    <motion.div
+      className="grid gap-4 xl:grid-cols-[minmax(0,1fr)_320px]"
+      initial={reducedMotion ? false : 'hidden'}
+      animate="visible"
+      variants={{ visible: { transition: { staggerChildren: dashboardAnimation.cardStagger } } }}
+    >
+      <motion.div variants={insightItemVariants} className="rounded-2xl border border-neutral-100 bg-[#FBFCFB] p-4">
         <h3 className="text-sm font-black text-neutral-900">{title}</h3>
         <div className="mt-3">{chart}</div>
         <div className="mt-3 grid grid-cols-2 gap-2 md:grid-cols-4">
           {metrics.map((metric) => <Metric key={metric.label} {...metric} />)}
         </div>
-      </div>
+      </motion.div>
       {side}
-    </div>
+    </motion.div>
   );
 }
 
 function Metric({ label, value, format }: InsightMetric) {
   return (
-    <div className="rounded-xl border border-neutral-100 bg-white p-3">
+    <motion.div variants={insightItemVariants} className="rounded-xl border border-neutral-100 bg-white p-3">
       <span className="text-[9px] font-black uppercase tracking-wider text-neutral-400">{label}</span>
       <strong className="mt-1 block text-lg font-black text-neutral-950">
         <AnimatedCounter value={value} format={format} />
       </strong>
-    </div>
+    </motion.div>
   );
 }
 
 function Ranking({ title, items }: { title: string; items: RankingItem[] }) {
   return (
-    <aside className="rounded-2xl border border-neutral-100 bg-neutral-950 p-4 text-white">
+    <motion.aside variants={insightItemVariants} className="rounded-2xl border border-neutral-100 bg-neutral-950 p-4 text-white">
       <h3 className="text-[10px] font-black uppercase tracking-widest text-neutral-300">{title}</h3>
       <div className="mt-4 space-y-2">
         {items.length === 0 && <p className="text-xs text-neutral-400">Sem dados registrados.</p>}
         {items.map(({ label, value, format }, index) => (
-          <div key={`${label}-${index}`} className="flex items-center justify-between gap-3 rounded-xl bg-white/7 px-3 py-2">
+          <motion.div key={`${label}-${index}`} variants={insightItemVariants} className="flex items-center justify-between gap-3 rounded-xl bg-white/7 px-3 py-2">
             <span className="min-w-0 truncate text-xs font-bold text-neutral-200">{label}</span>
             <strong className="shrink-0 text-xs">
               <AnimatedCounter value={value} format={format} />
             </strong>
-          </div>
+          </motion.div>
         ))}
       </div>
-    </aside>
+    </motion.aside>
   );
 }

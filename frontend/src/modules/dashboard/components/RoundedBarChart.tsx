@@ -1,5 +1,6 @@
 import { motion, useReducedMotion } from 'motion/react';
 import type { TrendPoint } from '../../../services/dashboardService';
+import { dashboardAnimation } from '../dashboardAnimation';
 
 type RoundedBarChartProps = {
   points: TrendPoint[];
@@ -41,6 +42,8 @@ export function RoundedBarChart({
   const maxIndex = points.reduce((best, point, index) => point.value > (points[best]?.value ?? -1) ? index : best, 0);
   const patternId = `rounded-bars-${label.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`;
   const labelEvery = Math.max(1, Math.ceil(points.length / (compact ? 0 : 7)));
+  const chartDuration = compact ? dashboardAnimation.compactChartDuration : dashboardAnimation.chartDuration;
+  const barDelayStep = compact ? dashboardAnimation.compactBarDelayStep : dashboardAnimation.barDelayStep;
 
   return (
     <motion.svg
@@ -51,7 +54,7 @@ export function RoundedBarChart({
       aria-label={`${label}: grafico de barras com ${points.length} periodos`}
       initial={reducedMotion ? false : 'hidden'}
       animate="visible"
-      variants={{ visible: { transition: { staggerChildren: compact ? 0.025 : 0.045 } } }}
+      variants={{ visible: { transition: { staggerChildren: compact ? 0.08 : 0.18 } } }}
     >
       <defs>
         <pattern id={patternId} width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(35)">
@@ -109,7 +112,11 @@ export function RoundedBarChart({
               fill={isMax ? '#078653' : `url(#${patternId})`}
               initial={reducedMotion ? false : { y: top + chartHeight, height: 0, opacity: 0.35 }}
               animate={{ y, height: valueHeight, opacity: 1 }}
-              transition={{ duration: 0.95, delay: Math.min(index * 0.09, 0.72), ease: [0.16, 1, 0.3, 1] }}
+              transition={{
+                duration: chartDuration,
+                delay: Math.min(index * barDelayStep, dashboardAnimation.maxElementDelay),
+                ease: dashboardAnimation.easeOut,
+              }}
             >
               <title>{point.label}: {formatValue(point.value)}</title>
             </motion.rect>
@@ -123,7 +130,7 @@ export function RoundedBarChart({
                 strokeWidth="2"
                 initial={reducedMotion ? false : { scale: 0 }}
                 animate={{ scale: 1 }}
-                transition={{ delay: 0.4 }}
+                transition={{ delay: Math.min(index * barDelayStep, dashboardAnimation.maxElementDelay) + chartDuration * 0.55 }}
               />
             )}
             {!compact && index % labelEvery === 0 && (

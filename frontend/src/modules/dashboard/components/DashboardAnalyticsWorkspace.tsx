@@ -16,6 +16,7 @@ import type {
   TrendPoint,
 } from '../../../services/dashboardService';
 import type { useDashboardOverview } from '../hooks/useDashboardOverview';
+import { dashboardAnimation } from '../dashboardAnimation';
 import { AnimatedCounter } from './AnimatedCounter';
 import { DashboardInsightsPanel } from './DashboardInsightsPanel';
 import { DashboardPrimaryChart } from './DashboardPrimaryChart';
@@ -120,7 +121,13 @@ export function DashboardAnalyticsWorkspace({ overview }: { overview: OverviewSt
   const animationRunKey = `${location.pathname}:${location.key}:${overview.data.generatedAt}:${overview.period}:${overview.categoryId ?? 'all'}:${metricKey}`;
 
   return (
-    <section className="rounded-3xl border border-neutral-200 bg-[#F5F7F6] p-3 shadow-[0_24px_70px_rgba(27,31,36,0.08)] md:p-5">
+    <motion.section
+      key={`dashboard-page:${animationRunKey}`}
+      className="rounded-3xl border border-neutral-200 bg-[#F5F7F6] p-3 shadow-[0_24px_70px_rgba(27,31,36,0.08)] md:p-5"
+      initial={reducedMotion ? false : { opacity: 0, y: 18, scale: 0.99 }}
+      animate={{ opacity: 1, y: 0, scale: 1 }}
+      transition={{ duration: dashboardAnimation.pageDuration, ease: dashboardAnimation.easeOut }}
+    >
       <header className="rounded-2xl bg-white p-4 shadow-[0_12px_32px_rgba(27,31,36,0.06)]">
         <div className="flex flex-col gap-4 xl:flex-row xl:items-start xl:justify-between">
           <div>
@@ -196,7 +203,7 @@ export function DashboardAnalyticsWorkspace({ overview }: { overview: OverviewSt
         className="mt-4 grid grid-cols-1 gap-4 xl:grid-cols-12"
         initial={reducedMotion ? false : 'hidden'}
         animate="visible"
-        variants={{ visible: { transition: { staggerChildren: 0.065 } } }}
+        variants={{ visible: { transition: { staggerChildren: dashboardAnimation.cardStagger } } }}
       >
         <Reveal className="xl:col-span-3">
           <article className="h-full rounded-2xl bg-[#078653] p-5 text-white shadow-[0_18px_42px_rgba(4,120,87,0.22)]">
@@ -267,13 +274,24 @@ export function DashboardAnalyticsWorkspace({ overview }: { overview: OverviewSt
       </motion.div>
 
       <DashboardInsightsPanel key={`insights:${animationRunKey}`} metrics={metrics} analytics={analytics} />
-    </section>
+    </motion.section>
   );
 }
 
 function Reveal({ children, className = '' }: { children: React.ReactNode; className?: string }) {
   return (
-    <motion.div className={className} variants={{ hidden: { opacity: 0, y: 10 }, visible: { opacity: 1, y: 0, transition: { duration: 0.28 } } }}>
+    <motion.div
+      className={className}
+      variants={{
+        hidden: { opacity: 0, y: 18, scale: 0.98 },
+        visible: {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          transition: { duration: dashboardAnimation.cardDuration, ease: dashboardAnimation.easeOut },
+        },
+      }}
+    >
       {children}
     </motion.div>
   );

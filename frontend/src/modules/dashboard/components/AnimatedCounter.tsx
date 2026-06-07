@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
 import { useReducedMotion } from 'motion/react';
+import { dashboardAnimation } from '../dashboardAnimation';
 
 export function AnimatedCounter({
   value,
   format = (current) => Math.round(current).toLocaleString('pt-BR'),
-  durationMs = 1200,
+  durationMs = dashboardAnimation.counterDurationMs,
 }: {
   value: number;
   format?: (value: number) => string;
