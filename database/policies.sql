@@ -6,6 +6,10 @@ alter table public.orders enable row level security;
 alter table public.order_items enable row level security;
 alter table public.settings enable row level security;
 alter table public.catalog_config enable row level security;
+alter table public.notifications enable row level security;
+alter table public.push_subscriptions enable row level security;
+alter table public.analytics_daily_snapshots enable row level security;
+alter table public.analytics_category_daily_snapshots enable row level security;
 
 drop policy if exists "Public can read active categories" on public.categories;
 create policy "Public can read active categories"

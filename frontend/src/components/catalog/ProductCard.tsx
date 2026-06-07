@@ -40,7 +40,7 @@ export const ProductCard = memo(function ProductCard({ product, priority = false
 
   return (
     <div onClick={openProduct} className="group flex flex-col h-full overflow-hidden rounded-2xl border border-neutral-200 bg-white shadow-sm transition-all duration-300 cursor-pointer hover:-translate-y-1.5 hover:border-[#c98f86] hover:shadow-xl hover:shadow-[#c98f86]/10">
-      <div className={`relative overflow-hidden border-b border-neutral-100 bg-white ${compact ? "aspect-square lg:aspect-[4/5]" : "aspect-[4/5]"}`}>
+      <div className={`mobile-card-photo relative overflow-hidden border-b border-neutral-100 bg-white ${compact ? "aspect-[3/4] sm:aspect-square lg:aspect-[4/5]" : "aspect-[4/5]"}`}>
         {product.imageUrl ? (
           <img
             src={product.imageUrl}

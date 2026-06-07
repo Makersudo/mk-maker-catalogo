@@ -6,6 +6,8 @@ import { Catalog } from './components/catalog/Catalog';
 import { ProductDetail } from './components/catalog/ProductDetail';
 import { CartDrawer } from './components/cart/CartDrawer';
 import { useStore } from './store/useStore';
+import { getPublicCatalogBootstrap } from './services/catalogService';
+import { dismissPublicCatalogSplash, getCriticalPublicMedia, preparePublicCatalogSplash } from './publicCatalogSplash';
 
 const LoginView = lazy(() => import('./modules/auth/views/LoginView').then((module) => ({ default: module.LoginView })));
 const AdminLayout = lazy(() => import('./modules/layout/views/AdminLayout').then((module) => ({ default: module.AdminLayout })));
@@ -32,6 +34,27 @@ function ScrollToTop() {
 
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+  }, [pathname]);
+
+  return null;
+}
+
+function AppSplashController() {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    const isPublicCatalogRoute = pathname === '/'
+      || pathname === '/inicio'
+      || pathname === '/catalogo'
+      || pathname === '/contato'
+      || pathname.startsWith('/produto/');
+
+    if (isPublicCatalogRoute) {
+      void preparePublicCatalogSplash(getPublicCatalogBootstrap, getCriticalPublicMedia(pathname));
+      return;
+    }
+
+    dismissPublicCatalogSplash();
   }, [pathname]);
 
   return null;
@@ -75,6 +98,7 @@ function PublicStore() {
 export default function App() {
   return (
     <Router>
+      <AppSplashController />
       <Routes>
         {/* Rota pública da Loja */}
         <Route path="/" element={<Navigate to="/catalogo" replace />} />

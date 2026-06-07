@@ -144,9 +144,9 @@ export function CartDrawer() {
             animate={{ x: 0 }}
             exit={{ x: "100%" }}
             transition={{ type: "spring", damping: 25, stiffness: 200 }}
-            className="fixed top-0 right-0 h-full w-full max-w-lg bg-white border-l border-neutral-200 shadow-2xl z-[101] flex flex-col"
+            className="fixed inset-x-0 bottom-0 top-4 z-[101] flex h-[calc(100dvh-1rem)] w-full flex-col border-l border-neutral-200 bg-white shadow-2xl max-sm:rounded-t-3xl sm:inset-y-0 sm:left-auto sm:h-dvh sm:max-w-lg sm:rounded-none"
           >
-            <header className="flex items-center justify-between p-6 border-b border-neutral-200 bg-neutral-50/80">
+            <header className="flex items-center justify-between border-b border-neutral-200 bg-neutral-50/80 p-4 sm:p-6">
               <h2 className="text-xl font-bold uppercase tracking-tight text-neutral-900 flex items-center gap-2">
                 Seu Carrinho
                 <span className="text-xs px-2 py-0.5 bg-gradient-to-r from-purple-800 to-purple-500 rounded-full text-white">
@@ -183,7 +183,7 @@ export function CartDrawer() {
                   )}
                 </div>
               ) : (
-                <div className="p-6 flex flex-col gap-6">
+                <div className="flex flex-col gap-5 p-4 sm:gap-6 sm:p-6">
                   <div className="flex flex-col gap-4">
                     {cart.map((item) => {
                       const unitPrice = item.variant?.price ?? item.product.price;
@@ -231,7 +231,7 @@ export function CartDrawer() {
                       </div>
                     )}
 
-                    <div className="grid grid-cols-2 gap-3">
+                    <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                       <label className={`flex items-center gap-2 p-3 border rounded-xl cursor-pointer ${formData.fulfillmentType === "delivery" ? "border-purple-400 bg-purple-50" : "border-neutral-200"}`}>
                         <input type="radio" name="fulfillmentType" value="delivery" checked={formData.fulfillmentType === "delivery"} onChange={handleChange} className="accent-purple-700" />
                         <MapPin className="w-4 h-4" />
@@ -249,18 +249,18 @@ export function CartDrawer() {
 
                     {formData.fulfillmentType === "delivery" && (
                       <>
-                        <div className="grid grid-cols-2 gap-3">
+                        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                           <input required name="cep" value={formData.cep} onChange={handleChange} type="text" placeholder={cepLoading ? "Buscando CEP..." : "CEP *"} className="w-full bg-white border border-neutral-300 text-sm text-neutral-900 rounded-lg px-4 py-2.5 focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 placeholder:text-neutral-400" />
                           <input required name="city" value={formData.city} onChange={handleChange} type="text" placeholder="Cidade *" className="w-full bg-white border border-neutral-300 text-sm text-neutral-900 rounded-lg px-4 py-2.5 focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 placeholder:text-neutral-400" />
                         </div>
-                        <div className="grid grid-cols-3 gap-3">
+                        <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
                           <input name="state" value={formData.state} onChange={handleChange} type="text" placeholder="UF" className="w-full bg-white border border-neutral-300 text-sm text-neutral-900 rounded-lg px-4 py-2.5 focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 placeholder:text-neutral-400" />
-                          <input required name="neighborhood" value={formData.neighborhood} onChange={handleChange} type="text" placeholder="Bairro *" className="col-span-2 w-full bg-white border border-neutral-300 text-sm text-neutral-900 rounded-lg px-4 py-2.5 focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 placeholder:text-neutral-400" />
+                          <input required name="neighborhood" value={formData.neighborhood} onChange={handleChange} type="text" placeholder="Bairro *" className="w-full bg-white border border-neutral-300 text-sm text-neutral-900 rounded-lg px-4 py-2.5 focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 placeholder:text-neutral-400 sm:col-span-2" />
                         </div>
                         <input required name="address" value={formData.address} onChange={handleChange} type="text" placeholder="Rua / Avenida *" className="w-full bg-white border border-neutral-300 text-sm text-neutral-900 rounded-lg px-4 py-2.5 focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 placeholder:text-neutral-400" />
-                        <div className="flex gap-3">
-                          <input required name="number" value={formData.number} onChange={handleChange} type="text" placeholder="Numero *" className="w-1/3 bg-white border border-neutral-300 text-sm text-neutral-900 rounded-lg px-4 py-2.5 focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 placeholder:text-neutral-400" />
-                          <input name="complement" value={formData.complement} onChange={handleChange} type="text" placeholder="Complemento" className="w-2/3 bg-white border border-neutral-300 text-sm text-neutral-900 rounded-lg px-4 py-2.5 focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 placeholder:text-neutral-400" />
+                        <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
+                          <input required name="number" value={formData.number} onChange={handleChange} type="text" placeholder="Numero *" className="w-full bg-white border border-neutral-300 text-sm text-neutral-900 rounded-lg px-4 py-2.5 focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 placeholder:text-neutral-400" />
+                          <input name="complement" value={formData.complement} onChange={handleChange} type="text" placeholder="Complemento" className="w-full bg-white border border-neutral-300 text-sm text-neutral-900 rounded-lg px-4 py-2.5 focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 placeholder:text-neutral-400 sm:col-span-2" />
                         </div>
                         <input name="referencePoint" value={formData.referencePoint} onChange={handleChange} type="text" placeholder="Ponto de referencia" className="w-full bg-white border border-neutral-300 text-sm text-neutral-900 rounded-lg px-4 py-2.5 focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 placeholder:text-neutral-400" />
                       </>
@@ -288,7 +288,7 @@ export function CartDrawer() {
               )}
             </main>
 
-            <footer className="p-6 border-t border-neutral-200 bg-white/80 backdrop-blur-md">
+            <footer className="border-t border-neutral-200 bg-white/80 px-4 pt-4 pb-[calc(1.5rem+env(safe-area-inset-bottom))] backdrop-blur-md sm:p-6">
               <div className="flex items-center justify-between mb-4">
                 <span className="text-neutral-500 uppercase tracking-widest text-[10px] font-bold">Total Estimado</span>
                 <span className="text-xl font-bold text-neutral-900">{formatPrice(total)}</span>

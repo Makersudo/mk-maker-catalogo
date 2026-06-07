@@ -241,8 +241,8 @@ export function ProductFormModal({ onClose, productToEdit }: ProductFormModalPro
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-neutral-900/50 p-3 backdrop-blur-sm sm:p-6">
-      <div className="relative flex max-h-[92vh] w-full max-w-6xl flex-shrink-0 animate-in flex-col overflow-hidden rounded-2xl bg-white shadow-2xl duration-200 fade-in zoom-in-95">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-neutral-900/50 p-0 backdrop-blur-sm sm:p-6">
+      <div className="relative flex max-h-[92vh] w-full max-w-6xl flex-shrink-0 animate-in flex-col overflow-hidden rounded-2xl bg-white shadow-2xl duration-200 fade-in zoom-in-95 max-sm:h-dvh max-sm:max-h-dvh max-sm:rounded-none">
         <div className="flex items-start justify-between gap-4 border-b border-neutral-100 bg-neutral-50 px-5 py-4">
           <div>
             <h2 className="text-xl font-black uppercase tracking-tight text-neutral-900">

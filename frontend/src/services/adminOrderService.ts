@@ -13,6 +13,12 @@ export interface AdminOrderItem {
   unit_price: number;
   quantity: number;
   subtotal: number;
+  unit_purchase_cost?: number;
+  cost_subtotal?: number;
+  category_id?: string | null;
+  category_name?: string | null;
+  subcategory_id?: string | null;
+  subcategory_name?: string | null;
   created_at: string;
 }
 

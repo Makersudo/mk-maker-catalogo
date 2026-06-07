@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import { AlertCircle, Package, ShoppingBag, Tag, TrendingUp } from 'lucide-react';
 import { type CatalogMetrics, type DashboardStats, getDashboardStats } from '../../../services/dashboardService';
 import { CatalogMetricsModule } from '../components/CatalogMetricsModule';
+import { HistoricalAnalyticsPanel } from '../components/HistoricalAnalyticsPanel';
+import { useDashboardAnalytics } from '../hooks/useDashboardAnalytics';
 
 const emptyCatalogMetrics: CatalogMetrics = {
   summary: {
@@ -70,6 +72,7 @@ function currency(value: number) {
 
 export function DashboardView() {
   const [dashboard, setDashboard] = useState<DashboardStats>(emptyDashboard);
+  const analytics = useDashboardAnalytics();
 
   useEffect(() => {
     getDashboardStats().then((stats) => {
@@ -111,6 +114,14 @@ export function DashboardView() {
           <p className="text-xs md:text-sm text-amber-800 font-medium">Voce possui <strong>{dashboard.inactiveProducts} produtos inativos</strong> no momento. Eles nao estao visiveis no catalogo principal.</p>
         </div>
       </div>
+
+      <HistoricalAnalyticsPanel
+        analytics={analytics}
+        categories={metrics.categoryPerformance.map((category) => ({
+          categoryId: category.categoryId,
+          name: category.name,
+        }))}
+      />
 
       <CatalogMetricsModule metrics={metrics} />
 

@@ -137,7 +137,54 @@ export interface DashboardStats {
   catalogMetrics?: CatalogMetrics;
 }
 
+export type AnalyticsPeriod = 'daily' | 'weekly' | 'monthly' | 'yearly';
+
+export interface TrendPoint {
+  bucket: string;
+  label: string;
+  value: number;
+}
+
+export interface DashboardAnalytics {
+  period: AnalyticsPeriod;
+  timezone: string;
+  range: { from: string; to: string };
+  categoryId: string | null;
+  series: {
+    revenue: TrendPoint[];
+    orders: TrendPoint[];
+    unitsSold: TrendPoint[];
+    averageTicket: TrendPoint[];
+    productsCreated: TrendPoint[];
+    stockUnits: TrendPoint[];
+    inventoryPurchaseValue: TrendPoint[];
+    inventorySaleValue: TrendPoint[];
+    estimatedGrossProfit: TrendPoint[];
+    realizedGrossProfit: TrendPoint[];
+    completionScore: TrendPoint[];
+  };
+  comparison: {
+    revenuePercent: number | null;
+    ordersPercent: number | null;
+    unitsSoldPercent: number | null;
+    averageTicketPercent: number | null;
+    productsCreatedPercent: number | null;
+    stockUnitsPercent: number | null;
+    inventoryPurchaseValuePercent: number | null;
+    inventorySaleValuePercent: number | null;
+    estimatedGrossProfitPercent: number | null;
+    realizedGrossProfitPercent: number | null;
+    completionScorePercent: number | null;
+  };
+}
+
 export async function getDashboardStats() {
   return apiRequest<DashboardStats>('/api/dashboard/stats', { auth: true });
+}
+
+export async function getDashboardAnalytics(period: AnalyticsPeriod, categoryId?: string | null) {
+  const query = new URLSearchParams({ period });
+  if (categoryId) query.set('categoryId', categoryId);
+  return apiRequest<DashboardAnalytics>(`/api/dashboard/analytics?${query.toString()}`, { auth: true });
 }
 

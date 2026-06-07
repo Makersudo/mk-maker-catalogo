@@ -17,6 +17,7 @@ describe("admin dense layout", () => {
     assert.equal(source.includes("h-dvh overflow-hidden"), true);
     assert.equal(source.includes("min-w-0 flex-1 flex flex-col overflow-hidden"), true);
     assert.equal(source.includes("min-h-0 flex-1 overflow-x-hidden overflow-y-auto"), true);
+    assert.equal(source.includes("pb-[calc(1rem+env(safe-area-inset-bottom))]"), true);
   });
 
   it("lets the products table keep natural page height without an internal vertical scrollbar", () => {
@@ -31,6 +32,20 @@ describe("admin dense layout", () => {
     assert.equal(source.includes("object-contain"), true);
     assert.equal(source.includes("whitespace-nowrap"), true);
     assert.equal(source.includes("md:pb-20"), false);
+  });
+
+  it("provides mobile-first admin alternatives for products and orders", () => {
+    const products = readFileSync(new URL("./products/views/ProductsListView.tsx", import.meta.url), "utf8");
+    const orders = readFileSync(new URL("./orders/views/OrdersKanbanView.tsx", import.meta.url), "utf8");
+    const header = readFileSync(new URL("./layout/components/AdminHeader.tsx", import.meta.url), "utf8");
+
+    assert.equal(products.includes("mobile-products-list"), true);
+    assert.equal(products.includes("lg:hidden"), true);
+    assert.equal(products.includes("hidden lg:block"), true);
+    assert.equal(orders.includes("mobile-order-status-tabs"), true);
+    assert.equal(orders.includes("selectedMobileStatus"), true);
+    assert.equal(orders.includes("lg:hidden"), true);
+    assert.equal(header.includes("max-sm:fixed max-sm:inset-x-3"), true);
   });
 
   it("does not show the disconnected global product search on the products route", () => {
@@ -49,5 +64,7 @@ describe("admin dense layout", () => {
     assert.equal(source.includes("Fotos"), true);
     assert.equal(source.includes("Vitrine"), true);
     assert.equal(source.includes("object-contain"), true);
+    assert.equal(source.includes("max-sm:h-dvh"), true);
+    assert.equal(source.includes("max-sm:rounded-none"), true);
   });
 });

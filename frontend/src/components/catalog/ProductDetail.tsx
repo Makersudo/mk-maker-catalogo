@@ -206,7 +206,7 @@ export function ProductDetail() {
 
   return (
     <div className="catalog-brand-surface flex-1">
-      <div className="max-w-6xl mx-auto px-4 py-6 md:py-10">
+      <div className="max-w-6xl mx-auto px-4 py-5 pb-24 md:py-10">
         <button onClick={() => navigate("/catalogo")} className="inline-flex items-center gap-2 mb-6 text-xs font-bold uppercase tracking-widest text-neutral-500 hover:text-[#8f5e59]">
           <ArrowLeft className="w-4 h-4" /> Voltar ao catalogo
         </button>
@@ -215,7 +215,7 @@ export function ProductDetail() {
           <div className="flex flex-col gap-5">
             <ProductDetailTitleBlock category={product.category} name={product.name} className="lg:hidden" />
 
-            <div className="product-photo-surface flex h-[62vh] min-h-[340px] max-h-[720px] items-center justify-center overflow-hidden rounded-2xl border border-neutral-200 p-4 shadow-lg shadow-neutral-900/5 sm:p-6">
+            <div className="product-photo-surface flex h-[52vh] min-h-[300px] max-h-[720px] items-center justify-center overflow-hidden rounded-2xl border border-neutral-200 p-4 shadow-lg shadow-neutral-900/5 sm:h-[58vh] sm:min-h-[340px] sm:p-6 lg:h-[62vh]">
               {product.imageUrl ? (
                 <img
                   src={product.imageUrl}
@@ -336,15 +336,17 @@ export function ProductDetail() {
                 </div>
               )}
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <button onClick={() => addSelectedToCart(false)} disabled={!canAddToCart} className="w-full flex items-center justify-center gap-2 py-3.5 border border-[#ead5d2] bg-white text-[#8f5e59] font-bold text-sm uppercase tracking-tight rounded-xl hover:bg-[#fbf4f3] disabled:opacity-50 disabled:cursor-not-allowed transition-all">
-                  <Plus className="w-4 h-4" />
-                  Adicionar e continuar
-                </button>
-                <button onClick={() => addSelectedToCart(true)} disabled={!canAddToCart} className="w-full flex items-center justify-center gap-2 py-3.5 bg-gradient-to-r from-[#6f4844] to-[#c98f86] text-white font-bold text-sm uppercase tracking-tight rounded-xl hover:from-[#7c4f4a] hover:to-[#d6a39b] disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-md shadow-[#c98f86]/20">
-                  <ShoppingCart className="w-4 h-4" />
-                  Comprar agora
-                </button>
+              <div className="mobile-product-actions fixed inset-x-0 bottom-0 z-30 border-t border-neutral-200 bg-white/95 px-4 pt-3 pb-[calc(1rem+env(safe-area-inset-bottom))] shadow-[0_-16px_40px_rgba(15,23,42,0.08)] backdrop-blur sm:static sm:border-0 sm:bg-transparent sm:p-0 sm:shadow-none">
+                <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-3">
+                  <button onClick={() => addSelectedToCart(false)} disabled={!canAddToCart} className="w-full flex items-center justify-center gap-2 py-3.5 border border-[#ead5d2] bg-white text-[#8f5e59] font-bold text-sm uppercase tracking-tight rounded-xl hover:bg-[#fbf4f3] disabled:opacity-50 disabled:cursor-not-allowed transition-all">
+                    <Plus className="w-4 h-4" />
+                    Adicionar e continuar
+                  </button>
+                  <button onClick={() => addSelectedToCart(true)} disabled={!canAddToCart} className="w-full flex items-center justify-center gap-2 py-3.5 bg-gradient-to-r from-[#6f4844] to-[#c98f86] text-white font-bold text-sm uppercase tracking-tight rounded-xl hover:from-[#7c4f4a] hover:to-[#d6a39b] disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-md shadow-[#c98f86]/20">
+                    <ShoppingCart className="w-4 h-4" />
+                    Comprar agora
+                  </button>
+                </div>
               </div>
             </div>
           </section>

@@ -9,8 +9,8 @@ self.addEventListener('push', (event) => {
   const title = payload.title || 'Novo pedido recebido';
   const options = {
     body: payload.body || 'A central recebeu uma nova compra no catalogo.',
-    icon: payload.icon || '/assets/mk-maker-logo-symbol-transparent.png',
-    badge: payload.badge || '/assets/mk-maker-logo-symbol-transparent.png',
+    icon: payload.icon || '/assets/mk-maker-icon-192.png',
+    badge: payload.badge || '/assets/mk-maker-maskable-512.png',
     data: payload.data || { url: '/admin/orders' },
     tag: payload.data?.orderId || 'mk-maker-order',
     renotify: true,

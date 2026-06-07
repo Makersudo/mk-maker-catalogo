@@ -1,8 +1,55 @@
 import { Instagram, PackageCheck, ShoppingBag, Sparkles } from "lucide-react";
 import { motion } from "motion/react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useStore } from "../../store/useStore";
 import { usePublicSettings } from "../../hooks/usePublicSettings";
+
+const LOOP_FADE_WINDOW_SECONDS = 0.8;
+const LOOP_REVEAL_WINDOW_SECONDS = 0.2;
+
+type HeroBackgroundVideoProps = {
+  className: string;
+  visibleOpacity: number;
+};
+
+function HeroBackgroundVideo({ className, visibleOpacity }: HeroBackgroundVideoProps) {
+  const [isLoopFading, setIsLoopFading] = useState(false);
+
+  const updateLoopTransition = (video: HTMLVideoElement) => {
+    if (!Number.isFinite(video.duration) || video.duration <= 0) return;
+
+    const remainingTime = video.duration - video.currentTime;
+    if (remainingTime <= LOOP_FADE_WINDOW_SECONDS) {
+      setIsLoopFading(true);
+      return;
+    }
+
+    if (video.currentTime <= LOOP_REVEAL_WINDOW_SECONDS) {
+      setIsLoopFading(false);
+    }
+  };
+
+  return (
+    <video
+      src="/hero/makeup-products.mp4"
+      autoPlay
+      muted
+      loop
+      playsInline
+      preload="auto"
+      data-hero-video
+      aria-hidden="true"
+      onTimeUpdate={(event) => updateLoopTransition(event.currentTarget)}
+      onSeeked={(event) => updateLoopTransition(event.currentTarget)}
+      className={className}
+      style={{
+        opacity: isLoopFading ? 0 : visibleOpacity,
+        transition: "opacity 700ms ease-in-out"
+      }}
+    />
+  );
+}
 
 export function Hero() {
   const setActiveTab = useStore(state => state.setActiveTab);
@@ -39,21 +86,17 @@ export function Hero() {
         />
         <div className="absolute inset-0 dot-pattern opacity-55"></div>
         <div className="absolute inset-y-0 right-0 hidden w-[64%] lg:block">
-          <img
-            src="/hero/makeup-products.jpg"
-            alt=""
-            aria-hidden="true"
-            className="hero-photo-gradient h-full w-full object-cover opacity-95"
+          <HeroBackgroundVideo
+            className="hero-photo-gradient h-full w-full object-cover"
+            visibleOpacity={0.95}
           />
           <div className="absolute inset-0 bg-gradient-to-r from-white via-white/55 to-white/10" />
           <div className="absolute inset-0 bg-gradient-to-b from-white/30 via-transparent to-white/35" />
         </div>
         <div className="absolute inset-0 sm:hidden">
-          <img
-            src="/hero/makeup-products.jpg"
-            alt=""
-            aria-hidden="true"
-            className="hero-photo-gradient-mobile h-full w-full object-cover opacity-75"
+          <HeroBackgroundVideo
+            className="hero-photo-gradient-mobile h-full w-full object-cover"
+            visibleOpacity={0.75}
           />
           <div className="absolute inset-0 bg-gradient-to-b from-white/90 via-white/70 to-white/42" />
           <div className="absolute inset-0 bg-gradient-to-r from-white/86 via-white/60 to-white/20" />

@@ -145,7 +145,7 @@ export function LoginView() {
       <main className="relative mx-auto flex min-h-screen w-full max-w-[1480px] items-center justify-center p-4 sm:p-6 lg:p-10">
         <section className="grid w-full max-w-7xl overflow-hidden rounded-[2rem] border border-neutral-200 bg-white shadow-[0_34px_90px_rgba(17,24,39,0.12)] lg:grid-cols-[minmax(0,1fr)_480px]">
           <aside
-            className="relative overflow-hidden border-b border-neutral-200 bg-white p-6 sm:p-10 lg:min-h-[700px] lg:border-b-0 lg:p-12"
+            className="relative order-2 overflow-hidden border-t border-neutral-200 bg-white p-6 sm:p-10 lg:order-1 lg:min-h-[700px] lg:border-b-0 lg:border-t-0 lg:p-12"
             aria-label="Central administrativa MK Maker"
           >
             <div
@@ -191,7 +191,7 @@ export function LoginView() {
             </div>
           </aside>
 
-          <section className="relative flex items-center justify-center bg-[#fffdfc] p-5 sm:p-8 lg:border-l lg:border-neutral-200 lg:p-10">
+          <section className="relative order-1 flex items-center justify-center bg-[#fffdfc] p-5 sm:p-8 lg:order-2 lg:border-l lg:border-neutral-200 lg:p-10">
             <div aria-hidden="true" className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-neutral-950 via-[#9B5F58] to-[#C98F86]" />
 
             <div className="w-full max-w-md">

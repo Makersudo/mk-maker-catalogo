@@ -168,7 +168,7 @@ export function AdminHeader() {
           </button>
 
           {isNotificationOpen && (
-            <div className="absolute right-0 top-12 z-50 w-[340px] overflow-hidden rounded-2xl border border-neutral-200 bg-white shadow-2xl shadow-neutral-900/10 sm:w-[390px]">
+            <div className="absolute right-0 top-12 z-50 w-[340px] overflow-hidden rounded-2xl border border-neutral-200 bg-white shadow-2xl shadow-neutral-900/10 max-sm:fixed max-sm:inset-x-3 max-sm:top-20 max-sm:w-auto sm:w-[390px]">
               <div className="flex items-start justify-between gap-3 border-b border-neutral-100 px-4 py-3">
                 <div>
                   <p className="text-[10px] font-black uppercase tracking-[0.22em] text-[#9d6a63]">Central</p>

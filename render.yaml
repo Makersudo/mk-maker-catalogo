@@ -37,3 +37,18 @@ services:
         value: 900000
       - key: LOGIN_RATE_LIMIT_MAX_ATTEMPTS
         value: 5
+  - type: cron
+    name: mk-maker-analytics-snapshot
+    runtime: node
+    rootDir: backend
+    schedule: "55 2 * * *"
+    installCommand: npm install --include=dev
+    buildCommand: npm run build
+    startCommand: npm run analytics:snapshot
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_SERVICE_ROLE_KEY
+        sync: false

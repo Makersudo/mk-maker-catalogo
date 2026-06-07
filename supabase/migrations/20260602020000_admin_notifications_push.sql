@@ -32,6 +32,9 @@ create index if not exists idx_notifications_order_id
 create index if not exists idx_push_subscriptions_active
   on public.push_subscriptions(is_active);
 
+alter table public.notifications enable row level security;
+alter table public.push_subscriptions enable row level security;
+
 drop trigger if exists trg_push_subscriptions_updated_at on public.push_subscriptions;
 create trigger trg_push_subscriptions_updated_at
 before update on public.push_subscriptions

@@ -4,6 +4,10 @@ import { useProductStore, Product } from '../store/useProductStore';
 import { useCategoryStore } from '../../categories/store/useCategoryStore';
 import { ProductFormModal } from '../components/ProductFormModal';
 
+function formatAdminPrice(value: number) {
+  return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(Number(value || 0));
+}
+
 export function ProductsListView() {
   const { products, isLoading, error, deleteProduct, updateVisibility, bulkUpdateVisibility, fetchProducts, bulkUpdateStock } = useProductStore();
   const categories = useCategoryStore((state) => state.categories);
@@ -252,7 +256,104 @@ export function ProductsListView() {
         </div>
       </section>
 
-      <div className="bg-white rounded-xl md:rounded-2xl border border-neutral-200 shadow-sm overflow-hidden">
+      <div className="mobile-products-list grid gap-3 lg:hidden">
+        {isLoading ? (
+          <div className="rounded-2xl border border-neutral-200 bg-white p-5 text-sm font-bold text-neutral-500 shadow-sm">
+            Carregando produtos...
+          </div>
+        ) : filteredProducts.length === 0 ? (
+          <div className="rounded-2xl border border-dashed border-neutral-200 bg-white p-8 text-center shadow-sm">
+            <Package className="mx-auto mb-3 h-10 w-10 text-neutral-300" />
+            <h3 className="text-sm font-black text-neutral-900">Nenhum produto encontrado</h3>
+            <p className="mx-auto mt-1 max-w-xs text-xs text-neutral-500">
+              Ajuste os filtros ou cadastre um novo produto para a vitrine.
+            </p>
+          </div>
+        ) : (
+          filteredProducts.map((product) => (
+            <article key={product.id} className="rounded-2xl border border-neutral-200 bg-white p-3 shadow-sm shadow-neutral-900/5">
+              <div className="flex items-start gap-3">
+                <input
+                  type="checkbox"
+                  checked={selectedProductIds.includes(product.id)}
+                  onChange={() => toggleProductSelection(product.id)}
+                  aria-label={`Selecionar ${product.title}`}
+                  className="mt-1 h-4 w-4 shrink-0 accent-[#C98F86]"
+                />
+                <div className="h-20 w-20 shrink-0 overflow-hidden rounded-xl border border-neutral-200 bg-white">
+                  {product.images[0]
+                    ? <img src={product.images[0]} alt={product.title} className="h-full w-full object-contain p-1.5" />
+                    : <Package className="mx-auto mt-6 h-6 w-6 text-neutral-300" />}
+                </div>
+                <div className="min-w-0 flex-1">
+                  <h4 className="line-clamp-2 text-sm font-black leading-tight text-neutral-900">{product.title}</h4>
+                  <p className="mt-1 truncate text-[11px] font-semibold text-neutral-500">{product.slug || `ID: ${product.id.split('-')[0].toUpperCase()}`}</p>
+                  <p className="mt-2 line-clamp-1 text-xs font-bold text-[#7A4944]">{getCategoryLabel(product)}</p>
+                  <div className="mt-2 flex flex-wrap gap-1">
+                    {product.brandLabel && <span className="rounded bg-[#F8EEEC] px-1.5 py-0.5 text-[9px] font-black uppercase text-[#8D514B]">{product.brandLabel}</span>}
+                    {product.productType && <span className="rounded bg-neutral-100 px-1.5 py-0.5 text-[9px] font-black uppercase text-neutral-600">{product.productType}</span>}
+                    {product.images.length === 0 && (
+                      <span className="inline-flex items-center gap-1 rounded bg-orange-50 px-1.5 py-0.5 text-[9px] font-black uppercase text-orange-700">
+                        <ImageOff className="h-3 w-3" />
+                        Sem imagem
+                      </span>
+                    )}
+                  </div>
+                </div>
+              </div>
+
+              <div className="mt-3 grid grid-cols-3 gap-2 rounded-xl bg-neutral-50 p-2 text-center">
+                <div>
+                  <span className="block text-[9px] font-black uppercase tracking-widest text-neutral-400">Preco</span>
+                  <strong className="mt-1 block text-xs text-neutral-900">{formatAdminPrice(product.price)}</strong>
+                </div>
+                <div>
+                  <span className="block text-[9px] font-black uppercase tracking-widest text-neutral-400">Estoque</span>
+                  <strong className="mt-1 block text-xs text-neutral-900">{product.stockQuantity ?? 0}</strong>
+                </div>
+                <div>
+                  <span className="block text-[9px] font-black uppercase tracking-widest text-neutral-400">Status</span>
+                  <strong className={`mt-1 inline-flex rounded-full px-2 py-0.5 text-[10px] uppercase ${product.isActive ? 'bg-emerald-100 text-emerald-700' : 'bg-neutral-200 text-neutral-500'}`}>
+                    {product.isActive ? 'Ativo' : 'Inativo'}
+                  </strong>
+                </div>
+              </div>
+
+              <div className="mt-3 flex flex-wrap items-center justify-between gap-2 border-t border-neutral-100 pt-3">
+                <label className="inline-flex items-center gap-2 rounded-xl border border-emerald-200 bg-emerald-50 px-3 py-2 text-xs font-black uppercase text-emerald-700">
+                  <input
+                    type="checkbox"
+                    checked={product.isActive}
+                    onChange={() => updateVisibility(product.id, { isActive: !product.isActive })}
+                    className="h-4 w-4 accent-emerald-600"
+                  />
+                  Ativo
+                </label>
+                <div className="ml-auto flex gap-2">
+                  <button
+                    onClick={() => handleEdit(product)}
+                    className="inline-flex items-center gap-1 rounded-xl border border-[#E7C9C4] bg-[#F8EEEC] px-3 py-2 text-xs font-black uppercase text-[#8D514B]"
+                  >
+                    <Edit2 className="h-3.5 w-3.5" />
+                    Editar
+                  </button>
+                  <button
+                    onClick={() => {
+                      if (confirm('Excluir este produto?')) deleteProduct(product.id);
+                    }}
+                    className="inline-flex items-center gap-1 rounded-xl border border-rose-200 bg-rose-50 px-3 py-2 text-xs font-black uppercase text-rose-700"
+                  >
+                    <Trash2 className="h-3.5 w-3.5" />
+                    Excluir
+                  </button>
+                </div>
+              </div>
+            </article>
+          ))
+        )}
+      </div>
+
+      <div className="hidden lg:block bg-white rounded-xl md:rounded-2xl border border-neutral-200 shadow-sm overflow-hidden">
         <div className="overflow-x-auto custom-scrollbar">
           <table className="w-full min-w-[1320px] text-left border-collapse">
             <thead>

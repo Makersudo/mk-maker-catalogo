@@ -10,6 +10,8 @@ import { matchesOrderSearch, normalizeOrderStatus } from './status.js';
 import { selectActiveCampaignForProduct } from '../marketing/campaignRules.js';
 import { loadCandidateCampaigns } from '../marketing/campaignRepository.js';
 import { createNewOrderNotification, dispatchPushNotification } from '../notifications/service.js';
+import { buildOrderItemSaleFacts, publicOrderItem } from './saleFacts.js';
+import { clearDashboardAnalyticsCache } from '../dashboard/analyticsService.js';
 
 export const orderRouter = Router();
 
@@ -22,6 +24,12 @@ interface NormalizedOrderItem {
   unit_price: number;
   quantity: number;
   subtotal: number;
+  unit_purchase_cost: number;
+  cost_subtotal: number;
+  category_id?: string | null;
+  category_name?: string | null;
+  subcategory_id?: string | null;
+  subcategory_name?: string | null;
 }
 
 function formatWhatsAppMessage(order: any, items: any[]) {
@@ -67,7 +75,7 @@ orderRouter.post('/', async (req, res) => {
     const [productsResult, campaignRows] = await Promise.all([
       supabase
         .from('products')
-        .select('id,title,price,is_active,stock_quantity,product_variants(id,label,options,price,stock_quantity,is_active)')
+        .select('id,title,price,purchase_cost,is_active,stock_quantity,category_id,subcategory_id,category:categories!products_category_id_fkey(name),subcategory:categories!products_subcategory_id_fkey(name),product_variants(id,label,options,price,stock_quantity,is_active)')
         .in('id', productIds)
         .eq('is_active', true)
         .eq('catalog_status', 'live'),
@@ -100,6 +108,7 @@ orderRouter.post('/', async (req, res) => {
       const activeCampaign = selectActiveCampaignForProduct(product.id, baseUnitPrice, campaignRows, now);
       const unitPrice = activeCampaign?.finalPrice ?? baseUnitPrice;
       const subtotal = unitPrice * quantity;
+      const saleFacts = buildOrderItemSaleFacts({ product: product as any, quantity });
 
       return {
         product_id: product.id,
@@ -110,6 +119,7 @@ orderRouter.post('/', async (req, res) => {
         unit_price: unitPrice,
         quantity,
         subtotal,
+        ...saleFacts,
       };
     });
 
@@ -151,6 +161,7 @@ orderRouter.post('/', async (req, res) => {
 
     const { order, createdItems } = await createOrderWithItemsAndInventory(supabase, orderPayload, normalizedItems);
     invalidatePublicCatalogCache();
+    clearDashboardAnalyticsCache();
 
     createNewOrderNotification(supabase, order)
       .then((notification) => notification ? dispatchPushNotification(supabase, notification) : null)
@@ -163,7 +174,7 @@ orderRouter.post('/', async (req, res) => {
       ? `https://wa.me/${phone}?text=${encodeURIComponent(formatWhatsAppMessage(order, createdItems ?? []))}`
       : '';
 
-    return ok(res, { order, items: createdItems ?? [], whatsappUrl }, 201);
+    return ok(res, { order, items: (createdItems ?? []).map(publicOrderItem), whatsappUrl }, 201);
   } catch (error) {
     return handleError(res, error);
   }
