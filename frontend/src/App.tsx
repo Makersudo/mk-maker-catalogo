@@ -8,6 +8,7 @@ import { CartDrawer } from './components/cart/CartDrawer';
 import { useStore } from './store/useStore';
 import { getPublicCatalogBootstrap } from './services/catalogService';
 import { dismissPublicCatalogSplash, getCriticalPublicMedia, preparePublicCatalogSplash } from './publicCatalogSplash';
+import { AnimationPreferenceProvider } from './providers/AnimationPreferenceProvider';
 
 const LoginView = lazy(() => import('./modules/auth/views/LoginView').then((module) => ({ default: module.LoginView })));
 const AdminLayout = lazy(() => import('./modules/layout/views/AdminLayout').then((module) => ({ default: module.AdminLayout })));
@@ -98,8 +99,9 @@ function PublicStore() {
 export default function App() {
   return (
     <Router>
-      <AppSplashController />
-      <Routes>
+      <AnimationPreferenceProvider>
+        <AppSplashController />
+        <Routes>
         {/* Rota pública da Loja */}
         <Route path="/" element={<Navigate to="/catalogo" replace />} />
         <Route path="/inicio" element={<PublicStore />} />
@@ -194,7 +196,8 @@ export default function App() {
 
         {/* Fallback */}
         <Route path="*" element={<Navigate to="/catalogo" replace />} />
-      </Routes>
+        </Routes>
+      </AnimationPreferenceProvider>
     </Router>
   );
 }

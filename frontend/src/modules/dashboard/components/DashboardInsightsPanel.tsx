@@ -1,7 +1,8 @@
 import { useMemo, useState } from 'react';
 import { Boxes, CircleDollarSign, PackageCheck, ShieldCheck, Tags } from 'lucide-react';
-import { motion, useReducedMotion } from 'motion/react';
+import { motion } from 'motion/react';
 import type { CatalogMetrics, DashboardAnalytics, TrendPoint } from '../../../services/dashboardService';
+import { useAnimationPreference } from '../../../providers/AnimationPreferenceProvider';
 import { dashboardAnimation } from '../dashboardAnimation';
 import { AnimatedCounter } from './AnimatedCounter';
 import { RoundedBarChart } from './RoundedBarChart';
@@ -57,7 +58,7 @@ export function DashboardInsightsPanel({
   analytics: DashboardAnalytics;
 }) {
   const [activeTab, setActiveTab] = useState<InsightTab>('sales');
-  const reducedMotion = useReducedMotion();
+  const { shouldReduceDashboardMotion: reducedMotion } = useAnimationPreference();
 
   return (
     <section className="mt-5 rounded-2xl border border-neutral-200 bg-white p-4 shadow-[0_14px_38px_rgba(27,31,36,0.06)] md:p-5">
@@ -229,7 +230,7 @@ function InsightLayout({
   metrics: InsightMetric[];
   side: React.ReactNode;
 }) {
-  const reducedMotion = useReducedMotion();
+  const { shouldReduceDashboardMotion: reducedMotion } = useAnimationPreference();
 
   return (
     <motion.div

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useReducedMotion } from 'motion/react';
+import { useAnimationPreference } from '../../../providers/AnimationPreferenceProvider';
 import { dashboardAnimation } from '../dashboardAnimation';
 
 export function AnimatedCounter({
@@ -11,7 +11,7 @@ export function AnimatedCounter({
   format?: (value: number) => string;
   durationMs?: number;
 }) {
-  const reducedMotion = useReducedMotion();
+  const { shouldReduceDashboardMotion: reducedMotion } = useAnimationPreference();
   const [displayed, setDisplayed] = useState(0);
 
   useEffect(() => {

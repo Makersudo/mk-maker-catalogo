@@ -12,6 +12,8 @@ describe('unified dashboard workspace', () => {
     const insights = readFileSync(new URL('./components/DashboardInsightsPanel.tsx', import.meta.url), 'utf8');
     const counter = readFileSync(new URL('./components/AnimatedCounter.tsx', import.meta.url), 'utf8');
     const animation = readFileSync(new URL('./dashboardAnimation.ts', import.meta.url), 'utf8');
+    const provider = readFileSync(new URL('../../providers/AnimationPreferenceProvider.tsx', import.meta.url), 'utf8');
+    const app = readFileSync(new URL('../../App.tsx', import.meta.url), 'utf8');
 
     assert.equal(view.includes('DashboardAnalyticsWorkspace'), true);
     assert.equal(view.includes('HistoricalAnalyticsPanel'), false);
@@ -49,9 +51,29 @@ describe('unified dashboard workspace', () => {
     assert.equal(animation.includes('compactChartDuration: 24'), true);
     assert.equal(animation.includes('counterDurationMs: 32000'), true);
     assert.equal(animation.includes('counterFrameMs: 80'), true);
+    assert.equal(animation.includes('interface DashboardAnimationConfig'), true);
+    assert.equal(animation.includes('as const satisfies DashboardAnimationConfig'), true);
+    assert.equal(animation.includes('respectReducedMotion: true'), true);
+    assert.equal(animation.includes('forceMotion'), false);
+    assert.equal(animation.includes('shouldReduceDashboardMotion'), true);
+    assert.equal(animation.includes('prefersReducedMotion ?? false'), true);
     assert.equal(animation.includes('maxElementDelay: 12'), true);
     assert.equal(counter.includes('setTimeout(update'), true);
     assert.equal(counter.includes('clearTimeout'), true);
+    assert.equal(counter.includes('useAnimationPreference'), true);
+    assert.equal(bars.includes('useAnimationPreference'), true);
+    assert.equal(workspace.includes('useAnimationPreference'), true);
+    assert.equal(insights.includes('useAnimationPreference'), true);
+    assert.equal(counter.includes('useReducedMotion'), false);
+    assert.equal(bars.includes('useReducedMotion'), false);
+    assert.equal(workspace.includes('useReducedMotion'), false);
+    assert.equal(insights.includes('useReducedMotion'), false);
+    assert.equal(provider.includes('MotionConfig'), true);
+    assert.equal(provider.includes('useReducedMotion'), true);
+    assert.equal(provider.includes('shouldReduceDashboardMotion'), true);
+    assert.equal(provider.includes('createContext'), true);
+    assert.equal(provider.includes("reducedMotion={value.motionConfigReducedMotion}"), true);
+    assert.equal(app.includes('AnimationPreferenceProvider'), true);
     assert.equal(insights.includes('Vendas'), true);
     assert.equal(insights.includes('Estoque'), true);
     assert.equal(insights.includes('Categorias'), true);

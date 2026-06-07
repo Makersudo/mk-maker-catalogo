@@ -1,6 +1,7 @@
 import { AlertCircle, BarChart3, RefreshCw } from 'lucide-react';
-import { motion, useReducedMotion } from 'motion/react';
+import { motion } from 'motion/react';
 import type { DashboardAnalytics } from '../../../services/dashboardService';
+import { useAnimationPreference } from '../../../providers/AnimationPreferenceProvider';
 import { dashboardAnimation } from '../dashboardAnimation';
 import { MetricTrendCard } from './MetricTrendCard';
 import { PeriodSelector } from './PeriodSelector';
@@ -44,7 +45,7 @@ export function HistoricalAnalyticsPanel({
   analytics: AnalyticsState;
   categories: Array<{ categoryId: string; name: string }>;
 }) {
-  const reducedMotion = useReducedMotion();
+  const { shouldReduceDashboardMotion: reducedMotion } = useAnimationPreference();
 
   return (
     <section className="rounded-xl md:rounded-2xl border border-neutral-200 bg-[#FBF8F7] p-4 md:p-6 shadow-sm">

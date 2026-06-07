@@ -9,13 +9,14 @@ import {
   RefreshCw,
   X,
 } from 'lucide-react';
-import { motion, useReducedMotion } from 'motion/react';
+import { motion } from 'motion/react';
 import type {
   DashboardAnalytics,
   DashboardAnalyticsSeries,
   TrendPoint,
 } from '../../../services/dashboardService';
 import type { useDashboardOverview } from '../hooks/useDashboardOverview';
+import { useAnimationPreference } from '../../../providers/AnimationPreferenceProvider';
 import { dashboardAnimation } from '../dashboardAnimation';
 import { AnimatedCounter } from './AnimatedCounter';
 import { DashboardInsightsPanel } from './DashboardInsightsPanel';
@@ -82,7 +83,7 @@ function downloadCsv(option: MetricOption, points: TrendPoint[], comparisonPoint
 }
 
 export function DashboardAnalyticsWorkspace({ overview }: { overview: OverviewState }) {
-  const reducedMotion = useReducedMotion();
+  const { shouldReduceDashboardMotion: reducedMotion } = useAnimationPreference();
   const location = useLocation();
   const [metricKey, setMetricKey] = useState<MetricKey>('revenue');
   const current = overview.data?.current;

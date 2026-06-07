@@ -1,5 +1,6 @@
-import { motion, useReducedMotion } from 'motion/react';
+import { motion } from 'motion/react';
 import type { TrendPoint } from '../../../services/dashboardService';
+import { useAnimationPreference } from '../../../providers/AnimationPreferenceProvider';
 import { dashboardAnimation } from '../dashboardAnimation';
 
 type RoundedBarChartProps = {
@@ -28,7 +29,7 @@ export function RoundedBarChart({
   compact = false,
   highlightMax = true,
 }: RoundedBarChartProps) {
-  const reducedMotion = useReducedMotion();
+  const { shouldReduceDashboardMotion: reducedMotion } = useAnimationPreference();
   const width = 760;
   const top = compact ? 6 : 26;
   const bottom = compact ? 4 : 34;
