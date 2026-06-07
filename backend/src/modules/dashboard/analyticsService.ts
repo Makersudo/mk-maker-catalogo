@@ -141,6 +141,7 @@ export async function buildDashboardAnalytics(
     repository.loadProductsCreated(previous),
   ]);
   const bucketList = buckets(range);
+  const previousBucketList = buckets(previous);
   const currentRevenue = sum(sales as unknown as Array<Record<string, unknown>>, 'revenue');
   const currentOrders = sum(sales as unknown as Array<Record<string, unknown>>, 'orders');
   const previousRevenue = sum(previousSales as unknown as Array<Record<string, unknown>>, 'revenue');
@@ -163,6 +164,19 @@ export async function buildDashboardAnalytics(
       estimatedGrossProfit: pointInTimeSeries(bucketList, range.period, snapshots, 'estimated_gross_profit'),
       realizedGrossProfit: seriesFromRows(bucketList, range.period, sales, 'realized_gross_profit'),
       completionScore: pointInTimeSeries(bucketList, range.period, snapshots, 'completion_score'),
+    },
+    previousSeries: {
+      revenue: seriesFromRows(previousBucketList, range.period, previousSales, 'revenue'),
+      orders: seriesFromRows(previousBucketList, range.period, previousSales, 'orders'),
+      unitsSold: seriesFromRows(previousBucketList, range.period, previousSales, 'units_sold'),
+      averageTicket: seriesFromRows(previousBucketList, range.period, previousSales, 'average_ticket'),
+      productsCreated: seriesFromRows(previousBucketList, range.period, previousCreated, 'products_created'),
+      stockUnits: pointInTimeSeries(previousBucketList, range.period, previousSnapshots, 'stock_units'),
+      inventoryPurchaseValue: pointInTimeSeries(previousBucketList, range.period, previousSnapshots, 'inventory_purchase_value'),
+      inventorySaleValue: pointInTimeSeries(previousBucketList, range.period, previousSnapshots, 'inventory_sale_value'),
+      estimatedGrossProfit: pointInTimeSeries(previousBucketList, range.period, previousSnapshots, 'estimated_gross_profit'),
+      realizedGrossProfit: seriesFromRows(previousBucketList, range.period, previousSales, 'realized_gross_profit'),
+      completionScore: pointInTimeSeries(previousBucketList, range.period, previousSnapshots, 'completion_score'),
     },
     comparison: {
       revenuePercent: comparison(currentRevenue, previousRevenue),

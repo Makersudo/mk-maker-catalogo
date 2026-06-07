@@ -42,6 +42,9 @@ describe('buildDashboardAnalytics', () => {
     assert.equal(result.series.revenue.length, 6);
     assert.equal(result.series.revenue[0].value, 100);
     assert.equal(result.series.revenue[2].value, 0);
+    assert.equal(result.previousSeries.revenue.length, 6);
+    assert.equal(result.previousSeries.revenue[0].value, 100);
+    assert.equal(result.previousSeries.stockUnits.at(-1)?.value, 8);
     assert.equal(result.series.stockUnits.at(-1)?.value, 10);
     assert.equal(result.comparison.revenuePercent, 50);
     assert.equal(result.comparison.ordersPercent, 50);

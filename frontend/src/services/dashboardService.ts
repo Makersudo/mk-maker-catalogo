@@ -145,24 +145,27 @@ export interface TrendPoint {
   value: number;
 }
 
+export interface DashboardAnalyticsSeries {
+  revenue: TrendPoint[];
+  orders: TrendPoint[];
+  unitsSold: TrendPoint[];
+  averageTicket: TrendPoint[];
+  productsCreated: TrendPoint[];
+  stockUnits: TrendPoint[];
+  inventoryPurchaseValue: TrendPoint[];
+  inventorySaleValue: TrendPoint[];
+  estimatedGrossProfit: TrendPoint[];
+  realizedGrossProfit: TrendPoint[];
+  completionScore: TrendPoint[];
+}
+
 export interface DashboardAnalytics {
   period: AnalyticsPeriod;
   timezone: string;
   range: { from: string; to: string };
   categoryId: string | null;
-  series: {
-    revenue: TrendPoint[];
-    orders: TrendPoint[];
-    unitsSold: TrendPoint[];
-    averageTicket: TrendPoint[];
-    productsCreated: TrendPoint[];
-    stockUnits: TrendPoint[];
-    inventoryPurchaseValue: TrendPoint[];
-    inventorySaleValue: TrendPoint[];
-    estimatedGrossProfit: TrendPoint[];
-    realizedGrossProfit: TrendPoint[];
-    completionScore: TrendPoint[];
-  };
+  series: DashboardAnalyticsSeries;
+  previousSeries: DashboardAnalyticsSeries;
   comparison: {
     revenuePercent: number | null;
     ordersPercent: number | null;
@@ -194,9 +197,17 @@ export async function getDashboardAnalytics(period: AnalyticsPeriod, categoryId?
   return apiRequest<DashboardAnalytics>(`/api/dashboard/analytics?${query.toString()}`, { auth: true });
 }
 
-export async function getDashboardOverview(period: AnalyticsPeriod, categoryId?: string | null) {
+export async function getDashboardOverview(
+  period: AnalyticsPeriod,
+  categoryId?: string | null,
+  dateRange?: { from: string; to: string } | null
+) {
   const query = new URLSearchParams({ period });
   if (categoryId) query.set('categoryId', categoryId);
+  if (dateRange?.from && dateRange?.to) {
+    query.set('from', dateRange.from);
+    query.set('to', dateRange.to);
+  }
   return apiRequest<DashboardOverview>(`/api/dashboard/overview?${query.toString()}`, { auth: true });
 }
 

@@ -47,6 +47,7 @@ export interface DashboardAnalyticsResponse {
   range: { from: string; to: string };
   categoryId: string | null;
   series: DashboardAnalyticsSeries;
+  previousSeries: DashboardAnalyticsSeries;
   comparison: DashboardAnalyticsComparison;
 }
 
