@@ -3,6 +3,7 @@ export interface DashboardAnimationConfig {
   cardDuration: number;
   chartDuration: number;
   compactChartDuration: number;
+  progressDuration: number;
   counterDurationMs: number;
   counterFrameMs: number;
   cardStagger: number;
@@ -18,6 +19,7 @@ export const dashboardAnimation = {
   cardDuration: 24,
   chartDuration: 36,
   compactChartDuration: 24,
+  progressDuration: 28,
   counterDurationMs: 32000,
   counterFrameMs: 80,
   cardStagger: 1.6,

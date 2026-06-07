@@ -49,6 +49,7 @@ describe('unified dashboard workspace', () => {
     assert.equal(animation.includes('cardDuration: 24'), true);
     assert.equal(animation.includes('chartDuration: 36'), true);
     assert.equal(animation.includes('compactChartDuration: 24'), true);
+    assert.equal(animation.includes('progressDuration: 28'), true);
     assert.equal(animation.includes('counterDurationMs: 32000'), true);
     assert.equal(animation.includes('counterFrameMs: 80'), true);
     assert.equal(animation.includes('interface DashboardAnimationConfig'), true);
@@ -58,8 +59,8 @@ describe('unified dashboard workspace', () => {
     assert.equal(animation.includes('shouldReduceDashboardMotion'), true);
     assert.equal(animation.includes('prefersReducedMotion ?? false'), true);
     assert.equal(animation.includes('maxElementDelay: 12'), true);
-    assert.equal(counter.includes('setTimeout(update'), true);
-    assert.equal(counter.includes('clearTimeout'), true);
+    assert.equal(counter.includes('requestAnimationFrame'), true);
+    assert.equal(counter.includes('cancelAnimationFrame'), true);
     assert.equal(counter.includes('useAnimationPreference'), true);
     assert.equal(bars.includes('useAnimationPreference'), true);
     assert.equal(workspace.includes('useAnimationPreference'), true);
@@ -84,5 +85,39 @@ describe('unified dashboard workspace', () => {
     assert.equal(insights.includes('Taxa de conclusao'), true);
     assert.equal(insights.includes('Tempo ate confirmar'), true);
     assert.equal(insights.includes('Maior lucro realizado'), true);
+  });
+
+  it('uses production-safe dashboard animation primitives', () => {
+    const counter = readFileSync(new URL('./components/AnimatedCounter.tsx', import.meta.url), 'utf8');
+    const bars = readFileSync(new URL('./components/RoundedBarChart.tsx', import.meta.url), 'utf8');
+    const workspace = readFileSync(new URL('./components/DashboardAnalyticsWorkspace.tsx', import.meta.url), 'utf8');
+    const provider = readFileSync(new URL('../../providers/AnimationPreferenceProvider.tsx', import.meta.url), 'utf8');
+
+    assert.equal(counter.includes('requestAnimationFrame'), true);
+    assert.equal(counter.includes('cancelAnimationFrame'), true);
+    assert.equal(counter.includes('setTimeout'), false);
+    assert.equal(counter.includes('aria-live="polite"'), true);
+    assert.equal(counter.includes('aria-atomic="true"'), true);
+    assert.equal(counter.includes('role="timer"'), true);
+    assert.equal(counter.includes('document.visibilityState'), true);
+    assert.equal(counter.includes('visibilitychange'), true);
+
+    assert.equal(bars.includes('scaleY'), true);
+    assert.equal(bars.includes('transformBox'), true);
+    assert.equal(bars.includes('transformOrigin'), true);
+    assert.equal(bars.includes('data-dashboard-animated-bar'), true);
+    assert.equal(bars.includes('dashboardAnimation.barDelayStep'), true);
+    assert.equal(bars.includes('height: valueHeight'), false);
+
+    assert.equal(workspace.includes('AnimatedProgressBar'), true);
+    assert.equal(workspace.includes('role="progressbar"'), true);
+    assert.equal(workspace.includes('aria-valuenow'), true);
+    assert.equal(workspace.includes('scaleX'), true);
+    assert.equal(workspace.includes('style={{ width:'), false);
+
+    assert.equal(provider.includes('document.visibilityState'), true);
+    assert.equal(provider.includes('visibilitychange'), true);
+    assert.equal(provider.includes('paused'), true);
+    assert.equal(provider.includes('durationScale'), true);
   });
 });

@@ -55,7 +55,7 @@ export function RoundedBarChart({
       aria-label={`${label}: grafico de barras com ${points.length} periodos`}
       initial={reducedMotion ? false : 'hidden'}
       animate="visible"
-      variants={{ visible: { transition: { staggerChildren: compact ? 0.08 : 0.18 } } }}
+      variants={{ visible: { transition: { staggerChildren: compact ? 0.08 : dashboardAnimation.cardStagger } } }}
     >
       <defs>
         <pattern id={patternId} width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(35)">
@@ -107,12 +107,16 @@ export function RoundedBarChart({
               </rect>
             )}
             <motion.rect
+              data-dashboard-animated-bar
               x={x}
+              y={y}
+              height={valueHeight}
               width={barWidth}
               rx={radius}
               fill={isMax ? '#078653' : `url(#${patternId})`}
-              initial={reducedMotion ? false : { y: top + chartHeight, height: 0, opacity: 0.35 }}
-              animate={{ y, height: valueHeight, opacity: 1 }}
+              style={{ transformBox: 'fill-box', transformOrigin: 'center bottom' }}
+              initial={reducedMotion ? false : { scaleY: 0, opacity: 0.35 }}
+              animate={{ scaleY: 1, opacity: 1 }}
               transition={{
                 duration: chartDuration,
                 delay: Math.min(index * barDelayStep, dashboardAnimation.maxElementDelay),

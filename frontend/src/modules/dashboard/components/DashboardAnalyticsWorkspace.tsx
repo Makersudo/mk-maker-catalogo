@@ -243,9 +243,7 @@ export function DashboardAnalyticsWorkspace({ overview }: { overview: OverviewSt
           <article className="h-full rounded-2xl border border-[#CFE5DA] bg-white p-5 shadow-[0_16px_38px_rgba(7,134,83,0.08)]">
             <span className="text-[10px] font-black uppercase tracking-widest text-emerald-700">Saude agora</span>
             <strong className="mt-3 block text-5xl font-black text-neutral-950"><AnimatedCounter value={health} format={percent} /></strong>
-            <div className="mt-4 h-2 overflow-hidden rounded-full bg-emerald-50">
-              <div className="h-full rounded-full bg-[#078653]" style={{ width: `${health}%` }} />
-            </div>
+            <AnimatedProgressBar value={health} label="Saude da vitrine" />
             <div className="mt-7 grid grid-cols-2 gap-2">
               <NowMetric label="Live" value={metrics.summary.liveProducts} />
               <NowMetric label="Com imagem" value={metrics.imageCoverage.withImage} />
@@ -276,6 +274,30 @@ export function DashboardAnalyticsWorkspace({ overview }: { overview: OverviewSt
 
       <DashboardInsightsPanel key={`insights:${animationRunKey}`} metrics={metrics} analytics={analytics} />
     </motion.section>
+  );
+}
+
+function AnimatedProgressBar({ value, label }: { value: number; label: string }) {
+  const { shouldReduceDashboardMotion: reducedMotion } = useAnimationPreference();
+  const safeValue = Math.max(0, Math.min(100, Number.isFinite(value) ? value : 0));
+
+  return (
+    <div
+      className="mt-4 h-2 overflow-hidden rounded-full bg-emerald-50"
+      role="progressbar"
+      aria-label={label}
+      aria-valuemin={0}
+      aria-valuemax={100}
+      aria-valuenow={Math.round(safeValue)}
+    >
+      <motion.div
+        className="h-full rounded-full bg-[#078653]"
+        style={{ transformOrigin: 'left center' }}
+        initial={reducedMotion ? false : { scaleX: 0 }}
+        animate={{ scaleX: safeValue / 100 }}
+        transition={{ duration: dashboardAnimation.progressDuration, ease: dashboardAnimation.easeOut }}
+      />
+    </div>
   );
 }
 
