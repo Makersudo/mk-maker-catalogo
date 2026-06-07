@@ -17,7 +17,7 @@ The historical dashboard combines immutable order events with daily snapshots of
 3. Capture the first snapshot.
 4. Verify all four analytics periods through the authenticated admin dashboard.
 5. Deploy the frontend.
-6. Enable and monitor the Render Cron service.
+6. Configure and monitor the GitHub Actions snapshot workflow.
 
 ## First Snapshot
 
@@ -37,13 +37,12 @@ Snapshot writes are idempotent. Re-running the same date replaces that date's gl
 
 ## Schedule
 
-`render.yaml` defines `mk-maker-analytics-snapshot` at `02:55 UTC`, equivalent to `23:55 America/Sao_Paulo`.
+`.github/workflows/analytics-snapshot.yml` runs at `02:55 UTC`, equivalent to `23:55 America/Sao_Paulo`, and also supports manual execution.
 
-Render Cron availability and billing must be confirmed before enabling the service. The cron service needs:
+The repository Actions secrets must contain:
 
 - `SUPABASE_URL`
 - `SUPABASE_SERVICE_ROLE_KEY`
-- `NODE_ENV=production`
 
 ## Verification
 
@@ -86,7 +85,7 @@ Compare those values with `dashboard_sales_analytics('monthly', '2026-06-01', '2
 
 ## Rollback
 
-1. Disable the Render Cron service before rolling back application code.
+1. Disable the `Capture analytics snapshot` GitHub Actions workflow before rolling back application code.
 2. Roll back frontend and backend deployments together so the dashboard does not call unavailable RPCs.
 3. Keep snapshot tables and sale-time order-item fields during rollback; dropping historical data is not required and is intentionally avoided.
 4. Remove analytics tables, RPCs, or columns only through a separately reviewed destructive migration after confirming no deployed version consumes them.
