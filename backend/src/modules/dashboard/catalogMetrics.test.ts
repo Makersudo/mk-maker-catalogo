@@ -86,8 +86,13 @@ describe('buildCatalogMetrics', () => {
           status: 'paid',
           created_at: '2026-04-23T11:00:00.000Z',
           order_items: [
-            { product_id: 'p1', quantity: 2, subtotal: 159.8 },
-            { product_id: 'p3', quantity: 1, subtotal: 99.9 },
+            { product_id: 'p1', quantity: 2, subtotal: 159.8, cost_subtotal: 60 },
+            { product_id: 'p3', quantity: 1, subtotal: 99.9, cost_subtotal: 25 },
+          ],
+          order_status_events: [
+            { next_status: 'confirmed', created_at: '2026-04-23T11:10:00.000Z' },
+            { next_status: 'ready_for_pickup', created_at: '2026-04-23T11:40:00.000Z' },
+            { next_status: 'completed', created_at: '2026-04-23T12:00:00.000Z' },
           ],
         },
         {
@@ -96,7 +101,10 @@ describe('buildCatalogMetrics', () => {
           status: 'cancelled',
           created_at: '2026-04-22T11:00:00.000Z',
           order_items: [
-            { product_id: 'p1', quantity: 1, subtotal: 79.9 },
+            { product_id: 'p1', quantity: 1, subtotal: 79.9, cost_subtotal: 30 },
+          ],
+          order_status_events: [
+            { next_status: 'cancelled', created_at: '2026-04-22T11:20:00.000Z' },
           ],
         },
       ],
@@ -128,7 +136,14 @@ describe('buildCatalogMetrics', () => {
     assert.equal(metrics.sales.averageTicket, 259.7);
     assert.equal(metrics.sales.unitsSold, 3);
     assert.equal(metrics.sales.validOrders, 1);
+    assert.equal(metrics.sales.realizedGrossProfit, 174.7);
+    assert.equal(metrics.orderOperations.averageMinutesToConfirmation, 10);
+    assert.equal(metrics.orderOperations.averageMinutesToReady, 40);
+    assert.equal(metrics.orderOperations.averageMinutesToCompletion, 60);
+    assert.equal(metrics.orderOperations.fulfillmentRate, 100);
+    assert.equal(metrics.orderOperations.cancellationRate, 50);
     assert.equal(metrics.catalogLines.find((item) => item.key === 'pele')?.unitsSold, 2);
+    assert.equal(metrics.catalogLines.find((item) => item.key === 'pele')?.realizedGrossProfit, 99.8);
     assert.equal(metrics.catalogLines.find((item) => item.key === 'olhos')?.withoutPrice, 1);
     assert.deepEqual(metrics.catalogLines.map((item) => item.label), ['Pele', 'Olhos', 'Sem categoria']);
     assert.equal(metrics.quality.withoutImage.count, 1);
@@ -138,9 +153,11 @@ describe('buildCatalogMetrics', () => {
     assert.equal(metrics.quality.emptyCategories.count, 1);
     assert.equal(metrics.topProductsByRevenue[0].id, 'p1');
     assert.equal(metrics.topProductsByRevenue[0].revenue, 159.8);
+    assert.equal(metrics.topProductsByProfit[0].realizedGrossProfit, 99.8);
     assert.equal(metrics.topProductsByRevenue[0].lineLabel, 'Pele');
     assert.equal(metrics.categoryPerformance[0].categoryId, 'cat-skin');
     assert.equal(metrics.categoryPerformance[0].revenue, 159.8);
+    assert.equal(metrics.categoryPerformance[0].realizedGrossProfit, 99.8);
     assert.equal(metrics.activity.productsCreatedLast7Days, 2);
     assert.equal(metrics.activity.ordersLast7Days, 1);
     assert.equal(metrics.alerts[0].severity, 'critical');

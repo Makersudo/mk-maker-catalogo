@@ -32,5 +32,8 @@ describe('unified dashboard workspace', () => {
     assert.equal(insights.includes('Estoque'), true);
     assert.equal(insights.includes('Categorias'), true);
     assert.equal(insights.includes('Qualidade'), true);
+    assert.equal(insights.includes('Taxa de conclusao'), true);
+    assert.equal(insights.includes('Tempo ate confirmar'), true);
+    assert.equal(insights.includes('Maior lucro realizado'), true);
   });
 });

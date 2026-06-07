@@ -41,6 +41,11 @@ export interface CatalogMetricsOrder {
     product_id?: string | null;
     quantity?: number | string | null;
     subtotal?: number | string | null;
+    cost_subtotal?: number | string | null;
+  }> | null;
+  order_status_events?: Array<{
+    next_status?: string | null;
+    created_at?: string | null;
   }> | null;
 }
 
@@ -99,6 +104,21 @@ function isValidOrder(order: CatalogMetricsOrder): boolean {
 
 function recentSince(now: Date, days: number): number {
   return now.getTime() - days * 24 * 60 * 60 * 1000;
+}
+
+function average(values: number[]): number {
+  return values.length ? Math.round(values.reduce((total, value) => total + value, 0) / values.length) : 0;
+}
+
+function minutesToStatus(order: CatalogMetricsOrder, status: string): number | null {
+  if (!order.created_at) return null;
+  const startedAt = new Date(order.created_at).getTime();
+  const eventAt = (order.order_status_events ?? [])
+    .filter((event) => event.next_status === status && event.created_at)
+    .map((event) => new Date(event.created_at as string).getTime())
+    .filter((value) => Number.isFinite(value) && value >= startedAt)
+    .sort((a, b) => a - b)[0];
+  return eventAt === undefined ? null : Math.round((eventAt - startedAt) / 60_000);
 }
 
 function productStock(product: CatalogMetricsProduct): number {
@@ -215,18 +235,23 @@ export function buildCatalogMetrics(input: BuildCatalogMetricsInput, options: Bu
   const liveProducts = products.filter((product) => statusKey(product.catalog_status) === 'live').length;
   const resolveCatalogLine = buildCatalogLineResolver(categories);
 
-  const unitsByProduct = new Map<string, { units: number; revenue: number }>();
+  const unitsByProduct = new Map<string, { units: number; revenue: number; realizedGrossProfit: number }>();
   let totalRevenue = 0;
   let unitsSold = 0;
+  let realizedGrossProfit = 0;
   for (const order of validOrders) {
     totalRevenue += numberValue(order.total_amount);
     for (const item of order.order_items ?? []) {
       const productId = item.product_id;
       if (!productId) continue;
-      const current = unitsByProduct.get(productId) ?? { units: 0, revenue: 0 };
+      const itemRevenue = numberValue(item.subtotal);
+      const itemProfit = itemRevenue - numberValue(item.cost_subtotal);
+      const current = unitsByProduct.get(productId) ?? { units: 0, revenue: 0, realizedGrossProfit: 0 };
       current.units += numberValue(item.quantity);
-      current.revenue += numberValue(item.subtotal);
+      current.revenue += itemRevenue;
+      current.realizedGrossProfit += itemProfit;
       unitsSold += numberValue(item.quantity);
+      realizedGrossProfit += itemProfit;
       unitsByProduct.set(productId, current);
     }
   }
@@ -260,7 +285,7 @@ export function buildCatalogMetrics(input: BuildCatalogMetricsInput, options: Bu
 
   const emptyCategories = categories.filter((category) => category.is_active !== false && !(productsByCategory.get(category.id)?.length));
   const productSales = products.map((product) => {
-    const sales = unitsByProduct.get(product.id) ?? { units: 0, revenue: 0 };
+    const sales = unitsByProduct.get(product.id) ?? { units: 0, revenue: 0, realizedGrossProfit: 0 };
     const catalogLine = resolveCatalogLine(product);
     return {
       id: product.id,
@@ -269,6 +294,7 @@ export function buildCatalogMetrics(input: BuildCatalogMetricsInput, options: Bu
       lineLabel: catalogLine.label,
       unitsSold: sales.units,
       revenue: roundMoney(sales.revenue),
+      realizedGrossProfit: roundMoney(sales.realizedGrossProfit),
     };
   });
 
@@ -297,6 +323,7 @@ export function buildCatalogMetrics(input: BuildCatalogMetricsInput, options: Bu
       stockUnits: scoped.reduce((sum, product) => sum + productStock(product), 0),
       unitsSold: scopedSales.reduce((sum, item) => sum + item.unitsSold, 0),
       revenue: roundMoney(scopedSales.reduce((sum, item) => sum + item.revenue, 0)),
+      realizedGrossProfit: roundMoney(scopedSales.reduce((sum, item) => sum + item.realizedGrossProfit, 0)),
     };
   }).sort((a, b) => {
     const aOrder = lineByKey.get(a.key)?.order ?? Number.MAX_SAFE_INTEGER;
@@ -319,6 +346,7 @@ export function buildCatalogMetrics(input: BuildCatalogMetricsInput, options: Bu
       withoutImage: scoped.filter((product) => !hasImage(product)).length,
       unitsSold: scopedSales.reduce((sum, item) => sum + item.unitsSold, 0),
       revenue: roundMoney(scopedSales.reduce((sum, item) => sum + item.revenue, 0)),
+      realizedGrossProfit: roundMoney(scopedSales.reduce((sum, item) => sum + item.realizedGrossProfit, 0)),
     };
   }).sort((a, b) => b.revenue - a.revenue || b.totalProducts - a.totalProducts || a.name.localeCompare(b.name));
 
@@ -394,6 +422,15 @@ export function buildCatalogMetrics(input: BuildCatalogMetricsInput, options: Bu
       totalRevenue: roundMoney(totalRevenue),
       averageTicket: roundMoney(validOrders.length ? totalRevenue / validOrders.length : 0),
       unitsSold,
+      realizedGrossProfit: roundMoney(realizedGrossProfit),
+    },
+    orderOperations: {
+      openOrders: validOrders.filter((order) => !['completed'].includes(String(order.status)) && minutesToStatus(order, 'completed') === null).length,
+      fulfillmentRate: percent(validOrders.filter((order) => order.status === 'completed' || minutesToStatus(order, 'completed') !== null).length, validOrders.length),
+      cancellationRate: percent(input.orders.filter((order) => order.status === 'cancelled').length, input.orders.length),
+      averageMinutesToConfirmation: average(validOrders.map((order) => minutesToStatus(order, 'confirmed')).filter((value): value is number => value !== null)),
+      averageMinutesToReady: average(validOrders.map((order) => minutesToStatus(order, 'ready_for_pickup')).filter((value): value is number => value !== null)),
+      averageMinutesToCompletion: average(validOrders.map((order) => minutesToStatus(order, 'completed')).filter((value): value is number => value !== null)),
     },
     catalogLines,
     quality: {
@@ -415,6 +452,10 @@ export function buildCatalogMetrics(input: BuildCatalogMetricsInput, options: Bu
     topProductsByUnits: productSales
       .filter((item) => item.revenue > 0 || item.unitsSold > 0)
       .sort((a, b) => b.unitsSold - a.unitsSold || b.revenue - a.revenue)
+      .slice(0, 5),
+    topProductsByProfit: productSales
+      .filter((item) => item.realizedGrossProfit > 0 || item.unitsSold > 0)
+      .sort((a, b) => b.realizedGrossProfit - a.realizedGrossProfit || b.revenue - a.revenue)
       .slice(0, 5),
     categoryPerformance: categoryPerformance.slice(0, 8),
     activity: {

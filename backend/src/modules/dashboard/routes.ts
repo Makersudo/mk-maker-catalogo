@@ -44,7 +44,7 @@ dashboardRouter.get('/overview', requireAuth, async (req, res) => {
     });
     const supabase = getSupabaseAdmin();
     const data = await buildDashboardOverview({
-      loadCurrent: () => loadDashboardCurrent(supabase, range.categoryId),
+      loadCurrent: () => loadDashboardCurrent(supabase, range),
       loadAnalytics: () => getCachedDashboardAnalytics(range, createAnalyticsRepository(supabase)),
     });
     return ok(res, data);

@@ -21,6 +21,14 @@ function points(items: Array<{ label: string; value: number }>): TrendPoint[] {
   return items.map((item, index) => ({ bucket: String(index), label: item.label, value: item.value }));
 }
 
+function duration(value: number) {
+  if (!value) return 'Sem dados';
+  if (value < 60) return `${value} min`;
+  const hours = Math.floor(value / 60);
+  const minutes = value % 60;
+  return minutes ? `${hours}h ${minutes}min` : `${hours}h`;
+}
+
 export function DashboardInsightsPanel({
   metrics,
   analytics,
@@ -76,11 +84,15 @@ function SalesInsight({ metrics, analytics }: { metrics: CatalogMetrics; analyti
       chart={<RoundedBarChart points={analytics.series.orders} comparisonPoints={analytics.previousSeries.orders} label="Pedidos por periodo" />}
       metrics={[
         ['Receita valida', currency(metrics.sales.totalRevenue)],
-        ['Ticket medio', currency(metrics.sales.averageTicket)],
-        ['Unidades vendidas', metrics.sales.unitsSold],
-        ['Cancelados', metrics.sales.cancelledOrders],
+        ['Lucro realizado', currency(metrics.sales.realizedGrossProfit)],
+        ['Taxa de conclusao', `${metrics.orderOperations.fulfillmentRate}%`],
+        ['Taxa de cancelamento', `${metrics.orderOperations.cancellationRate}%`],
+        ['Pedidos abertos', metrics.orderOperations.openOrders],
+        ['Tempo ate confirmar', duration(metrics.orderOperations.averageMinutesToConfirmation)],
+        ['Tempo ate retirada', duration(metrics.orderOperations.averageMinutesToReady)],
+        ['Tempo ate finalizar', duration(metrics.orderOperations.averageMinutesToCompletion)],
       ]}
-      side={<Ranking title="Maior receita" items={metrics.topProductsByRevenue.map((item) => [item.title, currency(item.revenue)])} />}
+      side={<Ranking title="Maior lucro realizado" items={metrics.topProductsByProfit.map((item) => [item.title, currency(item.realizedGrossProfit)])} />}
     />
   );
 }
@@ -130,26 +142,26 @@ function ProductsInsight({ metrics, analytics }: { metrics: CatalogMetrics; anal
 function CategoriesInsight({ metrics }: { metrics: CatalogMetrics }) {
   const categoryPoints = useMemo(() => points(
     [...metrics.categoryPerformance]
-      .sort((a, b) => b.revenue - a.revenue)
+      .sort((a, b) => b.realizedGrossProfit - a.realizedGrossProfit)
       .slice(0, 10)
-      .map((category) => ({ label: category.name, value: category.revenue }))
+      .map((category) => ({ label: category.name, value: category.realizedGrossProfit }))
   ), [metrics.categoryPerformance]);
   const ranking = [...metrics.categoryPerformance]
-    .sort((a, b) => b.revenue - a.revenue)
+    .sort((a, b) => b.realizedGrossProfit - a.realizedGrossProfit)
     .slice(0, 8)
-    .map((category) => [category.name, currency(category.revenue)] as [string, string]);
+    .map((category) => [category.name, currency(category.realizedGrossProfit)] as [string, string]);
 
   return (
     <InsightLayout
-      title="Receita por categoria"
-      chart={<RoundedBarChart points={categoryPoints} label="Receita por categoria" formatValue={currency} />}
+      title="Lucro realizado por categoria"
+      chart={<RoundedBarChart points={categoryPoints} label="Lucro realizado por categoria" formatValue={currency} />}
       metrics={[
         ['Categorias analisadas', metrics.categoryPerformance.length],
-        ['Com produtos', metrics.categoryPerformance.filter((item) => item.totalProducts > 0).length],
         ['Com vendas', metrics.categoryPerformance.filter((item) => item.revenue > 0).length],
-        ['Produtos live', metrics.summary.liveProducts],
+        ['Receita valida', currency(metrics.sales.totalRevenue)],
+        ['Lucro realizado', currency(metrics.sales.realizedGrossProfit)],
       ]}
-      side={<Ranking title="Categorias por receita" items={ranking} />}
+      side={<Ranking title="Categorias por lucro" items={ranking} />}
     />
   );
 }

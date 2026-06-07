@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { describe, it } from 'node:test';
-import { buildDashboardOverview } from './overviewService.js';
+import { buildDashboardOverview, dashboardOrderRange } from './overviewService.js';
 
 describe('dashboard overview', () => {
   it('links current operational metrics and historical analytics in one response', async () => {
@@ -16,5 +16,17 @@ describe('dashboard overview', () => {
     assert.equal(result.generatedAt, '2026-06-07T12:00:00.000Z');
     assert.equal(result.current, current);
     assert.equal(result.analytics, analytics);
+  });
+
+  it('creates inclusive Sao Paulo order boundaries for the selected analytics range', () => {
+    assert.deepEqual(dashboardOrderRange({
+      period: 'daily',
+      from: '2026-06-01',
+      to: '2026-06-07',
+      categoryId: null,
+    }), {
+      from: '2026-06-01T00:00:00.000-03:00',
+      toExclusive: '2026-06-08T00:00:00.000-03:00',
+    });
   });
 });

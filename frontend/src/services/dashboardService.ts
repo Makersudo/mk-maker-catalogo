@@ -47,6 +47,15 @@ export interface CatalogMetrics {
     totalRevenue: number;
     averageTicket: number;
     unitsSold: number;
+    realizedGrossProfit: number;
+  };
+  orderOperations: {
+    openOrders: number;
+    fulfillmentRate: number;
+    cancellationRate: number;
+    averageMinutesToConfirmation: number;
+    averageMinutesToReady: number;
+    averageMinutesToCompletion: number;
   };
   catalogLines: Array<{
     key: string;
@@ -63,6 +72,7 @@ export interface CatalogMetrics {
     stockUnits: number;
     unitsSold: number;
     revenue: number;
+    realizedGrossProfit: number;
   }>;
   quality: {
     withoutImage: MetricIssueList;
@@ -78,6 +88,7 @@ export interface CatalogMetrics {
   };
   topProductsByRevenue: Array<ProductRanking>;
   topProductsByUnits: Array<ProductRanking>;
+  topProductsByProfit: Array<ProductRanking>;
   categoryPerformance: Array<{
     categoryId: string;
     name: string;
@@ -89,6 +100,7 @@ export interface CatalogMetrics {
     withoutImage: number;
     unitsSold: number;
     revenue: number;
+    realizedGrossProfit: number;
   }>;
   activity: {
     productsCreatedLast7Days: number;
@@ -118,6 +130,7 @@ interface ProductRanking {
   lineLabel: string;
   unitsSold: number;
   revenue: number;
+  realizedGrossProfit: number;
 }
 
 export interface DashboardStats {

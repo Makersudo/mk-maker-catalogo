@@ -1,4 +1,5 @@
 import { buildCatalogMetrics } from './catalogMetrics.js';
+import type { AnalyticsRange } from './analyticsTypes.js';
 
 export async function buildDashboardOverview<TCurrent, TAnalytics>(input: {
   loadCurrent: () => Promise<TCurrent>;
@@ -17,7 +18,33 @@ export async function buildDashboardOverview<TCurrent, TAnalytics>(input: {
   };
 }
 
-export async function loadDashboardCurrent(supabase: any, categoryId: string | null = null) {
+export function dashboardOrderRange(range: AnalyticsRange) {
+  const nextDay = new Date(`${range.to}T12:00:00.000Z`);
+  nextDay.setUTCDate(nextDay.getUTCDate() + 1);
+  return {
+    from: `${range.from}T00:00:00.000-03:00`,
+    toExclusive: `${nextDay.toISOString().slice(0, 10)}T00:00:00.000-03:00`,
+  };
+}
+
+export async function loadDashboardCurrent(supabase: any, range: AnalyticsRange | null = null) {
+  const categoryId = range?.categoryId ?? null;
+  const orderRange = range ? dashboardOrderRange(range) : null;
+  let recentOrdersQuery = supabase
+    .from('orders')
+    .select('id,total_amount,status,created_at', { count: 'exact' })
+    .order('created_at', { ascending: false })
+    .limit(10);
+  let catalogOrdersQuery = supabase
+    .from('orders')
+    .select('id,total_amount,status,created_at,order_items(product_id,quantity,subtotal,cost_subtotal),order_status_events(next_status,created_at)')
+    .order('created_at', { ascending: false });
+
+  if (orderRange) {
+    recentOrdersQuery = recentOrdersQuery.gte('created_at', orderRange.from).lt('created_at', orderRange.toExclusive);
+    catalogOrdersQuery = catalogOrdersQuery.gte('created_at', orderRange.from).lt('created_at', orderRange.toExclusive);
+  }
+
   const [
     products,
     activeProducts,
@@ -36,16 +63,12 @@ export async function loadDashboardCurrent(supabase: any, categoryId: string | n
     supabase.from('products').select('id', { count: 'exact', head: true }).eq('is_featured', true),
     supabase.from('products').select('id', { count: 'exact', head: true }).eq('is_promo', true),
     supabase.from('products').select('id,title,price,product_images(url,sort_order)').order('created_at', { ascending: false }).limit(4),
-    supabase.from('orders').select('id,total_amount,status,created_at', { count: 'exact' }).order('created_at', { ascending: false }).limit(10),
+    recentOrdersQuery,
     supabase
       .from('products')
       .select('id,title,price,purchase_cost,audience,catalog_status,is_active,is_featured,is_promo,is_new,stock_quantity,variants_enabled,category_id,subcategory_id,created_at,category:categories!products_category_id_fkey(id,name,slug),subcategory:categories!products_subcategory_id_fkey(id,name,slug),product_images(id,url),product_variants(id,price,stock_quantity,is_active)'),
     supabase.from('categories').select('id,name,slug,parent_id,is_active'),
-    supabase
-      .from('orders')
-      .select('id,total_amount,status,created_at,order_items(product_id,quantity,subtotal)')
-      .order('created_at', { ascending: false })
-      .limit(500),
+    catalogOrdersQuery,
   ]);
 
   const failed = [
