@@ -1,6 +1,7 @@
 import { AlertCircle, BarChart3, RefreshCw } from 'lucide-react';
 import { motion, useReducedMotion } from 'motion/react';
 import type { DashboardAnalytics } from '../../../services/dashboardService';
+import { dashboardAnimation } from '../dashboardAnimation';
 import { MetricTrendCard } from './MetricTrendCard';
 import { PeriodSelector } from './PeriodSelector';
 import type { useDashboardAnalytics } from '../hooks/useDashboardAnalytics';
@@ -99,14 +100,18 @@ export function HistoricalAnalyticsPanel({
           className="mt-5 grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-3"
           initial={reducedMotion ? false : 'hidden'}
           animate="visible"
-          variants={{ visible: { transition: { staggerChildren: 0.055 } } }}
+          variants={{ visible: { transition: { staggerChildren: dashboardAnimation.cardStagger } } }}
         >
           {cards(analytics.data).map((card) => (
             <motion.div
               key={card.label}
               variants={{
                 hidden: { opacity: 0, y: 8 },
-                visible: { opacity: 1, y: 0, transition: { duration: 0.25 } },
+                visible: {
+                  opacity: 1,
+                  y: 0,
+                  transition: { duration: dashboardAnimation.cardDuration, ease: dashboardAnimation.easeOut },
+                },
               }}
             >
               <MetricTrendCard {...card} />

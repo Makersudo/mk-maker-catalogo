@@ -11,6 +11,7 @@ describe('unified dashboard workspace', () => {
     const bars = readFileSync(new URL('./components/RoundedBarChart.tsx', import.meta.url), 'utf8');
     const insights = readFileSync(new URL('./components/DashboardInsightsPanel.tsx', import.meta.url), 'utf8');
     const counter = readFileSync(new URL('./components/AnimatedCounter.tsx', import.meta.url), 'utf8');
+    const animation = readFileSync(new URL('./dashboardAnimation.ts', import.meta.url), 'utf8');
 
     assert.equal(view.includes('DashboardAnalyticsWorkspace'), true);
     assert.equal(view.includes('HistoricalAnalyticsPanel'), false);
@@ -42,6 +43,12 @@ describe('unified dashboard workspace', () => {
     assert.equal(bars.includes('delay: Math.min(index * barDelayStep'), true);
     assert.equal(counter.includes('useState(0)'), true);
     assert.equal(counter.includes('dashboardAnimation.counterDurationMs'), true);
+    assert.equal(animation.includes('pageDuration: 20'), true);
+    assert.equal(animation.includes('cardDuration: 24'), true);
+    assert.equal(animation.includes('chartDuration: 36'), true);
+    assert.equal(animation.includes('compactChartDuration: 24'), true);
+    assert.equal(animation.includes('counterDurationMs: 32000'), true);
+    assert.equal(animation.includes('maxElementDelay: 12'), true);
     assert.equal(insights.includes('Vendas'), true);
     assert.equal(insights.includes('Estoque'), true);
     assert.equal(insights.includes('Categorias'), true);
