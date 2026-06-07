@@ -82,7 +82,13 @@ export function RoundedBarChart({
         const radius = Math.min(barWidth / 2, valueHeight / 2);
 
         return (
-          <g key={`${point.bucket}-${index}`}>
+          <motion.g
+            key={`${point.bucket}-${index}`}
+            variants={{
+              hidden: { opacity: 0 },
+              visible: { opacity: 1 },
+            }}
+          >
             {previous > 0 && (
               <rect
                 x={x - 3}
@@ -101,11 +107,9 @@ export function RoundedBarChart({
               width={barWidth}
               rx={radius}
               fill={isMax ? '#078653' : `url(#${patternId})`}
-              variants={{
-                hidden: { y: top + chartHeight, height: 0, opacity: 0.35 },
-                visible: { y, height: valueHeight, opacity: 1 },
-              }}
-              transition={{ duration: 0.52, ease: 'easeOut' }}
+              initial={reducedMotion ? false : { y: top + chartHeight, height: 0, opacity: 0.35 }}
+              animate={{ y, height: valueHeight, opacity: 1 }}
+              transition={{ duration: 0.95, delay: Math.min(index * 0.09, 0.72), ease: [0.16, 1, 0.3, 1] }}
             >
               <title>{point.label}: {formatValue(point.value)}</title>
             </motion.rect>
@@ -127,7 +131,7 @@ export function RoundedBarChart({
                 {point.label}
               </text>
             )}
-          </g>
+          </motion.g>
         );
       })}
     </motion.svg>

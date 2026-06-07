@@ -10,6 +10,7 @@ describe('unified dashboard workspace', () => {
     const chart = readFileSync(new URL('./components/DashboardPrimaryChart.tsx', import.meta.url), 'utf8');
     const bars = readFileSync(new URL('./components/RoundedBarChart.tsx', import.meta.url), 'utf8');
     const insights = readFileSync(new URL('./components/DashboardInsightsPanel.tsx', import.meta.url), 'utf8');
+    const counter = readFileSync(new URL('./components/AnimatedCounter.tsx', import.meta.url), 'utf8');
 
     assert.equal(view.includes('DashboardAnalyticsWorkspace'), true);
     assert.equal(view.includes('HistoricalAnalyticsPanel'), false);
@@ -22,6 +23,7 @@ describe('unified dashboard workspace', () => {
     assert.equal(workspace.includes('staggerChildren'), true);
     assert.equal(workspace.includes('useLocation'), true);
     assert.equal(workspace.includes('location.key'), true);
+    assert.equal(workspace.includes('overview.data.generatedAt'), true);
     assert.equal(workspace.includes('animationRunKey'), true);
     assert.equal(workspace.includes('metricOptions'), true);
     assert.equal(workspace.includes('comparisonPoints'), true);
@@ -32,6 +34,10 @@ describe('unified dashboard workspace', () => {
     assert.equal(bars.includes('rx='), true);
     assert.equal(bars.includes('highlightMax'), true);
     assert.equal(bars.includes('staggerChildren'), true);
+    assert.equal(bars.includes('delay: Math.min(index * 0.09'), true);
+    assert.equal(bars.includes('duration: 0.95'), true);
+    assert.equal(counter.includes('useState(0)'), true);
+    assert.equal(counter.includes('durationMs = 1200'), true);
     assert.equal(insights.includes('Vendas'), true);
     assert.equal(insights.includes('Estoque'), true);
     assert.equal(insights.includes('Categorias'), true);

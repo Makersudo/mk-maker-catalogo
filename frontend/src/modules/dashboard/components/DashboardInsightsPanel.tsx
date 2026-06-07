@@ -29,10 +29,11 @@ function points(items: Array<{ label: string; value: number }>): TrendPoint[] {
 }
 
 function duration(value: number) {
-  if (!value) return 'Sem dados';
-  if (value < 60) return `${value} min`;
-  const hours = Math.floor(value / 60);
-  const minutes = value % 60;
+  const rounded = Math.round(value);
+  if (!rounded) return 'Sem dados';
+  if (rounded < 60) return `${rounded} min`;
+  const hours = Math.floor(rounded / 60);
+  const minutes = rounded % 60;
   return minutes ? `${hours}h ${minutes}min` : `${hours}h`;
 }
 
