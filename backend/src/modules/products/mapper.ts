@@ -79,3 +79,40 @@ export function mapProduct(row: any) {
     updated_at: row.updated_at,
   };
 }
+
+export function mapPublicProduct(product: any) {
+  return {
+    id: product.id,
+    slug: product.slug ?? null,
+    title: product.title,
+    description: product.description ?? '',
+    price: Number(product.price ?? 0),
+    categoryId: product.categoryId,
+    subcategoryId: product.subcategoryId ?? null,
+    categoryName: product.categoryName ?? null,
+    subcategoryName: product.subcategoryName ?? null,
+    brandLabel: product.brandLabel ?? '',
+    features: Array.isArray(product.features) ? product.features : [],
+    images: Array.isArray(product.images) ? product.images : [],
+    isFeatured: Boolean(product.isFeatured),
+    isPromo: Boolean(product.isPromo),
+    isNew: Boolean(product.isNew),
+    stockQuantity: Number(product.stockQuantity ?? 0),
+    variantsEnabled: Boolean(product.variantsEnabled),
+    variants: Array.isArray(product.variants)
+      ? product.variants
+        .filter((variant: any) => variant.isActive !== false)
+        .map((variant: any) => ({
+          id: variant.id,
+          label: variant.label,
+          options: Array.isArray(variant.options) ? variant.options : [],
+          price: variant.price === null || variant.price === undefined ? null : Number(variant.price),
+          stockQuantity: Number(variant.stockQuantity ?? 0),
+          isActive: true,
+        }))
+      : [],
+    campaign: product.campaign ?? null,
+    relevanceScore: Number(product.relevanceScore ?? 0),
+    created_at: product.created_at,
+  };
+}

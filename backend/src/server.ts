@@ -1,7 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import { env } from './config/env.js';
-import { handleError, ok } from './lib/http.js';
+import { ApiError, handleError, ok } from './lib/http.js';
 import { getSupabaseAdmin } from './lib/supabase.js';
 import { authRouter } from './modules/auth/routes.js';
 import { catalogRouter } from './modules/catalog/routes.js';
@@ -29,11 +29,11 @@ app.use(cors({
       callback(null, true);
       return;
     }
-    callback(new Error('Origem nao autorizada pelo CORS.'));
+    callback(new ApiError(403, 'Origem nao autorizada pelo CORS.'));
   },
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization', 'X-Admin-Gate-Token', 'X-Admin-Request', 'X-Admin-Client'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Admin-Gate-Token', 'X-Admin-Request', 'X-Admin-Client', 'Idempotency-Key'],
   maxAge: 600,
 }));
 app.use(rateLimit({
@@ -41,7 +41,7 @@ app.use(rateLimit({
   windowMs: env.rateLimitWindowMs,
   max: env.rateLimitMaxRequests,
 }));
-app.use(express.json({ limit: '25mb' }));
+app.use(express.json({ limit: '2mb' }));
 app.use(rejectDangerousJson);
 
 app.get('/api/health', (_req, res) => {

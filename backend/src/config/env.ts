@@ -22,6 +22,8 @@ export const env = {
   rateLimitMaxRequests: Number(process.env.RATE_LIMIT_MAX_REQUESTS ?? 120),
   loginRateLimitWindowMs: Number(process.env.LOGIN_RATE_LIMIT_WINDOW_MS ?? 15 * 60_000),
   loginRateLimitMaxAttempts: Number(process.env.LOGIN_RATE_LIMIT_MAX_ATTEMPTS ?? 5),
+  checkoutRateLimitWindowMs: Number(process.env.CHECKOUT_RATE_LIMIT_WINDOW_MS ?? 10 * 60_000),
+  checkoutRateLimitMaxRequests: Number(process.env.CHECKOUT_RATE_LIMIT_MAX_REQUESTS ?? 8),
   mediaBucket: process.env.SUPABASE_MEDIA_BUCKET ?? 'mk-maker-media',
   productBucket: process.env.SUPABASE_PRODUCT_BUCKET ?? 'mk-maker-products',
   webPushPublicKey: process.env.WEB_PUSH_PUBLIC_KEY ?? '',

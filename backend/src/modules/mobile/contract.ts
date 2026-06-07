@@ -113,3 +113,16 @@ export function mapMobileProduct(row: any) {
     variants,
   };
 }
+
+export function buildPublicMobileStoreResponse(input: any) {
+  const { plan: _plan, store, ...rest } = input;
+  const { plan: _storePlan, planUsage: _planUsage, ...publicStore } = store;
+  return {
+    ...rest,
+    store: publicStore,
+  };
+}
+
+export function buildAdminMobileStoreResponse(input: any) {
+  return input;
+}

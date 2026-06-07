@@ -4,6 +4,7 @@ import { handleError } from '../lib/http.js';
 import { extractSessionToken, isUnsafeAuthenticatedRequest } from '../modules/auth/sessionCookie.js';
 import { env } from '../config/env.js';
 import { assertTrustedAdminOrigin } from './adminOrigin.js';
+import { attachAdminAudit } from './adminAudit.js';
 
 export function requireAuth(req: Request, res: Response, next: NextFunction) {
   try {
@@ -17,6 +18,7 @@ export function requireAuth(req: Request, res: Response, next: NextFunction) {
       return res.status(403).json({ error: 'Requisicao administrativa invalida.' });
     }
     assertTrustedAdminOrigin(req, env.corsOrigins);
+    attachAdminAudit(req, res);
 
     next();
   } catch (error) {

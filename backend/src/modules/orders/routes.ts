@@ -12,6 +12,10 @@ import { loadCandidateCampaigns } from '../marketing/campaignRepository.js';
 import { createNewOrderNotification, dispatchPushNotification } from '../notifications/service.js';
 import { buildOrderItemSaleFacts, publicOrderItem } from './saleFacts.js';
 import { clearDashboardAnalyticsCache } from '../dashboard/analyticsService.js';
+import { parseCheckoutPayload } from './checkoutPayload.js';
+import { rateLimit } from '../../middleware/rateLimit.js';
+import { env } from '../../config/env.js';
+import { checkoutRequestHash, normalizeIdempotencyKey } from './idempotency.js';
 
 export const orderRouter = Router();
 
@@ -64,13 +68,16 @@ function formatWhatsAppMessage(order: any, items: any[]) {
   return message;
 }
 
-orderRouter.post('/', async (req, res) => {
+orderRouter.post('/', rateLimit({
+  keyPrefix: 'checkout',
+  windowMs: env.checkoutRateLimitWindowMs,
+  max: env.checkoutRateLimitMaxRequests,
+  keyGenerator: (req) => `${req.ip}:${String(req.body?.customer?.phone ?? req.body?.phone ?? '').replace(/\D/g, '')}`,
+}), async (req, res) => {
   try {
-    const customer = req.body.customer ?? req.body;
-    const items = Array.isArray(req.body.items) ? req.body.items : [];
-    if (items.length === 0) throw new ApiError(400, 'Pedido sem itens.');
-
-    const productIds = items.map((item: any) => requireString(item.productId ?? item.product?.id, 'productId'));
+    const { customer, items, productIds } = parseCheckoutPayload(req.body);
+    const idempotencyKey = normalizeIdempotencyKey(req.get('idempotency-key'));
+    const requestHash = checkoutRequestHash({ customer, items });
     const supabase = getSupabaseAdmin();
     const [productsResult, campaignRows] = await Promise.all([
       supabase
@@ -91,14 +98,14 @@ orderRouter.post('/', async (req, res) => {
     const now = new Date();
 
     const normalizedItems: NormalizedOrderItem[] = items.map((item: any) => {
-      const productId = requireString(item.productId ?? item.product?.id, 'productId');
+      const productId = item.productId;
       const product = products.find((entry) => entry.id === productId);
       if (!product) throw new ApiError(400, 'Produto indisponivel.');
-      const variantId = optionalString(item.variantId ?? item.variant?.id);
+      const variantId = optionalString(item.variantId);
       const variants = Array.isArray((product as any).product_variants) ? (product as any).product_variants : [];
       const selectedVariant = variantId ? variants.find((variant: any) => variant.id === variantId && variant.is_active) : null;
       if (variantId && !selectedVariant) throw new ApiError(400, 'Variacao indisponivel.');
-      const quantity = Math.max(1, Math.floor(requireNumber(item.quantity, 'quantity')));
+      const quantity = item.quantity;
       if (selectedVariant && Number(selectedVariant.stock_quantity ?? 0) < quantity) {
         throw new ApiError(400, `Estoque insuficiente para ${product.title} - ${selectedVariant.label}.`);
       }
@@ -124,13 +131,13 @@ orderRouter.post('/', async (req, res) => {
     });
 
     const total = normalizedItems.reduce((sum: number, item: NormalizedOrderItem) => sum + item.subtotal, 0);
-    const fulfillmentType = customer.fulfillmentType === 'pickup' || customer.fulfillment_type === 'pickup' ? 'pickup' : 'delivery';
-    const deliveryToBeArranged = Boolean(customer.deliveryToBeArranged ?? customer.delivery_to_be_arranged);
-    const paymentMethod = ['cash', 'pix', 'card'].includes(customer.paymentMethod ?? customer.payment_method)
-      ? customer.paymentMethod ?? customer.payment_method
+    const fulfillmentType = customer.fulfillmentType === 'pickup' ? 'pickup' : 'delivery';
+    const deliveryToBeArranged = customer.deliveryToBeArranged;
+    const paymentMethod = ['cash', 'pix', 'card'].includes(customer.paymentMethod)
+      ? customer.paymentMethod
       : 'pix';
-    const customerName = requireString(customer.fullName ?? customer.customer_name, 'fullName');
-    const customerPhone = requireString(customer.phone ?? customer.customer_phone, 'phone');
+    const customerName = requireString(customer.fullName, 'fullName');
+    const customerPhone = requireString(customer.phone, 'phone');
 
     if (fulfillmentType === 'delivery' && !deliveryToBeArranged) {
       requireString(customer.cep, 'cep');
@@ -154,20 +161,28 @@ orderRouter.post('/', async (req, res) => {
       region: deliveryToBeArranged ? 'A combinar' : optionalString(customer.region ?? customer.city),
       city: deliveryToBeArranged ? 'A combinar' : optionalString(customer.city),
       state: optionalString(customer.state),
-      reference_point: deliveryToBeArranged ? 'Entrega a combinar pelo WhatsApp' : optionalString(customer.referencePoint ?? customer.reference_point),
+      reference_point: deliveryToBeArranged ? 'Entrega a combinar pelo WhatsApp' : optionalString(customer.referencePoint),
       total_amount: total,
       status: 'new',
     };
 
-    const { order, createdItems } = await createOrderWithItemsAndInventory(supabase, orderPayload, normalizedItems);
+    const { order, createdItems, replayed } = await createOrderWithItemsAndInventory(
+      supabase,
+      orderPayload,
+      normalizedItems,
+      undefined,
+      { idempotencyKey, requestHash }
+    );
     invalidatePublicCatalogCache();
     clearDashboardAnalyticsCache();
 
-    createNewOrderNotification(supabase, order)
-      .then((notification) => notification ? dispatchPushNotification(supabase, notification) : null)
-      .catch((error) => {
-        console.error('Falha ao criar/enviar notificacao de novo pedido.', error);
-      });
+    if (!replayed) {
+      createNewOrderNotification(supabase, order)
+        .then((notification) => notification ? dispatchPushNotification(supabase, notification) : null)
+        .catch((error) => {
+          console.error('Falha ao criar/enviar notificacao de novo pedido.', error);
+        });
+    }
 
     const phone = await loadCheckoutWhatsappPhone();
     const whatsappUrl = phone

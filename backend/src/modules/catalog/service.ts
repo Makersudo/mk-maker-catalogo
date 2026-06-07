@@ -1,6 +1,6 @@
 import { getSupabaseAdmin } from '../../lib/supabase.js';
 import { mapCategory } from '../categories/mapper.js';
-import { mapProduct } from '../products/mapper.js';
+import { mapProduct, mapPublicProduct } from '../products/mapper.js';
 import { productSelect } from '../products/select.js';
 import { applyPublicCatalogProductVisibility } from './publicQueryGuard.js';
 import { buildProductRelevanceMap } from './relevance.js';
@@ -14,7 +14,7 @@ const RELEVANCE_ORDER_LIMIT = 500;
 
 type PublicCatalogSnapshot = {
   categories: ReturnType<typeof mapCategory>[];
-  products: ReturnType<typeof mapProduct>[];
+  products: ReturnType<typeof mapPublicProduct>[];
 };
 
 let publicCatalogCache:
@@ -71,13 +71,11 @@ async function refreshPublicCatalogSnapshot(): Promise<PublicCatalogSnapshot> {
 
     const activeCampaign = selectActiveCampaignForProduct(mappedProduct.id, mappedProduct.price, campaignRows, now);
 
-    return {
+    return mapPublicProduct({
       ...mappedProduct,
       campaign: activeCampaign,
       relevanceScore: relevance.score,
-      relevanceUnitsSold: relevance.unitsSold,
-      relevanceOrderCount: relevance.orderCount,
-    };
+    });
   });
 
   const visibleCategoryIds = new Set<string>();

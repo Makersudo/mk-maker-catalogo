@@ -178,6 +178,12 @@ export interface DashboardAnalytics {
   };
 }
 
+export interface DashboardOverview {
+  generatedAt: string;
+  current: DashboardStats;
+  analytics: DashboardAnalytics;
+}
+
 export async function getDashboardStats() {
   return apiRequest<DashboardStats>('/api/dashboard/stats', { auth: true });
 }
@@ -186,5 +192,11 @@ export async function getDashboardAnalytics(period: AnalyticsPeriod, categoryId?
   const query = new URLSearchParams({ period });
   if (categoryId) query.set('categoryId', categoryId);
   return apiRequest<DashboardAnalytics>(`/api/dashboard/analytics?${query.toString()}`, { auth: true });
+}
+
+export async function getDashboardOverview(period: AnalyticsPeriod, categoryId?: string | null) {
+  const query = new URLSearchParams({ period });
+  if (categoryId) query.set('categoryId', categoryId);
+  return apiRequest<DashboardOverview>(`/api/dashboard/overview?${query.toString()}`, { auth: true });
 }
 

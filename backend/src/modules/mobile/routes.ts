@@ -4,7 +4,14 @@ import { ApiError, handleError, ok } from '../../lib/http.js';
 import { requireAuth } from '../../middleware/requireAuth.js';
 import { loadPublicCatalogSnapshot } from '../catalog/service.js';
 import { loadMergedPublicSettings } from '../catalogConfig/service.js';
-import { buildStoreUsage, mapMobileProduct, normalizeStoreSlug, resolveMobilePlan } from './contract.js';
+import {
+  buildAdminMobileStoreResponse,
+  buildPublicMobileStoreResponse,
+  buildStoreUsage,
+  mapMobileProduct,
+  normalizeStoreSlug,
+  resolveMobilePlan,
+} from './contract.js';
 
 export const mobileRouter = Router();
 
@@ -22,12 +29,12 @@ async function countOrdersThisMonth() {
   return count ?? 0;
 }
 
-async function loadMobileStore(slugInput: string) {
+async function loadMobileStore(slugInput: string, includePlanUsage: boolean) {
   const slug = normalizeStoreSlug(slugInput);
   const [settings, catalog, ordersThisMonth] = await Promise.all([
     loadMergedPublicSettings(),
     loadPublicCatalogSnapshot(),
-    countOrdersThisMonth(),
+    includePlanUsage ? countOrdersThisMonth() : Promise.resolve(0),
   ]);
 
   const configuredSlug = normalizeStoreSlug(settings.store_slug || 'mk-maker');
@@ -62,7 +69,7 @@ async function loadMobileStore(slugInput: string) {
 mobileRouter.get('/store/:slug', async (req, res) => {
   try {
     res.set('Cache-Control', 'public, max-age=60, s-maxage=300, stale-while-revalidate=1800');
-    return ok(res, await loadMobileStore(req.params.slug));
+    return ok(res, buildPublicMobileStoreResponse(await loadMobileStore(req.params.slug, false)));
   } catch (error) {
     return handleError(res, error);
   }
@@ -70,7 +77,7 @@ mobileRouter.get('/store/:slug', async (req, res) => {
 
 mobileRouter.get('/admin/store/:slug', requireAuth, async (req, res) => {
   try {
-    return ok(res, await loadMobileStore(req.params.slug));
+    return ok(res, buildAdminMobileStoreResponse(await loadMobileStore(req.params.slug, true)));
   } catch (error) {
     return handleError(res, error);
   }

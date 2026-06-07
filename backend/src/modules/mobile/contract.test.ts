@@ -1,6 +1,13 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { buildStoreUsage, mapMobileProduct, normalizeStoreSlug, resolveMobilePlan } from './contract.js';
+import {
+  buildAdminMobileStoreResponse,
+  buildPublicMobileStoreResponse,
+  buildStoreUsage,
+  mapMobileProduct,
+  normalizeStoreSlug,
+  resolveMobilePlan,
+} from './contract.js';
 
 test('normalizes a store slug from direct code or public link', () => {
   assert.equal(normalizeStoreSlug('MK MAKER'), 'mk-maker');
@@ -46,4 +53,31 @@ test('maps public catalog product to mobile contract', () => {
   assert.equal(product.name, 'Creatina');
   assert.equal(product.category, 'Performance');
   assert.equal(product.variants.length, 1);
+});
+
+test('keeps plan and usage private on the public mobile store response', () => {
+  const input = {
+    store: {
+      id: 'store-default',
+      name: 'MK MAKER',
+      slug: 'mk-maker',
+      whatsapp: '5511999999999',
+      primaryColor: '#c98f86',
+      banner: 'banner',
+      logo: 'logo',
+      plan: 'medium',
+      planUsage: { products: 228, ordersThisMonth: 4, stockItems: 2268 },
+    },
+    plan: resolveMobilePlan('medium'),
+    products: [],
+  };
+
+  const publicResponse = buildPublicMobileStoreResponse(input);
+  const adminResponse = buildAdminMobileStoreResponse(input);
+
+  assert.equal('plan' in publicResponse, false);
+  assert.equal('plan' in publicResponse.store, false);
+  assert.equal('planUsage' in publicResponse.store, false);
+  assert.equal(adminResponse.plan.code, 'medium');
+  assert.equal(adminResponse.store.planUsage.products, 228);
 });

@@ -18,6 +18,13 @@ function sign(value: string): string {
   return crypto.createHmac('sha256', env.jwtSecret).update(value).digest('base64url');
 }
 
+export function safeSignatureMatches(expected: string, received: string): boolean {
+  const expectedSignature = Buffer.from(expected);
+  const receivedSignature = Buffer.from(received);
+  return expectedSignature.length === receivedSignature.length
+    && crypto.timingSafeEqual(expectedSignature, receivedSignature);
+}
+
 export function createSession(email: string): string {
   const header = base64url(JSON.stringify({ alg: 'HS256', typ: 'JWT' }));
   const payload = base64url(JSON.stringify({
@@ -36,7 +43,7 @@ export function verifySession(token: string): AdminSession {
   }
 
   const body = `${header}.${payload}`;
-  if (sign(body) !== signature) {
+  if (!safeSignatureMatches(sign(body), signature)) {
     throw new ApiError(401, 'Sessao invalida.');
   }
 

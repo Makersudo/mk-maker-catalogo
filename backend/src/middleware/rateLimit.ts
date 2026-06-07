@@ -14,15 +14,24 @@ interface Bucket {
 }
 
 const buckets = new Map<string, Bucket>();
+const MAX_BUCKETS = 50_000;
+let nextCleanupAt = 0;
 
 function clientIp(req: Request): string {
   return req.ip || req.socket.remoteAddress || 'unknown';
 }
 
 function cleanup(now: number) {
+  if (now < nextCleanupAt && buckets.size < MAX_BUCKETS) return;
   for (const [key, bucket] of buckets.entries()) {
     if (bucket.resetAt <= now) buckets.delete(key);
   }
+  while (buckets.size >= MAX_BUCKETS) {
+    const oldestKey = buckets.keys().next().value;
+    if (!oldestKey) break;
+    buckets.delete(oldestKey);
+  }
+  nextCleanupAt = now + 60_000;
 }
 
 export function rateLimit(options: RateLimitOptions) {
