@@ -1,5 +1,5 @@
 import { getSupabaseAdmin } from '../../lib/supabase.js';
-import { mapCategory } from '../categories/mapper.js';
+import { mapPublicCategory } from '../categories/mapper.js';
 import { mapProduct, mapPublicProduct } from '../products/mapper.js';
 import { productSelect } from '../products/select.js';
 import { applyPublicCatalogProductVisibility } from './publicQueryGuard.js';
@@ -13,7 +13,7 @@ const PUBLIC_CATALOG_STALE_TTL_MS = 30 * 60_000;
 const RELEVANCE_ORDER_LIMIT = 500;
 
 type PublicCatalogSnapshot = {
-  categories: ReturnType<typeof mapCategory>[];
+  categories: ReturnType<typeof mapPublicCategory>[];
   products: ReturnType<typeof mapPublicProduct>[];
 };
 
@@ -100,7 +100,7 @@ async function refreshPublicCatalogSnapshot(): Promise<PublicCatalogSnapshot> {
   const snapshot = {
     categories: categoryRows
       .filter((row) => visibleCategoryIds.has(row.id))
-      .map(mapCategory),
+      .map(mapPublicCategory),
     products: mappedProducts,
   };
 

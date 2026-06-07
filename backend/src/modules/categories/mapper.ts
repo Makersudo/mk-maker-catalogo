@@ -11,3 +11,17 @@ export function mapCategory(row: any) {
     updated_at: row.updated_at,
   };
 }
+
+export function mapPublicCategory(row: any) {
+  const category = mapCategory(row);
+
+  return {
+    id: category.id,
+    name: category.name,
+    slug: category.slug,
+    parent_id: category.parent_id,
+    parentId: category.parentId,
+    sort_order: category.sort_order,
+    is_active: category.is_active,
+  };
+}
