@@ -4,6 +4,7 @@ export const dashboardAnimation = {
   chartDuration: 36,
   compactChartDuration: 24,
   counterDurationMs: 32000,
+  counterFrameMs: 80,
   cardStagger: 1.6,
   barDelayStep: 1.35,
   compactBarDelayStep: 0.75,

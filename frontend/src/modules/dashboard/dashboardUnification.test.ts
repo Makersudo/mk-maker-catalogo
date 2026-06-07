@@ -48,7 +48,10 @@ describe('unified dashboard workspace', () => {
     assert.equal(animation.includes('chartDuration: 36'), true);
     assert.equal(animation.includes('compactChartDuration: 24'), true);
     assert.equal(animation.includes('counterDurationMs: 32000'), true);
+    assert.equal(animation.includes('counterFrameMs: 80'), true);
     assert.equal(animation.includes('maxElementDelay: 12'), true);
+    assert.equal(counter.includes('setTimeout(update'), true);
+    assert.equal(counter.includes('clearTimeout'), true);
     assert.equal(insights.includes('Vendas'), true);
     assert.equal(insights.includes('Estoque'), true);
     assert.equal(insights.includes('Categorias'), true);

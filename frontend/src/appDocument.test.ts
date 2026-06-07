@@ -33,7 +33,8 @@ describe("app document branding", () => {
     assert.equal(html.includes('id="app-splash"'), true);
     assert.equal(html.includes('class="app-splash__logo"'), true);
     assert.equal(html.includes('/assets/mk-maker-logo-symbol-transparent.png'), true);
-    assert.equal(html.includes('<link rel="preload" href="/hero/makeup-products.mp4" as="video" type="video/mp4" />'), true);
+    assert.equal(html.includes('as="video"'), false);
+    assert.equal(html.includes('<link rel="preload" href="/hero/makeup-products.mp4"'), false);
     assert.equal(html.includes('@media (max-width: 640px)'), true);
     assert.equal(html.includes('aria-label="Carregando catalogo MK Maker"'), true);
   });

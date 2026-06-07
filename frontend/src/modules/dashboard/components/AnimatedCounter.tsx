@@ -23,16 +23,17 @@ export function AnimatedCounter({
     const startedAt = performance.now();
     const initial = 0;
     setDisplayed(initial);
-    let frame = 0;
+    let timer = 0;
 
-    const update = (now: number) => {
+    const update = () => {
+      const now = performance.now();
       const progress = Math.min((now - startedAt) / durationMs, 1);
       const eased = 1 - Math.pow(1 - progress, 3);
       setDisplayed(initial + (value - initial) * eased);
-      if (progress < 1) frame = requestAnimationFrame(update);
+      if (progress < 1) timer = window.setTimeout(update, dashboardAnimation.counterFrameMs);
     };
-    frame = requestAnimationFrame(update);
-    return () => cancelAnimationFrame(frame);
+    timer = window.setTimeout(update, dashboardAnimation.counterFrameMs);
+    return () => window.clearTimeout(timer);
   }, [durationMs, reducedMotion, value]);
 
   return <>{format(displayed)}</>;
