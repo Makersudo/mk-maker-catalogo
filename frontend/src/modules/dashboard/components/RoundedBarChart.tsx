@@ -43,12 +43,15 @@ export function RoundedBarChart({
   const labelEvery = Math.max(1, Math.ceil(points.length / (compact ? 0 : 7)));
 
   return (
-    <svg
+    <motion.svg
       viewBox={`0 0 ${width} ${height}`}
       className={compact ? 'h-14 w-full' : 'w-full'}
       style={compact ? undefined : { minHeight: height }}
       role="img"
       aria-label={`${label}: grafico de barras com ${points.length} periodos`}
+      initial={reducedMotion ? false : 'hidden'}
+      animate="visible"
+      variants={{ visible: { transition: { staggerChildren: compact ? 0.025 : 0.045 } } }}
     >
       <defs>
         <pattern id={patternId} width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(35)">
@@ -98,9 +101,11 @@ export function RoundedBarChart({
               width={barWidth}
               rx={radius}
               fill={isMax ? '#078653' : `url(#${patternId})`}
-              initial={reducedMotion ? false : { y: top + chartHeight, height: 0, opacity: 0.35 }}
-              animate={{ y, height: valueHeight, opacity: 1 }}
-              transition={{ duration: 0.52, delay: Math.min(index * 0.035, 0.35), ease: 'easeOut' }}
+              variants={{
+                hidden: { y: top + chartHeight, height: 0, opacity: 0.35 },
+                visible: { y, height: valueHeight, opacity: 1 },
+              }}
+              transition={{ duration: 0.52, ease: 'easeOut' }}
             >
               <title>{point.label}: {formatValue(point.value)}</title>
             </motion.rect>
@@ -125,6 +130,6 @@ export function RoundedBarChart({
           </g>
         );
       })}
-    </svg>
+    </motion.svg>
   );
 }

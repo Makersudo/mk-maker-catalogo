@@ -28,10 +28,12 @@ describe('unified dashboard workspace', () => {
     assert.equal(bars.includes('motion.rect'), true);
     assert.equal(bars.includes('rx='), true);
     assert.equal(bars.includes('highlightMax'), true);
+    assert.equal(bars.includes('staggerChildren'), true);
     assert.equal(insights.includes('Vendas'), true);
     assert.equal(insights.includes('Estoque'), true);
     assert.equal(insights.includes('Categorias'), true);
     assert.equal(insights.includes('Qualidade'), true);
+    assert.equal(insights.includes('AnimatedCounter'), true);
     assert.equal(insights.includes('Taxa de conclusao'), true);
     assert.equal(insights.includes('Tempo ate confirmar'), true);
     assert.equal(insights.includes('Maior lucro realizado'), true);

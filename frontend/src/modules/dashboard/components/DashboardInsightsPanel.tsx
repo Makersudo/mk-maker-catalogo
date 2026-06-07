@@ -1,9 +1,12 @@
 import { useMemo, useState } from 'react';
 import { Boxes, CircleDollarSign, PackageCheck, ShieldCheck, Tags } from 'lucide-react';
 import type { CatalogMetrics, DashboardAnalytics, TrendPoint } from '../../../services/dashboardService';
+import { AnimatedCounter } from './AnimatedCounter';
 import { RoundedBarChart } from './RoundedBarChart';
 
 type InsightTab = 'sales' | 'stock' | 'products' | 'categories' | 'quality';
+type InsightMetric = { label: string; value: number; format?: (value: number) => string };
+type RankingItem = { label: string; value: number; format?: (value: number) => string };
 
 const tabs: Array<{ id: InsightTab; label: string; icon: typeof Boxes }> = [
   { id: 'sales', label: 'Vendas', icon: CircleDollarSign },
@@ -15,6 +18,10 @@ const tabs: Array<{ id: InsightTab; label: string; icon: typeof Boxes }> = [
 
 function currency(value: number) {
   return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(value || 0);
+}
+
+function percent(value: number) {
+  return `${new Intl.NumberFormat('pt-BR', { maximumFractionDigits: 1 }).format(value || 0)}%`;
 }
 
 function points(items: Array<{ label: string; value: number }>): TrendPoint[] {
@@ -83,16 +90,16 @@ function SalesInsight({ metrics, analytics }: { metrics: CatalogMetrics; analyti
       title="Pedidos por periodo"
       chart={<RoundedBarChart points={analytics.series.orders} comparisonPoints={analytics.previousSeries.orders} label="Pedidos por periodo" />}
       metrics={[
-        ['Receita valida', currency(metrics.sales.totalRevenue)],
-        ['Lucro realizado', currency(metrics.sales.realizedGrossProfit)],
-        ['Taxa de conclusao', `${metrics.orderOperations.fulfillmentRate}%`],
-        ['Taxa de cancelamento', `${metrics.orderOperations.cancellationRate}%`],
-        ['Pedidos abertos', metrics.orderOperations.openOrders],
-        ['Tempo ate confirmar', duration(metrics.orderOperations.averageMinutesToConfirmation)],
-        ['Tempo ate retirada', duration(metrics.orderOperations.averageMinutesToReady)],
-        ['Tempo ate finalizar', duration(metrics.orderOperations.averageMinutesToCompletion)],
+        { label: 'Receita valida', value: metrics.sales.totalRevenue, format: currency },
+        { label: 'Lucro realizado', value: metrics.sales.realizedGrossProfit, format: currency },
+        { label: 'Taxa de conclusao', value: metrics.orderOperations.fulfillmentRate, format: percent },
+        { label: 'Taxa de cancelamento', value: metrics.orderOperations.cancellationRate, format: percent },
+        { label: 'Pedidos abertos', value: metrics.orderOperations.openOrders },
+        { label: 'Tempo ate confirmar', value: metrics.orderOperations.averageMinutesToConfirmation, format: duration },
+        { label: 'Tempo ate retirada', value: metrics.orderOperations.averageMinutesToReady, format: duration },
+        { label: 'Tempo ate finalizar', value: metrics.orderOperations.averageMinutesToCompletion, format: duration },
       ]}
-      side={<Ranking title="Maior lucro realizado" items={metrics.topProductsByProfit.map((item) => [item.title, currency(item.realizedGrossProfit)])} />}
+      side={<Ranking title="Maior lucro realizado" items={metrics.topProductsByProfit.map((item) => ({ label: item.title, value: item.realizedGrossProfit, format: currency }))} />}
     />
   );
 }
@@ -103,16 +110,16 @@ function StockInsight({ metrics, analytics }: { metrics: CatalogMetrics; analyti
       title="Evolucao do estoque"
       chart={<RoundedBarChart points={analytics.series.stockUnits} comparisonPoints={analytics.previousSeries.stockUnits} label="Estoque por periodo" />}
       metrics={[
-        ['Unidades atuais', metrics.stockHealth.totalUnits],
-        ['Estoque saudavel', metrics.stockHealth.ok],
-        ['Estoque baixo', metrics.stockHealth.low],
-        ['Estoque zerado', metrics.stockHealth.zero],
+        { label: 'Unidades atuais', value: metrics.stockHealth.totalUnits },
+        { label: 'Estoque saudavel', value: metrics.stockHealth.ok },
+        { label: 'Estoque baixo', value: metrics.stockHealth.low },
+        { label: 'Estoque zerado', value: metrics.stockHealth.zero },
       ]}
       side={<Ranking title="Valores de estoque" items={[
-        ['Valor em mercadoria', currency(metrics.inventoryValue.purchaseValue)],
-        ['Potencial de venda', currency(metrics.inventoryValue.saleValue)],
-        ['Lucro bruto estimado', currency(metrics.inventoryValue.estimatedGrossProfit)],
-        ['Margem estimada', `${metrics.inventoryValue.estimatedGrossMarginPercent}%`],
+        { label: 'Valor em mercadoria', value: metrics.inventoryValue.purchaseValue, format: currency },
+        { label: 'Potencial de venda', value: metrics.inventoryValue.saleValue, format: currency },
+        { label: 'Lucro bruto estimado', value: metrics.inventoryValue.estimatedGrossProfit, format: currency },
+        { label: 'Margem estimada', value: metrics.inventoryValue.estimatedGrossMarginPercent, format: percent },
       ]} />}
     />
   );
@@ -124,16 +131,16 @@ function ProductsInsight({ metrics, analytics }: { metrics: CatalogMetrics; anal
       title="Produtos cadastrados"
       chart={<RoundedBarChart points={analytics.series.productsCreated} comparisonPoints={analytics.previousSeries.productsCreated} label="Produtos cadastrados por periodo" />}
       metrics={[
-        ['Produtos totais', metrics.summary.totalProducts],
-        ['Produtos live', metrics.summary.liveProducts],
-        ['Com imagem', metrics.imageCoverage.withImage],
-        ['Com custo', metrics.inventoryValue.productsWithPurchaseCost],
+        { label: 'Produtos totais', value: metrics.summary.totalProducts },
+        { label: 'Produtos live', value: metrics.summary.liveProducts },
+        { label: 'Com imagem', value: metrics.imageCoverage.withImage },
+        { label: 'Com custo', value: metrics.inventoryValue.productsWithPurchaseCost },
       ]}
       side={<Ranking title="Funil de publicacao" items={[
-        ['Rascunho', metrics.statusFunnel.draft],
-        ['Pronto', metrics.statusFunnel.ready],
-        ['Publicado', metrics.statusFunnel.live],
-        ['Inativos', metrics.summary.inactiveProducts],
+        { label: 'Rascunho', value: metrics.statusFunnel.draft },
+        { label: 'Pronto', value: metrics.statusFunnel.ready },
+        { label: 'Publicado', value: metrics.statusFunnel.live },
+        { label: 'Inativos', value: metrics.summary.inactiveProducts },
       ]} />}
     />
   );
@@ -149,17 +156,17 @@ function CategoriesInsight({ metrics }: { metrics: CatalogMetrics }) {
   const ranking = [...metrics.categoryPerformance]
     .sort((a, b) => b.realizedGrossProfit - a.realizedGrossProfit)
     .slice(0, 8)
-    .map((category) => [category.name, currency(category.realizedGrossProfit)] as [string, string]);
+    .map((category) => ({ label: category.name, value: category.realizedGrossProfit, format: currency }));
 
   return (
     <InsightLayout
       title="Lucro realizado por categoria"
       chart={<RoundedBarChart points={categoryPoints} label="Lucro realizado por categoria" formatValue={currency} />}
       metrics={[
-        ['Categorias analisadas', metrics.categoryPerformance.length],
-        ['Com vendas', metrics.categoryPerformance.filter((item) => item.revenue > 0).length],
-        ['Receita valida', currency(metrics.sales.totalRevenue)],
-        ['Lucro realizado', currency(metrics.sales.realizedGrossProfit)],
+        { label: 'Categorias analisadas', value: metrics.categoryPerformance.length },
+        { label: 'Com vendas', value: metrics.categoryPerformance.filter((item) => item.revenue > 0).length },
+        { label: 'Receita valida', value: metrics.sales.totalRevenue, format: currency },
+        { label: 'Lucro realizado', value: metrics.sales.realizedGrossProfit, format: currency },
       ]}
       side={<Ranking title="Categorias por lucro" items={ranking} />}
     />
@@ -181,12 +188,12 @@ function QualityInsight({ metrics }: { metrics: CatalogMetrics }) {
       title="Pendencias da vitrine"
       chart={<RoundedBarChart points={qualityPoints} label="Pendencias da vitrine" />}
       metrics={[
-        ['Saude da vitrine', `${metrics.summary.completionScore}%`],
-        ['Com imagem', `${metrics.imageCoverage.percent}%`],
-        ['Alertas', metrics.alerts.length],
-        ['Categorias vazias', metrics.quality.emptyCategories.count],
+        { label: 'Saude da vitrine', value: metrics.summary.completionScore, format: percent },
+        { label: 'Com imagem', value: metrics.imageCoverage.percent, format: percent },
+        { label: 'Alertas', value: metrics.alerts.length },
+        { label: 'Categorias vazias', value: metrics.quality.emptyCategories.count },
       ]}
-      side={<Ranking title="Acoes prioritarias" items={metrics.alerts.slice(0, 8).map((alert) => [alert.label, alert.count])} />}
+      side={<Ranking title="Acoes prioritarias" items={metrics.alerts.slice(0, 8).map((alert) => ({ label: alert.label, value: alert.count }))} />}
     />
   );
 }
@@ -199,7 +206,7 @@ function InsightLayout({
 }: {
   title: string;
   chart: React.ReactNode;
-  metrics: Array<[string, string | number]>;
+  metrics: InsightMetric[];
   side: React.ReactNode;
 }) {
   return (
@@ -208,7 +215,7 @@ function InsightLayout({
         <h3 className="text-sm font-black text-neutral-900">{title}</h3>
         <div className="mt-3">{chart}</div>
         <div className="mt-3 grid grid-cols-2 gap-2 md:grid-cols-4">
-          {metrics.map(([label, value]) => <Metric key={label} label={label} value={value} />)}
+          {metrics.map((metric) => <Metric key={metric.label} {...metric} />)}
         </div>
       </div>
       {side}
@@ -216,25 +223,29 @@ function InsightLayout({
   );
 }
 
-function Metric({ label, value }: { label: string; value: string | number }) {
+function Metric({ label, value, format }: InsightMetric) {
   return (
     <div className="rounded-xl border border-neutral-100 bg-white p-3">
       <span className="text-[9px] font-black uppercase tracking-wider text-neutral-400">{label}</span>
-      <strong className="mt-1 block text-lg font-black text-neutral-950">{value}</strong>
+      <strong className="mt-1 block text-lg font-black text-neutral-950">
+        <AnimatedCounter value={value} format={format} />
+      </strong>
     </div>
   );
 }
 
-function Ranking({ title, items }: { title: string; items: Array<[string, string | number]> }) {
+function Ranking({ title, items }: { title: string; items: RankingItem[] }) {
   return (
     <aside className="rounded-2xl border border-neutral-100 bg-neutral-950 p-4 text-white">
       <h3 className="text-[10px] font-black uppercase tracking-widest text-neutral-300">{title}</h3>
       <div className="mt-4 space-y-2">
         {items.length === 0 && <p className="text-xs text-neutral-400">Sem dados registrados.</p>}
-        {items.map(([label, value], index) => (
+        {items.map(({ label, value, format }, index) => (
           <div key={`${label}-${index}`} className="flex items-center justify-between gap-3 rounded-xl bg-white/7 px-3 py-2">
             <span className="min-w-0 truncate text-xs font-bold text-neutral-200">{label}</span>
-            <strong className="shrink-0 text-xs">{value}</strong>
+            <strong className="shrink-0 text-xs">
+              <AnimatedCounter value={value} format={format} />
+            </strong>
           </div>
         ))}
       </div>
