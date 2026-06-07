@@ -20,6 +20,9 @@ describe('unified dashboard workspace', () => {
     assert.equal(workspace.includes('PeriodSelector'), true);
     assert.equal(workspace.includes('AnimatedCounter'), true);
     assert.equal(workspace.includes('staggerChildren'), true);
+    assert.equal(workspace.includes('useLocation'), true);
+    assert.equal(workspace.includes('location.key'), true);
+    assert.equal(workspace.includes('animationRunKey'), true);
     assert.equal(workspace.includes('metricOptions'), true);
     assert.equal(workspace.includes('comparisonPoints'), true);
     assert.equal(workspace.includes('Exportar CSV'), true);

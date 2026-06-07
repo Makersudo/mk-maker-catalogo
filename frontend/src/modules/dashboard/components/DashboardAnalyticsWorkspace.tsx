@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import {
   AlertCircle,
   ArrowDownRight,
@@ -81,6 +82,7 @@ function downloadCsv(option: MetricOption, points: TrendPoint[], comparisonPoint
 
 export function DashboardAnalyticsWorkspace({ overview }: { overview: OverviewState }) {
   const reducedMotion = useReducedMotion();
+  const location = useLocation();
   const [metricKey, setMetricKey] = useState<MetricKey>('revenue');
   const current = overview.data?.current;
   const analytics = overview.data?.analytics;
@@ -115,6 +117,7 @@ export function DashboardAnalyticsWorkspace({ overview }: { overview: OverviewSt
   const selectedComparison = analytics.comparison[selected.comparisonKey];
   const health = metrics.summary.completionScore;
   const cardOptions = metricOptions.filter((option) => ['orders', 'averageTicket', 'inventoryPurchaseValue', 'inventorySaleValue'].includes(option.key));
+  const animationRunKey = `${location.pathname}:${location.key}:${overview.period}:${overview.categoryId ?? 'all'}:${metricKey}`;
 
   return (
     <section className="rounded-3xl border border-neutral-200 bg-[#F5F7F6] p-3 shadow-[0_24px_70px_rgba(27,31,36,0.08)] md:p-5">
@@ -189,7 +192,7 @@ export function DashboardAnalyticsWorkspace({ overview }: { overview: OverviewSt
       </div>
 
       <motion.div
-        key={`${overview.period}:${overview.categoryId ?? 'all'}:${metricKey}`}
+        key={animationRunKey}
         className="mt-4 grid grid-cols-1 gap-4 xl:grid-cols-12"
         initial={reducedMotion ? false : 'hidden'}
         animate="visible"
@@ -263,7 +266,7 @@ export function DashboardAnalyticsWorkspace({ overview }: { overview: OverviewSt
         })}
       </motion.div>
 
-      <DashboardInsightsPanel metrics={metrics} analytics={analytics} />
+      <DashboardInsightsPanel key={`insights:${animationRunKey}`} metrics={metrics} analytics={analytics} />
     </section>
   );
 }
