@@ -18,6 +18,8 @@ describe("public header surface", () => {
 
     assert.equal(source.includes("liquid-glass-button"), true);
     assert.equal(css.includes(".liquid-glass-button"), true);
+    assert.equal(css.includes("background-color: transparent"), true);
+    assert.equal(css.includes("background-color: #8f5e59"), false);
     assert.equal(css.includes("backdrop-filter: blur(18px) saturate(155%)"), true);
   });
 });

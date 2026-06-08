@@ -168,7 +168,7 @@ export function Hero() {
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.45, ease: "easeOut" }}
-            className="liquid-glass-button flex items-center gap-2 rounded-full px-6 py-3.5 text-sm font-bold uppercase tracking-tight text-white transition-all"
+            className="liquid-glass-button flex items-center gap-2 rounded-full px-6 py-3.5 text-sm font-bold uppercase tracking-tight transition-all"
           >
             <ShoppingBag className="w-5 h-5" />
             <span>Ver Catalogo</span>

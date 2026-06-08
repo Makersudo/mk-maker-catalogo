@@ -41,6 +41,8 @@ describe("public home hero media", () => {
     const css = readFileSync(new URL("../../index.css", import.meta.url), "utf8");
 
     assert.equal(source.includes("liquid-glass-button"), true);
+    assert.equal(css.includes("linear-gradient(135deg, rgba(255, 255, 255, 0.56)"), true);
+    assert.equal(css.includes("#8f5e59 68%"), false);
     assert.equal(css.includes(".liquid-glass-button::before"), true);
     assert.equal(css.includes(".liquid-glass-button::after"), true);
   });

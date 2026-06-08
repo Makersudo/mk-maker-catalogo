@@ -87,7 +87,7 @@ export function Header() {
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.6 }}
-            className="liquid-glass-button hidden h-11 items-center justify-center rounded-full px-5 text-xs font-bold uppercase tracking-tight text-white transition-all sm:flex"
+            className="liquid-glass-button hidden h-11 items-center justify-center rounded-full px-5 text-xs font-bold uppercase tracking-tight transition-all sm:flex"
             onClick={() => goToTab('contato')}
           >
             <span>Fale Conosco</span>
