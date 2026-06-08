@@ -3,6 +3,15 @@ import { readFileSync } from "node:fs";
 import { describe, it } from "node:test";
 
 describe("public header surface", () => {
+  it("hides the duplicated header logo on the public home hero", () => {
+    const source = readFileSync(new URL("./Header.tsx", import.meta.url), "utf8");
+
+    assert.equal(source.includes("isHomeSurface"), true);
+    assert.equal(source.includes("logoVisibilityClass"), true);
+    assert.equal(source.includes("isHomeSurface ? 'hidden'"), true);
+    assert.equal(source.includes("shouldCenterHeaderControls"), true);
+  });
+
   it("uses floating controls instead of a full white catalog bar", () => {
     const source = readFileSync(new URL("./Header.tsx", import.meta.url), "utf8");
 

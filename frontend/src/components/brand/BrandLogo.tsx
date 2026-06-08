@@ -5,6 +5,7 @@ type BrandLogoProps = {
   className?: string;
   imageClassName?: string;
   textClassName?: string;
+  fallbackText?: string;
 };
 
 const DEFAULT_TRANSPARENT_LOGO = '/assets/mk-maker-logo-ultra-realista.png';
@@ -24,11 +25,13 @@ export function BrandLogo({
   className = '',
   imageClassName = 'h-16 w-32 object-contain object-left md:h-20 md:w-44',
   textClassName = 'text-lg font-black tracking-normal text-neutral-950',
+  fallbackText,
 }: BrandLogoProps) {
   const settings = usePublicSettings();
   const [imageFailed, setImageFailed] = useState(false);
   const storeName = settings.store_name?.trim() || 'MK MAKER';
   const logoUrl = getDisplayLogoUrl(settings.store_logo);
+  const fallbackLabel = fallbackText ?? storeName;
 
   return (
     <div className={`flex items-center ${className}`}>
@@ -40,7 +43,7 @@ export function BrandLogo({
           onError={() => setImageFailed(true)}
         />
       ) : (
-        <span className={textClassName}>{storeName}</span>
+        <span className={textClassName}>{fallbackLabel}</span>
       )}
     </div>
   );

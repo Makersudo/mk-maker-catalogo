@@ -12,7 +12,10 @@ export function Header() {
   const navigate = useNavigate();
   const cartCount = cart.reduce((acc, item) => acc + item.quantity, 0);
   const isProductPage = location.pathname.startsWith('/produto/');
+  const isHomeSurface = activeTab === 'inicio' && !isProductPage;
   const isCatalogSurface = activeTab === 'catalogo' && !isProductPage;
+  const shouldCenterHeaderControls = isHomeSurface || isCatalogSurface;
+  const logoVisibilityClass = isHomeSurface ? 'hidden' : shouldCenterHeaderControls ? 'flex lg:hidden' : 'flex';
   const primaryColor = settings.store_primary_color || '#c98f86';
   const publicPathByTab = {
     inicio: '/inicio',
@@ -33,14 +36,14 @@ export function Header() {
 
   return (
     <header className="pointer-events-none fixed inset-x-0 top-0 z-50 px-4 py-3 md:px-6 lg:px-16">
-      <div className={`grid min-h-16 grid-cols-[auto_1fr_auto] items-center gap-3 md:min-h-20 ${isCatalogSurface ? 'lg:grid-cols-[1fr_auto_1fr]' : ''}`}>
+      <div className={`grid min-h-16 grid-cols-[auto_1fr_auto] items-center gap-3 md:min-h-20 ${shouldCenterHeaderControls ? 'lg:grid-cols-[1fr_auto_1fr]' : ''}`}>
         {/* Logo */}
-        {isCatalogSurface && <div className="hidden lg:block" aria-hidden="true" />}
+        {shouldCenterHeaderControls && <div className="hidden lg:block" aria-hidden="true" />}
         <motion.div
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
-          className={`pointer-events-auto min-w-0 cursor-pointer items-center ${isCatalogSurface ? 'flex lg:hidden' : 'flex'}`}
+          className={`pointer-events-auto min-w-0 cursor-pointer items-center ${logoVisibilityClass}`}
           onClick={() => goToTab('inicio')}
         >
           <BrandLogo imageClassName="h-14 w-32 object-contain object-left md:h-16 md:w-40" />

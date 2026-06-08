@@ -4,6 +4,15 @@ import { readFileSync } from "node:fs";
 import { describe, it } from "node:test";
 
 describe("public home hero media", () => {
+  it("replaces the MK text in the hero title with the brand logo", () => {
+    const source = readFileSync(new URL("./Hero.tsx", import.meta.url), "utf8");
+
+    assert.equal(source.includes("useHeroLogoTitle"), true);
+    assert.equal(source.includes('<BrandLogo'), true);
+    assert.equal(source.includes('fallbackText="MK"'), true);
+    assert.match(source, /<span className="font-display block[^"]*">\s*Maker\s*<\/span>/);
+  });
+
   it("uses the local muted looping video without an image layer underneath", () => {
     const source = readFileSync(new URL("./Hero.tsx", import.meta.url), "utf8");
     const videoPath = new URL("../../../public/hero/makeup-products.mp4", import.meta.url);

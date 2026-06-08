@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useStore } from "../../store/useStore";
 import { usePublicSettings } from "../../hooks/usePublicSettings";
+import { BrandLogo } from "../brand/BrandLogo";
 
 const LOOP_FADE_WINDOW_SECONDS = 0.8;
 const LOOP_REVEAL_WINDOW_SECONDS = 0.2;
@@ -58,6 +59,7 @@ export function Hero() {
   const instagramUrl = import.meta.env.VITE_INSTAGRAM_URL || "https://www.instagram.com/";
   const storeName = settings.store_name || 'MK MAKER';
   const heroStoreName = storeName.toUpperCase() === 'MK MAKER' ? 'MK Maker' : storeName;
+  const useHeroLogoTitle = heroStoreName.toUpperCase() === 'MK MAKER';
   const primaryColor = settings.store_primary_color || '#c98f86';
   const secondaryColor = settings.store_secondary_color || '#111111';
 
@@ -126,9 +128,23 @@ export function Hero() {
             transition={{ duration: 0.8, delay: 0.25, ease: "easeOut" }}
             className="mb-6 max-w-full text-neutral-900"
           >
-            <span className="font-display block text-[46px] font-semibold leading-[0.96] tracking-normal sm:text-[58px] md:text-[76px] lg:text-[86px]">
-              {heroStoreName}
-            </span>
+            {useHeroLogoTitle ? (
+              <span className="flex max-w-full flex-wrap items-end gap-x-3 gap-y-1 sm:gap-x-4">
+                <BrandLogo
+                  fallbackText="MK"
+                  className="shrink-0"
+                  imageClassName="h-[72px] w-[132px] object-contain object-left sm:h-[86px] sm:w-[158px] md:h-[112px] md:w-[206px] lg:h-[126px] lg:w-[232px]"
+                  textClassName="font-display block text-[46px] font-semibold leading-[0.96] tracking-normal sm:text-[58px] md:text-[76px] lg:text-[86px]"
+                />
+                <span className="font-display block text-[46px] font-semibold leading-[0.96] tracking-normal sm:text-[58px] md:text-[76px] lg:text-[86px]">
+                  Maker
+                </span>
+              </span>
+            ) : (
+              <span className="font-display block text-[46px] font-semibold leading-[0.96] tracking-normal sm:text-[58px] md:text-[76px] lg:text-[86px]">
+                {heroStoreName}
+              </span>
+            )}
             <span className="font-display mt-2 block text-[28px] font-medium italic leading-[1.05] tracking-normal text-neutral-800 sm:text-[36px] md:text-[46px] lg:text-[54px]">
               pronto para vender
             </span>
