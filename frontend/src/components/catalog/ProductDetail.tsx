@@ -206,7 +206,7 @@ export function ProductDetail() {
 
   return (
     <div className="catalog-brand-surface flex-1">
-      <div className="max-w-6xl mx-auto px-4 py-5 pb-24 md:py-10">
+      <div className="max-w-6xl mx-auto px-4 pb-24 pt-28 md:pb-10 md:pt-32">
         <button onClick={() => navigate("/catalogo")} className="inline-flex items-center gap-2 mb-6 text-xs font-bold uppercase tracking-widest text-neutral-500 hover:text-[#8f5e59]">
           <ArrowLeft className="w-4 h-4" /> Voltar ao catalogo
         </button>

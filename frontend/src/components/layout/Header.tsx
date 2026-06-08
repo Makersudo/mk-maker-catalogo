@@ -33,7 +33,7 @@ export function Header() {
   ] as const;
 
   return (
-    <header className="mk-header-surface sticky top-0 z-50 px-4 py-3 backdrop-blur-xl md:px-6 lg:px-16">
+    <header className="pointer-events-none fixed inset-x-0 top-0 z-50 px-4 py-3 md:px-6 lg:px-16">
       <div className={`grid min-h-16 grid-cols-[auto_1fr_auto] items-center gap-3 md:min-h-20 ${isCatalogSurface ? 'lg:grid-cols-[1fr_auto_1fr]' : ''}`}>
         {/* Logo */}
         {isCatalogSurface && <div className="hidden lg:block" aria-hidden="true" />}
@@ -41,14 +41,14 @@ export function Header() {
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
-          className={`min-w-0 cursor-pointer items-center ${isCatalogSurface ? 'flex lg:hidden' : 'flex'}`}
+          className={`pointer-events-auto min-w-0 cursor-pointer items-center ${isCatalogSurface ? 'flex lg:hidden' : 'flex'}`}
           onClick={() => goToTab('inicio')}
         >
           <BrandLogo imageClassName="h-14 w-32 object-contain object-left md:h-16 md:w-40" />
         </motion.div>
 
         {/* Nav Links */}
-        <nav className="hidden justify-self-center rounded-full bg-white p-1 text-sm font-bold uppercase tracking-wider text-neutral-500 shadow-sm shadow-neutral-900/5 ring-1 ring-neutral-200/80 md:flex">
+        <nav className="pointer-events-auto hidden justify-self-center rounded-full bg-white/94 p-1 text-sm font-bold uppercase tracking-wider text-neutral-500 shadow-lg shadow-neutral-900/5 ring-1 ring-neutral-200/80 backdrop-blur-md md:flex">
           {navItems.map((item, index) => (
             <motion.button
               key={item.id}
@@ -65,12 +65,12 @@ export function Header() {
         </nav>
 
         {/* Header Controls */}
-        <div className="flex items-center justify-end gap-2 md:gap-3">
+        <div className="pointer-events-auto flex items-center justify-end gap-2 md:gap-3">
           <motion.button
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             onClick={openCart}
-            className="relative flex h-11 w-11 items-center justify-center rounded-full bg-white text-neutral-500 shadow-sm shadow-neutral-900/5 ring-1 ring-neutral-200/80 transition-colors hover:bg-neutral-50 hover:text-neutral-900"
+            className="relative flex h-11 w-11 items-center justify-center rounded-full bg-white/94 text-neutral-500 shadow-lg shadow-neutral-900/5 ring-1 ring-neutral-200/80 backdrop-blur-md transition-colors hover:bg-white hover:text-neutral-900"
             aria-label="Abrir carrinho"
           >
             <ShoppingCart className="h-6 w-6" />
@@ -97,7 +97,7 @@ export function Header() {
         </div>
       </div>
 
-      <nav className="mt-2 flex justify-center rounded-full bg-white p-1 text-xs font-bold uppercase tracking-wider text-neutral-500 shadow-sm shadow-neutral-900/5 ring-1 ring-neutral-200/80 md:hidden">
+      <nav className="pointer-events-auto mt-2 flex justify-center rounded-full bg-white/94 p-1 text-xs font-bold uppercase tracking-wider text-neutral-500 shadow-lg shadow-neutral-900/5 ring-1 ring-neutral-200/80 backdrop-blur-md md:hidden">
         {navItems.map((item) => (
           <button
             key={item.id}

@@ -487,7 +487,7 @@ export function Catalog() {
 
       <div
         ref={catalogScrollRef}
-        className={`relative z-10 flex h-full flex-1 flex-col overflow-y-auto p-4 transition-[margin] duration-300 custom-scrollbar lg:p-12 ${
+        className={`relative z-10 flex h-full flex-1 flex-col overflow-y-auto p-4 pt-28 transition-[margin] duration-300 custom-scrollbar lg:p-12 lg:pt-28 ${
           isSidebarCollapsed ? "lg:ml-20" : "lg:ml-72"
         }`}
       >

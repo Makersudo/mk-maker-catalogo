@@ -26,4 +26,13 @@ describe("public home hero media", () => {
     assert.equal(source.includes("onSeeked"), true);
     assert.equal(source.includes('transition: "opacity 700ms ease-in-out"'), true);
   });
+
+  it("lets the hero video fill the public home background behind the current gradient", () => {
+    const source = readFileSync(new URL("./Hero.tsx", import.meta.url), "utf8");
+
+    assert.equal(source.includes("min-h-[100svh]"), true);
+    assert.equal(source.includes("absolute inset-0 hidden lg:block"), true);
+    assert.equal(source.includes("object-[center_right]"), true);
+    assert.equal(source.includes("w-[64%]"), false);
+  });
 });

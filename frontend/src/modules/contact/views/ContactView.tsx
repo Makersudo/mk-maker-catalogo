@@ -75,7 +75,7 @@ export function ContactView() {
   ];
 
   return (
-    <section className="w-full flex-1 flex flex-col items-center justify-start px-4 py-12 lg:py-20 bg-neutral-50/50">
+    <section className="w-full flex-1 flex flex-col items-center justify-start bg-neutral-50/50 px-4 pb-12 pt-28 lg:pb-20 lg:pt-32">
       <div className="w-full max-w-5xl mx-auto">
         {/* Cabeçalho */}
         <motion.div

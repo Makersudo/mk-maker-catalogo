@@ -74,7 +74,7 @@ export function Hero() {
   ];
 
   return (
-    <div className="relative w-full flex-1 flex flex-col overflow-hidden bg-white">
+    <div className="relative flex min-h-[100svh] w-full flex-1 flex-col overflow-hidden bg-white">
       {/* Background Media */}
       <div className="absolute inset-0 z-0 bg-white">
         <div
@@ -85,13 +85,13 @@ export function Hero() {
           }}
         />
         <div className="absolute inset-0 dot-pattern opacity-55"></div>
-        <div className="absolute inset-y-0 right-0 hidden w-[64%] lg:block">
+        <div className="absolute inset-0 hidden lg:block">
           <HeroBackgroundVideo
-            className="hero-photo-gradient h-full w-full object-cover"
-            visibleOpacity={0.95}
+            className="hero-photo-gradient h-full w-full object-cover object-[center_right]"
+            visibleOpacity={0.9}
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-white via-white/55 to-white/10" />
-          <div className="absolute inset-0 bg-gradient-to-b from-white/30 via-transparent to-white/35" />
+          <div className="absolute inset-0 bg-gradient-to-r from-white via-white/70 to-white/8" />
+          <div className="absolute inset-0 bg-gradient-to-b from-white/24 via-transparent to-white/32" />
         </div>
         <div className="absolute inset-0 sm:hidden">
           <HeroBackgroundVideo
@@ -103,7 +103,7 @@ export function Hero() {
         </div>
       </div>
 
-      <div className="relative z-10 mx-auto grid w-full max-w-full flex-1 items-center gap-8 px-6 pb-56 pt-10 sm:container sm:pb-44 lg:grid-cols-[minmax(0,0.95fr)_minmax(360px,0.9fr)] lg:px-16 lg:pb-32 lg:pt-12">
+      <div className="relative z-10 mx-auto grid w-full max-w-full flex-1 items-center gap-8 px-6 pb-56 pt-24 sm:container sm:pb-44 lg:grid-cols-[minmax(0,0.95fr)_minmax(360px,0.9fr)] lg:px-16 lg:pb-32 lg:pt-28">
         <div className="w-full min-w-0 max-w-[calc(100vw-3rem)] sm:max-w-2xl">
           <motion.div
             initial={{ opacity: 0, y: 40 }}
