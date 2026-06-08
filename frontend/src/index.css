@@ -97,6 +97,61 @@
     box-shadow: 0 0 0 3px rgba(201, 143, 134, 0.18);
     background: #fffdfc;
   }
+  .liquid-glass-button {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.52);
+    background:
+      radial-gradient(circle at 18% 12%, rgba(255, 255, 255, 0.78), rgba(255, 255, 255, 0) 28%),
+      linear-gradient(135deg, rgba(17, 17, 17, 0.97) 0%, rgba(88, 53, 49, 0.96) 48%, rgba(201, 143, 134, 0.96) 100%);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.5),
+      inset 0 -18px 28px rgba(255, 255, 255, 0.08),
+      0 16px 34px rgba(58, 33, 31, 0.22),
+      0 5px 14px rgba(201, 143, 134, 0.2);
+    backdrop-filter: blur(18px) saturate(155%);
+    -webkit-backdrop-filter: blur(18px) saturate(155%);
+  }
+  .liquid-glass-button > * {
+    position: relative;
+    z-index: 1;
+  }
+  .liquid-glass-button::before {
+    content: "";
+    position: absolute;
+    inset: -1px;
+    z-index: 0;
+    background: linear-gradient(118deg, transparent 0%, transparent 34%, rgba(255, 255, 255, 0.62) 46%, transparent 58%, transparent 100%);
+    transform: translateX(-130%);
+    transition: transform 850ms var(--ease-out);
+  }
+  .liquid-glass-button::after {
+    content: "";
+    position: absolute;
+    inset: 2px;
+    z-index: 0;
+    border-radius: inherit;
+    background:
+      radial-gradient(circle at 78% 22%, rgba(255, 255, 255, 0.3), transparent 24%),
+      linear-gradient(180deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.02));
+    opacity: 0.86;
+    pointer-events: none;
+  }
+  .liquid-glass-button:hover {
+    transform: translateY(-1px) scale(1.025);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.62),
+      inset 0 -18px 30px rgba(255, 255, 255, 0.12),
+      0 20px 42px rgba(58, 33, 31, 0.28),
+      0 8px 18px rgba(201, 143, 134, 0.26);
+  }
+  .liquid-glass-button:hover::before {
+    transform: translateX(130%);
+  }
+  .liquid-glass-button:active {
+    transform: translateY(0) scale(0.98);
+  }
   .mk-header-surface {
     background: #ffffff;
     border-bottom: 1px solid rgba(229, 231, 235, 0.85);

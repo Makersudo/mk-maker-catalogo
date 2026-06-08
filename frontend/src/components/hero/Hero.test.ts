@@ -35,4 +35,13 @@ describe("public home hero media", () => {
     assert.equal(source.includes("object-[center_right]"), true);
     assert.equal(source.includes("w-[64%]"), false);
   });
+
+  it("uses a liquid glass button for the catalog CTA", () => {
+    const source = readFileSync(new URL("./Hero.tsx", import.meta.url), "utf8");
+    const css = readFileSync(new URL("../../index.css", import.meta.url), "utf8");
+
+    assert.equal(source.includes("liquid-glass-button"), true);
+    assert.equal(css.includes(".liquid-glass-button::before"), true);
+    assert.equal(css.includes(".liquid-glass-button::after"), true);
+  });
 });

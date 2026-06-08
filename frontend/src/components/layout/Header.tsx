@@ -14,7 +14,6 @@ export function Header() {
   const isProductPage = location.pathname.startsWith('/produto/');
   const isCatalogSurface = activeTab === 'catalogo' && !isProductPage;
   const primaryColor = settings.store_primary_color || '#c98f86';
-  const secondaryColor = settings.store_secondary_color || '#111111';
   const publicPathByTab = {
     inicio: '/inicio',
     catalogo: '/catalogo',
@@ -88,11 +87,10 @@ export function Header() {
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.6 }}
-            className="hidden h-11 items-center justify-center rounded-full px-5 text-xs font-bold uppercase tracking-tight text-white shadow-lg shadow-neutral-900/10 transition-all sm:flex"
-            style={{ background: `linear-gradient(90deg, ${secondaryColor}, ${primaryColor})` }}
+            className="liquid-glass-button hidden h-11 items-center justify-center rounded-full px-5 text-xs font-bold uppercase tracking-tight text-white transition-all sm:flex"
             onClick={() => goToTab('contato')}
           >
-            Fale Conosco
+            <span>Fale Conosco</span>
           </motion.button>
         </div>
       </div>

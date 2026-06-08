@@ -11,4 +11,13 @@ describe("public header surface", () => {
     assert.equal(source.includes("mk-header-surface"), false);
     assert.equal(source.includes("bg-white/94"), true);
   });
+
+  it("uses a liquid glass button for the public contact CTA", () => {
+    const source = readFileSync(new URL("./Header.tsx", import.meta.url), "utf8");
+    const css = readFileSync(new URL("../../index.css", import.meta.url), "utf8");
+
+    assert.equal(source.includes("liquid-glass-button"), true);
+    assert.equal(css.includes(".liquid-glass-button"), true);
+    assert.equal(css.includes("backdrop-filter: blur(18px) saturate(155%)"), true);
+  });
 });

@@ -168,11 +168,10 @@ export function Hero() {
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.45, ease: "easeOut" }}
-            className="flex items-center gap-2 px-6 py-3.5 text-white font-bold text-sm uppercase tracking-tight rounded-full transition-all hover:scale-105 active:scale-95 shadow-lg"
-            style={{ background: `linear-gradient(90deg, ${secondaryColor}, ${primaryColor})` }}
+            className="liquid-glass-button flex items-center gap-2 rounded-full px-6 py-3.5 text-sm font-bold uppercase tracking-tight text-white transition-all"
           >
             <ShoppingBag className="w-5 h-5" />
-            Ver Catalogo
+            <span>Ver Catalogo</span>
           </motion.button>
         </div>
 
