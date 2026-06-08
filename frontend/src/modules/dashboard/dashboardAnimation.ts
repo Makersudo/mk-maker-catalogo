@@ -15,17 +15,17 @@ export interface DashboardAnimationConfig {
 }
 
 export const dashboardAnimation = {
-  pageDuration: 20,
-  cardDuration: 24,
-  chartDuration: 36,
-  compactChartDuration: 24,
-  progressDuration: 28,
-  counterDurationMs: 32000,
-  counterFrameMs: 80,
-  cardStagger: 1.6,
-  barDelayStep: 1.35,
-  compactBarDelayStep: 0.75,
-  maxElementDelay: 12,
+  pageDuration: 1.2,
+  cardDuration: 1.4,
+  chartDuration: 2.8,
+  compactChartDuration: 1.8,
+  progressDuration: 1.8,
+  counterDurationMs: 2200,
+  counterFrameMs: 16,
+  cardStagger: 0.12,
+  barDelayStep: 0.08,
+  compactBarDelayStep: 0.04,
+  maxElementDelay: 0.6,
   easeOut: [0.16, 1, 0.3, 1],
   respectReducedMotion: true,
 } as const satisfies DashboardAnimationConfig;
