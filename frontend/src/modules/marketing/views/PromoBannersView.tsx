@@ -100,8 +100,6 @@ export function ImageCropperModal({ isOpen, imageUrl, onCrop, onClose }: ImageCr
     }
   }, [isOpen]);
 
-  if (!isOpen) return null;
-
   const handleMouseDown = (handle: string, e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
@@ -196,6 +194,8 @@ export function ImageCropperModal({ isOpen, imageUrl, onCrop, onClose }: ImageCr
     };
     img.src = imageUrl;
   };
+
+  if (!isOpen) return null;
 
   return (
     <div className="fixed inset-0 z-[110] flex flex-col bg-black/90 backdrop-blur-md p-4 sm:p-6 justify-center items-center">
