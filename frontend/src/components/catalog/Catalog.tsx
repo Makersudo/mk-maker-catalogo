@@ -468,14 +468,12 @@ export function Catalog() {
     <div className="catalog-brand-surface relative w-full flex-1 flex flex-col">
       <div className="absolute inset-0 dot-pattern opacity-60 pointer-events-none" />
       <div className="pointer-events-none absolute inset-x-0 top-0 h-28 bg-gradient-to-b from-white/90 to-transparent" />
-
       {/* 1. Promo Banner Carousel (Full Width) */}
       {!isLoading && !loadError && sortedProducts.length > 0 && (
-        <div className="w-full shrink-0">
+        <div className="w-full shrink-0 mb-6 lg:mb-10">
           <PromoBannerCarousel />
         </div>
       )}
-
       {/* 2. Main Row Layout (Sidebar + Products Grid) */}
       <div className="flex-1 w-full flex relative items-start">
         {/* Mobile Drawer (Only visible on lg:hidden) */}
