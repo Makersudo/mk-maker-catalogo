@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 import { useAuthStore } from '../../auth/store/useAuthStore';
 import { AdminSidebar } from '../components/AdminSidebar';
 import { AdminHeader } from '../components/AdminHeader';
+import { AdminBottomNav } from '../components/AdminBottomNav';
 
 export function AdminLayout() {
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
@@ -26,10 +27,12 @@ export function AdminLayout() {
       <AdminSidebar />
       <div className="min-w-0 flex-1 flex flex-col overflow-hidden">
         <AdminHeader />
-        <main className="min-h-0 flex-1 overflow-x-hidden overflow-y-auto bg-[radial-gradient(circle_at_top_right,rgba(201,143,134,0.12),transparent_28%),linear-gradient(180deg,#fbfaf9_0%,#f6f4f3_100%)] p-4 pb-[calc(1rem+env(safe-area-inset-bottom))] md:p-8">
+        <main className="min-h-0 flex-1 overflow-x-hidden overflow-y-auto bg-[radial-gradient(circle_at_top_right,rgba(201,143,134,0.12),transparent_28%),linear-gradient(180deg,#fbfaf9_0%,#f6f4f3_100%)] p-4 pb-24 lg:pb-8 lg:p-8">
           <Outlet />
         </main>
+        <AdminBottomNav />
       </div>
     </div>
   );
 }
+

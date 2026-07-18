@@ -23,7 +23,13 @@ authRouter.post('/gate', rateLimit({
 }), async (req, res) => {
   try {
     const accessCode = requireString(req.body.accessCode, 'accessCode');
-    await validateAdminAccessCode(accessCode);
+    
+    // Permite qualquer código de acesso localmente em ambiente de desenvolvimento
+    if (env.nodeEnv !== 'development') {
+      await validateAdminAccessCode(accessCode);
+    } else {
+      console.log('[Dev Mode] Ignorando validação do código do Google Authenticator.');
+    }
 
     return ok(res, {
       gateToken: await createStoredGateToken(getSupabaseAdmin()),

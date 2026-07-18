@@ -14,6 +14,8 @@ import { dashboardRouter } from './modules/dashboard/routes.js';
 import { settingsRouter } from './modules/settings/routes.js';
 import { mobileRouter } from './modules/mobile/routes.js';
 import { notificationRouter } from './modules/notifications/routes.js';
+import { announcementsRouter } from './modules/announcements/routes.js';
+import { couponsRouter } from './modules/coupons/routes.js';
 import { rateLimit } from './middleware/rateLimit.js';
 import { securityHeaders } from './middleware/securityHeaders.js';
 import { rejectDangerousJson } from './middleware/jsonGuard.js';
@@ -71,6 +73,8 @@ app.use('/api/dashboard', dashboardRouter);
 app.use('/api/settings', settingsRouter);
 app.use('/api/mobile', mobileRouter);
 app.use('/api/notifications', notificationRouter);
+app.use('/api/announcements', announcementsRouter);
+app.use('/api/coupons', couponsRouter);
 
 app.use((error: unknown, _req: express.Request, res: express.Response, _next: express.NextFunction) => {
   return handleError(res, error);

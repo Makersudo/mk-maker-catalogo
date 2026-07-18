@@ -18,6 +18,9 @@ const CategoriesView = lazy(() => import('./modules/categories/views/CategoriesV
 const MediaView = lazy(() => import('./modules/media/views/MediaView').then((module) => ({ default: module.MediaView })));
 const HighlightsView = lazy(() => import('./modules/highlights/views/HighlightsView').then((module) => ({ default: module.HighlightsView })));
 const MarketingView = lazy(() => import('./modules/marketing/views/MarketingView').then((module) => ({ default: module.MarketingView })));
+const BannersView = lazy(() => import('./modules/marketing/views/BannersView').then((module) => ({ default: module.BannersView })));
+const PromoBannersView = lazy(() => import('./modules/marketing/views/PromoBannersView').then((module) => ({ default: module.PromoBannersView })));
+const CouponsView = lazy(() => import('./modules/marketing/views/CouponsView').then((module) => ({ default: module.CouponsView })));
 const OrdersKanbanView = lazy(() => import('./modules/orders/views/OrdersKanbanView').then((module) => ({ default: module.OrdersKanbanView })));
 const SettingsView = lazy(() => import('./modules/settings/views/SettingsView').then((module) => ({ default: module.SettingsView })));
 const ContactView = lazy(() => import('./modules/contact/views/ContactView').then((module) => ({ default: module.ContactView })));
@@ -78,18 +81,23 @@ function PublicStore() {
     }
   }, [activeTab, routedTab, setActiveTab]);
 
+  const isHero = routedTab === 'inicio';
+  const mainSpacingClass = isHero ? 'pb-24 lg:pb-0' : 'main-content-padding';
+
   return (
-    <div className="min-h-screen flex flex-col font-sans bg-neutral-50 text-neutral-900 selection:bg-purple-200">
+    <div className="h-screen overflow-hidden flex flex-col font-sans bg-neutral-50 text-neutral-900 selection:bg-purple-200">
       <ScrollToTop />
       <Header />
-      <main className="flex-1 flex flex-col">
-        {routedTab === 'inicio' && <Hero />}
-        {isProductPage ? <ProductDetail /> : routedTab === 'catalogo' && <Catalog />}
-        {routedTab === 'contato' && (
-          <Suspense fallback={<RouteFallback />}>
-            <ContactView />
-          </Suspense>
-        )}
+      <main className="flex-1 overflow-y-auto custom-scrollbar flex flex-col">
+        <div className={`flex-1 flex flex-col ${mainSpacingClass}`}>
+          {routedTab === 'inicio' && <Hero />}
+          {isProductPage ? <ProductDetail /> : routedTab === 'catalogo' && <Catalog />}
+          {routedTab === 'contato' && (
+            <Suspense fallback={<RouteFallback />}>
+              <ContactView />
+            </Suspense>
+          )}
+        </div>
       </main>
       <CartDrawer />
     </div>
@@ -173,6 +181,30 @@ export default function App() {
             element={(
               <Suspense fallback={<RouteFallback />}>
                 <MarketingView />
+              </Suspense>
+            )}
+          />
+          <Route
+            path="banners"
+            element={(
+              <Suspense fallback={<RouteFallback />}>
+                <BannersView />
+              </Suspense>
+            )}
+          />
+          <Route
+            path="promo-banners"
+            element={(
+              <Suspense fallback={<RouteFallback />}>
+                <PromoBannersView />
+              </Suspense>
+            )}
+          />
+          <Route
+            path="coupons"
+            element={(
+              <Suspense fallback={<RouteFallback />}>
+                <CouponsView />
               </Suspense>
             )}
           />

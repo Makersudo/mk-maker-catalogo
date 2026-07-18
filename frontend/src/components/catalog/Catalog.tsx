@@ -1,6 +1,6 @@
 import { useState, useMemo, useEffect, useRef } from "react";
 import { motion } from "motion/react";
-import { Grid2X2, Rows3, Search, ChevronDown, ChevronLeft, ChevronRight, PackageX, Menu, X } from "lucide-react";
+import { Grid2X2, Rows3, Search, ChevronDown, ChevronLeft, ChevronRight, PackageX, Menu, X, Sparkles, Layers } from "lucide-react";
 import { ProductCard } from "./ProductCard";
 import { CatalogSortOption, sortCatalogProducts } from "./catalogSort";
 import { getCatalogSampleImage } from "./catalogSampleImages";
@@ -9,6 +9,7 @@ import { getPublicCatalogBootstrap } from "../../services/catalogService";
 import { Product } from "../../types";
 import { BrandLogo } from "../brand/BrandLogo";
 import { usePublicSettings } from "../../hooks/usePublicSettings";
+import { PromoBannerCarousel } from "../layout/PromoBannerCarousel";
 
 interface CatalogCategory {
   id: string;
@@ -85,10 +86,8 @@ function CatalogSkeleton() {
 }
 
 export function Catalog() {
-  const { activeCategory, setActiveCategory } = useStore();
+  const { activeCategory, setActiveCategory, searchTerm, setSearchTerm } = useStore();
   const settings = usePublicSettings();
-  const catalogScrollRef = useRef<HTMLDivElement | null>(null);
-  const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [isSidebarOpen, setIsSidebarOpen] = useState(() => {
     if (typeof window === "undefined") return false;
@@ -106,8 +105,7 @@ export function Catalog() {
   const storeName = settings.store_name?.trim() || "MK MAKER";
 
   const scrollCatalogToTop = () => {
-    catalogScrollRef.current?.scrollTo({ top: 0, left: 0, behavior: "auto" });
-    window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+    document.querySelector("main")?.scrollTo({ top: 0, left: 0, behavior: "auto" });
   };
 
   const setCatalogPage = (nextPage: number) => {
@@ -306,191 +304,213 @@ export function Catalog() {
     });
   };
 
+  const renderSidebarContent = (isMobile: boolean) => (
+    <div className={`w-[min(20rem,calc(100vw-1rem))] lg:w-72 flex ${isMobile ? 'h-full' : 'h-auto'} flex-col overflow-hidden`}>
+      {/* Logo: visível apenas no mobile drawer */}
+      <div className="flex min-h-[92px] items-center bg-white px-5 lg:hidden justify-start">
+        <div className="min-w-0">
+          <BrandLogo imageClassName="h-14 w-36 object-contain object-left" />
+        </div>
+      </div>
+
+      {/* Premium Sidebar Header */}
+      <div className="px-5 pt-5 pb-4">
+        <div className="flex items-center gap-3 justify-between">
+          <div className="min-w-0">
+            <div className="flex items-center gap-2">
+              <Sparkles className="w-3.5 h-3.5 text-[#c98f86]" />
+              <h3 className="text-[11px] font-black text-[#7c4f4a] uppercase tracking-[0.22em]">
+                Categorias
+              </h3>
+            </div>
+            <p className="mt-1.5 text-[11px] text-neutral-400 font-medium">
+              Navegue por linha e tipo de produto
+            </p>
+          </div>
+          {isMobile && (
+            <button
+              onClick={() => setIsSidebarOpen(false)}
+              className="inline-flex shrink-0 items-center justify-center rounded-full w-8 h-8 bg-neutral-100 text-neutral-500 transition-all hover:bg-[#fbf4f3] hover:text-[#8f5e59] hover:scale-105 active:scale-95"
+              aria-label="Fechar painel"
+            >
+              <X className="w-4 h-4" />
+            </button>
+          )}
+        </div>
+        {/* Gradient accent line */}
+        <div className="mt-3 h-[2px] rounded-full bg-gradient-to-r from-[#c98f86] via-[#e8c4bc] to-transparent" />
+      </div>
+
+      {/* Category List */}
+      <div className={`flex-1 ${isMobile ? 'overflow-y-auto custom-scrollbar' : 'overflow-hidden'} px-3 pb-5`}>
+        {isLoading &&
+          Array.from({ length: 6 }).map((_, index) => (
+            <div key={index} className="h-11 animate-pulse rounded-lg bg-neutral-50 mb-1" />
+          ))}
+
+        {!isLoading && (
+          <div className="flex flex-col">
+            {/* "Todos os Itens" — Premium pill button */}
+            <button
+              onClick={() => {
+                selectCategory(null);
+              }}
+              className={`group flex w-full items-center gap-3 rounded-xl px-4 py-3 text-left transition-all duration-200 mb-2 ${
+                activeCategory === null
+                  ? "bg-gradient-to-r from-[#7c4f4a] to-[#c98f86] text-white shadow-lg shadow-[#c98f86]/20"
+                  : "text-neutral-600 hover:bg-[#fbf4f3] hover:text-[#7c4f4a]"
+              }`}
+            >
+              <Layers className={`w-4 h-4 shrink-0 transition-transform duration-200 group-hover:scale-110 ${activeCategory === null ? 'text-white/80' : 'text-[#c98f86]'}`} />
+              <span className="text-sm font-semibold tracking-wide flex-1">Todos os Itens</span>
+              <span className={`shrink-0 rounded-full px-2.5 py-0.5 text-[10px] font-bold tabular-nums ${
+                activeCategory === null
+                  ? "bg-white/20 text-white"
+                  : "bg-neutral-100 text-neutral-400"
+              }`}>
+                {storeProducts.length}
+              </span>
+            </button>
+
+            {/* Category accordion items */}
+            {rootCategories.map((category, index) => {
+              const subcategories = subcategoriesByParent[category.id] ?? [];
+              const hasSubcategories = subcategories.length > 0;
+              const isExpanded = expandedCategoryIds.has(category.id);
+              const isCategoryActive = activeCategory === category.id || subcategories.some(s => s.id === activeCategory);
+
+              return (
+                <div key={category.id} className="flex flex-col">
+                  {/* Divider line between categories */}
+                  {index > 0 && (
+                    <div className="mx-3 border-t border-neutral-100" />
+                  )}
+                  <button
+                    onClick={() => {
+                      if (hasSubcategories) {
+                        toggleCategoryDropdown(category.id);
+                      } else {
+                        selectCategory(category.id);
+                      }
+                    }}
+                    className={`group flex w-full items-center justify-between gap-2 px-4 py-3 text-left transition-all duration-200 rounded-lg ${
+                      isCategoryActive
+                        ? "text-[#7c4f4a]"
+                        : "text-neutral-600 hover:text-[#7c4f4a] hover:bg-[#fdf8f7]"
+                    }`}
+                  >
+                    <span className={`text-[13px] tracking-wide truncate min-w-0 ${
+                      isCategoryActive ? "font-bold" : "font-semibold"
+                    }`}>
+                      {category.name}
+                    </span>
+                    <div className="flex items-center gap-1.5 shrink-0">
+                      {!hasSubcategories && (
+                        <span className={`rounded-full px-2 py-0.5 text-[10px] font-bold tabular-nums ${
+                          isCategoryActive
+                            ? "bg-[#fbf0ed] text-[#9d6a63]"
+                            : "bg-neutral-50 text-neutral-400"
+                        }`}>
+                          {categoryProductCounts[category.id] ?? 0}
+                        </span>
+                      )}
+                      {hasSubcategories && (
+                        <ChevronDown
+                          className={`h-4 w-4 text-neutral-400 transition-all duration-300 ease-out group-hover:text-[#c98f86] ${
+                            isExpanded ? "rotate-180 text-[#c98f86]" : ""
+                          }`}
+                        />
+                      )}
+                    </div>
+                  </button>
+
+                  {/* Subcategory expansion — animated reveal */}
+                  {hasSubcategories && isExpanded && (
+                    <div className="ml-4 mr-2 mb-2 flex flex-col border-l-2 border-[#ead5d2] pl-3 animate-[fadeSlideIn_200ms_ease-out]">
+                      {subcategories.map((subcategory) => {
+                        const isSubcategoryActive = activeCategory === subcategory.id;
+                        return (
+                          <button
+                            key={subcategory.id}
+                            onClick={() => {
+                              selectCategory(subcategory.id);
+                            }}
+                            className={`group flex w-full items-center justify-between gap-2 rounded-lg px-3 py-2 text-left transition-all duration-200 ${
+                              isSubcategoryActive
+                                ? "bg-[#fbf4f3] text-[#7c4f4a] font-semibold"
+                                : "text-neutral-500 hover:bg-[#fdf8f7] hover:text-[#7c4f4a]"
+                            }`}
+                            title={subcategory.name}
+                          >
+                            <span className="min-w-0 truncate text-[12.5px]">{subcategory.name}</span>
+                            <span className={`shrink-0 rounded-full px-2 py-0.5 text-[10px] font-bold tabular-nums ${
+                              isSubcategoryActive
+                                ? "bg-[#fbf0ed] text-[#9d6a63]"
+                                : "bg-neutral-50/80 text-neutral-400"
+                            }`}>
+                              {categoryProductCounts[subcategory.id] ?? 0}
+                            </span>
+                          </button>
+                        );
+                      })}
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+
   return (
-    <div className="catalog-brand-surface relative w-full flex-1 flex overflow-hidden">
+    <div className="catalog-brand-surface relative w-full flex-1 flex flex-col">
       <div className="absolute inset-0 dot-pattern opacity-60 pointer-events-none" />
       <div className="pointer-events-none absolute inset-x-0 top-0 h-28 bg-gradient-to-b from-white/90 to-transparent" />
 
-      {isSidebarOpen && (
-        <div
-          className="lg:hidden fixed inset-0 z-40 bg-neutral-900/50 backdrop-blur-sm"
-          onClick={() => setIsSidebarOpen(false)}
-        />
+      {/* 1. Promo Banner Carousel (Full Width) */}
+      {!isLoading && !loadError && sortedProducts.length > 0 && (
+        <div className="w-full shrink-0">
+          <PromoBannerCarousel />
+        </div>
       )}
 
-      <aside
-        className={`
-          fixed inset-y-0 left-0 z-[60]
-          bg-white lg:bg-white/95 lg:backdrop-blur-md
-          border-r border-neutral-200
-          transition-all duration-300 ease-in-out shrink-0 overflow-visible
-          ${
-            isSidebarOpen
-              ? "translate-x-0 w-[min(20rem,calc(100vw-1rem))] shadow-2xl pointer-events-auto"
-              : "-translate-x-full w-[min(20rem,calc(100vw-1rem))] border-r-0 opacity-0 pointer-events-none"
-          }
-          lg:translate-x-0 lg:border-r lg:opacity-100 lg:pointer-events-auto lg:shadow-none
-          ${isSidebarCollapsed ? "lg:w-20" : "lg:w-72"}
-        `}
-      >
-        <button
-          type="button"
-          onClick={() => setIsSidebarCollapsed((collapsed) => !collapsed)}
-          className="absolute -right-4 top-24 z-20 hidden h-9 w-9 items-center justify-center rounded-full border border-neutral-200 bg-white text-[#8f5e59] shadow-md shadow-neutral-900/10 transition-all hover:border-[#ead5d2] hover:bg-neutral-50 lg:flex"
-          aria-label={isSidebarCollapsed ? "Expandir categorias" : "Recolher categorias"}
-          title={isSidebarCollapsed ? "Expandir categorias" : "Recolher categorias"}
-        >
-          {isSidebarCollapsed ? <ChevronRight className="h-5 w-5" /> : <ChevronLeft className="h-5 w-5" />}
-        </button>
-
-        <div className={`w-[min(20rem,calc(100vw-1rem))] ${isSidebarCollapsed ? "lg:w-20" : "lg:w-72"} flex h-full flex-col overflow-hidden`}>
-          <div className={`flex min-h-[92px] items-center bg-white px-5 ${isSidebarCollapsed ? "justify-center lg:px-3" : "justify-start lg:px-5"}`}>
-            {!isSidebarCollapsed ? (
-              <div className="min-w-0">
-                <BrandLogo imageClassName="h-14 w-36 object-contain object-left" />
-              </div>
-            ) : (
-              <div
-                className="flex h-14 w-14 items-center justify-center overflow-hidden"
-                title={storeName}
-                aria-label={storeName}
-              >
-                <BrandLogo imageClassName="h-14 w-14 object-contain object-center" />
-              </div>
-            )}
-          </div>
-
-          <div className={`border-b border-neutral-100 bg-white/95 px-5 py-5 ${isSidebarCollapsed ? "hidden" : "lg:px-5"}`}>
-            <div className={`flex items-center gap-3 ${isSidebarCollapsed ? "lg:justify-center" : "justify-between"}`}>
-              <div className="min-w-0">
-                <h3 className="text-[11px] font-black text-[#7c4f4a] uppercase tracking-[0.22em]">
-                  Categorias
-                </h3>
-                <p className="mt-1 truncate text-xs text-neutral-500">
-                  Navegue por linha e tipo de produto
-                </p>
-              </div>
-              <button
-                onClick={() => setIsSidebarOpen(false)}
-                className="inline-flex shrink-0 items-center gap-1.5 rounded-lg border border-neutral-200 bg-white px-3 py-2 text-[10px] font-bold uppercase tracking-widest text-neutral-500 shadow-sm shadow-neutral-900/5 transition-colors hover:border-[#ead5d2] hover:bg-neutral-50 hover:text-[#8f5e59] lg:hidden"
-                aria-label="Fechar painel"
-              >
-                <X className="w-3.5 h-3.5" />
-                Fechar
-              </button>
-            </div>
-          </div>
-
-          <div className={`flex-1 overflow-y-auto py-5 custom-scrollbar ${isSidebarCollapsed ? "px-4 lg:px-2" : "px-4"}`}>
-            <div className={`${isSidebarCollapsed ? "hidden" : ""} flex flex-col gap-3`}>
-              {isLoading &&
-                Array.from({ length: 6 }).map((_, index) => (
-                  <div key={index} className="h-12 animate-pulse rounded-xl bg-neutral-100" />
-                ))}
-
-              {!isLoading && (
-                <>
-                  <button
-                    onClick={() => {
-                      selectCategory(null);
-                    }}
-                    className={`group flex w-full items-center justify-between gap-3 rounded-xl border px-4 py-3 text-left text-sm transition-all ${
-                      activeCategory === null
-                        ? "border-[#ead5d2] bg-white text-[#7c4f4a] font-black shadow-sm shadow-neutral-900/5"
-                        : "border-neutral-100 bg-white text-neutral-700 hover:border-[#f0dddd] hover:bg-neutral-50 hover:text-[#7c4f4a]"
-                    }`}
-                  >
-                    <span className="min-w-0 truncate">Todos os Itens</span>
-                    <span className="rounded-full bg-white/80 px-2 py-0.5 text-[11px] font-bold text-neutral-500">
-                      {storeProducts.length}
-                    </span>
-                  </button>
-
-                  {rootCategories.map((category) => {
-                    const subcategories = subcategoriesByParent[category.id] ?? [];
-                    const isCategoryActive = activeCategory === category.id;
-                    const hasSubcategories = subcategories.length > 0;
-                    const isExpanded = expandedCategoryIds.has(category.id);
-
-                    return (
-                      <div key={category.id} className="catalog-panel-surface rounded-2xl border p-2">
-                        <button
-                          onClick={() => {
-                            if (hasSubcategories) toggleCategoryDropdown(category.id);
-                            selectCategory(category.id);
-                          }}
-                          className={`flex w-full items-center gap-3 rounded-xl px-3 py-3 text-left transition-all ${
-                            isCategoryActive
-                              ? "bg-[#fbf4f3] text-[#7c4f4a] shadow-sm"
-                              : "text-neutral-700 hover:bg-neutral-50 hover:text-[#7c4f4a]"
-                          }`}
-                          title={category.name}
-                        >
-                          <span className={`h-8 w-1 rounded-full ${isCategoryActive ? "bg-[#c98f86]" : "bg-neutral-200"}`} />
-                          <span className="min-w-0 flex-1">
-                            <span className="block truncate text-sm font-bold">{category.name}</span>
-                            {subcategories.length > 0 && (
-                              <span className="mt-0.5 block text-[11px] font-medium text-neutral-400">
-                                {subcategories.length} subcategorias
-                              </span>
-                            )}
-                          </span>
-                          <span className="rounded-full bg-neutral-100 px-2 py-0.5 text-[11px] font-bold text-neutral-500">
-                            {categoryProductCounts[category.id] ?? 0}
-                          </span>
-                          {hasSubcategories && (
-                            <ChevronDown
-                              className={`h-4 w-4 shrink-0 text-neutral-400 transition-transform ${
-                                isExpanded ? "rotate-180" : ""
-                              }`}
-                            />
-                          )}
-                        </button>
-
-                        {hasSubcategories && isExpanded && (
-                          <div className="mt-1 flex flex-col gap-1 border-l border-[#ead5d2] pl-3">
-                            {subcategories.map((subcategory) => {
-                              const isSubcategoryActive = activeCategory === subcategory.id;
-
-                              return (
-                                <button
-                                  key={subcategory.id}
-                                  onClick={() => {
-                                    selectCategory(subcategory.id);
-                                  }}
-                                  className={`flex w-full items-center justify-between gap-2 rounded-lg px-3 py-2.5 text-left text-sm transition-all ${
-                                    isSubcategoryActive
-                                      ? "bg-[#fbf4f3] text-[#7c4f4a] font-bold"
-                                      : "text-neutral-600 hover:bg-neutral-50 hover:text-[#7c4f4a]"
-                                  }`}
-                                  title={subcategory.name}
-                                >
-                                  <span className="min-w-0 truncate">{subcategory.name}</span>
-                                  <span className="shrink-0 rounded-full bg-neutral-50 px-2 py-0.5 text-[10px] font-bold text-neutral-400">
-                                    {categoryProductCounts[subcategory.id] ?? 0}
-                                  </span>
-                                </button>
-                              );
-                            })}
-                          </div>
-                        )}
-                      </div>
-                    );
-                  })}
-                </>
-              )}
-            </div>
-
-          </div>
+      {/* 2. Main Row Layout (Sidebar + Products Grid) */}
+      <div className="flex-1 w-full flex relative items-start">
+        {/* Mobile Drawer (Only visible on lg:hidden) */}
+        <div className="lg:hidden">
+          {isSidebarOpen && (
+            <div
+              className="fixed inset-0 z-40 bg-neutral-900/50 backdrop-blur-sm"
+              onClick={() => setIsSidebarOpen(false)}
+            />
+          )}
+          <aside
+            className={`
+              fixed left-0 z-[60] top-0 h-full bg-white
+              border-r border-neutral-200
+              transition-all duration-300 ease-in-out shrink-0 overflow-visible
+              w-[min(20rem,calc(100vw-1rem))]
+              ${
+                isSidebarOpen
+                  ? "translate-x-0 shadow-2xl pointer-events-auto"
+                  : "-translate-x-full opacity-0 pointer-events-none"
+              }
+            `}
+          >
+            {renderSidebarContent(true)}
+          </aside>
         </div>
-      </aside>
+        {/* Desktop Sidebar (Only visible on lg:block, sticky positioning below header) */}
+        <aside className="hidden lg:block w-72 shrink-0 bg-white/95 backdrop-blur-md border-r border-neutral-200 h-auto self-start mt-6 lg:sticky lg:top-[112px] lg:max-h-[calc(100vh-128px)] lg:overflow-y-auto lg:overflow-x-hidden sidebar-scrollbar">
+          {renderSidebarContent(false)}
+        </aside>
 
       <div
-        ref={catalogScrollRef}
-        className={`relative z-10 flex h-full flex-1 flex-col overflow-y-auto p-4 pt-28 transition-[margin] duration-300 custom-scrollbar lg:p-12 lg:pt-28 ${
-          isSidebarCollapsed ? "lg:ml-20" : "lg:ml-72"
-        }`}
+        className="relative z-10 flex flex-1 flex-col p-4 pt-6 lg:p-12 lg:pt-8"
       >
+
         <header className="mb-6 lg:mb-10 flex flex-col gap-4 lg:gap-6">
           <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
             <div className="flex items-start gap-4">
@@ -536,17 +556,6 @@ export function Catalog() {
             </div>
           </div>
 
-          <div className="w-full lg:w-96 relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-neutral-400" />
-            <input
-              type="text"
-              value={searchTerm}
-              onChange={(event) => setSearchTerm(event.target.value)}
-              placeholder="Buscar por nome ou descricao..."
-              disabled={isLoading}
-              className="w-full pl-9 pr-4 py-2.5 bg-white border border-neutral-200 rounded-xl text-sm focus:outline-none focus:border-[#c98f86] focus:ring-1 focus:ring-[#c98f86] transition-colors shadow-sm shadow-neutral-900/5 disabled:bg-neutral-100 disabled:text-neutral-400"
-            />
-          </div>
 
           <div className="flex items-center justify-between gap-3 rounded-2xl border border-neutral-200 bg-white p-2 shadow-sm shadow-neutral-900/5 lg:hidden">
             <span className="pl-2 text-[10px] font-black uppercase tracking-[0.2em] text-neutral-400">
@@ -728,5 +737,6 @@ export function Catalog() {
         )}
       </div>
     </div>
+  </div>
   );
 }

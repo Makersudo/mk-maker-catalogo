@@ -1,9 +1,10 @@
 import { type ChangeEvent, type FormEvent, useEffect, useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { X, Minus, Plus, Trash2, Send, ShoppingCart, MapPin, Store, Copy, CheckCircle2 } from "lucide-react";
+import { X, Minus, Plus, Trash2, Send, ShoppingCart, MapPin, Store, Copy, CheckCircle2, Tag, Ticket, CheckCheck, AlertCircle } from "lucide-react";
 import { useStore } from "../../store/useStore";
 import { CheckoutData } from "../../types";
 import { createOrder } from "../../services/orderService";
+import { validateCoupon, useCoupon, type CouponValidation } from "../../services/couponsService";
 
 function formatPrice(value: number) {
   return new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" }).format(value);
@@ -20,6 +21,34 @@ export function CartDrawer() {
   const [orderCode, setOrderCode] = useState("");
   const [ticketCopied, setTicketCopied] = useState(false);
   const [cepLoading, setCepLoading] = useState(false);
+
+  // Cupom
+  const [couponCode, setCouponCode] = useState("");
+  const [couponLoading, setCouponLoading] = useState(false);
+  const [couponError, setCouponError] = useState("");
+  const [appliedCoupon, setAppliedCoupon] = useState<CouponValidation | null>(null);
+
+  const handleApplyCoupon = async () => {
+    if (!couponCode.trim()) return;
+    setCouponError("");
+    setCouponLoading(true);
+    try {
+      const result = await validateCoupon(couponCode.trim(), total);
+      setAppliedCoupon(result);
+    } catch (err: any) {
+      setAppliedCoupon(null);
+      setCouponError(err?.message || "Cupom inválido.");
+    } finally {
+      setCouponLoading(false);
+    }
+  };
+
+  const removeCoupon = () => {
+    setAppliedCoupon(null);
+    setCouponCode("");
+    setCouponError("");
+  };
+
 
   const [formData, setFormData] = useState<CheckoutData>({
     fullName: "",
@@ -119,6 +148,10 @@ export function CartDrawer() {
     const unitPrice = item.variant?.price ?? item.product.price;
     return acc + unitPrice * item.quantity;
   }, 0);
+
+  const discountAmount = appliedCoupon ? appliedCoupon.discount_amount : 0;
+  const finalTotal = Math.max(0, total - discountAmount);
+
 
   const copyTicket = async () => {
     if (!orderCode) return;
@@ -272,6 +305,55 @@ export function CartDrawer() {
                       <option value="card">Cartao</option>
                     </select>
 
+                    {/* Campo de Cupom */}
+                    <div className="rounded-xl border border-neutral-200 bg-neutral-50 p-4">
+                      <h3 className="uppercase tracking-widest text-xs font-bold text-neutral-500 mb-3 flex items-center gap-2">
+                        <Tag className="h-3.5 w-3.5" /> Cupom de desconto
+                      </h3>
+                      {appliedCoupon ? (
+                        <div className="flex items-center justify-between gap-3 p-3 bg-emerald-50 border border-emerald-200 rounded-lg">
+                          <div className="flex items-center gap-2">
+                            <CheckCheck className="h-4 w-4 text-emerald-600" />
+                            <div>
+                              <p className="text-xs font-black text-emerald-700">{appliedCoupon.code}</p>
+                              <p className="text-[10px] text-emerald-600">
+                                -{formatPrice(appliedCoupon.discount_amount)} de desconto
+                              </p>
+                            </div>
+                          </div>
+                          <button onClick={removeCoupon} className="text-emerald-500 hover:text-red-500 transition-colors">
+                            <X className="h-4 w-4" />
+                          </button>
+                        </div>
+                      ) : (
+                        <div className="space-y-2">
+                          <div className="flex gap-2">
+                            <input
+                              type="text"
+                              value={couponCode}
+                              onChange={e => { setCouponCode(e.target.value.toUpperCase()); setCouponError(""); }}
+                              onKeyDown={e => e.key === 'Enter' && (e.preventDefault(), handleApplyCoupon())}
+                              placeholder="Digite seu cupom"
+                              className="flex-1 border border-neutral-200 rounded-lg px-3 py-2 text-xs font-mono font-bold text-neutral-900 outline-none focus:border-[#c98f86]/60 bg-white uppercase"
+                            />
+                            <button
+                              type="button"
+                              onClick={handleApplyCoupon}
+                              disabled={couponLoading || !couponCode.trim()}
+                              className="px-3 py-2 rounded-lg bg-[#c98f86] text-white text-xs font-bold hover:bg-[#b87d74] disabled:opacity-50 transition-colors"
+                            >
+                              {couponLoading ? '…' : 'Aplicar'}
+                            </button>
+                          </div>
+                          {couponError && (
+                            <p className="text-[10px] text-red-500 flex items-center gap-1">
+                              <AlertCircle className="h-3 w-3" /> {couponError}
+                            </p>
+                          )}
+                        </div>
+                      )}
+                    </div>
+
                     <div className="rounded-xl border border-neutral-200 bg-neutral-50 p-4">
                       <h3 className="uppercase tracking-widest text-xs font-bold text-neutral-500 mb-3">Resumo do pedido</h3>
                       <div className="flex flex-col gap-2 text-xs text-neutral-600">
@@ -281,6 +363,12 @@ export function CartDrawer() {
                             <strong>{formatPrice((item.variant?.price ?? item.product.price) * item.quantity)}</strong>
                           </div>
                         ))}
+                        {appliedCoupon && (
+                          <div className="flex justify-between gap-3 text-emerald-600 font-bold border-t border-neutral-200 pt-2 mt-1">
+                            <span>Desconto ({appliedCoupon.code})</span>
+                            <strong>-{formatPrice(appliedCoupon.discount_amount)}</strong>
+                          </div>
+                        )}
                       </div>
                     </div>
                   </form>
@@ -289,9 +377,19 @@ export function CartDrawer() {
             </main>
 
             <footer className="border-t border-neutral-200 bg-white/80 px-4 pt-4 pb-[calc(1.5rem+env(safe-area-inset-bottom))] backdrop-blur-md sm:p-6">
+              <div className="flex items-center justify-between mb-1">
+                <span className="text-neutral-500 uppercase tracking-widest text-[10px] font-bold">Subtotal</span>
+                <span className="text-sm font-medium text-neutral-600">{formatPrice(total)}</span>
+              </div>
+              {appliedCoupon && (
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-emerald-600 text-[10px] font-bold uppercase tracking-widest">Desconto</span>
+                  <span className="text-sm font-bold text-emerald-600">-{formatPrice(discountAmount)}</span>
+                </div>
+              )}
               <div className="flex items-center justify-between mb-4">
-                <span className="text-neutral-500 uppercase tracking-widest text-[10px] font-bold">Total Estimado</span>
-                <span className="text-xl font-bold text-neutral-900">{formatPrice(total)}</span>
+                <span className="text-neutral-900 uppercase tracking-widest text-[10px] font-black">Total</span>
+                <span className="text-xl font-black text-neutral-900">{formatPrice(finalTotal)}</span>
               </div>
 
               <button type="submit" form="checkout-form" disabled={cart.length === 0 || checkoutLoading} className="w-full flex items-center justify-center gap-2 py-3.5 bg-gradient-to-r from-purple-800 to-purple-500 text-white font-bold text-sm uppercase tracking-tight rounded-xl hover:from-purple-700 hover:to-purple-400 disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-md shadow-purple-500/20">

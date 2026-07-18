@@ -30,6 +30,17 @@
   }
 }
 
+@keyframes fadeSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 @layer utilities {
   .bento-card {
     background: #ffffff;
@@ -174,4 +185,76 @@
     -webkit-mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.68) 0%, #000000 34%, #000000 100%);
     mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.68) 0%, #000000 34%, #000000 100%);
   }
+  .bottom-nav-badge {
+    transition: background-color var(--transition-normal), transform var(--transition-normal);
+  }
+  .active-dot {
+    transition: transform var(--transition-normal), opacity var(--transition-normal);
+  }
+  .announcement-strip-fixed {
+    position: fixed;
+    left: 0;
+    right: 0;
+    z-index: 40;
+    overflow: hidden;
+    top: 57px;
+  }
+  @media (min-width: 1024px) {
+    .announcement-strip-fixed {
+      top: 112px;
+    }
+  }
+
+  .main-content-padding {
+    padding-top: 58px;
+    padding-bottom: 96px;
+  }
+  @media (min-width: 1024px) {
+    .main-content-padding {
+      padding-top: 112px;
+      padding-bottom: 0px;
+    }
+  }
+
+  /* Scrollbar elegante e discreta para containers gerais */
+  .custom-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(180, 160, 155, 0.25) transparent;
+  }
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: rgba(180, 160, 155, 0.25);
+    border-radius: 999px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: rgba(180, 160, 155, 0.45);
+  }
+  /* Scrollbar premium da marca para a sidebar de categorias */
+  .sidebar-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(201, 143, 134, 0.35) rgba(201, 143, 134, 0.06);
+  }
+  .sidebar-scrollbar::-webkit-scrollbar {
+    width: 3px;
+  }
+  .sidebar-scrollbar::-webkit-scrollbar-track {
+    background: rgba(201, 143, 134, 0.06);
+    border-radius: 999px;
+    margin: 8px 0;
+  }
+  .sidebar-scrollbar::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #c98f86, #e8c4bc);
+    border-radius: 999px;
+    transition: background 0.2s;
+  }
+  .sidebar-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, #9d6a63, #c98f86);
+  }
 }
+

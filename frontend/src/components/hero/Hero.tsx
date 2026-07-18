@@ -6,6 +6,7 @@ import { useStore } from "../../store/useStore";
 import { usePublicSettings } from "../../hooks/usePublicSettings";
 import { BrandLogo } from "../brand/BrandLogo";
 
+
 const LOOP_FADE_WINDOW_SECONDS = 0.8;
 const LOOP_REVEAL_WINDOW_SECONDS = 0.2;
 

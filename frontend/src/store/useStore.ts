@@ -15,6 +15,8 @@ interface StoreState {
   removeFromCart: (key: string) => void;
   updateQuantity: (key: string, quantity: number) => void;
   clearCart: () => void;
+  searchTerm: string;
+  setSearchTerm: (term: string) => void;
 }
 
 function getCartKey(productId: string, variant?: ProductVariant | null) {
@@ -45,6 +47,8 @@ export const useStore = create<StoreState>()(
         cart: state.cart.map(item => item.key === key ? { ...item, quantity } : item)
       })),
       clearCart: () => set({ cart: [] }),
+      searchTerm: '',
+      setSearchTerm: (term) => set({ searchTerm: term }),
     }),
     {
       name: 'mk-maker-cart',
