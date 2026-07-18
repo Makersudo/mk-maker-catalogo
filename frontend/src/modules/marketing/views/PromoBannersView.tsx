@@ -88,17 +88,48 @@ interface ImageCropperModalProps {
   onClose: () => void;
 }
 
+
+
 export function ImageCropperModal({ isOpen, imageUrl, onCrop, onClose }: ImageCropperModalProps) {
   const [cropBox, setCropBox] = useState({ x: 0.15, y: 0.15, width: 0.7, height: 0.7 });
   const [draggingHandle, setDraggingHandle] = useState<string | null>(null);
   const [dragStart, setDragStart] = useState<{ x: number; y: number; box: typeof cropBox } | null>(null);
+  const [naturalSize, setNaturalSize] = useState<{ width: number; height: number } | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (isOpen) {
-      setCropBox({ x: 0.15, y: 0.15, width: 0.7, height: 0.7 });
+    if (isOpen && imageUrl) {
+      const img = new Image();
+      img.crossOrigin = 'anonymous';
+      img.onload = () => {
+        setNaturalSize({ width: img.naturalWidth, height: img.naturalHeight });
+        
+        // Inicializa o cropBox com a proporção exata de 1920/380
+        const targetRatio = 1920 / 380;
+        const imageRatio = img.naturalWidth / img.naturalHeight;
+        if (imageRatio > targetRatio) {
+          const w = targetRatio / imageRatio;
+          setCropBox({
+            x: (1 - w) / 2,
+            y: 0,
+            width: w,
+            height: 1
+          });
+        } else {
+          const h = imageRatio / targetRatio;
+          setCropBox({
+            x: 0,
+            y: (1 - h) / 2,
+            width: 1,
+            height: h
+          });
+        }
+      };
+      img.src = imageUrl;
+    } else {
+      setNaturalSize(null);
     }
-  }, [isOpen]);
+  }, [isOpen, imageUrl]);
 
   const handleMouseDown = (handle: string, e: React.MouseEvent) => {
     e.preventDefault();
@@ -112,37 +143,69 @@ export function ImageCropperModal({ isOpen, imageUrl, onCrop, onClose }: ImageCr
   };
 
   const handleMouseMove = (e: MouseEvent) => {
-    if (!draggingHandle || !dragStart || !containerRef.current) return;
+    if (!draggingHandle || !dragStart || !containerRef.current || !naturalSize) return;
     const rect = containerRef.current.getBoundingClientRect();
     const deltaX = (e.clientX - dragStart.x) / rect.width;
     const deltaY = (e.clientY - dragStart.y) / rect.height;
 
     let { x, y, width, height } = dragStart.box;
-    const minSize = 0.05;
 
     if (draggingHandle === 'move') {
       x = Math.max(0, Math.min(1 - width, x + deltaX));
       y = Math.max(0, Math.min(1 - height, y + deltaY));
+      setCropBox({ x, y, width, height });
     } else {
-      if (['l', 'tl', 'bl'].includes(draggingHandle)) {
-        const newX = Math.max(0, Math.min(x + width - minSize, x + deltaX));
-        width = x + width - newX;
-        x = newX;
-      }
-      if (['r', 'tr', 'br'].includes(draggingHandle)) {
-        width = Math.max(minSize, Math.min(1 - x, width + deltaX));
-      }
-      if (['t', 'tl', 'tr'].includes(draggingHandle)) {
-        const newY = Math.max(0, Math.min(y + height - minSize, y + deltaY));
-        height = y + height - newY;
-        y = newY;
-      }
-      if (['b', 'bl', 'br'].includes(draggingHandle)) {
-        height = Math.max(minSize, Math.min(1 - y, height + deltaY));
+      const targetRatio = 1920 / 380;
+      const relRatio = targetRatio * (naturalSize.height / naturalSize.width);
+
+      if (['r', 'tr', 'br', 'b'].includes(draggingHandle)) {
+        let newWidth = width + deltaX;
+        let newHeight = newWidth / relRatio;
+
+        // Check boundaries
+        if (x + newWidth > 1) {
+          newWidth = 1 - x;
+          newHeight = newWidth / relRatio;
+        }
+        if (y + newHeight > 1) {
+          newHeight = 1 - y;
+          newWidth = newHeight * relRatio;
+        }
+        if (newWidth < 0.1) {
+          newWidth = 0.1;
+          newHeight = newWidth / relRatio;
+        }
+
+        setCropBox({ x, y, width: newWidth, height: newHeight });
+      } else if (['l', 'tl', 'bl', 't'].includes(draggingHandle)) {
+        let newX = x + deltaX;
+        let newWidth = (x + width) - newX;
+        let newHeight = newWidth / relRatio;
+        let newY = (y + height) - newHeight;
+
+        // Check boundaries
+        if (newX < 0) {
+          newX = 0;
+          newWidth = x + width;
+          newHeight = newWidth / relRatio;
+          newY = (y + height) - newHeight;
+        }
+        if (newY < 0) {
+          newY = 0;
+          newHeight = y + height;
+          newWidth = newHeight * relRatio;
+          newX = (x + width) - newWidth;
+        }
+        if (newWidth < 0.1) {
+          newWidth = 0.1;
+          newHeight = newWidth / relRatio;
+          newX = (x + width) - newWidth;
+          newY = (y + height) - newHeight;
+        }
+
+        setCropBox({ x: newX, y: newY, width: newWidth, height: newHeight });
       }
     }
-
-    setCropBox({ x, y, width, height });
   };
 
   const handleMouseUp = () => {
@@ -159,7 +222,7 @@ export function ImageCropperModal({ isOpen, imageUrl, onCrop, onClose }: ImageCr
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('mouseup', handleMouseUp);
     };
-  }, [draggingHandle, dragStart]);
+  }, [draggingHandle, dragStart, naturalSize]);
 
   const handleConfirm = () => {
     const img = new Image();
