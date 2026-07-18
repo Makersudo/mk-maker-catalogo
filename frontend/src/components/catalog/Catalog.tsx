@@ -470,7 +470,7 @@ export function Catalog() {
       <div className="pointer-events-none absolute inset-x-0 top-0 h-28 bg-gradient-to-b from-white/90 to-transparent" />
       {/* 1. Promo Banner Carousel (Full Width) */}
       {!isLoading && !loadError && sortedProducts.length > 0 && (
-        <div className="w-full shrink-0 mb-6 lg:mb-10">
+        <div className="w-full shrink-0">
           <PromoBannerCarousel />
         </div>
       )}
