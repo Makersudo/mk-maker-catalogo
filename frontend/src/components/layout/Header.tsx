@@ -34,6 +34,7 @@ export function Header() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   // Estados para as sugestões de pesquisa inteligentes (Shopee / Mercado Livre Style)
+  const [localSearchTerm, setLocalSearchTerm] = useState(searchTerm);
   const [allProducts, setAllProducts] = useState<PublicCatalogProduct[]>([]);
   const [allCategories, setAllCategories] = useState<PublicCatalogCategory[]>([]);
   const [suggestions, setSuggestions] = useState<SearchSuggestion[]>([]);
@@ -42,6 +43,11 @@ export function Header() {
 
   const searchContainerRef = useRef<HTMLFormElement>(null);
   const mobileSearchContainerRef = useRef<HTMLFormElement>(null);
+
+  // Sincroniza o termo de pesquisa local se a store global mudar por fora (ex: limpar filtros)
+  useEffect(() => {
+    setLocalSearchTerm(searchTerm);
+  }, [searchTerm]);
 
   // Carrega produtos e categorias para a busca offline
   useEffect(() => {
@@ -112,19 +118,21 @@ export function Header() {
     setSuggestions([...matchedCategories, ...matchedProducts]);
   };
 
-  // Monitora alterações na busca para gerar sugestões e resetar índice de navegação do teclado
+  // Monitora alterações na busca local para gerar sugestões e resetar índice de navegação do teclado
   useEffect(() => {
-    generateSuggestions(searchTerm);
+    generateSuggestions(localSearchTerm);
     setActiveSuggestionIndex(-1);
-  }, [searchTerm, allProducts, allCategories, categories]);
+  }, [localSearchTerm, allProducts, allCategories, categories]);
 
   const handleSuggestionClick = (suggestion: SearchSuggestion) => {
     setShowSuggestions(false);
     if (suggestion.type === 'product') {
+      setLocalSearchTerm(suggestion.text);
       setSearchTerm(suggestion.text);
       navigate(`/produto/${suggestion.value}`);
     } else if (suggestion.type === 'category') {
       setActiveCategory(suggestion.value);
+      setLocalSearchTerm('');
       setSearchTerm('');
       setActiveTab('catalogo');
       navigate('/catalogo');
@@ -153,7 +161,7 @@ export function Header() {
   // Renderizador do painel flutuante de sugestões (estilo Mercado Livre/Shopee)
   const renderSuggestionsDropdown = () => {
     if (!showSuggestions) return null;
-    if (suggestions.length === 0 && searchTerm.trim() === '') return null;
+    if (suggestions.length === 0 && localSearchTerm.trim() === '') return null;
 
     return (
       <motion.div
@@ -164,7 +172,7 @@ export function Header() {
         className="absolute top-full left-0 right-0 mt-2 bg-white rounded-2xl border border-neutral-200/80 shadow-2xl overflow-hidden z-[100] text-neutral-800"
       >
         <div className="py-2 max-h-[300px] overflow-y-auto custom-scrollbar">
-          {searchTerm.trim() === '' ? (
+          {localSearchTerm.trim() === '' ? (
             <div className="px-4 py-1.5 text-[10px] font-black uppercase tracking-wider text-neutral-400">
               Categorias Principais
             </div>
@@ -281,8 +289,8 @@ export function Header() {
               <input
                 type="text"
                 placeholder="Busque produtos, categorias e mais..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
+                value={localSearchTerm}
+                onChange={(e) => setLocalSearchTerm(e.target.value)}
                 onFocus={() => setShowSuggestions(true)}
                 onKeyDown={handleKeyDown}
                 autoComplete="off"
@@ -374,8 +382,8 @@ export function Header() {
               <input
                 type="text"
                 placeholder="Pesquisar produtos..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
+                value={localSearchTerm}
+                onChange={(e) => setLocalSearchTerm(e.target.value)}
                 onFocus={() => setShowSuggestions(true)}
                 onKeyDown={handleKeyDown}
                 autoComplete="off"
