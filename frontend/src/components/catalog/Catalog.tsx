@@ -467,9 +467,9 @@ export function Catalog() {
   return (
     <div className="catalog-brand-surface relative w-full flex-1 flex flex-col">
       <div className="absolute inset-0 dot-pattern opacity-60 pointer-events-none" />
-      {/* 1. Promo Banner Carousel (Full Width) - negative margin cancels main-content-padding so banner sits flush under header */}
+      {/* 1. Promo Banner Carousel (Full Width) */}
       {!isLoading && !loadError && sortedProducts.length > 0 && (
-        <div className="w-full shrink-0 -mt-[64px] lg:-mt-[120px]">
+        <div className="w-full shrink-0">
           <PromoBannerCarousel />
         </div>
       )}
