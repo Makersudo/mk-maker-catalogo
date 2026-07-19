@@ -21,13 +21,13 @@ export function AdminBottomNav() {
       <nav className="flex justify-around items-center h-16 px-1">
         {adminNavItems.map((item) => {
           const isMenu = 'isMenu' in item && item.isMenu;
-          const isTabActive = isMenu ? isSidebarOpen : location.pathname === item.path;
+          const isTabActive = isMenu ? isSidebarOpen : ('path' in item && location.pathname === item.path);
           const Icon = item.icon;
 
           const handleClick = () => {
             if (isMenu) {
               toggleSidebar();
-            } else if (item.path) {
+            } else if ('path' in item && item.path) {
               navigate(item.path);
             }
           };

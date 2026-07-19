@@ -413,12 +413,10 @@ export function Header() {
             const handleClick = () => {
               if (isCart) {
                 openCart();
-              } else if (item.path) {
+              } else if ('path' in item && item.path) {
                 goToTab(item.id as any);
               }
-            };
-
-            return (
+            };            return (
               <button
                 key={item.id}
                 onClick={handleClick}
