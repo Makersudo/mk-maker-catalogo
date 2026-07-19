@@ -1,5 +1,6 @@
 import { lazy, Suspense, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
+import { motion, AnimatePresence } from 'motion/react';
 import { Header } from './components/layout/Header';
 import { Hero } from './components/hero/Hero';
 import { Catalog } from './components/catalog/Catalog';
@@ -90,13 +91,24 @@ function PublicStore() {
       <Header />
       <main className="flex-1 overflow-y-auto custom-scrollbar flex flex-col">
         <div className={`flex-1 flex flex-col ${mainSpacingClass}`}>
-          {routedTab === 'inicio' && <Hero />}
-          {isProductPage ? <ProductDetail /> : routedTab === 'catalogo' && <Catalog />}
-          {routedTab === 'contato' && (
-            <Suspense fallback={<RouteFallback />}>
-              <ContactView />
-            </Suspense>
-          )}
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={isProductPage ? 'produto' : routedTab}
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -8 }}
+              transition={{ duration: 0.18, ease: "easeOut" }}
+              className="flex-1 flex flex-col"
+            >
+              {routedTab === 'inicio' && <Hero />}
+              {isProductPage ? <ProductDetail /> : routedTab === 'catalogo' && <Catalog />}
+              {routedTab === 'contato' && (
+                <Suspense fallback={<RouteFallback />}>
+                  <ContactView />
+                </Suspense>
+              )}
+            </motion.div>
+          </AnimatePresence>
         </div>
       </main>
       <CartDrawer />

@@ -160,7 +160,6 @@ export function Header() {
 
   // Renderizador do painel flutuante de sugestões (estilo Mercado Livre/Shopee)
   const renderSuggestionsDropdown = () => {
-    if (!showSuggestions) return null;
     if (suggestions.length === 0 && localSearchTerm.trim() === '') return null;
 
     return (
@@ -304,7 +303,9 @@ export function Header() {
                 <Search className="h-4 w-4" />
               </button>
             </div>
-            {renderSuggestionsDropdown()}
+            <AnimatePresence>
+              {showSuggestions && renderSuggestionsDropdown()}
+            </AnimatePresence>
           </form>
 
           {/* Banner Promocional / Contato */}
@@ -396,7 +397,9 @@ export function Header() {
                 <Search className="h-3.5 w-3.5" />
               </button>
             </div>
-            {renderSuggestionsDropdown()}
+            <AnimatePresence>
+              {showSuggestions && renderSuggestionsDropdown()}
+            </AnimatePresence>
           </form>
         </div>
       </header>

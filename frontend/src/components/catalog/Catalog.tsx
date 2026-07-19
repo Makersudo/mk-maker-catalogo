@@ -1,5 +1,5 @@
 import { useState, useMemo, useEffect, useRef } from "react";
-import { motion } from "motion/react";
+import { motion, AnimatePresence } from "motion/react";
 import { Grid2X2, Rows3, Search, ChevronDown, ChevronLeft, ChevronRight, PackageX, Menu, X, Sparkles, Layers } from "lucide-react";
 import { ProductCard } from "./ProductCard";
 import { CatalogSortOption, sortCatalogProducts } from "./catalogSort";
@@ -655,32 +655,40 @@ export function Catalog() {
                   </span>
                 </div>
                 <div className={focusGridClass}>
-                  {campaignFocusProducts.map((product, index) => (
-                    <motion.div
-                      key={product.id}
-                      initial={{ opacity: 0, scale: 0.95 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      layout
-                    >
-                      <ProductCard product={product} priority={index < 4} compact={isCompactMobileGrid} />
-                    </motion.div>
-                  ))}
+                  <AnimatePresence mode="popLayout">
+                    {campaignFocusProducts.map((product, index) => (
+                      <motion.div
+                        key={product.id}
+                        initial={{ opacity: 0, y: 12 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -12 }}
+                        transition={{ duration: 0.22, ease: "easeInOut" }}
+                        layout
+                      >
+                        <ProductCard product={product} priority={index < 4} compact={isCompactMobileGrid} />
+                      </motion.div>
+                    ))}
+                  </AnimatePresence>
                 </div>
               </section>
             )}
 
             {paginatedProducts.length > 0 && (
               <div className={productGridClass}>
-                {paginatedProducts.map((product, index) => (
-                  <motion.div
-                    key={product.id}
-                    initial={{ opacity: 0, scale: 0.95 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    layout
-                  >
-                    <ProductCard product={product} priority={campaignFocusProducts.length === 0 && currentPage === 1 && index < 4} compact={isCompactMobileGrid} />
-                  </motion.div>
-                ))}
+                <AnimatePresence mode="popLayout">
+                  {paginatedProducts.map((product, index) => (
+                    <motion.div
+                      key={product.id}
+                      initial={{ opacity: 0, y: 12 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -12 }}
+                      transition={{ duration: 0.22, ease: "easeInOut" }}
+                      layout
+                    >
+                      <ProductCard product={product} priority={campaignFocusProducts.length === 0 && currentPage === 1 && index < 4} compact={isCompactMobileGrid} />
+                    </motion.div>
+                  ))}
+                </AnimatePresence>
               </div>
             )}
 
