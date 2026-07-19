@@ -83,7 +83,7 @@ export function Header() {
 
       {/* --- CABEÇALHO WEB (DESKTOP) --- oculto na home/início */}
       {!isHomePage && (
-      <header className="fixed top-1 inset-x-0 z-50 hidden border-b border-[#3a1e1b] shadow-md pointer-events-auto lg:block" style={{ backgroundColor: '#4a2825' }}>
+      <header className="fixed top-1 inset-x-0 z-50 hidden border-b border-[#3a1e1b] pointer-events-auto lg:block" style={{ backgroundColor: '#4a2825' }}>
         {/* Linha Superior: Logo, Busca Global e Highlight */}
         <div className="mx-auto max-w-7xl px-6 lg:px-8 h-16 flex items-center gap-6">
 
