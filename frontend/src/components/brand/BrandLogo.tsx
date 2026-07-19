@@ -8,7 +8,7 @@ type BrandLogoProps = {
   fallbackText?: string;
 };
 
-const DEFAULT_TRANSPARENT_LOGO = '/assets/mk-maker-logo-ultra-realista.png';
+const DEFAULT_TRANSPARENT_LOGO = '/assets/mk-maker-logo-ultra-realista.webp';
 
 function getDisplayLogoUrl(logoUrl?: string) {
   const trimmedLogoUrl = logoUrl?.trim();

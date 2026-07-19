@@ -11,33 +11,33 @@ type CatalogSampleProduct = {
 const SAMPLE_BASE = "/catalog/samples";
 
 const sampleByBrand = [
-  { match: ["avon"], image: `${SAMPLE_BASE}/sample-brand-avon.png` },
-  { match: ["dior"], image: `${SAMPLE_BASE}/sample-brand-dior-beauty.png` },
-  { match: ["fenty"], image: `${SAMPLE_BASE}/sample-brand-fenty-beauty.png` },
-  { match: ["lancome", "lanc"], image: `${SAMPLE_BASE}/sample-brand-lancome.png` },
-  { match: ["mac", "m a c"], image: `${SAMPLE_BASE}/sample-brand-mac-cosmetics.png` },
+  { match: ["avon"], image: `${SAMPLE_BASE}/sample-brand-avon.webp` },
+  { match: ["dior"], image: `${SAMPLE_BASE}/sample-brand-dior-beauty.webp` },
+  { match: ["fenty"], image: `${SAMPLE_BASE}/sample-brand-fenty-beauty.webp` },
+  { match: ["lancome", "lanc"], image: `${SAMPLE_BASE}/sample-brand-lancome.webp` },
+  { match: ["mac", "m a c"], image: `${SAMPLE_BASE}/sample-brand-mac-cosmetics.webp` },
 ];
 
 const sampleByType = [
   {
     match: ["pincel", "pinceis", "esponja", "escovinha", "aplicador"],
-    image: `${SAMPLE_BASE}/sample-pincel-base.png`,
+    image: `${SAMPLE_BASE}/sample-pincel-base.webp`,
   },
   {
     match: ["esmalte", "unha", "manicure", "acetona", "lixa", "alicate", "top coat", "oleo secante"],
-    image: `${SAMPLE_BASE}/sample-esmalte-nude.png`,
+    image: `${SAMPLE_BASE}/sample-esmalte-nude.webp`,
   },
   {
     match: ["paleta", "sombra", "pigmento"],
-    image: `${SAMPLE_BASE}/sample-paleta-sombras.png`,
+    image: `${SAMPLE_BASE}/sample-paleta-sombras.webp`,
   },
   {
     match: ["primer", "bruma", "fixador", "protetor solar"],
-    image: `${SAMPLE_BASE}/sample-primer-facial.png`,
+    image: `${SAMPLE_BASE}/sample-primer-facial.webp`,
   },
   {
     match: ["base", "corretivo", "bb cream", "po ", "po compacto", "blush", "bronzer", "contorno", "iluminador"],
-    image: `${SAMPLE_BASE}/sample-base-liquida.png`,
+    image: `${SAMPLE_BASE}/sample-base-liquida.webp`,
   },
 ];
 

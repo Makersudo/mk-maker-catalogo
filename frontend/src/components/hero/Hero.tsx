@@ -97,9 +97,12 @@ export function Hero() {
           <div className="absolute inset-0 bg-gradient-to-b from-white/24 via-transparent to-white/32" />
         </div>
         <div className="absolute inset-0 sm:hidden">
-          <HeroBackgroundVideo
+          <img
+            src="/hero/makeup-products.webp"
+            alt=""
+            loading="eager"
             className="hero-photo-gradient-mobile h-full w-full object-cover"
-            visibleOpacity={0.75}
+            style={{ opacity: 0.75 }}
           />
           <div className="absolute inset-0 bg-gradient-to-b from-white/90 via-white/70 to-white/42" />
           <div className="absolute inset-0 bg-gradient-to-r from-white/86 via-white/60 to-white/20" />
