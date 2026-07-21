@@ -134,7 +134,7 @@ export default function App() {
     return <div className="h-screen w-screen bg-neutral-950" />;
   }
 
-  if (license && !license.active && license.status === 'suspended') {
+  if (license && !license.active) {
     return <SuspendedOverlay message={license.message} supportContact={license.supportContact} />;
   }
 
