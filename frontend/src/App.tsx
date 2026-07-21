@@ -1,4 +1,4 @@
-import { lazy, Suspense, useEffect } from 'react';
+import { lazy, Suspense, useEffect, useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'motion/react';
 import { Header } from './components/layout/Header';
@@ -10,6 +10,8 @@ import { useStore } from './store/useStore';
 import { getPublicCatalogBootstrap } from './services/catalogService';
 import { dismissPublicCatalogSplash, getCriticalPublicMedia, preparePublicCatalogSplash } from './publicCatalogSplash';
 import { AnimationPreferenceProvider } from './providers/AnimationPreferenceProvider';
+import { checkCatalogLicense, type LicenseStatus } from './services/licenseService';
+import { SuspendedOverlay } from './components/layout/SuspendedOverlay';
 
 const LoginView = lazy(() => import('./modules/auth/views/LoginView').then((module) => ({ default: module.LoginView })));
 const AdminLayout = lazy(() => import('./modules/layout/views/AdminLayout').then((module) => ({ default: module.AdminLayout })));
@@ -117,6 +119,25 @@ function PublicStore() {
 }
 
 export default function App() {
+  const [license, setLicense] = useState<LicenseStatus | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    checkCatalogLicense().then((res) => {
+      setLicense(res);
+      setLoading(false);
+    });
+  }, []);
+
+  if (loading) {
+    // Retorna vazio ou tela escura simples durante a validação da licença
+    return <div className="h-screen w-screen bg-neutral-950" />;
+  }
+
+  if (license && !license.active && license.status === 'suspended') {
+    return <SuspendedOverlay message={license.message} supportContact={license.supportContact} />;
+  }
+
   return (
     <Router>
       <AnimationPreferenceProvider>
