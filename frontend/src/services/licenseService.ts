@@ -20,7 +20,12 @@ const GRACE_PERIOD_MS = 1000 * 60 * 60 * 48; // 48 horas de tolerância offline
  */
 export async function checkCatalogLicense(): Promise<LicenseStatus> {
   const licenseKey = import.meta.env.VITE_CENTRAL_LICENSE_KEY;
-  const apiUrl = import.meta.env.VITE_CENTRAL_API_URL || DEFAULT_API_URL;
+  let apiUrl = import.meta.env.VITE_CENTRAL_API_URL || DEFAULT_API_URL;
+
+  // Em ambiente local de desenvolvimento/teste, desvia automaticamente para a API local
+  if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+    apiUrl = 'http://localhost:3001';
+  }
 
   // 1. Se não houver chave de licença no .env, assume que é dev local livre
   if (!licenseKey) {
@@ -67,7 +72,7 @@ export async function checkCatalogLicense(): Promise<LicenseStatus> {
     const data = await response.json();
     const result = data as LicenseStatus;
 
-    // Atualiza o cache local com a resposta em tempo real da Central
+    // Atualiza o cache local imediatamente com a resposta em tempo real da Central
     const cacheData: CachedLicense = {
       status: result,
       lastChecked: Date.now()
@@ -80,25 +85,17 @@ export async function checkCatalogLicense(): Promise<LicenseStatus> {
     clearTimeout(timeoutId);
     console.warn('Falha de conexão com a Central. Verificando cache offline...', error);
 
-    // 2. Se falhar a conexão, verifica se temos um cache válido dentro do período de graça (48h)
-    if (cached) {
+    // 2. Se falhar a conexão, apenas usa o cache offline se a licença estava previamente ATIVA
+    if (cached && cached.status.active) {
       const timeSinceLastCheck = Date.now() - cached.lastChecked;
       
       if (timeSinceLastCheck < GRACE_PERIOD_MS) {
         console.log(`Usando licença cacheada offline (verificada há ${Math.round(timeSinceLastCheck / 1000 / 60)} min)`);
         return cached.status;
       }
-      
-      // Cache expirou (mais de 48h offline)
-      return {
-        active: false,
-        status: 'error',
-        message: 'Não foi possível verificar a assinatura do catálogo nos últimos dias. Por favor, conecte-se à internet.',
-        supportContact: cached.status.supportContact
-      };
     }
 
-    // 3. Sem cache e sem conexão: Bloqueia preventivamente (evita burlar desligando a rede no primeiro acesso)
+    // 3. Sem cache ativo ou sem conexão: Bloqueia preventivamente
     return {
       active: false,
       status: 'error',
