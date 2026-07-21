@@ -10,3 +10,5 @@ coverage/
 .vercel
 .private/
 tokens.txt
+
+.vercel

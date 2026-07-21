@@ -35,8 +35,9 @@ export function MediaView() {
         const ctx = canvas.getContext('2d');
         ctx?.drawImage(img, 0, 0, canvas.width, canvas.height);
         
-        const compressedBase64 = canvas.toDataURL('image/jpeg', 0.6);
-        addMedia(compressedBase64, file.name)
+        const compressedBase64 = canvas.toDataURL('image/webp', 0.80);
+        const newFileName = file.name.replace(/\.[^/.]+$/, "") + ".webp";
+        addMedia(compressedBase64, newFileName)
           .then(() => setFeedback('Upload concluido!'))
           .catch(() => setFeedback('Falha ao enviar.'))
           .finally(() => setUploading(false));

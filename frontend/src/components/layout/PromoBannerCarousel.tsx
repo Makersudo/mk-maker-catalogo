@@ -4,6 +4,7 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useStore } from '../../store/useStore';
 import { listPublicAnnouncements, BannerAnnouncement } from '../../services/bannersService';
+import { getOptimizedImageUrl } from '../../utils/imageOptimizer';
 
 export function PromoBannerCarousel() {
   const [banners, setBanners] = useState<BannerAnnouncement[]>([]);
@@ -103,7 +104,7 @@ export function PromoBannerCarousel() {
           onClick={handleClick}
         >
           <img 
-            src={item.image_url || ''} 
+            src={getOptimizedImageUrl(item.image_url || '', 1200, 80)} 
             alt={item.title} 
             className={`w-full h-full ${fitClass}`}
             draggable={false}

@@ -3,6 +3,7 @@ import { memo, type MouseEvent, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Product } from "../../types";
 import { useStore } from "../../store/useStore";
+import { getOptimizedImageUrl } from "../../utils/imageOptimizer";
 
 interface ProductCardProps {
   product: Product;
@@ -43,7 +44,7 @@ export const ProductCard = memo(function ProductCard({ product, priority = false
       <div className={`mobile-card-photo relative overflow-hidden border-b border-neutral-100 bg-white ${compact ? "aspect-[3/4] sm:aspect-square lg:aspect-[4/5]" : "aspect-[4/5]"}`}>
         {product.imageUrl ? (
           <img
-            src={product.imageUrl}
+            src={getOptimizedImageUrl(product.imageUrl, 400, 75)}
             alt={product.name}
             loading={priority ? "eager" : "lazy"}
             decoding="async"

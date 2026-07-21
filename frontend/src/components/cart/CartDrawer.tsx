@@ -2,6 +2,7 @@ import { type ChangeEvent, type FormEvent, useEffect, useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { X, Minus, Plus, Trash2, Send, ShoppingCart, MapPin, Store, Copy, CheckCircle2, Tag, Ticket, CheckCheck, AlertCircle } from "lucide-react";
 import { useStore } from "../../store/useStore";
+import { getOptimizedImageUrl } from "../../utils/imageOptimizer";
 import { CheckoutData } from "../../types";
 import { createOrder } from "../../services/orderService";
 import { validateCoupon, useCoupon, type CouponValidation } from "../../services/couponsService";
@@ -224,7 +225,7 @@ export function CartDrawer() {
                         <div key={item.key} className="flex gap-4 p-4 bg-white border border-neutral-200 rounded-xl shadow-sm">
                           <div className="w-16 h-16 bg-neutral-100 rounded-lg overflow-hidden flex-shrink-0">
                             {item.product.imageUrl ? (
-                              <img src={item.product.imageUrl} alt={item.product.name} className="w-full h-full object-cover" />
+                              <img src={getOptimizedImageUrl(item.product.imageUrl, 150, 75)} alt={item.product.name} className="w-full h-full object-cover" />
                             ) : (
                               <div className="w-full h-full bg-neutral-100" />
                             )}

@@ -3,6 +3,8 @@ import { ArrowLeft, Minus, Plus, ShoppingCart, Timer } from "lucide-react";
 import { useNavigate, useParams } from "react-router-dom";
 import { getPublicCatalogBootstrap, PublicCatalogProduct } from "../../services/catalogService";
 import { useStore } from "../../store/useStore";
+import { trackEvent } from "../../utils/analytics";
+import { getOptimizedImageUrl } from "../../utils/imageOptimizer";
 import { Product } from "../../types";
 import { ProductCard } from "./ProductCard";
 import { getCatalogSampleImage } from "./catalogSampleImages";
@@ -218,7 +220,7 @@ export function ProductDetail() {
             <div className="product-photo-surface flex h-[52vh] min-h-[300px] max-h-[720px] items-center justify-center overflow-hidden rounded-2xl border border-neutral-200 p-4 shadow-lg shadow-neutral-900/5 sm:h-[58vh] sm:min-h-[340px] sm:p-6 lg:h-[62vh]">
               {product.imageUrl ? (
                 <img
-                  src={product.imageUrl}
+                  src={getOptimizedImageUrl(product.imageUrl, 800, 80)}
                   alt={product.name}
                   loading="eager"
                   decoding="async"
