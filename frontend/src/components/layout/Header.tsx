@@ -16,7 +16,7 @@ interface SearchSuggestion {
 }
 
 export function Header() {
-  const { activeTab, setActiveTab, cart, openCart, isCartOpen, searchTerm, setSearchTerm, setActiveCategory } = useStore();
+  const { activeTab, setActiveTab, cart, openCart, isCartOpen, searchTerm, setSearchTerm, setActiveCategory, setIsMobileCategoriesOpen } = useStore();
   const settings = usePublicSettings();
   const location = useLocation();
   const navigate = useNavigate();
@@ -258,7 +258,7 @@ export function Header() {
     { id: 'inicio', label: 'Início', icon: Home, path: '/inicio' },
     { id: 'catalogo', label: 'Catálogo', icon: ShoppingBag, path: '/catalogo' },
     { id: 'carrinho', label: 'Carrinho', icon: ShoppingCart, isCart: true },
-    { id: 'contato', label: 'Contato', icon: MessageCircle, path: '/contato' },
+    { id: 'categorias', label: 'Categorias', icon: Layers, isCategories: true },
   ] as const;
 
   const isHomePage = location.pathname === '/inicio';
@@ -416,6 +416,9 @@ export function Header() {
             const handleClick = () => {
               if (isCart) {
                 openCart();
+              } else if ('isCategories' in item && item.isCategories) {
+                if (!isCatalogPage) goToTab('catalogo');
+                setIsMobileCategoriesOpen(true);
               } else if ('path' in item && item.path) {
                 goToTab(item.id as any);
               }

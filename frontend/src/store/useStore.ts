@@ -17,6 +17,8 @@ interface StoreState {
   clearCart: () => void;
   searchTerm: string;
   setSearchTerm: (term: string) => void;
+  isMobileCategoriesOpen: boolean;
+  setIsMobileCategoriesOpen: (open: boolean) => void;
 }
 
 function getCartKey(productId: string, variant?: ProductVariant | null) {
@@ -49,6 +51,8 @@ export const useStore = create<StoreState>()(
       clearCart: () => set({ cart: [] }),
       searchTerm: '',
       setSearchTerm: (term) => set({ searchTerm: term }),
+      isMobileCategoriesOpen: false,
+      setIsMobileCategoriesOpen: (open) => set({ isMobileCategoriesOpen: open }),
     }),
     {
       name: 'mk-maker-cart',

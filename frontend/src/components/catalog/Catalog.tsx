@@ -86,7 +86,7 @@ function CatalogSkeleton() {
 }
 
 export function Catalog() {
-  const { activeCategory, setActiveCategory, searchTerm, setSearchTerm } = useStore();
+  const { activeCategory, setActiveCategory, searchTerm, setSearchTerm, isMobileCategoriesOpen, setIsMobileCategoriesOpen } = useStore();
   const settings = usePublicSettings();
   const [currentPage, setCurrentPage] = useState(1);
   const [isSidebarOpen, setIsSidebarOpen] = useState(() => {
@@ -126,11 +126,20 @@ export function Catalog() {
 
     syncSidebarMode();
     desktopQuery.addEventListener("change", syncSidebarMode);
-
-    return () => {
-      desktopQuery.removeEventListener("change", syncSidebarMode);
-    };
+    return () => desktopQuery.removeEventListener("change", syncSidebarMode);
   }, []);
+
+  useEffect(() => {
+    if (isMobileCategoriesOpen) {
+      setIsSidebarOpen(true);
+    }
+  }, [isMobileCategoriesOpen]);
+
+  useEffect(() => {
+    if (!isSidebarOpen && window.innerWidth < 1024) {
+      setIsMobileCategoriesOpen(false);
+    }
+  }, [isSidebarOpen, setIsMobileCategoriesOpen]);
 
   useEffect(() => {
     let isMounted = true;
