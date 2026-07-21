@@ -10,7 +10,7 @@ interface CachedLicense {
   lastChecked: number; // Timestamp em milissegundos
 }
 
-const DEFAULT_API_URL = 'https://mkmaker-central-api.onrender.com';
+const DEFAULT_API_URL = 'https://central-admin-backend.onrender.com';
 const CACHE_KEY = 'mk_catalog_license_cache';
 const GRACE_PERIOD_MS = 1000 * 60 * 60 * 48; // 48 horas de tolerância offline
 
