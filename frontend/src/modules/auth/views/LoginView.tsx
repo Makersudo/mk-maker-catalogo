@@ -12,7 +12,7 @@ import {
 } from '../../../services/authService';
 import { usePublicSettings } from '../../../hooks/usePublicSettings';
 
-const ADMIN_LOGIN_LOGO = '/assets/mk-maker-logo-symbol-transparent.png';
+const ADMIN_LOGIN_LOGO = '/assets/mk-maker-logo-ultra-realista.webp';
 
 export function LoginView() {
   const settings = usePublicSettings();
@@ -42,7 +42,7 @@ export function LoginView() {
       .catch((err: any) => {
         if (!active) return;
         setTotpConfigured(true);
-        setError(err?.message || 'Nao foi possivel verificar o autenticador.');
+        setError(err?.message || 'Não foi possível verificar o autenticador.');
       });
 
     return () => {
@@ -61,7 +61,7 @@ export function LoginView() {
       }));
       setSetupPassword('');
     } catch (err: any) {
-      setError(err?.message || 'Nao foi possivel gerar a configuracao.');
+      setError(err?.message || 'Não foi possível gerar a configuração.');
     } finally {
       setLoading(false);
     }
@@ -81,7 +81,7 @@ export function LoginView() {
       setSetupComplete(true);
       setTotpConfigured(true);
     } catch (err: any) {
-      setError(err?.message || 'Nao foi possivel ativar o autenticador.');
+      setError(err?.message || 'Não foi possível ativar o autenticador.');
     } finally {
       setLoading(false);
     }
@@ -97,7 +97,7 @@ export function LoginView() {
       setGateToken(token);
       setAccessCode('');
     } catch (err: any) {
-      setError(err?.message || 'Codigo invalido.');
+      setError(err?.message || 'Código inválido.');
     } finally {
       setLoading(false);
     }
@@ -113,20 +113,20 @@ export function LoginView() {
       setUser(user);
       navigate('/admin/dashboard');
     } catch (err: any) {
-      setError(err?.message || 'Nao foi possivel entrar no painel.');
+      setError(err?.message || 'Não foi possível entrar no painel.');
     } finally {
       setLoading(false);
     }
   };
 
   const loginStep = !totpConfigured
-    ? 'Configurar seguranca'
+    ? 'Configurar segurança'
     : gateToken
       ? 'Credenciais do admin'
       : 'Validar autenticador';
 
   return (
-    <div className="min-h-screen overflow-hidden bg-[#fbfaf9] text-neutral-950">
+    <div className="min-h-screen overflow-x-hidden bg-[#fbfaf9] text-neutral-950 font-sans">
       <div
         aria-hidden="true"
         className="pointer-events-none fixed inset-0 dot-pattern opacity-60"
@@ -142,10 +142,11 @@ export function LoginView() {
         }}
       />
 
-      <main className="relative mx-auto flex min-h-screen w-full max-w-[1480px] items-center justify-center p-4 sm:p-6 lg:p-10">
-        <section className="grid w-full max-w-7xl overflow-hidden rounded-[2rem] border border-neutral-200 bg-white shadow-[0_34px_90px_rgba(17,24,39,0.12)] lg:grid-cols-[minmax(0,1fr)_480px]">
+      <main className="relative mx-auto flex min-h-screen w-full max-w-[1440px] items-center justify-center p-4 sm:p-6 lg:p-8">
+        <section className="grid w-full max-w-6xl overflow-hidden rounded-[2.5rem] border border-neutral-200/80 bg-white shadow-[0_32px_80px_rgba(17,24,39,0.08)] lg:grid-cols-[1fr_460px]">
+          {/* Lado Esquerdo - Marca & Apresentação */}
           <aside
-            className="relative order-2 overflow-hidden border-t border-neutral-200 bg-white p-6 sm:p-10 lg:order-1 lg:min-h-[700px] lg:border-b-0 lg:border-t-0 lg:p-12"
+            className="relative order-2 overflow-hidden border-t border-neutral-200/80 bg-gradient-to-br from-white via-neutral-50/50 to-amber-50/20 p-6 sm:p-10 lg:order-1 lg:min-h-[660px] lg:border-t-0 lg:p-12"
             aria-label="Central administrativa MK Maker"
           >
             <div
@@ -153,61 +154,67 @@ export function LoginView() {
               className="absolute inset-0"
               style={{
                 background:
-                  `linear-gradient(135deg, ${primaryColor}18 0%, transparent 30%, transparent 68%, ${primaryColor}14 100%)`,
+                  `linear-gradient(135deg, ${primaryColor}18 0%, transparent 35%, transparent 65%, ${primaryColor}12 100%)`,
               }}
             />
-            <div aria-hidden="true" className="absolute -right-24 top-16 h-72 w-72 rounded-full border border-[#e8d2cf]" />
-            <div aria-hidden="true" className="absolute -bottom-24 left-16 h-64 w-64 rounded-full border border-[#ead8d5]" />
+            <div aria-hidden="true" className="absolute -right-20 top-12 h-64 w-64 rounded-full border border-[#e8d2cf]/60 pointer-events-none" />
+            <div aria-hidden="true" className="absolute -bottom-20 left-12 h-56 w-56 rounded-full border border-[#ead8d5]/60 pointer-events-none" />
 
-            <div className="relative z-10 flex h-full flex-col justify-between gap-10">
+            <div className="relative z-10 flex h-full flex-col justify-between gap-8">
               <div>
-                <div className="inline-flex max-w-full">
+                <div className="inline-flex items-center gap-3">
                   <img
                     src={ADMIN_LOGIN_LOGO}
                     alt="MK Maker"
-                    className="h-32 w-72 object-contain object-left drop-shadow-[0_18px_34px_rgba(106,68,63,0.16)] sm:h-36 sm:w-80"
+                    className="h-10 w-auto max-w-[200px] object-contain drop-shadow-sm"
+                    onError={(e) => {
+                      // Fallback se a imagem não carregar
+                      (e.target as HTMLElement).style.display = 'none';
+                    }}
                   />
+                  <span className="font-display text-2xl font-bold text-neutral-900 tracking-tight">MK Maker</span>
                 </div>
 
-                <div className="mt-10 inline-flex items-center gap-2 rounded-full border border-[#E7C9C4] bg-[#F8EEEC] px-4 py-2 text-[11px] font-black uppercase tracking-[0.22em] text-[#8D514B]">
-                  <Store className="h-4 w-4" />
-                  Central privada da vitrine
+                <div className="mt-8 inline-flex items-center gap-2 rounded-full border border-[#E7C9C4] bg-[#F8EEEC] px-3.5 py-1.5 text-[10px] font-black uppercase tracking-[0.2em] text-[#8D514B]">
+                  <Store className="h-3.5 w-3.5" />
+                  Central Privada da Vitrine
                 </div>
 
-                <h1 className="mt-5 max-w-3xl font-display text-5xl font-semibold leading-[0.96] tracking-normal text-neutral-950 sm:text-6xl lg:text-7xl">
-                  Central administrativa <span className="text-[#9B5F58]">MK Maker</span>
+                <h1 className="mt-5 max-w-2xl font-display text-3xl font-bold leading-[1.15] text-neutral-950 sm:text-4xl lg:text-5xl tracking-tight">
+                  Central Administrativa <span className="text-[#9B5F58] font-extrabold">MK Maker</span>
                 </h1>
 
-                <p className="mt-6 max-w-xl text-base font-medium leading-7 text-neutral-600">
-                  Entrada reservada para operar produtos, campanhas, pedidos, estoque e notificacoes do catalogo.
+                <p className="mt-4 max-w-lg text-sm font-medium leading-relaxed text-neutral-600">
+                  Entrada reservada para operar produtos, campanhas, pedidos, estoque e notificações do catálogo.
                 </p>
               </div>
 
               <div className="grid gap-3 sm:grid-cols-3">
-                <LoginFeatureCard icon={<PackageCheck className="h-5 w-5" />} title="Catalogo live" text="Produtos e vitrine publicados." />
-                <LoginFeatureCard icon={<Bell className="h-5 w-5" />} title="Alertas" text="Pedidos novos na central." />
-                <LoginFeatureCard icon={<ShieldCheck className="h-5 w-5" />} title="2FA ativo" text="Acesso com autenticador." />
+                <LoginFeatureCard icon={<PackageCheck className="h-4 w-4" />} title="Catálogo Live" text="Produtos e vitrine publicados." />
+                <LoginFeatureCard icon={<Bell className="h-4 w-4" />} title="Alertas Novos" text="Pedidos na central." />
+                <LoginFeatureCard icon={<ShieldCheck className="h-4 w-4" />} title="2FA Ativo" text="Acesso com autenticador." />
               </div>
             </div>
           </aside>
 
-          <section className="relative order-1 flex items-center justify-center bg-[#fffdfc] p-5 sm:p-8 lg:order-2 lg:border-l lg:border-neutral-200 lg:p-10">
+          {/* Lado Direito - Card de Autenticação */}
+          <section className="relative order-1 flex items-center justify-center overflow-hidden bg-[#fffdfc] p-6 sm:p-8 lg:order-2 lg:border-l lg:border-neutral-200/80 lg:p-10">
             <div aria-hidden="true" className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-neutral-950 via-[#9B5F58] to-[#C98F86]" />
 
             <div className="w-full max-w-md">
-              <div className="mb-7 flex items-center gap-4 rounded-3xl border border-neutral-200 bg-white p-4 shadow-[0_12px_34px_rgba(17,24,39,0.05)] lg:hidden">
-                <img src={ADMIN_LOGIN_LOGO} alt="MK Maker" className="h-16 w-32 object-contain object-left" />
+              <div className="mb-6 flex items-center gap-3 rounded-2xl border border-neutral-200 bg-white p-3.5 shadow-sm lg:hidden">
+                <img src={ADMIN_LOGIN_LOGO} alt="MK Maker" className="h-8 w-auto object-contain" />
                 <div>
-                  <p className="text-sm font-black text-neutral-950">MK Maker Admin</p>
-                  <p className="text-xs font-semibold text-neutral-500">Central privada</p>
+                  <p className="text-xs font-black text-neutral-950">MK Maker Admin</p>
+                  <p className="text-[10px] font-semibold text-neutral-500">Central Privada</p>
                 </div>
               </div>
 
               <LoginStepPill label={loginStep} />
 
-              <div className="mt-5">
-                <h2 className="text-3xl font-black tracking-tight text-neutral-950 sm:text-4xl">Entrar no painel</h2>
-                <p className="mt-3 text-sm font-medium leading-6 text-neutral-500">
+              <div className="mt-4">
+                <h2 className="text-2xl font-extrabold tracking-tight text-neutral-950 sm:text-3xl">Entrar no painel</h2>
+                <p className="mt-2 text-xs font-medium leading-relaxed text-neutral-500">
                   Use o autenticador e suas credenciais para liberar a central administrativa.
                 </p>
               </div>
