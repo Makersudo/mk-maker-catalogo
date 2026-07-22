@@ -123,10 +123,34 @@ export default function App() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    // Validação inicial
     checkCatalogLicense().then((res) => {
       setLicense(res);
       setLoading(false);
     });
+
+    // ⚡ Validação em Tempo Real: verifica a cada 10 segundos
+    const intervalId = setInterval(() => {
+      checkCatalogLicense().then((res) => {
+        setLicense(res);
+      });
+    }, 10000);
+
+    // ⚡ Re-validação imediata ao focar na aba
+    const handleFocus = () => {
+      checkCatalogLicense().then((res) => {
+        setLicense(res);
+      });
+    };
+
+    window.addEventListener('focus', handleFocus);
+    document.addEventListener('visibilitychange', handleFocus);
+
+    return () => {
+      clearInterval(intervalId);
+      window.removeEventListener('focus', handleFocus);
+      document.removeEventListener('visibilitychange', handleFocus);
+    };
   }, []);
 
   if (loading) {
