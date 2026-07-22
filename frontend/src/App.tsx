@@ -159,7 +159,15 @@ export default function App() {
   }
 
   if (license && !license.active) {
-    return <SuspendedOverlay message={license.message} supportContact={license.supportContact} />;
+    const currentPath = window.location.pathname.toLowerCase();
+    const isAdminRoute = currentPath.startsWith('/admin') || currentPath.startsWith('/login');
+    return (
+      <SuspendedOverlay 
+        message={license.message} 
+        supportContact={license.supportContact} 
+        isAdminRoute={isAdminRoute} 
+      />
+    );
   }
 
   return (
