@@ -129,12 +129,12 @@ export default function App() {
       setLoading(false);
     });
 
-    // ⚡ Validação em Tempo Real: verifica a cada 10 segundos
+    // ⚡ Validação Ultra-Rápida em Tempo Real: verifica a cada 2 segundos para Bloqueio e Desbloqueio Instantâneo
     const intervalId = setInterval(() => {
       checkCatalogLicense().then((res) => {
         setLicense(res);
       });
-    }, 10000);
+    }, 2000);
 
     // ⚡ Re-validação imediata ao focar na aba
     const handleFocus = () => {
