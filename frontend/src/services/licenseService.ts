@@ -11,7 +11,6 @@ interface CachedLicense {
 }
 
 const DEFAULT_SUPABASE_URL = 'https://augeggvlijscaebcggvk.supabase.co';
-const DEFAULT_SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImF1Z2VnZ3ZsaWpzY2FlYmNnZ3ZrIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3OTk4MzU1MSwiZXhwIjoyMDk1NTU5NTUxfQ.GAyDM47edl59b0waLX79r79Y_boxPsTK4ox-jww1Un8';
 const DEFAULT_API_URL = 'https://central-admin-backend.onrender.com';
 const CACHE_KEY = 'mk_catalog_license_cache';
 const GRACE_PERIOD_MS = 1000 * 60 * 60 * 48; // 48 horas de tolerância offline
@@ -134,7 +133,7 @@ export async function checkCatalogLicense(): Promise<LicenseStatus> {
   const licenseKey = import.meta.env.VITE_CENTRAL_LICENSE_KEY;
   let apiUrl = import.meta.env.VITE_CENTRAL_API_URL || DEFAULT_API_URL;
   const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || DEFAULT_SUPABASE_URL;
-  const supabaseKey = import.meta.env.VITE_SUPABASE_SERVICE_ROLE_KEY || import.meta.env.VITE_SUPABASE_ANON_KEY || DEFAULT_SUPABASE_KEY;
+  const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY || import.meta.env.VITE_SUPABASE_KEY || '';
 
   if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
     apiUrl = 'http://localhost:3001';
@@ -159,41 +158,43 @@ export async function checkCatalogLicense(): Promise<LicenseStatus> {
     }
   }
 
-  // ⚡ 1º PASSO (PRIMÁRIO): Consulta DIRETA AO SUPABASE REST API (Resposta ultrarrápida em ~20ms)
-  try {
-    const supabaseController = new AbortController();
-    const supTimeout = setTimeout(() => supabaseController.abort(), 4000);
+  // ⚡ 1º PASSO (PRIMÁRIO): Consulta DIRETA AO SUPABASE REST API se houver chave pública anon configurada
+  if (supabaseKey) {
+    try {
+      const supabaseController = new AbortController();
+      const supTimeout = setTimeout(() => supabaseController.abort(), 4000);
 
-    const supResponse = await fetch(
-      `${supabaseUrl}/rest/v1/catalog_licenses?license_key=eq.${encodeURIComponent(licenseKey)}&select=*`,
-      {
-        method: 'GET',
-        signal: supabaseController.signal,
-        headers: {
-          'apikey': supabaseKey,
-          'Authorization': `Bearer ${supabaseKey}`,
-          'Accept': 'application/json'
+      const supResponse = await fetch(
+        `${supabaseUrl}/rest/v1/catalog_licenses?license_key=eq.${encodeURIComponent(licenseKey)}&select=*`,
+        {
+          method: 'GET',
+          signal: supabaseController.signal,
+          headers: {
+            'apikey': supabaseKey,
+            'Authorization': `Bearer ${supabaseKey}`,
+            'Accept': 'application/json'
+          }
+        }
+      );
+      clearTimeout(supTimeout);
+
+      if (supResponse.ok) {
+        const rows = await supResponse.json();
+        if (Array.isArray(rows) && rows.length > 0) {
+          const result = evaluateLicenseStatus(rows[0]);
+
+          // Grava no cache imediato
+          localStorage.setItem(CACHE_KEY, JSON.stringify({
+            status: result,
+            lastChecked: Date.now()
+          }));
+
+          return result;
         }
       }
-    );
-    clearTimeout(supTimeout);
-
-    if (supResponse.ok) {
-      const rows = await supResponse.json();
-      if (Array.isArray(rows) && rows.length > 0) {
-        const result = evaluateLicenseStatus(rows[0]);
-
-        // Grava no cache imediato
-        localStorage.setItem(CACHE_KEY, JSON.stringify({
-          status: result,
-          lastChecked: Date.now()
-        }));
-
-        return result;
-      }
+    } catch (err) {
+      console.warn('Consulta direta ao Supabase falhou ou sofreu timeout, tentando backend secundário...', err);
     }
-  } catch (err) {
-    console.warn('Consulta direta ao Supabase falhou ou sofreu timeout, tentando backend secundário...', err);
   }
 
   // ⚡ 2º PASSO (SECUNDÁRIO): Fallback na API Central Backend
