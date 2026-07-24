@@ -261,7 +261,7 @@ export function Header() {
     { id: 'categorias', label: 'Categorias', icon: Layers, isCategories: true },
   ] as const;
 
-  const isHomePage = location.pathname === '/inicio';
+  const isHomePage = location.pathname === '/inicio' || location.pathname === '/' || activeTab === 'inicio';
 
   return (
     <>
@@ -405,7 +405,8 @@ export function Header() {
       </header>
       )}
 
-      {/* --- BARRA DE NAVEGAÇÃO INFERIOR PÚBLICA (Instagram Style) --- */}
+      {/* --- BARRA DE NAVEGAÇÃO INFERIOR PÚBLICA (Instagram Style) - oculta na home/início --- */}
+      {!isHomePage && (
       <div className="fixed bottom-4 left-4 right-4 z-50 rounded-2xl bg-white/94 backdrop-blur-md border border-neutral-200/80 shadow-lg shadow-neutral-900/10 lg:hidden pointer-events-auto">
         <nav className="flex justify-around items-center h-16 px-1">
           {bottomNavItems.map((item) => {
@@ -422,7 +423,9 @@ export function Header() {
               } else if ('path' in item && item.path) {
                 goToTab(item.id as any);
               }
-            };            return (
+            };
+
+            return (
               <button
                 key={item.id}
                 onClick={handleClick}
@@ -462,6 +465,7 @@ export function Header() {
           })}
         </nav>
       </div>
+      )}
     </>
   );
 }

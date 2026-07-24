@@ -85,7 +85,7 @@ function PublicStore() {
   }, [activeTab, routedTab, setActiveTab]);
 
   const isHero = routedTab === 'inicio';
-  const mainSpacingClass = isHero ? 'pb-24 lg:pb-0' : 'main-content-padding';
+  const mainSpacingClass = isHero ? 'pb-0' : 'main-content-padding';
 
   return (
     <div className="h-screen overflow-hidden flex flex-col font-sans bg-neutral-50 text-neutral-900 selection:bg-purple-200">
